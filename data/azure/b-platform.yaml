@@ -1,0 +1,389 @@
+provider: azure
+bucket: b
+product: Microsoft Foundry Agent Service
+aliases:
+  - Azure AI Foundry Agent Service
+  - Azure AI Agent Service
+  - Foundry Agent Service
+notes: >
+  RENAMED: docs now say "Microsoft Foundry", not "Azure AI Foundry". The canonical URL is
+  learn.microsoft.com/en-us/azure/foundry/agents/overview and ms.service is
+  "microsoft-foundry". Keep the older aliases searchable.
+  "Foundry Agent Service is a managed platform for building, deploying, and scaling AI
+  agents. Use any framework, any supported model from the Foundry model catalog, and the
+  Responses API as a single entry point."
+  Doc ms.date 2026-05-27, updated_at 2026-07-09.
+
+capabilities:
+  managed_agent_runtime:
+    product: Agent Runtime
+    status: ga
+    notes: >
+      "Hosts and scales prompt agents and Hosted agents. Manages conversations, tool
+      calls, and agent lifecycle."
+      TWO AGENT TYPES — a structural difference from other clouds:
+      - Prompt agents: "author a prompt agent in the Foundry portal or define it with
+        SDKs and REST, and Foundry runs it for you. No application code to maintain, no
+        compute to pay for". Cost model: "Per-call inference + tool usage".
+      - Hosted agents: your container/zip, "Foundry builds the image for you when you
+        bring a zip". Cost model adds "container compute".
+      *** FIRST AND ONLY EXPLICIT GA STATEMENT IN THIS ENTIRE DATASET ***, found on the
+      quotas page (a DIFFERENT source from this cell's overview page — see runtime_regions):
+      "Foundry Agent Service is generally available (GA). Some sub-features are in public
+      preview and might have different constraints."
+      Every other provider documents capabilities without ever saying GA. Azure is the only
+      one that commits. Note the second sentence carefully — GA is the SERVICE, not every
+      sub-feature; memory and web search remain preview.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  framework_agnosticism:
+    status: documented
+    value:
+      - Microsoft Agent Framework
+      - LangGraph
+      - OpenAI Agents SDK
+      - Anthropic Agent SDK
+      - GitHub Copilot SDK
+      - custom code
+    notes: >
+      Hosted agents can be built with Agent Framework, LangGraph, the OpenAI Agents SDK,
+      the Anthropic Agent SDK, the GitHub Copilot SDK, or your own code. (Paraphrase of the
+      framework list; each framework name is directly evidenced on the page.)
+      Notably includes the Anthropic Agent SDK and GitHub Copilot SDK — broader than
+      just Microsoft's own. CrewAI and LlamaIndex are NOT named.
+      Third option: keep code outside Foundry entirely and "Call the Responses API from
+      your existing process to get Foundry models and platform tools without moving your
+      code."
+      NOTE ON A MIS-SOURCED CAVEAT: an earlier revision attributed an "at your own risk"
+      / "Non-Microsoft Products" clause to this page. Those strings are NOT on this page —
+      they are in the Microsoft Agent Framework GitHub README (see azure/a-sdk.yaml).
+      This page places no such caveat on its framework list.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  openai_compatible_endpoint:
+    status: documented
+    product: Responses API
+    notes: >
+      "Single entry point for every agent type. Gives any framework, process, or runtime
+      access to Foundry models plus platform tools". Supports "standard OpenAI tools like
+      file search, code interpreter, and web search".
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  third_party_catalog:
+    status: documented
+    notes: >
+      "Works with many models from the Foundry model catalog, such as GPT-4o, Llama, and
+      DeepSeek. Swap models without changing your agent code."
+      Full list is deferred to a limits/quotas page — not enumerated here.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  code_interpreter:
+    status: documented
+    notes: Listed as a built-in platform tool via the Responses API.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  knowledge_base:
+    status: documented
+    value: [file search, SharePoint, WorkIQ, Fabric IQ]
+    notes: >
+      "Foundry-exclusive tools like SharePoint, WorkIQ, and Fabric IQ" in addition to
+      standard file search. BYO resources: "Use your own Azure resources (for example,
+      storage, Azure AI Search, and Azure Cosmos DB for conversation state)".
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  mcp_server_hosting:
+    status: documented
+    notes: >
+      "Foundry supports remote MCP servers that you can add from the Add Tools catalog in
+      the Foundry portal." Custom MCP servers can be hosted on Azure Functions via a
+      Functions MCP webhook endpoint (paraphrase).
+      The Azure DevOps MCP Server is specifically "(public preview)".
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  mcp_registry:
+    product: Toolbox
+    status: documented
+    notes: >
+      "Toolbox lets you define a curated set of tools once, manage them centrally in
+      Foundry, and expose them through a single MCP-compatible endpoint. Any
+      MCP-compatible agent runtime or client can consume a toolbox, regardless of the
+      framework you use." Includes versioning with promote-to-default.
+      Closest analogue to AgentCore Registry + Gateway combined.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  web_search_tool:
+    status: preview
+    notes: '"Some tools, including memory and web search, are in preview."'
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  long_term_memory:
+    status: preview
+    notes: >
+      EXPLICITLY PREVIEW: "Some tools, including memory and web search, are in preview."
+      Memory is listed as a platform tool via the Responses API.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  short_term_memory:
+    status: documented
+    notes: >
+      "session-level state persistence" for Hosted agents; Agent Runtime "Manages
+      conversations". BYO Cosmos DB for conversation state.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  agent_workload_identity:
+    status: documented
+    notes: >
+      "Each agent can have a dedicated Microsoft Entra identity, enabling secure, scoped
+      access to resources and APIs without sharing credentials."
+      For Hosted agents it is "Automatic, dedicated per agent".
+      Agent identities "can authenticate to external MCP servers".
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  delegated_user_auth:
+    status: documented
+    notes: >
+      "Managed authentication includes service-managed credentials and On-Behalf-Of
+      (OBO)." Auth options for MCP/tool connections: "Key-based access", "Microsoft Entra
+      (using the agent's managed identity or the project's managed identity)",
+      "OAuth identity passthrough (On-Behalf-Of)", "Unauthenticated access, where
+      appropriate".
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  guardrails:
+    status: documented
+    notes: >
+      "Integrated content filters help mitigate prompt injection risks (including
+      cross-prompt injection) and prevent unsafe outputs."
+      Names the XPIA attack class explicitly — "cross-prompt injection attacks (XPIA)".
+      Separate guardrails product area linked.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  private_networking:
+    status: documented
+    notes: >
+      "Run agents within your Azure virtual network for full network isolation and
+      compliance with data residency requirements. Private networking is available for
+      prompt agents. Hosted agents support bring-your-own Azure Virtual Network (BYO
+      VNet), where each session runs in a VM-isolated sandbox connected to your VNet."
+      Note the per-agent-type difference.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  otel_traces:
+    status: unknown
+    notes: >
+      Tracing EXISTS — "End-to-end tracing, metrics, and Application Insights
+      integration. See every decision your agent makes." But this row is specifically
+      about OpenTelemetry / GenAI semconv, and the page never mentions OpenTelemetry;
+      only Application Insights is named. `unknown` for OTel conformance, matching how
+      GCP and AWS are treated for the same evidentiary gap. Do not assume neutral export.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  apm_integration:
+    status: documented
+    value: Application Insights
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  eval_service:
+    status: documented
+    notes: '"Evaluate — Run evaluations to measure quality and catch regressions."'
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  agent_optimization:
+    product: agent optimizer
+    status: documented
+    notes: >
+      An "agent optimizer" is documented as automatically improving a hosted agent's
+      instructions. (Paraphrase.) Direct counterpart to AgentCore Optimization.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  versioning_rollout:
+    status: documented
+    notes: >
+      "As you iterate on your agent, versions are automatically snapshotted. Roll back to
+      any previous version or compare changes between versions."
+      Publishing "Promote an agent to a managed resource with a stable endpoint."
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  a2a_protocol:
+    status: preview
+    notes: '"the A2A protocol (preview) for agent-to-agent communication"'
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  distribution_to_packaged_products:
+    status: documented
+    notes: >
+      CROSS-BUCKET BRIDGE (B -> C), unique among the five providers: published agents can
+      be shared "through Microsoft 365 Copilot and Teams and the Entra Agent Registry,
+      putting your agents where your users already work." Supports "OpenResponses and
+      Activity Protocols for Microsoft 365 publishing".
+      This is the strongest B->C integration story in the comparison.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  authoring_mode:
+    status: documented
+    value: both
+    notes: >
+      Portal-first (visual) and code-first (SDK/REST) both supported for prompt agents.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  runtime_regions:
+    status: ga
+    value:
+      agent_regions: 30
+      class_a_private_ip: 22
+    notes: >
+      30 REGIONS — the widest agent-platform footprint in this comparison (AgentCore Runtime
+      reaches 20, BytePlus 2). All 30 support both the Responses API and Agents:
+      Australia East, Brazil South, Canada Central, Canada East, Central US, East US,
+      East US 2, France Central, Germany West Central, Italy North, Japan East, Japan West,
+      Korea Central, North Central US, Norway East, Poland Central, South Africa North,
+      South Central US, Southeast Asia, South India, Spain Central, Sweden Central,
+      Switzerland North, Switzerland West, UAE North, UK South, West Central US,
+      West Europe, West US, West US 3.
+      SUB-FEATURE GAP: 8 of the 30 do NOT support private Class A (10.x.x.x) IP ranges —
+      Canada Central, Japan West, Norway East, Poland Central, Switzerland North,
+      Switzerland West, West Central US. Matters if you need private networking.
+      Endpoints are regional and "data is stored in the same region as the endpoint".
+      Marked `ga` because the same page states the service is generally available.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  tool_region_variance:
+    status: documented
+    notes: >
+      THE UNDER-DISCLOSED FACT THIS PROJECT EXISTS FOR — a full tool-by-region matrix, and
+      the gaps are real:
+      "Not all tools are available in every region. For example, file search isn't available
+      in Italy North and Brazil South."
+      COMPUTER USE is the narrowest tool by far: supported in only THREE regions
+      (East US 2, South India, Sweden Central) out of 24 listed in the matrix.
+      Function calling is absent in Brazil South, North Central US, South Central US, West US.
+      Grounding with Bing Search has its own 24-region list that does NOT match the
+      30-region agent list.
+      Anyone who picks a region from the headline list and then needs Computer Use has a
+      1-in-8 chance of being right.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  sovereign_cloud:
+    status: documented
+    value: [US Gov Virginia, US Gov Arizona]
+    notes: >
+      "Foundry Agent Service is also available in Azure Government (US Gov Virginia and
+      US Gov Arizona) with a subset of agent types and tools."
+      Note the caveat — a SUBSET, not parity. Compare AWS, whose GovCloud (US-West) carries
+      Runtime, Gateway, Identity, Built-in Tools, Observability and Evaluations but not
+      Harness, Memory, Optimization or Policy.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  data_residency:
+    status: documented
+    notes: >
+      TWO SETUP MODES with materially different residency, and the choice is easy to make
+      unknowingly since basic "is the default when you don't configure your own resources":
+      - Basic setup "stores agent state in secure, Microsoft-managed storage that's
+        logically separated" — logical, not physical, separation.
+      - Standard setup "stores agent state in customer-managed, single-tenant Azure
+        resources in your own subscription, which gives you full control over data residency
+        and access."
+      Per-data-type mapping under standard: files to Azure Blob Storage, vector stores to
+      Azure AI Search, "Threads, conversation history, messages, and agent definitions" to
+      Azure Cosmos DB.
+      For compliance work this row matters more than any feature row.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  service_limits:
+    status: documented
+    notes: >
+      HARD, NON-NEGOTIABLE CEILINGS — "fixed service limits and can't be increased":
+      10,000 files per agent/thread; 512 MB max file size; 300 GB total uploads;
+      2,000,000 tokens per file into a vector store; 100,000 messages per thread;
+      1,500,000 characters per message; 128 tools registered per agent;
+      1,000 valid agent revisions per agent.
+      THE REVISION CAP IS A DEPLOYMENT TRAP: exceeding it is terminal, not transient —
+      "This error is terminal—retrying the same create call without deleting versions keeps
+      failing." A CI pipeline that creates a version per deploy dies after 1,000 deploys
+      until someone manually prunes.
+      No maximum session or run DURATION is stated anywhere on this page.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+  pricing_axes:
+    status: unknown
+    notes: >
+      Partially known: prompt agents "Per-call inference + tool usage"; hosted agents add
+      "container compute". Actual rates need the pricing page.
+    source: null
+    verified_on: null
+  runtime_sla:
+    status: unknown
+    source: null
+    verified_on: null
+  long_running_agents:
+    status: unknown
+    source: null
+    verified_on: null
+  iac_coverage:
+    status: unknown
+    source: null
+    verified_on: null
+  certifications:
+    status: unknown
+    source: null
+    verified_on: null
+  training_data_policy:
+    status: unknown
+    source: null
+    verified_on: null

@@ -1,0 +1,153 @@
+provider: alibaba
+bucket: c
+product: 百炼 / Bailian visual application builder
+aliases: [Model Studio application builder, Bailian, 智能体应用]
+notes: >
+  SCOPE JUDGEMENT, stated openly because it affects comparability: Alibaba does not appear
+  to market a packaged employee-facing assistant equivalent to Microsoft 365 Copilot or
+  Gemini Enterprise. What it offers instead is a BUILDER aimed at business users —
+  「面向业务人员提供可视化应用构建能力，可快速创建智能体、知识库问答等 AI 应用」
+  (visual application-building for business staff, to quickly create agents and
+  knowledge-base Q&A applications).
+  That is a genuinely different product shape: buy-and-configure rather than
+  buy-and-deploy. Recording it in bucket C is the closest honest fit, but the site must not
+  imply a like-for-like race with M365 Copilot — the buyer question "can I buy instead of
+  build?" gets a partial yes here.
+  A dedicated 智能体应用 doc page was sought at help.aliyun.com/zh/model-studio/
+  agent-application and returned 404; cells below cite the verified CN overview instead.
+  No 公测/beta/GA label appears — hence `documented`.
+
+capabilities:
+  packaged_assistant:
+    status: documented
+    notes: >
+      Partial fit, see the scope note above. The visual mode targets non-developers:
+      「可视化模式可快速创建智能体应用（Agent 1.0）和工作流应用」 and
+      「可视化流程编排，无代码基础的业务人员也能独立完成工作流设计。」
+      Version marker "Agent 1.0". This is a builder, NOT a pre-populated assistant that
+      already knows your corpus on day one.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  authoring_mode:
+    status: documented
+    value: both
+    notes: >
+      「提供可视化和高代码两种开发模式」 — visual and high-code modes. Strongest low-code
+      story of the CN providers researched, and the reason this row is a `documented` fit
+      for bucket C at all.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  prebuilt_connectors:
+    status: documented
+    notes: >
+      Tools reach external systems via plugins and MCP:
+      「通过插件和模型上下文协议（MCP）调用外部服务。」
+      No enterprise SaaS connector catalog (Confluence/Jira/SharePoint-style) is named,
+      which is the sharpest contrast with Gemini Enterprise and M365 Copilot — those lead
+      with a connector inventory; this leads with a protocol.
+      UNKNOWN, not absent: a connector list may exist on a page not yet read.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  index_freshness:
+    status: documented
+    notes: >
+      Knowledge base (RAG) is the grounding mechanism:
+      「通过知识库（RAG）接入私有数据和专业领域知识」.
+      Billing note relevant to running it continuously:
+      「按规格时长和模型调用计费，不支持节省计划或资源包等预付费形式」 — spec-duration plus
+      model calls, with NO savings plan or prepaid pack. Refresh cadence not stated.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  training_data_policy:
+    status: documented
+    notes: >
+      Same commitment recorded in bucket B and worth repeating here, since this is the
+      bucket where a buyer's data-governance reviewer will look:
+      「阿里云保护数据隐私，绝不会将您的数据用于模型训练」 — will never use your data for
+      model training; transmitted data is encrypted.
+      Contrast AWS AgentCore's "may use and store your content" clause.
+    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  permission_aware_retrieval:
+    status: unknown
+    notes: >
+      NOT established, and this is the most important gap in this file. ACL-trimmed
+      retrieval is the row that separates an enterprise assistant from a chatbot, and the
+      CN overview says nothing about whether knowledge-base answers respect the asking
+      user's document permissions. Do NOT assume either way.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  invoke_custom_agents:
+    status: documented
+    notes: >
+      Publishing targets are consumer/social rather than enterprise-desktop, a distinctly
+      CN-market shape: 「支持将应用发布至网页、钉钉机器人、微信公众号及音视频互动智能体等多种平台」
+      — web pages, DingTalk bots, WeChat official accounts, and audio/video interactive
+      agents. No Slack/Teams equivalent named; DingTalk is the analogue.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  seat_pricing:
+    status: unknown
+    notes: >
+      No per-seat model found. Billing is consumption-based —
+      「开通百炼无需费用，调用、微调、部署模型时产生相应费用」 (no fee to enable; charges on
+      invoke/fine-tune/deploy) — which is a bucket-B pricing shape, not a bucket-C one.
+      Consistent with this being a builder rather than a seat-licensed assistant.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  model_choosable:
+    status: documented
+    notes: >
+      Unlike M365 Copilot (opaque), the model is explicitly selectable — the platform
+      「集成千问及主流第三方模型」 (integrates Qwen and mainstream third-party models).
+      A real advantage for this bucket and easy to miss when comparing against
+      assistant-shaped products.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  license_bundling:
+    status: unknown
+    source: null
+    verified_on: null
+  admin_analytics:
+    status: unknown
+    source: null
+    verified_on: null
+  dlp_tenant_isolation:
+    status: unknown
+    source: null
+    verified_on: null
+  guardrails:
+    status: unknown
+    source: null
+    verified_on: null
+  index_residency:
+    status: unknown
+    source: null
+    verified_on: null
+  coding_agent_plan:
+    status: documented
+    notes: >
+      A "Coding Plan" for AI coding tools exists, and the docs point to a
+      Connect-to-clients-or-developer-tools guide naming Claude Code — a CN provider
+      documenting integration with a third-party coding agent rather than only its own.
+    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"

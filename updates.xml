@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>CompareAI — Agentic capability updates</title>
+    <link>https://example.invalid/compareai</link>
+    <description>Changes to agentic AI offerings across AWS, Azure, GCP, BytePlus, and Alibaba Cloud.</description>
+    <item>
+      <title>AWS A: New coverage: Strands Agents</title>
+      <description>17 cells added [research]</description>
+      <guid isPermaLink="false">2026-08-04:AWS:A:—</guid>
+    </item>
+    <item>
+      <title>AWS B: New coverage: Amazon Bedrock AgentCore</title>
+      <description>29 cells added [research]</description>
+      <guid isPermaLink="false">2026-08-04:AWS:B:—</guid>
+    </item>
+    <item>
+      <title>Alibaba A: New coverage: AgentScope</title>
+      <description>17 cells added [research]</description>
+      <guid isPermaLink="false">2026-08-04:Alibaba:A:—</guid>
+    </item>
+    <item>
+      <title>Alibaba B: New coverage: Alibaba Cloud Model Studio</title>
+      <description>20 cells added [research]</description>
+      <guid isPermaLink="false">2026-08-04:Alibaba:B:—</guid>
+    </item>
+    <item>
+      <title>Azure A: New coverage: Microsoft Agent Framework</title>
+      <description>17 cells added [research]</description>
+      <guid isPermaLink="false">2026-08-04:Azure:A:—</guid>
+    </item>
+    <item>
+      <title>Azure B: New coverage: Microsoft Foundry Agent Service</title>
+      <description>30 cells added [research]</description>
+      <guid isPermaLink="false">2026-08-04:Azure:B:—</guid>
+    </item>
+    <item>
+      <title>BytePlus B: New coverage: BytePlus ModelArk — Managed Agents</title>
+      <description>22 cells added [research]</description>
+      <guid isPermaLink="false">2026-08-04:BytePlus:B:—</guid>
+    </item>
+    <item>
+      <title>GCP A: New coverage: Agent Development Kit (ADK)</title>
+      <description>16 cells added [research]</description>
+      <guid isPermaLink="false">2026-08-04:GCP:A:—</guid>
+    </item>
+    <item>
+      <title>GCP B: New coverage: Gemini Enterprise Agent Platform</title>
+      <description>23 cells added [research]</description>
+      <guid isPermaLink="false">2026-08-04:GCP:B:—</guid>
+    </item>
+  </channel>
+</rss>

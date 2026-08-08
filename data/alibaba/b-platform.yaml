@@ -1,0 +1,236 @@
+provider: alibaba
+bucket: b
+product: Alibaba Cloud Model Studio
+aliases: [Model Studio, DashScope, 百炼, Bailian]
+notes: >
+  "a one-stop model service platform."
+  SCOPE CAUTION: the page fetched is Model Studio's overview, which is a MODEL platform,
+  not an agent platform. It does NOT document an agent runtime, agent builder, workflow
+  designer, knowledge base, or MCP support. Agents appear only incidentally.
+  THE FAIRNESS RULE PAID OFF: the suspicion that the EN page understated Alibaba was
+  correct. The CN-language Bailian (百炼) docs at help.aliyun.com document a full agent
+  application builder — visual AND high-code modes, workflow orchestration, knowledge-base
+  RAG, plugins and MCP — none of which appears on the EN "what is Model Studio" page.
+  Cells below now cite the CN docs where those are the authoritative source. Had this
+  project shipped on EN docs alone it would have shown Alibaba as having no agent platform,
+  which would have been simply false.
+  「阿里云百炼是一站式大模型开发与应用平台，集成千问及主流第三方模型。」
+
+capabilities:
+  launch_stage_investigation:
+    status: unknown
+    notes: >
+      LAUNCH STAGE: NO EXPLICIT STAGE FOUND, and this was checked twice from two networks.
+      A remote agent on EC2 (different egress) scanned the CN pages for 公测 / 邀测 / 正式商用 /
+      限时免费 / 内测 / 公开测试 / 商业化 and found ZERO occurrences on the readable pages.
+      REACHABILITY IS NOT THE PROBLEM — help.aliyun.com, docs.volcengine.com and
+      docs.byteplus.com all return HTTP 200 from both a local laptop and an EC2 box. The
+      obstacle is that the agent sub-pages are client-rendered SPAs whose article bodies load
+      from APIs that return 404 / 未授权访问 anonymously. Reachable, not readable.
+      Do NOT record a stage for these products by inference. The absence is honest.
+      Pages checked: help.aliyun.com/zh/model-studio/what-is-model-studio (200, server-rendered,
+      readable, no stage words); /model-studio/agent-application and /product-overview/billing
+      (404); agent-application-overview, agent, what-is-agent, application-center (200 but an
+      identical ~24 KB SPA shell with nav only).
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  workflow_engine:
+    status: documented
+    notes: >
+      Visual workflow orchestration, explicitly aimed at non-coders:
+      「可视化流程编排，无代码基础的业务人员也能独立完成工作流设计。」
+      Workflow applications are a distinct application type from agent applications.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  multi_agent_patterns:
+    status: unknown
+    notes: >
+      NOT established. The CN page names only 「智能体应用（Agent 1.0）」 and links to a
+      single-agent-application page; no multi-agent collaboration is described. Recording
+      `unknown` rather than `none` — absence on an overview page is not a denial.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  long_term_memory:
+    status: unknown
+    notes: >
+      NOT mentioned on the CN overview page (页面无相关表述). Notable gap versus AgentCore
+      Memory and Vertex Memory Bank — but verify on a dedicated page before recording it
+      as absent.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  first_party_models:
+    status: documented
+    value: [Qwen-Max, Qwen-Plus, Qwen-Flash]
+    notes: >
+      "the proprietary Qwen series and third-party models such as DeepSeek, Kimi, and GLM."
+      Qwen-Max: "The highest-performing model in the Qwen series, suited for complex,
+      multi-step tasks"; "The latest qwen3.7-max delivers significant reasoning
+      improvements over its predecessor."
+      Qwen-Plus is positioned as the balanced tier and Qwen-Flash as the low-cost,
+      low-latency tier. (Paraphrase.)
+      Modalities: "text generation, visual understanding, image generation, video
+      generation, speech recognition and synthesis, and embedding."
+      Specialized: "long-text processing, translation, data mining, intent recognition,
+      role-playing, and deep research."
+    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  third_party_catalog:
+    status: documented
+    value: [DeepSeek, Kimi, GLM]
+    notes: >
+      REGIONAL RESTRICTION worth surfacing prominently: "DeepSeek is available only in the
+      China (Beijing) region."
+    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  openai_compatible_endpoint:
+    status: documented
+    notes: >
+      "Model Studio is OpenAI-compatible. Update the API key, base URL, and model name to
+      migrate existing OpenAI code."
+      Base URL pattern: https://{WorkspaceId}.<region>.maas.aliyuncs.com/compatible-mode/v1
+      — except US (Virginia), which uses dashscope-us.aliyuncs.com.
+    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  runtime_regions:
+    status: documented
+    value: [Singapore, US (Virginia), China (Beijing), China (Hong Kong), Japan (Tokyo), Germany (Frankfurt)]
+    notes: >
+      Six regions for the MODEL platform (not an agent runtime — do not compare directly
+      with AgentCore's 20).
+      CRITICAL PORTABILITY GOTCHA: regions differ in "endpoints and base URLs, API keys
+      (not interchangeable across regions), supported models," plus features and pricing.
+      API keys are NOT interchangeable across regions — a real migration cost.
+      New-user free quota is limited to Singapore.
+    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  coding_agent_plan:
+    status: documented
+    notes: >
+      A "Coding Plan" for AI coding tools is referenced, and the docs point to a
+      "Connect to clients or developer tools" guide that names Claude Code. (Paraphrase.)
+      Notable that a CN provider documents Claude Code integration — relevant to the
+      bucket-C coding-agent sub-segment.
+    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  managed_agent_runtime:
+    status: documented
+    product: 百炼 / Bailian application platform (Agent 1.0)
+    notes: >
+      CORRECTS AN EARLIER `unknown` THAT CAME FROM READING ONLY ENGLISH DOCS.
+      The CN docs describe agent applications and a hosted high-code deployment path:
+      「可视化模式可快速创建智能体应用（Agent 1.0）和工作流应用」 — the visual mode creates
+      agent applications (Agent 1.0) and workflow applications; and
+      「高代码应用则支持将 Python 项目部署为后端服务，具备自动化运维、可观测、日志服务等能力」
+      — high-code applications deploy a Python project as a backend service with automated
+      ops, observability and logging. That is a managed runtime in substance.
+      Version marker is "Agent 1.0"; no GA/公测/beta label appears, hence `documented`.
+      Publishing targets are unusually consumer-oriented:
+      「支持将应用发布至网页、钉钉机器人、微信公众号及音视频互动智能体等多种平台」
+      — web, DingTalk bots, WeChat official accounts, and audio/video interactive agents.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+  authoring_mode:
+    status: documented
+    value: both
+    notes: >
+      Both modes, stated explicitly: 「提供可视化和高代码两种开发模式」 — visual and
+      high-code development modes. Visual mode is aimed at non-developers:
+      「可视化流程编排，无代码基础的业务人员也能独立完成工作流设计。」
+      The EN overview showed only a "Playground", which is why this was previously unknown.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+  knowledge_base:
+    status: documented
+    notes: >
+      Knowledge-base RAG is a first-class capability:
+      「通过知识库（RAG）接入私有数据和专业领域知识」
+      (approx: connect private data and domain knowledge via a knowledge base / RAG).
+      Billed independently: 「按规格时长和模型调用计费，不支持节省计划或资源包等预付费形式」
+      — metered by spec-duration plus model calls, with NO savings plan or prepaid resource
+      pack available. That exclusion is a real budgeting constraint worth surfacing.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+  mcp_server_hosting:
+    status: documented
+    notes: >
+      MCP is documented alongside plugins as the mechanism for calling external services:
+      「通过插件和模型上下文协议（MCP）调用外部服务。」
+      NOTE: this establishes MCP *consumption* by applications. Whether Model Studio HOSTS
+      MCP servers (the AgentCore Gateway equivalent) is NOT established by this sentence —
+      do not equate the two without a dedicated MCP page.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+  code_interpreter:
+    status: unknown
+    source: null
+    verified_on: null
+  browser_use:
+    status: unknown
+    source: null
+    verified_on: null
+  agent_workload_identity:
+    status: unknown
+    source: null
+    verified_on: null
+  guardrails:
+    status: unknown
+    source: null
+    verified_on: null
+  otel_traces:
+    status: unknown
+    source: null
+    verified_on: null
+  eval_service:
+    status: unknown
+    source: null
+    verified_on: null
+  pricing_axes:
+    status: unknown
+    notes: Pricing differs per region per the region note; rates not captured.
+    source: null
+    verified_on: null
+  runtime_sla:
+    status: unknown
+    source: null
+    verified_on: null
+  certifications:
+    status: unknown
+    source: null
+    verified_on: null
+  training_data_policy:
+    status: documented
+    notes: >
+      STRONGEST DATA-USE COMMITMENT IN THIS COMPARISON, and it was nearly missed:
+      "Alibaba Cloud protects data privacy and will never use your data for model
+      training. All data transmitted when building applications or training models is
+      encrypted."
+      Contrast AWS AgentCore, whose overview states it "may use and store your content to
+      improve your service experience or performance". Leaving this cell blank while
+      surfacing AWS's clause would have made the most favourable fact for a CN provider
+      invisible and the least favourable one for AWS prominent — exactly the asymmetry the
+      fairness rule exists to prevent.
+    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"

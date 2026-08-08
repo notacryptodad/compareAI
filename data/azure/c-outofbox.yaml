@@ -1,0 +1,161 @@
+provider: azure
+bucket: c
+product: Microsoft 365 Copilot
+aliases: [M365 Copilot, Office Copilot, Microsoft 365 Copilot Chat]
+notes: >
+  "Microsoft 365 Copilot is an AI-powered tool that helps with your work tasks".
+  TWO-SKU STRUCTURE IS THE KEY BUYING FACT: Microsoft 365 Copilot "requires an add-on
+  license"; Microsoft 365 Copilot Chat "uses the web and users can provide organizational
+  data. It doesn't require an additional license." Confusing these is the single most
+  common costing error with this product.
+  In-product labels expose the tiering: "M365 Copilot (Premium)" (has the add-on),
+  "M365 Copilot (Basic)" (no add-on, standard access), "Copilot chat (Basic)" (no add-on,
+  no Copilot chat in Word/Excel/PowerPoint/OneNote).
+  Doc ms.date 2026-07-09. No GA/preview label — hence `documented` throughout.
+
+capabilities:
+  packaged_assistant:
+    status: documented
+    notes: >
+      Embedded in the apps rather than a standalone portal — the strongest distribution
+      story in bucket C: "Pairs with the Microsoft 365 productivity apps that you use every
+      day, like Word, Excel, PowerPoint, Outlook, Teams, and others."
+      Per-app features are enumerated (Word draft/chat, Excel formula suggestions, Outlook
+      summarize/coaching, Teams meeting + call summarization, Loop, Whiteboard, OneNote,
+      Forms).
+      Teams chat has a stated limit worth surfacing: Copilot "can summarize up to 30 days of
+      the chat content before the last message in a chat" and "can't reference other chats
+      or data types, like meeting transcripts, emails, and files."
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  permission_aware_retrieval:
+    status: documented
+    notes: >
+      Stated twice, unambiguously: "Copilot only shows the data that users have permission
+      to access", and responses "can include internet-based content and work content that
+      users have permission to access."
+      Mechanism is Microsoft Graph plus semantic indexing, which "preserves security,
+      compliance, and privacy, ensuring organizational boundaries are respected".
+      IMPORTANT OPERATIONAL CAVEAT the docs are unusually candid about — correct permissions
+      are the CUSTOMER's problem, and oversharing is a known failure mode. Two products
+      exist specifically to fix it: SharePoint Advanced Management "helps you reduce
+      oversharing and cleanup inactive sites", and Restricted SharePoint Search "gives you
+      time to review and configure the correct permissions on your SharePoint sites".
+      A permission-aware assistant over mis-permissioned data still leaks.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  invoke_custom_agents:
+    status: documented
+    notes: >
+      Yes, and this is the receiving end of the B->C bridge that Foundry Agent Service
+      documents from the other side: "Agents are scoped or focused versions of Microsoft 365
+      Copilot that act as AI assistants and can automate business processes. For example,
+      you can create an agent that creates help desk tickets, or a human resources agent
+      that looks up employee info from your data source."
+      Also: "You can also create and use agents to customize your Copilot experience with
+      your organization's data sources."
+      No other provider in this comparison documents both directions of that bridge.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  prebuilt_connectors:
+    status: documented
+    notes: >
+      Grounding is Microsoft Graph — "information on users, their activities, and the
+      organization data they can access" — spanning "a user's emails, chats, documents, and
+      meetings".
+      Microsoft 365 Copilot Search is "an AI-powered universal search experience across all
+      your Microsoft 365 applications and connected non-Microsoft data sources".
+      No connector count or third-party list is given on this page.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  license_bundling:
+    status: documented
+    notes: >
+      THE M365 E5 EFFECT, confirmed: Copilot is an ADD-ON, not a standalone purchase —
+      it "requires an add-on license" on top of an existing Microsoft 365 license, and
+      "Your Microsoft 365 license includes services and features that help you get your data
+      and organization ready for Copilot."
+      Copilot Chat needs no extra license, which makes a free-tier entry point available to
+      every existing M365 tenant — a distribution advantage no other provider here has.
+      "Copilot experiences in Word, Excel, PowerPoint, and OneNote may vary depending on
+      your organization's licensing and tenant configuration."
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  seat_pricing:
+    status: documented
+    notes: >
+      Per-seat add-on licensing confirmed in structure; this page states no rates and defers
+      to a licensing page. Unlike Amazon Q Business there is no separate index-capacity
+      charge mentioned.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  dlp_tenant_isolation:
+    status: documented
+    notes: >
+      Microsoft Purview "can classify and label your data based on the sensitivity of the
+      content. It can also help prevent unauthorized sharing or leakage and review Copilot
+      prompts and responses." Prompt/response review is a governance capability no other
+      bucket-C entry documents here.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  model_choosable:
+    status: none
+    notes: >
+      Not choosable — Copilot "Coordinates large language models (LLMs)" as an internal
+      implementation detail; no admin model selection is offered.
+      MATERIAL SUBPROCESSOR DISCLOSURE, prominent at the top of the page and relevant to
+      anyone with data-flow review obligations: "Microsoft has onboarded OpenAI as a
+      Microsoft subprocessor" and "Microsoft has onboarded Anthropic as a Microsoft
+      subprocessor." So a third-party model provider is in the path by default.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  training_data_policy:
+    status: unknown
+    notes: >
+      Deferred to a dedicated page ("Data, Privacy, and Security for Microsoft 365
+      Copilot") that was not fetched. Do NOT infer from the subprocessor note.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  admin_analytics:
+    status: unknown
+    source: null
+    verified_on: null
+  index_freshness:
+    status: unknown
+    source: null
+    verified_on: null
+  index_residency:
+    status: unknown
+    source: null
+    verified_on: null
+  guardrails:
+    status: unknown
+    source: null
+    verified_on: null
+  authoring_mode:
+    status: unknown
+    source: null
+    verified_on: null
+  coding_agent_plan:
+    status: unknown
+    notes: GitHub Copilot is a separate product, not covered by this page.
+    source: null
+    verified_on: null

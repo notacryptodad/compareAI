@@ -1,0 +1,310 @@
+provider: byteplus
+bucket: b
+product: BytePlus ModelArk
+aliases: [ModelArk, Ark, BytePlus Ark]
+notes: >
+  CORRECTION TO EARLIER ASSUMPTION: BytePlus DOES have a managed agent offering. The
+  README's initial "TBD" was wrong. ModelArk documents a "Managed Agents" section with
+  agents, skills, tools, sessions, sandboxes, and persistent memory.
+  "Managed Agents" is a SECTION within ModelArk (alongside Model invocation, Tool use,
+  Inference, Knowledge base, PromptPilot), not a separately branded product.
+  TOOLING WALL DIAGNOSED, THEN BROKEN. docs.byteplus.com renders article bodies
+  client-side: plain HTTP fetches return ~280-300 KB of HTML per page that strips to ~3.3 KB
+  of pure navigation chrome, which is why three earlier research passes recorded only
+  doc-section titles. Driving headless Chrome via Playwright yields the real content
+  (12.5 KB of prose on the overview page alone). Cells below now cite rendered bodies.
+  VERIFICATION CAVEAT: because the bodies are JS-rendered, scripts/check_quotes.py cannot
+  re-verify these quotes over plain HTTP and reports this provider's pages as
+  UNVERIFIABLE rather than failing. So BytePlus quotes carry a weaker automated guarantee
+  than every other provider's — they were verified once, by hand, through headless Chrome
+  on 2026-08-04. Re-verification needs the same method. Do not mistake the passing CI run
+  for machine-checked provenance here.
+  METHOD NOTE worth keeping: the earlier `unknown` statuses were correct at the time — the
+  evidence genuinely was nav-titles-only — but "unreachable" was a property of the toolchain,
+  not the vendor. Any provider whose docs are a JS app will look under-documented to an
+  HTTP-only researcher. Check the rendering model before concluding a vendor discloses less
+  than its competitors.
+
+capabilities:
+  launch_stage_investigation:
+    status: unknown
+    notes: >
+      NO EXPLICIT STAGE FOUND for ModelArk Managed Agents, verified from two networks.
+      An EC2-based agent scanned the rendered and raw HTML: "generally available" x0,
+      "GA" x0, "invitational" x0. The 4 "beta" and 1 "preview" tokens present are unrelated
+      navigation labels such as "Structured output (beta)" — do NOT attribute them to
+      Managed Agents.
+      REACHABILITY CONFIRMED FROM BOTH LOCATIONS (HTTP 200); the limit is client-side
+      rendering, not network blocking. ~376 KB of HTML strips to ~3.3 KB of navigation.
+      A JS-rendered stage tag could exist and would not be visible to either vantage point.
+      CROSS-PROVIDER OBSERVATION worth keeping: docs.volcengine.com (Volcengine 方舟/Ark,
+      the CN-market sibling) serves the SAME doc IDs — 2553713 is the Managed Agents
+      overview on both — so BytePlus and Volcengine share a documentation platform and
+      almost certainly the same product. Useful for cross-checking either one.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553713
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  long_running_agents:
+    status: documented
+    notes: >
+      A HEADLINE POSITIONING CLAIM, not an afterthought: Managed Agents "is best suited for
+      long-running, stateful asynchronous tasks with multi-turn tool calls."
+      "checkpoint resume" is named as one of the components ModelArk implements for you.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553713
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  managed_agent_runtime:
+    product: ModelArk Managed Agents
+    status: documented
+    notes: >
+      NOW VERIFIED FROM THE RENDERED BODY, not nav titles:
+      "ModelArk Managed Agents is a prebuilt, configurable agent framework provided by
+      ModelArk. It runs on ModelArk-managed infrastructure and is best suited for
+      long-running, stateful asynchronous tasks with multi-turn tool calls."
+      Positioned explicitly against DIY: "To build a usable agent based on the model API,
+      you need to implement common components yourself, such as AgentLoop, tool calls,
+      context management, sandbox scheduling, checkpoint resume, and permission isolation."
+      TWO-PATH CHOICE, stated plainly — closest analogue to AWS Runtime-vs-Harness:
+      "ModelArk currently provides two ways to build agents based on Dola models: use the
+      model API when you need fine-grained control over the agent loop; use Managed Agents
+      when you want ModelArk to host the agent".
+      Quickstart is four steps: "create an agent, create an environment, start a session,
+      send a message and receive a streaming response."
+      No launch stage stated on the page — hence `documented`, not `ga`.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553713
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  session_management:
+    status: documented
+    notes: >
+      CONFIRMED with a clear object model — agent / environment / session are distinct,
+      versioned resources:
+      Agent = "A versioned and reusable intelligent agent configuration asset. It defines
+      roles, capabilities, behavior boundaries, and runtime rules of an agent, and serves as
+      the template and baseline for all task runs."
+      Environment = "The environment configuration for running a session, including network,
+      preinstalled dependency packages, and environment variables. Referenced through
+      environment_id."
+      Session = "An agent instance that runs in an environment and is used to execute a
+      specific task. Context, files, and state are isolated from each other. The same agent
+      can start multiple parallel sessions."
+      Per-session isolation plus parallel sessions per agent is a genuine multi-tenancy
+      primitive, comparable to AgentCore's session isolation.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553713
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  multi_agent_patterns:
+    status: documented
+    value: [orchestrator / sub-agent delegation]
+    notes: >
+      ORCHESTRATOR-SUBAGENT (supervisor-equivalent), verified from the rendered page:
+      "Multi-agent is an advanced capability of ModelArk Managed Agents ... it allows one
+      agent (the orchestrator) to delegate tasks to other agents (sub-agents)".
+      Sub-agents are independently configured — each has "its own model, system prompt,
+      skills, tools, and other settings" — so heterogeneous-model teams are possible.
+      EXPLICIT DEPTH LIMIT worth surfacing, since it constrains architecture:
+      "An orchestrator agent cannot be selected as a sub-agent of another agent, to prevent
+      circular delegation." That caps hierarchies at ONE level — no nested supervisors,
+      unlike ADK's nested workflows or MAF's group collaboration.
+      Config is declarative via a `multiagent` parameter (type / agents[] / agents[].type /
+      agents[].id / agents[].version) — note sub-agents are version-pinned.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553730
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  mcp_server_hosting:
+    status: documented
+    notes: >
+      MCP is a first-class tool type: "Tools determine which execution capabilities an agent
+      can call in a session. ModelArk Managed Agents currently support the following tool
+      types" — and "If you need to integrate external system capabilities wrapped according
+      to the MCP protocol, see MCP."
+      Also a versioned BUILT-IN toolset, which no other provider here documents this way:
+      "After you add agent_toolset_20260701 to an agent, all these tools are enabled by
+      default." A date-stamped toolset ID implies deliberate version pinning.
+      Custom tools use an event-callback model rather than server hosting: "The business
+      side receives tool call events, runs the actual business logic, and returns the tool
+      results".
+      CAUTION: this establishes MCP CONSUMPTION. Whether ModelArk HOSTS MCP servers (the
+      AgentCore Gateway equivalent) is still not established.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553719
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  tool_least_privilege:
+    status: unknown
+    notes: >
+      Doc title "Tool permission policy" exists alongside "Agent", "Skills", "Tools" —
+      a per-tool policy concept comparable to AgentCore Policy. Unverified depth.
+      If real, this is a notable strength for a provider often assumed to be behind.
+    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  code_interpreter:
+    status: documented
+    notes: >
+      CONFIRMED — it is a code interpreter in substance even though no page carries that
+      name: "The cloud-isolated sandbox of the agent, used to execute code, read and write
+      files, and run command line tools within a session, and is automatically reclaimed
+      after the" session ends.
+      Code execution + filesystem + shell, session-scoped and auto-reclaimed — functionally
+      equivalent to AgentCore Code Interpreter and Vertex Code Execution.
+    source: https://docs.byteplus.com/en/docs/ModelArk/1544106
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  browser_use:
+    status: unknown
+    notes: >
+      NOT FOUND — no browser-use or web-browsing page title in the captured navigation.
+      Absence in a nav-only capture is weak evidence; recheck before recording `none`.
+    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  long_term_memory:
+    status: unknown
+    notes: >
+      Doc titles under "Manage agent context": "Upload and mount files",
+      "Persistent memory". Also "Context management", "Context caching overview",
+      "Files API tutorial".
+    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  knowledge_base:
+    status: unknown
+    notes: >
+      Substantial documented section: "Create a knowledge base", "Knowledge retrieval",
+      "Knowledge Q&A", "Create a knowledge service".
+    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  first_party_models:
+    status: unknown
+    notes: >
+      MODEL FAMILY RESOLVED from the rendered pricing table, and it is NOT what earlier
+      revisions guessed: the LLM family is "Seed" (seed-1-6, seed-1-8-251228,
+      seed-2-0-pro-260328, seed-2-0-lite, seed-2-0-mini, seed-2-0-code-preview-260328),
+      with Seedance for video, Seedream/Seededit for image, and a "dola-" prefix on some
+      agent-facing IDs (dola-seed-2-1-turbo, dola-seedream-5-0-pro-260628). The Managed
+      Agents overview refers to "Dola models".
+      NEITHER Skylark NOR Doubao appears — both were plausible guesses from the ByteDance
+      relationship and both would have been wrong. Date-suffixed IDs mean pinned snapshots.
+    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  delegated_user_auth:
+    status: unknown
+    notes: 'Doc title "Use Vaults authentication" — a credential-vault concept. Unverified.'
+    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  tool_calling:
+    status: documented
+    notes: >
+      Multiple tool types supported; custom tools are declared with type: "custom" and need
+      "a name, a purpose description, and an input parameter schema".
+      Agents are declarative configuration objects: an agent takes a model ID (example
+      given: "dola-seed-2-1-turbo-260628"), a system prompt "used to define the agent's
+      role, behavior boundaries, and working style", plus skills and tools.
+      "ModelArk Managed Agents is a fully managed agent service launched by ModelArk,
+      providing an out-of-the-box agent experience."
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553716
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  agent_skills:
+    status: documented
+    notes: >
+      A CAPABILITY NO OTHER PROVIDER IN THIS COMPARISON DOCUMENTS as a first-class,
+      uploadable artifact — worth its own taxonomy row:
+      "Skills are reusable capability packs used to add domain knowledge, operation
+      processes, and best practices to an agent. Unlike writing a large number of rules
+      directly into system" prompts, skills are packaged separately.
+      Uploaded as a zip via the CreateSkill API, with "SKILL.md placed directly under the
+      top-level directory".
+      HONEST CAVEAT the docs volunteer themselves: "The API currently does not validate file
+      formats" — recommended structure only, so malformed skills fail at runtime.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553717
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  runtime_regions:
+    status: documented
+    value: ["Johor (ap-southeast-1)", "Dublin (eu-west-1)"]
+    notes: >
+      TWO REGIONS ONLY — the single most decision-relevant fact about this provider, and it
+      contrasts sharply with AgentCore's 20:
+      "ModelArk currently supports the following regions" — "Johor, Asia Pacific (AP)",
+      Region ID ap-southeast-1, base URL https://ark.ap-southeast.bytepluses.com/api/v3;
+      and "Dublin, Europe (EU)", Region ID eu-west-1, base URL
+      https://ark.eu-west.bytepluses.com/api/v3.
+      NOTE ON FAIRNESS: two regions is a real limitation for global deployments, but Johor
+      is a strong SEA position — read it against the intended market, not a US-centric
+      default. There is NO mainland-China region here; BytePlus is ByteDance's
+      international arm.
+      HARD ISOLATION between them, a genuine migration cost:
+      "An inference endpoint created in a region must be invoked using the region-specific
+      base URL. Inference endpoints in one region cannot be called through another region's"
+      endpoint, and "Platform-level resources, such as API keys and model activation status
+      are isolated by region." Same trap as Alibaba Model Studio's non-interchangeable keys.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2191806
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+  pricing_axes:
+    status: documented
+    notes: >
+      THREE-PART FORMULA, stated explicitly — the clearest agent-pricing breakdown of any
+      provider in this comparison:
+      "Managed Agents fee = Model invocation fee + agent runtime fee + tool calling fee"
+      BEST-IN-SET IDLE RULE, and a real cost advantage for conversational agents:
+      "Billing only applies when the session status is running; no billing applies when the
+      status is idle (waiting for the user's next message or tool confirmation)".
+      Compare AWS AgentCore, which also excludes idle but only where "no other background
+      process is running".
+      Model pricing is per-million-token with separate non-audio and audio input rates, plus
+      a "Cache-storage (USD/M tokens/Hour)" axis.
+    source: https://docs.byteplus.com/en/docs/ModelArk/1544106
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+  runtime_sla:
+    status: unknown
+    source: null
+    verified_on: null
+  otel_traces:
+    status: unknown
+    source: null
+    verified_on: null
+  eval_service:
+    status: unknown
+    source: null
+    verified_on: null
+  guardrails:
+    status: unknown
+    source: null
+    verified_on: null
+  agent_workload_identity:
+    status: unknown
+    source: null
+    verified_on: null
+  private_networking:
+    status: unknown
+    source: null
+    verified_on: null
+  certifications:
+    status: unknown
+    source: null
+    verified_on: null
+  training_data_policy:
+    status: unknown
+    source: null
+    verified_on: null

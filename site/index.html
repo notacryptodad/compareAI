@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>CompareAI — Agentic Capability Comparison</title>
+<style>
+  :root {
+    --bg:#fbfbfd; --panel:#fff; --ink:#1a1a2e; --muted:#6b7280; --line:#e5e7eb;
+    --accent:#2563eb; --chip:#f3f4f6;
+    --ga:#0f9d58; --preview:#d9822b; --limited:#c2410c; --documented:#2563eb;
+    --partner:#7c3aed; --oss:#6b7280; --none:#b91c1c; --unknown:#c9ccd1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0f1117; --panel:#181b23; --ink:#e6e8ee; --muted:#9aa1ad;
+            --line:#272b36; --chip:#232733; --unknown:#3a3f4b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  header { padding:20px 24px 12px; border-bottom:1px solid var(--line); }
+  h1 { margin:0 0 4px; font-size:20px; }
+  .sub { color:var(--muted); font-size:13px; }
+  .banner { background:var(--chip); border:1px solid var(--line); border-radius:8px;
+            padding:8px 12px; margin:12px 0 0; font-size:13px; color:var(--muted); }
+  .controls { display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center;
+              padding:14px 24px; position:sticky; top:0; background:var(--bg);
+              border-bottom:1px solid var(--line); z-index:5; }
+  .tabs button, .picker label, .toggle label { cursor:pointer; }
+  .tabs button { background:var(--chip); border:1px solid var(--line); color:var(--ink);
+                 padding:6px 14px; border-radius:999px; margin-right:6px; font-size:13px; }
+  .tabs button[aria-selected="true"] { background:var(--accent); color:#fff;
+                 border-color:var(--accent); }
+  input[type=search] { padding:7px 12px; border:1px solid var(--line); border-radius:8px;
+                 background:var(--panel); color:var(--ink); min-width:200px; font-size:14px; }
+  .picker { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .picker span.lbl, .toggle span.lbl { color:var(--muted); font-size:12px;
+                 text-transform:uppercase; letter-spacing:.04em; }
+  .picker label, .toggle label { display:inline-flex; gap:5px; align-items:center;
+                 font-size:13px; background:var(--chip); border:1px solid var(--line);
+                 padding:4px 9px; border-radius:6px; }
+  main { padding:8px 24px 60px; }
+  .qline { color:var(--muted); font-size:12px; margin:12px 0 4px; }
+  .dim { margin:22px 0 6px; font-size:12px; font-weight:700; text-transform:uppercase;
+         letter-spacing:.05em; color:var(--muted); }
+  .reframe { font-size:12px; color:var(--muted); font-style:italic; margin:2px 0 8px; }
+  table { border-collapse:collapse; width:100%; margin-bottom:8px; }
+  th, td { text-align:left; vertical-align:top; padding:9px 11px;
+           border-bottom:1px solid var(--line); font-size:13.5px; }
+  th { position:sticky; top:56px; background:var(--bg); z-index:3; font-size:12px; }
+  th.cap, td.cap { width:34%; }
+  tr:hover td { background:var(--chip); }
+  .cell { cursor:pointer; }
+  .badge { display:inline-block; font-size:11px; font-weight:700; padding:2px 7px;
+           border-radius:5px; color:#fff; white-space:nowrap; }
+  .b-ga{background:var(--ga)} .b-preview{background:var(--preview)}
+  .b-limited{background:var(--limited)} .b-documented{background:var(--documented)}
+  .b-partner{background:var(--partner)} .b-oss{background:var(--oss)}
+  .b-none{background:var(--none)} .b-unknown{background:var(--unknown);color:var(--ink)}
+  .prod { display:block; color:var(--muted); font-size:12px; margin-top:3px; }
+  .legend { display:flex; flex-wrap:wrap; gap:8px; font-size:12px; color:var(--muted);
+            padding:0 24px 12px; }
+  dialog { border:1px solid var(--line); border-radius:12px; max-width:560px; width:92%;
+           padding:0; background:var(--panel); color:var(--ink); }
+  dialog::backdrop { background:rgba(0,0,0,.45); }
+  .dlg-h { padding:16px 18px 8px; border-bottom:1px solid var(--line); }
+  .dlg-b { padding:14px 18px 18px; }
+  .dlg-b .k { color:var(--muted); font-size:12px; text-transform:uppercase;
+              letter-spacing:.04em; margin-top:12px; }
+  .dlg-b pre { white-space:pre-wrap; font:13px/1.5 ui-monospace,monospace;
+               background:var(--chip); padding:10px; border-radius:8px; margin:4px 0 0; }
+  .dlg-b a { color:var(--accent); word-break:break-all; }
+  .close { float:right; cursor:pointer; border:none; background:none; font-size:20px;
+           color:var(--muted); line-height:1; }
+  .empty { color:var(--muted); font-style:italic; padding:20px 0; }
+  footer { color:var(--muted); font-size:12px; padding:0 24px 40px; }
+  code { background:var(--chip); padding:1px 5px; border-radius:4px; font-size:12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>CompareAI — Agentic Capability Comparison</h1>
+  <div class="sub">AWS · Azure · Google Cloud · BytePlus · Alibaba Cloud — build / assemble / buy</div>
+  <div class="banner" id="banner">Loading…</div>
+</header>
+
+<div class="controls">
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <input type="search" id="search" placeholder="Filter capabilities…" aria-label="Filter capabilities">
+  <div class="picker" id="picker"><span class="lbl">Providers</span></div>
+  <div class="toggle"><label><input type="checkbox" id="diff"> Differences only</label></div>
+  <div class="toggle"><label><input type="checkbox" id="hideUnknown"> Hide all-unknown rows</label></div>
+</div>
+
+<div class="legend" id="legend"></div>
+<main id="main"><p class="empty">Loading data…</p></main>
+<footer>
+  Generated from <code>data/*.yaml</code> via <code>build_data.py</code>. Every non-blank
+  cell links to a first-party source. <code>·</code> = not yet researched, never
+  "not offered". <span id="foot-count"></span>
+</footer>
+
+<dialog id="dlg">
+  <div class="dlg-h"><button class="close" id="dlgClose" aria-label="Close">×</button>
+    <strong id="dlgTitle"></strong><div class="sub" id="dlgSub"></div></div>
+  <div class="dlg-b" id="dlgBody"></div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

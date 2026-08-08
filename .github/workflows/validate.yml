@@ -1,0 +1,44 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # Weekly staleness + dead-link sweep. Off-the-hour on purpose.
+    - cron: "17 6 * * 1"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Validate data against taxonomy
+        run: uv run scripts/validate.py
+
+      # Blocking: a fabricated quote is the worst defect this project can ship.
+      # This check exists because the first research pass recorded an LLM summariser's
+      # paraphrases as verbatim quotes — 40 of them.
+      - name: Verify every quote appears verbatim on its cited source
+        run: uv run scripts/check_quotes.py
+
+      - name: Check generated files are up to date
+        run: |
+          uv run scripts/build_table.py
+          if ! git diff --exit-code --quiet COMPARISON.md; then
+            echo "::error::COMPARISON.md is stale. Run 'uv run scripts/build_table.py' and commit."
+            git diff COMPARISON.md
+            exit 1
+          fi
+
+  dead-links:
+    runs-on: ubuntu-latest
+    # Informational: a vendor moving a doc URL is a signal to re-verify, not a
+    # reason to block a PR that didn't touch that cell.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Check every source URL still resolves
+        run: uv run scripts/check_links.py

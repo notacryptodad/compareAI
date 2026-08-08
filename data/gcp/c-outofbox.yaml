@@ -1,0 +1,143 @@
+provider: gcp
+bucket: c
+product: Gemini Enterprise
+aliases: [Agentspace, Google Agentspace, Gemini Enterprise Agent Gallery]
+notes: >
+  "Gemini Enterprise is an intranet search, AI assistant, and agentic platform."
+  Note the three-in-one framing — it is the only bucket-C entry here that presents itself
+  as a *platform* as well as an assistant, which blurs the B/C line for this provider
+  (its agent platform is separately branded Gemini Enterprise Agent Platform, see
+  gcp/b-platform.yaml).
+  Renamed from Agentspace. No GA/preview/experimental label anywhere on the overview page,
+  consistent with Google's house style across all its agent docs — hence `documented`.
+  Page last updated 2026-08-03 UTC.
+  URL NOTE: cloud.google.com/gemini-enterprise/docs 301-redirects to
+  docs.cloud.google.com/gemini/enterprise/docs (note the path change, gemini-enterprise ->
+  gemini/enterprise). Several plausible URL shapes 404.
+
+capabilities:
+  packaged_assistant:
+    status: documented
+    notes: >
+      Purchasable, unlike AWS's Q Business. Positioned as intranet search + assistant +
+      agent host in one product, offering a single multimodal search interface.
+      (Paraphrase.)
+    source: https://docs.cloud.google.com/gemini/enterprise/docs
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  permission_aware_retrieval:
+    status: documented
+    notes: >
+      Yes — described as "permissions-aware access to enterprise information", with the
+      ability to "Enforce access-controlled search results and generative answers at
+      scale". Trust attributed to "SSO and user-level access".
+      Admin docs additionally cover IAM roles, app-level access controls, and mapping
+      external identities for custom data sources — that last one matters for
+      non-Google-identity estates and is a gap in several competitors.
+    source: https://docs.cloud.google.com/gemini/enterprise/docs
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  prebuilt_connectors:
+    status: documented
+    notes: >
+      LARGEST CONNECTOR CATALOG OF THE THREE BUCKET-C PRODUCTS RESEARCHED, and the only one
+      that also accepts custom MCP servers.
+      Overview names "prebuilt connectors for commonly-used third-party applications like
+      Confluence, Jira, Microsoft SharePoint, and ServiceNow".
+      Navigation shows a much wider catalog: Google sources (Drive, Gmail, Chat, Calendar,
+      BigQuery, Cloud Storage, Cloud SQL, Spanner, Firestore, Bigtable, AlloyDB) and dozens
+      of third-party (Box, Dropbox, Salesforce, Slack, Notion, Zendesk, GitHub/GitLab,
+      Microsoft OneDrive/Outlook/Teams, Zoho, others), plus custom connectors and custom
+      MCP servers.
+      CAVEAT: the wide catalog is a NAV-derived count; only the four named above appear in
+      overview prose. Do not publish a connector total from this evidence.
+      Notable that it indexes Microsoft 365 sources — a cross-cloud reach Microsoft's own
+      Copilot does not reciprocate for Google Workspace.
+    source: https://docs.cloud.google.com/gemini/enterprise/docs
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  invoke_custom_agents:
+    status: documented
+    notes: >
+      Strongest custom-agent story in bucket C. It can "host custom AI agents that apply
+      generative AI contextually", and admins can "Use out-of-the-box agents, available to
+      you in the Agent Gallery".
+      Registration covers Dialogflow, A2A, ADK and A2UI agents, plus Marketplace and Agent
+      Registry imports.
+      A2A support means it can receive agents built OUTSIDE Google — the only bucket-C
+      product here documenting an open-protocol path in. Compare Azure, which documents the
+      bridge from its own platform side but via Microsoft-specific protocols.
+    source: https://docs.cloud.google.com/gemini/enterprise/docs
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  seat_pricing:
+    status: unknown
+    notes: >
+      NOT stated on this page. Editions ARE named — "Standard, Plus, Pay-as-you-go, and
+      Frontline editions", with Business documented separately in a Help Center — and the
+      docs reference "Get subscriptions and assign licenses", implying seat assignment.
+      But no seat rates or terms appear, so pricing stays unknown.
+      A "Pay-as-you-go" edition is unusual for a packaged assistant (M365 Copilot and
+      Q Business are both subscription-first) and worth confirming: if real, it removes the
+      per-seat commitment barrier that defines this category.
+    source: https://docs.cloud.google.com/gemini/enterprise/docs
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  license_bundling:
+    status: unknown
+    notes: >
+      Whether Workspace licences bundle or discount Gemini Enterprise is not stated here.
+      Relevant because Microsoft's E5 bundling is a decisive commercial lever in this
+      category — check before comparing.
+    source: https://docs.cloud.google.com/gemini/enterprise/docs
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  authoring_mode:
+    status: documented
+    value: both
+    notes: >
+      Agent Gallery provides out-of-the-box agents (no-code consumption) while custom
+      agents can be built and registered (code path) — both routes documented.
+    source: https://docs.cloud.google.com/gemini/enterprise/docs
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  model_choosable:
+    status: unknown
+    source: null
+    verified_on: null
+  index_freshness:
+    status: unknown
+    source: null
+    verified_on: null
+  index_residency:
+    status: unknown
+    source: null
+    verified_on: null
+  admin_analytics:
+    status: unknown
+    source: null
+    verified_on: null
+  dlp_tenant_isolation:
+    status: unknown
+    source: null
+    verified_on: null
+  guardrails:
+    status: unknown
+    source: null
+    verified_on: null
+  training_data_policy:
+    status: unknown
+    source: null
+    verified_on: null
+  coding_agent_plan:
+    status: unknown
+    notes: Gemini Code Assist is a separate product, not covered by this page.
+    source: null
+    verified_on: null

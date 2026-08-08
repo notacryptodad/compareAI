@@ -1,0 +1,21 @@
+provider: byteplus
+bucket: c
+product: null
+notes: >
+  NOT RESEARCHED — and deliberately left empty rather than filled with inference.
+  Attempts made 2026-08-04: byteplus.com/en/product/byteplus-agent returned only a page
+  title ("BytePlus | AI-Native Cloud for Enterprise Growth") with no body; the whole
+  BytePlus web estate (marketing site and docs.byteplus.com alike) renders content
+  client-side and is unreadable with an HTTP-fetch toolchain. See the same limitation
+  documented at length in byteplus/b-platform.yaml.
+  WHAT IS AND IS NOT CLAIMED HERE: this file asserts nothing about whether BytePlus offers
+  a packaged enterprise assistant. It may; it may not. An empty bucket-C file must NOT be
+  read as evidence of absence — that inference is exactly the failure mode the project's
+  fairness rule exists to prevent, and it would systematically disadvantage the provider
+  whose docs happen to be the hardest to scrape.
+  Its Managed Agents documentation (bucket B) proves BytePlus is active in this space, so
+  the prior should be curiosity, not a negative verdict.
+  NEXT STEP: a headless browser, or a reader who can access the rendered pages directly.
+  Logged as the top BytePlus task in the README roadmap.
+
+capabilities: {}

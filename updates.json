@@ -1,0 +1,86 @@
+{
+  "generated": "2026-08-04",
+  "entries": [
+    {
+      "date": "2026-08-04",
+      "provider": "AWS",
+      "bucket": "A",
+      "row": "\u2014",
+      "label": "New coverage: Strands Agents",
+      "detail": "17 cells added",
+      "tag": "research"
+    },
+    {
+      "date": "2026-08-04",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "\u2014",
+      "label": "New coverage: Amazon Bedrock AgentCore",
+      "detail": "29 cells added",
+      "tag": "research"
+    },
+    {
+      "date": "2026-08-04",
+      "provider": "Alibaba",
+      "bucket": "A",
+      "row": "\u2014",
+      "label": "New coverage: AgentScope",
+      "detail": "17 cells added",
+      "tag": "research"
+    },
+    {
+      "date": "2026-08-04",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "\u2014",
+      "label": "New coverage: Alibaba Cloud Model Studio",
+      "detail": "20 cells added",
+      "tag": "research"
+    },
+    {
+      "date": "2026-08-04",
+      "provider": "Azure",
+      "bucket": "A",
+      "row": "\u2014",
+      "label": "New coverage: Microsoft Agent Framework",
+      "detail": "17 cells added",
+      "tag": "research"
+    },
+    {
+      "date": "2026-08-04",
+      "provider": "Azure",
+      "bucket": "B",
+      "row": "\u2014",
+      "label": "New coverage: Microsoft Foundry Agent Service",
+      "detail": "30 cells added",
+      "tag": "research"
+    },
+    {
+      "date": "2026-08-04",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "\u2014",
+      "label": "New coverage: BytePlus ModelArk \u2014 Managed Agents",
+      "detail": "22 cells added",
+      "tag": "research"
+    },
+    {
+      "date": "2026-08-04",
+      "provider": "GCP",
+      "bucket": "A",
+      "row": "\u2014",
+      "label": "New coverage: Agent Development Kit (ADK)",
+      "detail": "16 cells added",
+      "tag": "research"
+    },
+    {
+      "date": "2026-08-04",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "\u2014",
+      "label": "New coverage: Gemini Enterprise Agent Platform",
+      "detail": "23 cells added",
+      "tag": "research"
+    }
+  ]
+}

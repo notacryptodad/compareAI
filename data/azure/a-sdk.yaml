@@ -1,0 +1,176 @@
+provider: azure
+bucket: a
+product: Microsoft Agent Framework
+aliases: [MAF, agent-framework, Semantic Kernel, AutoGen]
+repo: https://github.com/microsoft/agent-framework
+notes: >
+  "A framework for building, orchestrating and deploying AI agents and multi-agent
+  workflows" / "an open, multi-language framework for building production-grade AI agents
+  and multi-agent workflows".
+  SUCCESSOR TO TWO PRIOR FRAMEWORKS — this is the key fact for anyone with existing code:
+  MAF consolidates Semantic Kernel and AutoGen, offering migration guides for both
+  ("Migration from Semantic Kernel", "Migration from AutoGen") rather than coexistence.
+  No shared-codebase or dependency relationship is described.
+
+capabilities:
+  sdk_languages:
+    status: documented
+    value: [python, csharp]
+    notes: >
+      Python and C#/.NET are both first-class. Install:
+      `pip install agent-framework` / `dotnet add package Microsoft.Agents.AI`.
+      (Paraphrase — the consistent-APIs sentence was not verbatim.)
+      Only provider SDK here with first-class .NET support.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  authoring_mode:
+    status: documented
+    value: code-first
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  workflow_engine:
+    status: documented
+    notes: >
+      Graph-based workflows with "checkpointing, streaming, human-in-the-loop, and
+      time-travel". Pitched for cases needing "orchestration beyond a single prompt or
+      stateless chat loop".
+      "time-travel" is a differentiator no other SDK in this set claims — candidate new
+      taxonomy row in d4 (replay/rewind of agent state).
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  multi_agent_patterns:
+    status: documented
+    value: [sequential, concurrent, handoff, group collaboration]
+    notes: >
+      "sequential, concurrent, handoff, and group collaboration patterns" — the most
+      explicitly enumerated pattern list of any SDK in this comparison.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  human_in_the_loop:
+    status: documented
+    notes: Listed as a workflow capability alongside checkpointing and time-travel.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  checkpoint_resume:
+    status: documented
+    notes: '"checkpointing" and "time-travel" both listed.'
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  cross_cloud_model_adapters:
+    status: unknown
+    notes: >
+      Ecosystem named: Microsoft Foundry, Azure OpenAI, OpenAI, and the GitHub Copilot
+      SDK. Additional LLM providers are described as being added over time. (Paraphrase.)
+      No rival-cloud provider (Bedrock, Gemini/Vertex) is named — a narrower stated
+      surface than Strands or ADK. Quickstarts use `FoundryChatClient` (Python) and
+      `AIProjectClient` (.NET) with Azure credentials.
+      POSSIBLE CAVEAT, UNCONFIRMED: a summarising fetch reported terms placing
+      third-party/non-Azure models outside Microsoft's product warranty. check_quotes.py
+      could not find that wording on this page — verify before publishing.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  mcp_client:
+    status: unknown
+    notes: >
+      NO evidence on the repo page. "MCP Registry" appears only in GitHub's own site-wide
+      navigation, not in the README, feature list, or samples.
+      Given Foundry Agent Service supports remote MCP servers, MAF very likely does too —
+      but that is inference, not evidence. Needs the docs site or a samples directory.
+    source: null
+    verified_on: null
+
+  oss_license:
+    status: documented
+    value: MIT
+    notes: >
+      "MIT license" — more permissive than the Apache-2.0 used by Strands, ADK, and
+      AgentScope.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_governance:
+    status: documented
+    value: single-vendor
+    notes: Microsoft-owned org. No foundation governance stated.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_release_cadence:
+    status: unknown
+    notes: >
+      No GA or preview label anywhere in the README. Release/package versions were NOT
+      captured by our fetch (GitHub lazy-loads those panels; badges are images) — this is
+      a fetch limitation, NOT evidence that no releases exist. Spot check shows tags such
+      as python-1.13.0 and dotnet-1.16.0 do exist.
+      One sub-area IS explicitly early-stage: "AF Labs: Experimental packages for
+      cutting-edge features including benchmarking, reinforcement learning, and research
+      initiatives".
+      Migration-from-SK/AutoGen history is itself a breaking-change signal worth noting.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_runtime_lockin:
+    status: unknown
+    notes: >
+      Evidence ON THIS PAGE (the repo): the quickstart defaults to Azure credentials
+      (`FoundryChatClient`, `AIProjectClient`), and the README carries a Third-Party
+      Systems clause placing non-Microsoft systems outside Microsoft Product Terms —
+      soft pressure toward Azure.
+      Evidence on the Azure Learn page (a DIFFERENT source — see the b-platform file):
+      Foundry also hosts LangGraph, OpenAI Agents SDK and Anthropic Agent SDK, and MAF
+      code can call the Responses API from any process. Do not credit that to this URL.
+      Needs a deployment-portability doc to resolve definitively.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_community:
+    status: documented
+    value:
+      stars: 12600
+      forks: 2100
+      commits: 2719
+      open_issues: 525
+    notes: >
+      Snapshot 2026-08-04. Higher than Strands (6.8k), but NOT the highest in this set —
+      a repo page cannot support a cross-repo superlative, and spot checks show
+      agentscope ~28.5k and adk-python ~21k both above MAF. Fill those cells before making
+      any comparative claim.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  in_repo_eval:
+    status: unknown
+    notes: AF Labs mentions "benchmarking" as experimental; not a stable eval harness.
+    source: null
+    verified_on: null
+  local_dev_loop:
+    status: unknown
+    source: null
+    verified_on: null
+  otel_traces:
+    status: unknown
+    source: null
+    verified_on: null
+  sdk_telemetry_phone_home:
+    status: unknown
+    source: null
+    verified_on: null

@@ -1,0 +1,136 @@
+provider: aws
+bucket: c
+product: Amazon Q Business
+aliases: [Q Business, Amazon Q, Amazon Quick]
+notes: >
+  MOST IMPORTANT FACT ABOUT THIS PRODUCT, and it is the first line of its own docs:
+  "Amazon Q Business is no longer open to new customers. For capabilities similar to
+  Q Business, explore Amazon Quick."
+  Anyone reading a cloud comparison to make a buying decision cannot act on Q Business at
+  all — so every capability row below is historical/for-existing-customers context, not a
+  purchasable option. Successor is "Amazon Quick"; that product is NOT yet researched here.
+  This is exactly the kind of fact a stale comparison table would get catastrophically
+  wrong, and it is why the 90/180-day staleness rules exist.
+
+capabilities:
+  packaged_assistant:
+    status: none
+    product: Amazon Q Business
+    notes: >
+      Recorded `none` for PURCHASABILITY, on a positive vendor statement (the rule for
+      `none`): "Amazon Q Business is no longer open to new customers."
+      The capability itself is real and documented for existing customers:
+      "Amazon Q Business is a fully managed, generative-AI powered assistant that you can
+      configure to answer questions, provide summaries, generate content, and complete
+      tasks based on your enterprise data."
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  permission_aware_retrieval:
+    status: documented
+    notes: >
+      Strong on paper — this is the row that separates a real enterprise assistant from a
+      chatbot, and Q Business leads with it:
+      "It allows end users to receive immediate, permissions-aware responses from
+      enterprise data sources with citations".
+      "Its responses to questions are based on the content that your end user has
+      permissions to access. You can use AWS IAM Identity Center or AWS Identity and
+      Access Management to manage end user access".
+      Caveat: an explicit opt-out exists — "anonymous applications" that "don't require
+      user authentication", for public-facing use.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  prebuilt_connectors:
+    status: documented
+    notes: >
+      "out-of-the-box connections to multiple supported data sources" — the docs page does
+      NOT state a connector count; named examples are Amazon S3, SharePoint and Salesforce,
+      with Amazon Kendra usable as a retriever.
+      Third-party actions via plugins. Integrations and browser extensions surface it in
+      Slack, Microsoft Teams and Microsoft Office, and it can be embedded in your own apps.
+      Data accessors let verified ISVs retrieve from your index. (Paraphrase.)
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  guardrails:
+    status: documented
+    notes: >
+      Built on Bedrock, so it inherits those controls: "Because Amazon Q Business is built
+      on Amazon Bedrock, users can take full advantage of the controls implemented in
+      Amazon Bedrock to enforce safety, security, and the responsible use of artificial
+      intelligence (AI)." AWS also "implements automated abuse detection".
+      Grounding control: you "control whether the responses should only use your enterprise
+      data, or use both enterprise data and model knowledge".
+      Hallucination mitigation "checks supported chat responses for inconsistencies and
+      automatically corrects them in real-time during conversations."
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  seat_pricing:
+    status: documented
+    notes: >
+      TWO-AXIS BILLING, which is unusual for a packaged assistant and easy to miss when
+      budgeting: "Amazon Q Business charges you both for user subscriptions to
+      applications, and for index capacity."
+      Per-seat alone is therefore NOT the whole cost — index capacity is metered separately.
+      Tier detail is on a separate subscription-and-index pricing page (not fetched).
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  invoke_custom_agents:
+    status: documented
+    notes: >
+      "You can use Amazon Q Business to create and share task automation applications, or
+      perform routine actions like submitting time-off requests and sending meeting
+      invites." Third-party actions go through plugins.
+      Whether it can invoke an AgentCore-hosted agent is NOT stated — do not assume the
+      B->C bridge that Azure documents explicitly.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  model_choosable:
+    status: unknown
+    notes: >
+      Built on Bedrock, but the page does not say whether an admin picks the model.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  index_residency:
+    status: unknown
+    notes: Region list is on a separate quotas-and-regions page (not fetched).
+    source: null
+    verified_on: null
+  admin_analytics:
+    status: unknown
+    source: null
+    verified_on: null
+  dlp_tenant_isolation:
+    status: unknown
+    source: null
+    verified_on: null
+  license_bundling:
+    status: unknown
+    source: null
+    verified_on: null
+  training_data_policy:
+    status: unknown
+    source: null
+    verified_on: null
+  index_freshness:
+    status: unknown
+    source: null
+    verified_on: null
+  coding_agent_plan:
+    status: unknown
+    notes: >
+      Amazon Q Developer / Kiro are separate products, not covered by this page.
+    source: null
+    verified_on: null

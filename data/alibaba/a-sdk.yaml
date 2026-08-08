@@ -1,0 +1,175 @@
+provider: alibaba
+bucket: a
+product: AgentScope
+aliases: [agentscope, AgentScope 2.0]
+repo: https://github.com/agentscope-ai/agentscope
+notes: >
+  Current major version is "AgentScope 2.0".
+  AFFILIATION NOW CONFIRMED (was unresolved through three earlier revisions).
+  The PyPI package metadata for `agentscope` — the authoritative publisher record — gives
+  author_email as "SysML team of Alibaba Tongyi Lab <...@alibaba-inc.com>".
+  An @alibaba-inc.com corporate address plus a named Alibaba Tongyi Lab team settles it:
+  this IS an Alibaba-affiliated SDK and belongs in Alibaba's bucket A.
+  Why it took so long: neither the GitHub org (`agentscope-ai`, not an Alibaba org), the
+  repo README, nor agentscope.io states the affiliation. agentscope.io lists Alibaba Cloud,
+  Alibaba Group and Ant Group under "Trusted by Teams At" — which reads as ADOPTION, not
+  ownership, and is exactly the kind of signal that should not be treated as proof.
+  Package-registry metadata beat both the repo and the marketing site here; worth
+  remembering as a sourcing technique for the other SDKs.
+  Caveat for precision: Tongyi Lab is Alibaba Group R&D. Treat this as
+  Alibaba-Group-affiliated; "Alibaba Cloud product" is a stronger claim, unevidenced.
+  Bilingual docs (English + 中文主页 / README_zh.md) — good sign for the fairness rule
+  about not penalizing CN providers for thin English docs.
+
+capabilities:
+  sdk_languages:
+    status: documented
+    value: [python]
+    notes: >
+      Python only. Requirement stated: Python 3.11 or higher — a higher floor than
+      Strands/ADK (3.10). (Requirement paraphrased.)
+      The GitHub Languages panel was not captured by our fetch (lazily loaded), which is a
+      fetch limitation rather than evidence; a spot check reports Python plus Dockerfile
+      and Mako.
+      No TypeScript/Java/Go equivalent found.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  mcp_client:
+    status: documented
+    notes: >
+      Multiple signals: `mcp` repo topic; news entry (2026-08) "MCP & Skill Hub
+      supported — browse a hub, install into your library, add to a workspace"; news entry
+      (2026-08) "GitHub MCP Registry and ClawHub supported as built-in hubs."
+      Built-in MCP hub/registry integration is more than a plain MCP client — arguably the
+      most opinionated MCP story of the SDKs surveyed.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  multi_agent_patterns:
+    status: documented
+    value: [agent team / leader-worker, task planning]
+    notes: >
+      "Agent Team — a leader agent spawns workers and coordinates them through the
+      built-in team tools." (supervisor-equivalent)
+      "Task planning — the agent breaks complex work into a tracked plan and updates it
+      as it goes."
+      Repo topics: `multi-agent`, `react-agent`.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  long_running_agents:
+    status: documented
+    notes: >
+      Background task offloading is listed as a feature: a long-running tool can move to
+      the background. Unusual for an SDK (vs a platform) to handle this. (Paraphrase.)
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  multi_tenancy:
+    status: documented
+    notes: >
+      RE-VERIFIED 2026-08-07 — the README was reworded since the 08-04 pass (the word
+      "tenants" was replaced), a live example of source drift the quote-checker caught.
+      Current verbatim from the Serving row: "Multi-tenancy, multi-session isolation,
+      FastAPI backend, pre-built Web UI".
+      An SDK claiming multi-tenant serving blurs the A/B bucket line — worth a note on the
+      site, since no other bucket-A entry claims this.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-07
+    verified_by: "@notacryptodad"
+
+  code_interpreter:
+    status: documented
+    value: [local, Docker, Apple Container, Bubblewrap, E2B, OpenSandbox, Daytona, K8s]
+    notes: >
+      RE-VERIFIED 2026-08-07 — the backend list GREW since the 08-04 pass, an instance of
+      source drift caught by re-checking. Current verbatim from the Workspace row:
+      "Isolated tool & code execution — local, Docker, Apple Container, Bubblewrap, E2B,
+      OpenSandbox, Daytona, K8s". Apple Container and Bubblewrap are new since 08-04.
+      Pluggable third-party sandboxes rather than one managed service — the opposite
+      design choice from AWS/GCP managed code interpreters, and now the widest backend set
+      of any provider here.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-07
+    verified_by: "@notacryptodad"
+
+  cross_cloud_model_adapters:
+    status: unknown
+    notes: >
+      Only DashScope is explicitly evidenced: `DashScopeChatModel`, `DashScopeCredential`,
+      model "qwen3.6-plus", `DASHSCOPE_API_KEY`.
+      A `scripts/model_examples` directory exists but contents were not visible — other
+      providers are plausible but unverified. Do NOT assume model-agnosticism.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_license:
+    status: documented
+    value: Apache-2.0
+    notes: '"AgentScope is released under Apache License 2.0."'
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_governance:
+    status: documented
+    value: single-vendor
+    notes: >
+      Single-vendor, resolved via the PyPI JSON API (a DIFFERENT source from the repo
+      page): author_email reads SysML team of Alibaba Tongyi Lab, at an alibaba-inc.com
+      address. The GitHub org name (`agentscope-ai`)
+      reads independent and states no corporate owner — the org page alone is NOT sufficient
+      evidence either way, which is why this sat at `unknown` until the registry was checked.
+      No foundation governance.
+    source: https://pypi.org/pypi/agentscope/json
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_release_cadence:
+    status: unknown
+    notes: >
+      Version badge is dynamically pulled from PyPI, so no number appeared. The README
+      does carry dated news entries (2026-08), indicating active development.
+    source: null
+    verified_on: null
+
+  oss_runtime_lockin:
+    status: unknown
+    notes: >
+      No Alibaba-runtime requirement stated, and sandbox backends are third-party — but
+      the DashScope default is analogous to Strands' Bedrock default.
+    source: null
+    verified_on: null
+
+  oss_community:
+    status: unknown
+    source: null
+    verified_on: null
+  authoring_mode:
+    status: documented
+    value: code-first
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+  local_dev_loop:
+    status: unknown
+    source: null
+    verified_on: null
+  otel_traces:
+    status: unknown
+    source: null
+    verified_on: null
+  in_repo_eval:
+    status: unknown
+    source: null
+    verified_on: null
+  sdk_telemetry_phone_home:
+    status: unknown
+    source: null
+    verified_on: null

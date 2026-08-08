@@ -1,0 +1,174 @@
+provider: aws
+bucket: a
+product: Strands Agents
+aliases: [Strands, strands-agents]
+repo: https://github.com/strands-agents/harness-sdk
+notes: >
+  Monorepo. The former standalone sdk-typescript repo is archived; both language SDKs now
+  live in harness-sdk as strands-py/ and strands-ts/. There is no sdk-python repo.
+
+capabilities:
+  sdk_languages:
+    status: documented
+    value: [python, typescript]
+    notes: >
+      Python and TypeScript SDKs, as strands-py/ and strands-ts/ in the monorepo.
+      Requires Python 3.10+ / Node.js 20+.
+      (Paraphrase: the exact marketing sentence quoted in an earlier revision of this
+      file was not verbatim; the language support itself is directly evidenced by the
+      install instructions and directory layout.)
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  authoring_mode:
+    status: documented
+    value: code-first
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  multi_agent_patterns:
+    status: unknown
+    notes: >
+      README says only "multi-agent patterns ... are all built in" — does not enumerate
+      supervisor/swarm/graph/handoff. Needs the docs site to confirm which are offered.
+      Related repo agent-sop provides "natural language workflows".
+    source: null
+    verified_on: null
+
+  local_dev_loop:
+    status: unknown
+    notes: A `strandly/` CLI exists in the monorepo; capabilities not verified.
+    source: null
+    verified_on: null
+
+  mcp_client:
+    status: documented
+    notes: >
+      "MCP, streaming, multi-agent patterns, and structured output are all built in."
+      Dedicated strands-mcp/ directory. The separate mcp-server repo is archived.
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  bundled_tools:
+    status: documented
+    product: strands-agents-tools
+    notes: >
+      Separate package (`pip install strands-agents-tools`). Org also ships `shell`
+      (Rust) — "Give your agent a shell without giving it the keys to your machine."
+    source: https://github.com/strands-agents
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  cross_cloud_model_adapters:
+    status: documented
+    notes: >
+      Explicit "Model agnostic." bullet — "First-class support for Amazon Bedrock,
+      Anthropic, OpenAI, and Gemini" plus Ollama and custom providers.
+      CAVEAT: "Both SDKs default to the Amazon Bedrock model provider", requiring AWS
+      credentials and Claude Sonnet access unless another provider is configured.
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  human_in_the_loop:
+    status: unknown
+    notes: >
+      DOWNGRADED from `ga` by scripts/check_quotes.py: the phrase "human-in-the-loop" does
+      NOT appear in the README. The README mentions hooks, guardrails and steering
+      handlers, which are control features but not evidence of interrupt/resume or
+      approval gates. Needs the docs site.
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  policy_hooks:
+    status: documented
+    notes: >
+      The harness-sdk README (a different page from the org page cited here) describes
+      hooks as programmatic interception — "log it, validate it, or redirect it" — plus
+      guardrails and steering handlers. On THIS org page, the extension-template
+      description lists extension types including "interventions".
+      NOTE for human_in_the_loop: "Steering handlers let agents correct themselves
+      instead of failing silently" is AGENT self-correction, not human intervention.
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  otel_traces:
+    status: unknown
+    notes: >
+      DOWNGRADED from `ga` by scripts/check_quotes.py. The README says it "traces every
+      decision by default" and mentions observability, but the strings "OpenTelemetry",
+      "OTel" and "otel" appear NOWHERE in it. Do not credit OTel conformance without
+      evidence — that was an inference, and this row is specifically about OTel/GenAI
+      semconv. Needs the docs site.
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  in_repo_eval:
+    status: documented
+    product: strands-agents/evals
+    notes: '"A comprehensive evaluation framework for AI agents and LLM applications."'
+    source: https://github.com/strands-agents/evals
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_license:
+    status: documented
+    value: Apache-2.0
+    notes: '"This project is licensed under the Apache License 2.0"'
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_governance:
+    status: documented
+    value: single-vendor
+    notes: >
+      Single-vendor in practice: the org profile repo is "Forked from amzn/.github"
+      (verbatim, org page). The org page does NOT itself assert AWS operation, and the
+      "Generated from amazon-archives/__template_Apache-2.0" provenance string is on the
+      harness-sdk repo page, not here. No foundation governance stated anywhere.
+    source: https://github.com/strands-agents
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_release_cadence:
+    status: unknown
+    notes: >
+      Releases section renders empty on the repo page; release links are split by tag
+      prefix (python/, typescript/) implying independent per-SDK versioning.
+      Version numbers only in badge images, not readable as text.
+    source: null
+    verified_on: null
+
+  oss_runtime_lockin:
+    status: none
+    notes: >
+      No runtime lock-in. "Any model, any cloud" / "Swap backends when you scale; your
+      code stays the same." Bedrock is only the default, not a requirement.
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  oss_community:
+    status: documented
+    value:
+      stars: 6800
+      forks: 1000
+      commits: 2338
+      open_issues: 449
+      open_prs: 194
+    notes: Snapshot 2026-08-04; stars ~6.8k.
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
+
+  sdk_telemetry_phone_home:
+    status: unknown
+    source: null
+    verified_on: null

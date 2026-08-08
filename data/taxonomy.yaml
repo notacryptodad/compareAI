@@ -1,0 +1,461 @@
+# CompareAI taxonomy — the two axes.
+#
+# Axis 1: buckets (a/b/c) — how you acquire the capability.
+# Axis 2: dimensions (1-8) -> rows. Each row declares which buckets it applies to.
+#
+# This file is the contract. `data/<provider>/<bucket>.yaml` may only use row ids
+# declared here, and only in buckets the row applies to. CI enforces both.
+# Change this file deliberately: renaming a row id breaks deep links.
+
+version: 1
+
+# IMPORTANT: this enum tracks TWO different things, and conflating them caused a real
+# fairness bug. `ga`/`preview`/`limited` are LAUNCH STAGE claims and require the vendor to
+# state the stage. `documented` is for a verified FACT with no stage attached — either a
+# capability the docs describe without a launch label, or a plain attribute (license,
+# language list, star count) where "GA" is meaningless.
+#
+# The bug: ~40 AWS/Azure cells were marked `ga` purely because no preview label appeared,
+# while GCP cells were marked `unknown` for IDENTICAL evidence. That penalized Google for
+# Google's documentation style and flattered AWS/Azure. `documented` fixes it uniformly.
+status_enum:
+  ga:         Vendor explicitly states generally available / GA
+  preview:    Vendor explicitly states public preview / beta
+  limited:    Private preview, allowlist, or single-region
+  documented: >
+    Verified on a first-party page, but the vendor states NO launch stage — or the row is
+    a plain fact (license, languages, counts) where launch stage does not apply.
+    NOT a synonym for GA. Do not upgrade without an explicit vendor statement.
+  partner:    Only via a third party / marketplace, not first-party
+  oss:        Open-source, self-managed by you
+  none:       Affirmatively not offered — the vendor says no
+  unknown:    Not yet researched — the honest default
+
+providers:
+  aws:      {name: Amazon Web Services,  short: AWS}
+  azure:    {name: Microsoft Azure,      short: Azure}
+  gcp:      {name: Google Cloud,         short: GCP}
+  byteplus: {name: BytePlus,             short: BytePlus}
+  alibaba:  {name: Alibaba Cloud,        short: Alibaba}
+
+buckets:
+  a:
+    name: Agent SDK / Dev Kit
+    verb: build
+    question: How do I *write* an agent?
+    source_type: GitHub repo, release notes, or API reference — the repo is the source of truth
+  b:
+    name: Managed agentic platform
+    verb: assemble
+    question: Who runs it in prod?
+    source_type: Service documentation, pricing page, or region table
+  c:
+    name: Out-of-box AI capability
+    verb: buy
+    question: Can I buy instead of build?
+    source_type: Licensing/plan guide or admin documentation
+
+dimensions:
+  d1:
+    name: Build & orchestrate
+    weight: {a: core, b: secondary, c: thin}
+    rows:
+      sdk_languages:
+        label: Languages supported
+        buckets: [a]
+        hint: Python / TypeScript / Java / .NET / Go
+      authoring_mode:
+        label: Code-first vs low-code builder
+        buckets: [a, b, c]
+      multi_agent_patterns:
+        label: Multi-agent patterns
+        buckets: [a, b]
+        hint: supervisor, swarm, hierarchical, handoff
+      workflow_engine:
+        label: Workflow engine (graph/DAG, durable, resumable)
+        buckets: [a, b]
+      local_dev_loop:
+        label: Local dev loop (no cloud creds, hot reload, debug UI)
+        buckets: [a]
+      managed_agent_runtime:
+        label: Managed agent runtime
+        buckets: [b]
+        hint: The headline hosting service — serverless, session-isolated
+      managed_agent_loop:
+        label: Managed agent loop (define + invoke an agent in one API call)
+        buckets: [b]
+        hint: A tier above a runtime — the provider orchestrates, not just hosts
+      session_management:
+        label: Session lifecycle API (start, manage, event stream)
+        buckets: [b]
+      long_running_agents:
+        label: Long-running agents (max session duration, async/background)
+        buckets: [a, b]
+        hint: >
+          Also applies to bucket A — some SDKs (AgentScope) offer background task
+          offloading themselves rather than delegating it to a runtime.
+      multi_tenancy:
+        label: Multi-tenant serving with tenant/session isolation
+        buckets: [a, b]
+        hint: An SDK claiming this blurs the A/B line — worth calling out
+      framework_agnosticism:
+        label: Framework agnosticism
+        buckets: [b]
+        hint: Can you deploy LangGraph / CrewAI / a rival cloud's SDK on this runtime?
+      a2a_protocol:
+        label: Agent-to-agent (A2A) protocol support
+        buckets: [a, b]
+      packaged_assistant:
+        label: Packaged assistant — is it purchasable, and what does it cover?
+        buckets: [c]
+        hint: >
+          The headline row for bucket C. Record `none` when the vendor has CLOSED the
+          product to new customers (Amazon Q Business) — purchasability is the first thing
+          a buyer needs and the fastest-rotting fact in this dataset.
+      invoke_custom_agents:
+        label: Can the packaged product invoke agents you built yourself?
+        buckets: [c]
+      distribution_to_packaged_products:
+        label: Can agents you build be published INTO the vendor's packaged product?
+        buckets: [b]
+        hint: >
+          The B->C bridge. Rare and highly decision-relevant — publishing a custom agent
+          into an assistant your users already have is a distribution channel, not a
+          feature.
+
+  d2:
+    name: Model access
+    weight: {a: thin, b: core, c: thin}
+    rows:
+      first_party_models:
+        label: First-party frontier models
+        buckets: [b]
+        hint: Nova / GPT+Phi via Azure / Gemini / Skylark / Qwen
+      third_party_catalog:
+        label: Third-party model catalog
+        buckets: [b]
+        hint: Anthropic, Meta, Mistral, DeepSeek, ...
+      byo_open_weights:
+        label: BYO / open-weight hosting; provisioned throughput
+        buckets: [b]
+      tuning:
+        label: Fine-tuning, distillation, prompt caching
+        buckets: [b]
+      model_routing:
+        label: Model routing / fallback / cost-tiering
+        buckets: [a, b]
+      cross_cloud_model_adapters:
+        label: Can the SDK talk to a rival cloud's models?
+        buckets: [a]
+        hint: Portability signal — LiteLLM-style adapters
+      openai_compatible_endpoint:
+        label: OpenAI-compatible endpoint
+        buckets: [a, b]
+      model_choosable:
+        label: Is the underlying model choosable, or fixed and opaque?
+        buckets: [c]
+      coding_agent_plan:
+        label: Coding-agent plan / third-party coding-tool integration
+        buckets: [b, c]
+        hint: >
+          The coding-agent sub-segment. Includes whether the provider documents
+          integration with third-party coding agents (e.g. Claude Code) rather than
+          only its own.
+
+  d3:
+    name: Tools & context
+    weight: {a: core, b: core, c: core}
+    rows:
+      tool_calling:
+        label: Function/tool calling; parallel tool calls
+        buckets: [a, b]
+      mcp_client:
+        label: MCP client support
+        buckets: [a]
+      mcp_server_hosting:
+        label: Managed MCP server hosting
+        buckets: [b]
+      mcp_registry:
+        label: Managed MCP registry / catalog
+        buckets: [b]
+      bundled_tools:
+        label: Built-in tool library shipped with the SDK
+        buckets: [a]
+      agent_skills:
+        label: Uploadable skill packs (reusable capability bundles)
+        buckets: [a, b]
+        hint: >
+          Domain knowledge / procedures packaged as a versioned artifact separate from the
+          system prompt. BytePlus ships this as a first-class API (CreateSkill, SKILL.md in
+          a zip); AgentScope has an MCP & Skill Hub. Added from research, 2026-08.
+      openapi_import:
+        label: OpenAPI -> tool import
+        buckets: [a, b]
+      code_interpreter:
+        label: Code interpreter / sandbox
+        buckets: [a, b]
+        hint: >
+          Managed in bucket B (AWS/GCP host it). In bucket A it may instead be pluggable
+          third-party backends (AgentScope: local, Docker, E2B, OpenSandbox, Daytona) —
+          record which model the vendor chose, it is a real design difference.
+      browser_use:
+        label: Managed browser / computer use
+        buckets: [b]
+        hint: headless browser, live view, session recording
+      web_search_tool:
+        label: Built-in web search tool
+        buckets: [b, c]
+      agent_payments:
+        label: Agent payments / microtransactions
+        buckets: [b]
+        hint: >
+          Emerging category (x402 protocol, wallet integration, spending limits).
+          Only AWS documents this as of 2026-08 — expect movement.
+      knowledge_base:
+        label: Managed knowledge base / RAG
+        buckets: [b]
+        hint: vector stores, parsing, chunking, hybrid search, reranking, graph RAG
+      text_to_sql:
+        label: Structured data / text-to-SQL over warehouses
+        buckets: [b]
+      ai_service_tools:
+        label: First-party AI-service tools callable as tools
+        buckets: [b, c]
+        hint: OCR, speech, translation, web search
+      prebuilt_connectors:
+        label: Prebuilt SaaS/enterprise connectors
+        buckets: [c]
+        hint: count, which systems, auth model
+      index_freshness:
+        label: Enterprise index freshness (real-time vs batch crawl)
+        buckets: [c]
+
+  d4:
+    name: Memory & state
+    weight: {a: secondary, b: core, c: thin}
+    rows:
+      short_term_memory:
+        label: Short-term session/thread memory
+        buckets: [a, b]
+        hint: managed vs bring-your-own
+      checkpointer_backends:
+        label: Checkpointer interface + pluggable backends
+        buckets: [a]
+        hint: Redis / Postgres / DynamoDB / ...
+      long_term_memory:
+        label: Long-term memory (semantic, episodic, preference)
+        buckets: [b]
+        hint: automatic extraction?
+      memory_namespacing:
+        label: Per-end-user namespacing; TTL, deletion, export
+        buckets: [b]
+        hint: GDPR-relevant
+      checkpoint_resume:
+        label: Checkpointing and resume-after-failure
+        buckets: [a, b]
+      conversation_history:
+        label: Conversation history, personalization, retention controls
+        buckets: [c]
+
+  d5:
+    name: Trust — identity, guardrails, human-in-the-loop
+    weight: {a: thin, b: core, c: core}
+    rows:
+      agent_workload_identity:
+        label: Agent workload identity
+        buckets: [b]
+        hint: Does the agent get its OWN principal, or reuse a service role?
+      delegated_user_auth:
+        label: Delegated end-user auth (OAuth token vault, 3LO, on-behalf-of)
+        buckets: [b]
+      tool_least_privilege:
+        label: Least-privilege scoping of tool access; per-tool policy
+        buckets: [b]
+      guardrails:
+        label: Guardrails
+        buckets: [b, c]
+        hint: content filters, PII redaction, denied topics, prompt-injection defense,
+              jailbreak detection, groundedness check
+      human_in_the_loop:
+        label: Human-in-the-loop (interrupt/resume, approval gates)
+        buckets: [a, b]
+      policy_hooks:
+        label: Callback/hook points for custom policy
+        buckets: [a]
+        hint: In bucket A this is all you get — you build the rest
+      tool_audit_trail:
+        label: Audit trail of every tool invocation
+        buckets: [b, c]
+        hint: who, what, when, on whose behalf
+      permission_aware_retrieval:
+        label: Permission-aware retrieval (ACL trimming at query time)
+        buckets: [c]
+        hint: Does it surface documents the asking user cannot open?
+      dlp_tenant_isolation:
+        label: DLP, tenant isolation, admin controls
+        buckets: [c]
+
+  d6:
+    name: Operate — observability, eval, deployment
+    weight: {a: secondary, b: core, c: secondary}
+    rows:
+      otel_traces:
+        label: OpenTelemetry / GenAI semconv; span-level tool-call traces
+        buckets: [a, b]
+      sdk_instrumentation_portability:
+        label: Can the SDK emit to any OTel backend, or vendor-locked?
+        buckets: [a]
+      in_repo_eval:
+        label: In-repo eval harness runnable in your own CI
+        buckets: [a]
+      cost_attribution:
+        label: Token & cost attribution per agent / tenant / session
+        buckets: [b]
+      apm_integration:
+        label: Native APM tie-in
+        buckets: [b]
+        hint: CloudWatch / Azure Monitor / Cloud Trace / ARMS
+      eval_service:
+        label: Evaluation service
+        buckets: [b]
+        hint: trajectory eval, LLM-as-judge, dataset mgmt, CI gating, online eval
+      versioning_rollout:
+        label: Versioning, aliases, canary, rollback
+        buckets: [b]
+      iac_coverage:
+        label: IaC coverage and CI/CD story
+        buckets: [b]
+        hint: Terraform / CDK / Bicep / ROS
+      private_networking:
+        label: Private networking
+        buckets: [b]
+        hint: VPC/VNet integration, PrivateLink equivalent, egress allowlist
+      agent_optimization:
+        label: Automated agent optimization
+        buckets: [b]
+        hint: >
+          AI-generated prompt/tool-description improvements, A/B testing, traffic
+          splitting. AWS (AgentCore Optimization) and Azure (agent optimizer) both ship
+          this — a genuinely new category since early 2026.
+      feedback_service:
+        label: Managed end-user feedback collection
+        buckets: [b, c]
+        hint: Qualitative feedback traced alongside telemetry
+      admin_analytics:
+        label: Admin & adoption analytics, answer-feedback loop
+        buckets: [c]
+        hint: Not OTel spans — this is a different audience
+
+  d7:
+    name: Commercial (OSS health for bucket A)
+    weight: {a: reframed, b: core, c: core}
+    reframe:
+      a: >
+        Pricing is meaningless for a library. Bucket A is scored on OSS project health
+        instead — the thing that actually determines whether you can depend on it.
+    rows:
+      # --- bucket A: OSS health ---
+      oss_license:
+        label: License
+        buckets: [a]
+        hint: Apache 2.0 / MIT / other — and is it genuinely open?
+      oss_governance:
+        label: Governance (single-vendor vs foundation; external maintainers?)
+        buckets: [a]
+      oss_release_cadence:
+        label: Release cadence, breaking-change history, deprecation policy
+        buckets: [a]
+      oss_runtime_lockin:
+        label: Does the SDK force you onto that vendor's runtime?
+        buckets: [a]
+      oss_community:
+        label: Community signal (contributors, issue response, production adopters)
+        buckets: [a]
+      # --- bucket B: consumption ---
+      pricing_axes:
+        label: Pricing axes
+        buckets: [b]
+        hint: per-token, per-runtime-second, per-GB memory, per-tool-call
+      separately_billed_primitives:
+        label: Which primitives bill separately
+        buckets: [b]
+        hint: Classic surprise — gateway + memory + sandbox each metered
+      free_tier_commitments:
+        label: Free tier, commitment/savings plans, marketplace procurement
+        buckets: [b]
+      runtime_sla:
+        label: Support tier & SLA on the agent runtime specifically
+        buckets: [b]
+        hint: Not the model API's SLA — the runtime's
+      # --- bucket C: seats ---
+      seat_pricing:
+        label: Per-seat cost, minimum seats, annual commitment
+        buckets: [c]
+      license_bundling:
+        label: Bundling with licenses you already own
+        buckets: [c]
+        hint: The M365 E5 effect — often decides the deal
+      addon_surcharges:
+        label: Add-on vs included; per-connector or per-index surcharges
+        buckets: [c]
+
+  d8:
+    name: Sovereignty & reach
+    weight: {a: dropped, b: core, c: core}
+    reframe:
+      a: >
+        Not applicable — a library runs wherever you run it. One row only: default telemetry.
+    rows:
+      sdk_telemetry_phone_home:
+        label: Does the SDK phone home telemetry by default, and can you disable it?
+        buckets: [a]
+      runtime_regions:
+        label: Region availability OF THE AGENT RUNTIME
+        buckets: [b]
+      tool_region_variance:
+        label: Per-tool regional availability (does every tool work in every region?)
+        buckets: [b]
+        hint: >
+          Almost never yes, and almost never disclosed on an overview page. Azure publishes
+          a full tool-by-region matrix showing Computer Use in only 3 of 24 regions; AWS's
+          region table shows per-service variance across its 13 services. Picking a region
+          from the headline list can silently cost you a tool.
+      service_limits:
+        label: Hard service limits (files, messages, tools, versions)
+        buckets: [b]
+      launch_stage_investigation:
+        label: Launch-stage evidence trail (where the vendor does/doesn't state GA)
+        buckets: [a, b, c]
+        hint: >
+          A meta-row recording WHERE a stage was found, or which URLs were checked and came
+          up empty. Added because stages turned out to live in announcement feeds and release
+          notes rather than product docs — AWS's in What's New, Google's in Vertex AI release
+          notes under the product's pre-rename name. Records negative results so the next
+          researcher doesn't redo the search.
+        hint: >
+          Fixed ceilings that cannot be raised by a quota request. Include any that are
+          TERMINAL rather than transient — e.g. Azure's 1,000-agent-revision cap fails every
+          subsequent create until versions are pruned.
+        hint: Usually far narrower than the cloud itself — the most under-disclosed
+              fact in the space
+      data_residency:
+        label: Data residency, in-region processing, cross-region inference behavior
+        buckets: [b]
+      training_data_policy:
+        label: Training-on-customer-data policy, retention, abuse-monitoring opt-out
+        buckets: [b, c]
+      certifications:
+        label: Certifications
+        buckets: [b, c]
+        hint: SOC 2, ISO 27001/42001, HIPAA, PCI, GDPR, China MLPS
+      sovereign_cloud:
+        label: Gov / sovereign cloud availability
+        buckets: [b, c]
+      index_residency:
+        label: Where the enterprise index physically lives
+        buckets: [c]
+
+# Fairness note enforced in review, not in CI:
+# BytePlus and Alibaba Cloud must not be scored down for thin ENGLISH docs.
+# Cite CN-language first-party docs where that is the authoritative source.
+# `unknown` means "we have not researched it", never "they lack it".
