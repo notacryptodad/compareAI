@@ -200,13 +200,3 @@ capabilities:
     source: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/overview
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
-  coding_agent_plan:
-    status: unknown
-    notes: >
-      No coding agent capability found in M365 Copilot docs. Work IQ API mentions MCP
-      support for "AI coding assistants in IDEs and CLIs" as consumers of M365 data, but
-      that is coding tools accessing M365 data — not M365 Copilot providing coding.
-      GitHub Copilot is a separate product with no documented cross-product integration.
-    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/overview
-    verified_on: 2026-08-09
-    verified_by: "@notacryptodad"

@@ -181,6 +181,13 @@ capabilities:
     verified_by: "@notacryptodad"
 
   sdk_telemetry_phone_home:
-    status: unknown
-    source: null
-    verified_on: null
+    status: none
+    notes: >
+      No automatic phone-home. ADK's telemetry is entirely opt-in via OpenTelemetry:
+      telemetry only emits when the user configures an exporter (--otel_to_cloud flag,
+      OTEL_EXPORTER_OTLP_ENDPOINT env var, or programmatic setup). The source code
+      (telemetry/tracing.py) shows spans are written to a user-configured tracer provider,
+      not to any hardcoded Google endpoint. Open-source under Apache-2.0.
+    source: https://github.com/google/adk-python/blob/main/src/google/adk/telemetry/tracing.py
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

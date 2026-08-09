@@ -217,9 +217,22 @@ capabilities:
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   in_repo_eval:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Full evaluation framework documented: "AgentScope's Evaluation Module is designed to
+      be the CI/CD pipeline for your Agents. It transforms the vague art of 'prompt
+      engineering' into a measurable engineering discipline." Components: Benchmark (Task +
+      Metric), Solution (adapter pattern), Evaluator (orchestrator). Two evaluators:
+      GeneralEvaluator (sequential) and RayEvaluator (parallel/distributed via Ray).
+      Built-in benchmark: ACEBench ("comprehensive multi-domain evaluation framework for
+      testing AI agents' tool usage and collaboration capabilities"). Supports LLM-as-a-Judge
+      via OpenJudge integration (50+ pre-built graders). Trajectory analysis for process
+      evaluation. This is the RICHEST eval framework of any SDK in this comparison —
+      more complete than ADK's eval (which has simulation but no distributed runner) and
+      far beyond MAF's experimental AF Labs benchmarking.
+    source: https://docs.agentscope.io/v1/observe-and-evaluate/evaluation
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   sdk_telemetry_phone_home:
     status: none
     notes: >

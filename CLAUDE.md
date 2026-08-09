@@ -3,14 +3,23 @@
 Comparison of agentic AI offerings across AWS, Azure, GCP, BytePlus, Alibaba Cloud.
 Data-first: YAML in `data/` is the source of truth; `COMPARISON.md` is generated.
 
-## Network: this Mac host has domain-access restrictions — use jump-claude for web fetching
+## Dev server
+
+The site lives in `dist/` (built by `uv run scripts/build_data.py`). Always serve from
+`dist/`, never the project root:
+
+```bash
+python3 -m http.server -d dist        # or: npx serve dist
+```
+
+## Network: this host has domain-access restrictions — use jump-claude for web fetching
 
 **This machine cannot reliably reach every domain the research needs.** When a fetch or
 fact-check has to hit external vendor sites, route it through the **jump-claude** skill,
-which runs a Claude agent on an EC2 box with unrestricted egress:
+which runs a Claude agent on a remote box with unrestricted egress:
 
 ```
-~/.claude/skills/jump-claude/jump-claude.sh setup      # confirm box is live
+~/.claude/skills/jump-claude/jump-claude.sh setup
 ~/.claude/skills/jump-claude/jump-claude.sh launch <session> --task-file <f> --workdir '~' --model opus --effort high
 ~/.claude/skills/jump-claude/jump-claude.sh status/tail/wait/result <session>
 ```
@@ -18,8 +27,8 @@ which runs a Claude agent on an EC2 box with unrestricted egress:
 Scope the remote task tightly and demand verbatim quotes + source URLs back (the whole
 project rests on traceable evidence — see `docs/CONTRIBUTING.md`).
 
-**Know when the restriction actually bites — don't reflexively spin up EC2.** As of the
-2026-08 research, plain local `curl`/WebFetch *did* reach `aws.amazon.com`,
+**Know when the restriction actually bites — don't reflexively spin up the remote box.** As
+of the 2026-08 research, plain local `curl`/WebFetch *did* reach `aws.amazon.com`,
 `docs.cloud.google.com`, `help.aliyun.com`, `docs.volcengine.com` and `docs.byteplus.com`
 (all HTTP 200). The restriction is **selective**, so:
 
@@ -38,21 +47,9 @@ product name — not in the product docs).
 
 ### Collecting remote output back to local
 
-`jump-claude.sh result <session>` returns the agent's final text. But a file the agent
-writes **outside** `~/<project>` (e.g. under `--workdir '~'` → `~/results/…`) is NOT
-reachable by `fetch` (whose base is `~/compareAI`) and survives `clean` (which only
-deletes the run dir). Pull it directly over SSM:
-
-```bash
-aws ssm send-command --region REGION --instance-ids <id> \
-  --document-name AWS-RunShellScript \
-  --parameters 'commands=["base64 ~/project/results/<file>"]' ...
-# then base64 -d into the local file
-```
-
-Prefer `--workdir '~/compareAI'` for repo-relative output so `fetch` just works. Note the
-box is **shared infrastructure** — other projects' sessions appear in `list`; only touch
-your own (`clean`/`kill` by your session name).
+`jump-claude.sh result <session>` returns the agent's final text. For files written outside
+the project workdir, use `jump-claude.sh fetch <session> <path>` to pull them back.
+Prefer `--workdir '~/compareAI'` for repo-relative output so `fetch` just works.
 
 ## Data & verification rules (load-bearing — CI enforces them)
 

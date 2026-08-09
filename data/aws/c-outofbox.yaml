@@ -168,12 +168,3 @@ capabilities:
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/supported-connectors.html
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
-  coding_agent_plan:
-    status: none
-    notes: >
-      Q Business is focused on enterprise Q&A, task automation, and workflow actions — not
-      coding. Amazon Q Developer (a separate product) has coding agent capabilities.
-      No coding agent feature found in Q Business docs.
-    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-09
-    verified_by: "@notacryptodad"

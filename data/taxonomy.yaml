@@ -54,11 +54,16 @@ buckets:
     verb: buy
     question: Can I buy instead of build?
     source_type: Licensing/plan guide or admin documentation
+  d:
+    name: AI coding tools
+    verb: code
+    question: Which AI coding tool fits my dev team?
+    source_type: Product documentation, pricing page, or feature comparison
 
 dimensions:
   d1:
     name: Build & orchestrate
-    weight: {a: core, b: secondary, c: thin}
+    weight: {a: core, b: secondary, c: thin, d: secondary}
     rows:
       sdk_languages:
         label: Languages supported
@@ -122,10 +127,22 @@ dimensions:
           The B->C bridge. Rare and highly decision-relevant — publishing a custom agent
           into an assistant your users already have is a distribution channel, not a
           feature.
+      ide_integration:
+        label: IDE integration (VS Code, JetBrains, Vim/Neovim, other)
+        buckets: [d]
+        hint: Which editors are supported; extension marketplace presence
+      cli_agent:
+        label: CLI / terminal agent mode
+        buckets: [d]
+        hint: Agentic coding from terminal (Claude Code, Q CLI, Kiro CLI)
+      agentic_coding:
+        label: Agentic coding (multi-file edits, task execution, tool use)
+        buckets: [d]
+        hint: Can the tool autonomously plan and execute multi-step coding tasks?
 
   d2:
     name: Model access
-    weight: {a: thin, b: core, c: thin}
+    weight: {a: thin, b: core, c: thin, d: core}
     rows:
       first_party_models:
         label: First-party frontier models
@@ -153,18 +170,15 @@ dimensions:
         buckets: [a, b]
       model_choosable:
         label: Is the underlying model choosable, or fixed and opaque?
-        buckets: [c]
-      coding_agent_plan:
-        label: Coding-agent plan / third-party coding-tool integration
-        buckets: [b, c]
-        hint: >
-          The coding-agent sub-segment. Includes whether the provider documents
-          integration with third-party coding agents (e.g. Claude Code) rather than
-          only its own.
+        buckets: [c, d]
+      model_choice_coding:
+        label: Model choice in coding tool
+        buckets: [d]
+        hint: Can the developer pick which model powers completions/chat/agent?
 
   d3:
     name: Tools & context
-    weight: {a: core, b: core, c: core}
+    weight: {a: core, b: core, c: core, d: core}
     rows:
       tool_calling:
         label: Function/tool calling; parallel tool calls
@@ -229,10 +243,21 @@ dimensions:
       index_freshness:
         label: Enterprise index freshness (real-time vs batch crawl)
         buckets: [c]
+      mcp_support_coding:
+        label: MCP support in coding tool
+        buckets: [d]
+        hint: Can the coding tool connect to MCP servers for extended context?
+      codebase_indexing:
+        label: Codebase indexing / repo-wide context
+        buckets: [d]
+        hint: How does the tool understand the full repo — embeddings, AST, search?
+      code_review:
+        label: AI code review (PR review, inline suggestions)
+        buckets: [d]
 
   d4:
     name: Memory & state
-    weight: {a: secondary, b: core, c: thin}
+    weight: {a: secondary, b: core, c: thin, d: thin}
     rows:
       short_term_memory:
         label: Short-term session/thread memory
@@ -259,7 +284,7 @@ dimensions:
 
   d5:
     name: Trust — identity, guardrails, human-in-the-loop
-    weight: {a: thin, b: core, c: core}
+    weight: {a: thin, b: core, c: core, d: secondary}
     rows:
       agent_workload_identity:
         label: Agent workload identity
@@ -294,10 +319,14 @@ dimensions:
       dlp_tenant_isolation:
         label: DLP, tenant isolation, admin controls
         buckets: [c]
+      code_data_retention:
+        label: Code snippet retention & training policy
+        buckets: [d]
+        hint: Is user code sent to the cloud? Retained? Used for training?
 
   d6:
     name: Operate — observability, eval, deployment
-    weight: {a: secondary, b: core, c: secondary}
+    weight: {a: secondary, b: core, c: secondary, d: secondary}
     rows:
       otel_traces:
         label: OpenTelemetry / GenAI semconv; span-level tool-call traces
@@ -348,7 +377,7 @@ dimensions:
 
   d7:
     name: Commercial (OSS health for bucket A)
-    weight: {a: reframed, b: core, c: core}
+    weight: {a: reframed, b: core, c: core, d: core}
     reframe:
       a: >
         Pricing is meaningless for a library. Bucket A is scored on OSS project health
@@ -398,10 +427,17 @@ dimensions:
       addon_surcharges:
         label: Add-on vs included; per-connector or per-index surcharges
         buckets: [c]
+      coding_seat_pricing:
+        label: Per-seat pricing (individual / business / enterprise tiers)
+        buckets: [d]
+      coding_free_tier:
+        label: Free tier or usage-based option
+        buckets: [d]
+        hint: GitHub Copilot Free, Gemini Code Assist free tier, etc.
 
   d8:
     name: Sovereignty & reach
-    weight: {a: dropped, b: core, c: core}
+    weight: {a: dropped, b: core, c: core, d: secondary}
     reframe:
       a: >
         Not applicable — a library runs wherever you run it. One row only: default telemetry.
@@ -425,7 +461,7 @@ dimensions:
         buckets: [b]
       launch_stage_investigation:
         label: Launch-stage evidence trail (where the vendor does/doesn't state GA)
-        buckets: [a, b, c]
+        buckets: [a, b, c, d]
         hint: >
           A meta-row recording WHERE a stage was found, or which URLs were checked and came
           up empty. Added because stages turned out to live in announcement feeds and release

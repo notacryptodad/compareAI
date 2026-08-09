@@ -349,24 +349,17 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
   runtime_sla:
-    status: unknown
+    status: documented
+    value: 99.9%
     notes: >
-      AGENTCORE IS NOT COVERED BY THE BEDROCK SLA — as far as that document shows, and this
-      is the row where the project's runtime-versus-model-API distinction earns its keep.
-      The Bedrock SLA is "a policy governing the use of Amazon Bedrock", and availability is
-      measured only on requests that "relate solely to the Amazon Bedrock APIs for models
-      that are available on Amazon Bedrock" — i.e. model-serving calls. A "Request" is "an
-      invocation of Amazon Bedrock by directly calling any of the Amazon Bedrock APIs".
-      AgentCore is never mentioned, and no covered-service list exists. The document is
-      dated 2023-10-04, which PREDATES AgentCore entirely — consistent with its absence.
-      Commitment for what IS covered: 99.9% monthly uptime, credits 10% / 25% / 100% at the
-      99.9 / 99.0 / 95.0 thresholds. Only HTTP 500s count as errors under the SLA's own
-      definition, so throttling and 4xx responses are outside the measurement entirely.
-      STATUS IS `unknown` DELIBERATELY: absence from this document is not proof AgentCore
-      has no SLA. It may have its own, or appear in a newer Bedrock SLA revision. What IS
-      established is that the SLA most people would cite does not name it.
-    source: https://aws.amazon.com/bedrock/sla/
-    verified_on: 2026-08-04
+      AgentCore inherits the Amazon Bedrock SLA at the GA tier. Per the FAQs page:
+      "The SLA for Amazon Bedrock applies to AgentCore." The Bedrock SLA commits to 99.9%
+      monthly uptime, with credits 10% (99.0–99.9%), 25% (95.0–99.0%), 100% (<95.0%).
+      Availability measured per 5-minute interval on API requests; only HTTP 500s count as
+      errors (throttling/4xx excluded). Claim requires AWS Support case within 2 billing
+      cycles. Latency commitments are NOT in the public SLA — must be negotiated into MSA.
+    source: https://aws.amazon.com/bedrock/agentcore/faqs/
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   long_running_agents:
     status: documented

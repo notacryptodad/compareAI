@@ -42,12 +42,20 @@
                  padding:4px 9px; border-radius:6px; }
   main { padding:8px 24px 60px; }
   .qline { color:var(--muted); font-size:12px; margin:12px 0 4px; }
-  .dim { margin:22px 0 6px; font-size:12px; font-weight:700; text-transform:uppercase;
-         letter-spacing:.05em; color:var(--muted); }
+  .dim-section { margin:16px 0 6px; border:none; }
+  .dim-section[open] { margin-bottom:6px; }
+  .dim { margin:0; padding:8px 0; font-size:12px; font-weight:700; text-transform:uppercase;
+         letter-spacing:.05em; color:var(--muted); cursor:pointer; list-style:none;
+         display:flex; align-items:center; gap:6px; user-select:none; }
+  .dim::-webkit-details-marker { display:none; }
+  .dim::before { content:'▸'; font-size:11px; transition:transform .15s ease; }
+  .dim-section[open] > .dim::before { transform:rotate(90deg); }
+  .dim:hover { color:var(--ink); }
   .reframe { font-size:12px; color:var(--muted); font-style:italic; margin:2px 0 8px; }
-  table { border-collapse:collapse; width:100%; margin-bottom:8px; }
+  table { border-collapse:collapse; width:100%; margin-bottom:8px; table-layout:fixed; }
   th, td { text-align:left; vertical-align:top; padding:9px 11px;
-           border-bottom:1px solid var(--line); font-size:13.5px; }
+           border-bottom:1px solid var(--line); font-size:13.5px; overflow:hidden;
+           text-overflow:ellipsis; }
   th { position:sticky; top:56px; background:var(--bg); z-index:3; font-size:12px; }
   th.cap, td.cap { width:34%; }
   tr:hover td { background:var(--chip); }
@@ -71,6 +79,10 @@
   .dlg-b pre { white-space:pre-wrap; font:13px/1.5 ui-monospace,monospace;
                background:var(--chip); padding:10px; border-radius:8px; margin:4px 0 0; }
   .dlg-b a { color:var(--accent); word-break:break-all; }
+  a.contribute { display:inline-block; font-size:13px; padding:6px 12px; border-radius:6px;
+                 background:var(--chip); border:1px solid var(--line); color:var(--ink);
+                 text-decoration:none; word-break:normal; }
+  a.contribute:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
   .close { float:right; cursor:pointer; border:none; background:none; font-size:20px;
            color:var(--muted); line-height:1; }
   .empty { color:var(--muted); font-style:italic; padding:20px 0; }

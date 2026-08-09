@@ -101,14 +101,27 @@ capabilities:
     verified_by: "@notacryptodad"
 
   seat_pricing:
-    status: unknown
+    status: documented
+    value:
+      standard: USD 30/seat/month
+      pro: USD 100/seat/month
+      max: USD 200/seat/month
     notes: >
-      No per-seat model found. Billing is consumption-based —
-      「开通百炼无需费用，调用、微调、部署模型时产生相应费用」 (no fee to enable; charges on
-      invoke/fine-tune/deploy) — which is a bucket-B pricing shape, not a bucket-C one.
-      Consistent with this being a builder rather than a seat-licensed assistant.
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
+      Token Plan Team Edition provides per-seat pricing with three tiers:
+      Standard ($30/seat/month, 25,000 Credits), Pro ($100/seat/month, 100,000 Credits),
+      Max ($200/seat/month, 250,000 Credits). Limited-time promotional pricing available
+      (Standard $20, Pro $75). "A seat is the smallest subscription unit in Token Plan
+      (Team Edition), representing a usage quota for one team member." Each seat bound to
+      one member and one API Key. Shared usage packs available for overflow.
+      Compatible with "mainstream coding tools and popular agent tools" including
+      "Qwen Code, Claude Code, OpenClaw". Enterprise features: data security, team
+      management, dedicated throughput.
+      PRICING SHAPE IS DIFFERENT from M365 Copilot/Gemini Enterprise: this is a TOKEN
+      QUOTA plan, not an assistant access license. You get Credits to spend across models,
+      not access to a pre-built assistant. Closer to a committed-spend tier than a seat
+      license — but per-seat assignment and management makes it comparable.
+    source: https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   model_choosable:
@@ -123,9 +136,15 @@ capabilities:
     verified_by: "@notacryptodad"
 
   license_bundling:
-    status: unknown
-    source: null
-    verified_on: null
+    status: none
+    notes: >
+      Token Plan Team Edition is a standalone subscription — not bundled with other
+      Alibaba Cloud services. Monthly or annual commitment terms. Personal Edition
+      (Lite/Standard/Pro starting at $6/mo) is a separate individual product.
+      No equivalent of Google Workspace bundling or M365 E5 inclusion.
+    source: https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   admin_analytics:
     status: documented
     notes: >
@@ -138,13 +157,39 @@ capabilities:
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   dlp_tenant_isolation:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Token Plan Team Edition: "Multi-tenant isolation architecture ensures no queuing
+      during peak usage periods." "Data security: Token Plan Team Edition does not use
+      conversation data for model training, meeting enterprise-grade data privacy
+      requirements." Each seat bound to one API Key — logical isolation per member.
+      Workspaces provide data isolation: "You can use your Alibaba Cloud account to grant
+      different workspace permissions to different RAM users. Data is isolated between
+      workspaces." No DLP/PII-masking feature specific to the application builder
+      documented — content moderation is via the separate AI Guardrails product.
+    source: https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   guardrails:
-    status: unknown
-    source: null
-    verified_on: null
+    product: AI Guardrails
+    status: documented
+    notes: >
+      Alibaba Cloud AI Guardrails is a separate product that integrates with Model Studio.
+      "AI Guardrails provides two content safety offerings: Guardrails for AI application
+      protection and Content Moderation for user-generated content (UGC) safety."
+      Protection dimensions for AI applications:
+      - Content compliance (pornographic, violent, political content)
+      - Sensitive content detection (PII, enterprise data leakage)
+      - Prompt attack detection (jailbreaks, unauthorized actions)
+      - Model hallucination detection
+      Enforcement modes: Inspect-and-block or Monitor-only.
+      Integration paths: "RESTful API for custom applications, AI Gateway for centralized
+      policy enforcement, WAF for edge-level prompt blocking, Model Studio for one-click
+      Tongyi integration, and third-party platforms (Dify agents, OpenClaw plug-ins)."
+      Per-consumer policies configurable with protection levels (Low/Medium/High).
+    source: https://www.alibabacloud.com/help/en/content-moderation/latest/product-overview
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   index_residency:
     status: documented
     notes: >
@@ -155,13 +200,4 @@ capabilities:
       "All data transmitted when building applications or training models is encrypted."
     source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
     verified_on: 2026-08-09
-    verified_by: "@notacryptodad"
-  coding_agent_plan:
-    status: documented
-    notes: >
-      A "Coding Plan" for AI coding tools exists, and the docs point to a
-      Connect-to-clients-or-developer-tools guide naming Claude Code — a CN provider
-      documenting integration with a third-party coding agent rather than only its own.
-    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
     verified_by: "@notacryptodad"

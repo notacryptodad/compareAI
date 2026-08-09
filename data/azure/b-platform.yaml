@@ -389,19 +389,32 @@ capabilities:
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   runtime_sla:
-    status: unknown
+    status: none
     notes: >
-      SLA page (azure.microsoft.com/en-us/support/legal/sla/ai-foundry/) returned 404.
-      Service is GA but specific uptime commitment percentage not confirmed.
-    source: null
-    verified_on: null
+      "Agent Service has no availability or state durability Service Level Agreement (SLA).
+      Standard mode offloads SLAs and data durability assurances to the underlying storage
+      components." This is explicitly stated in the HA/DR docs. The underlying Azure
+      platform SLA (99.9% for Azure OpenAI) covers the model API but NOT the Agent Service
+      itself. Composite availability depends on customer-managed Cosmos DB, AI Search, and
+      Storage accounts in Standard mode. In Basic mode, Microsoft manages those with
+      "limited" recovery options. This is a significant gap vs. AWS (99.9% via Bedrock SLA).
+    source: https://learn.microsoft.com/en-us/azure/foundry/how-to/high-availability-resiliency
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   long_running_agents:
-    status: unknown
+    product: Background Responses + Hosted Agents
+    status: documented
     notes: >
-      Quotas page lists file and message limits (100,000 messages per thread) but no
-      maximum session duration or time limit for agent runs. Session-level state persistence
-      is supported for hosted agents. No async/long-running time cap documented.
-    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
+      Two mechanisms for long-running agents:
+      1. Background Responses — "start processing a request and return a continuation token
+      that can be used to poll for results or resume interrupted streams." Server-side
+      processing continues even if client disconnects. Supports resumption via continuation
+      tokens. Available for OpenAI Responses agents and Azure OpenAI Responses agents.
+      2. Hosted Agents — VM-isolated sandboxes with per-session state persistence. Idle
+      timeout 15 minutes, session lifetime up to 30 days. State ($HOME, /files) persisted
+      across idle periods. No explicit time cap on individual executions documented.
+      Tool call timeout is 10 minutes (function calling) or 50 seconds (MCP non-streaming).
+    source: https://learn.microsoft.com/en-us/agent-framework/agents/background-responses
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   iac_coverage:
@@ -427,12 +440,19 @@ capabilities:
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   training_data_policy:
-    status: unknown
+    status: documented
     notes: >
-      No explicit training data policy statement found on Foundry Agent Service pages.
-      Azure's general DPA typically prohibits using customer data to train models, but not
-      confirmed on a Foundry-specific page. M365 Copilot has explicit language (see
-      azure/c) but that is a different product.
-    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+      Strongest possible commitment — five explicit "NOT" statements:
+      "Your prompts (inputs) and completions (outputs), your embeddings, and your training
+      data: are NOT available to other customers. are NOT available to OpenAI or other
+      providers of Models sold by Azure. are NOT used by providers of Models sold by Azure
+      to improve their models or services. are NOT used to train any generative AI foundation
+      models without your permission or instruction. Customer Data, Prompts, and Completions
+      are NOT used to improve Microsoft or third-party products or services without your
+      explicit permission or instruction."
+      Models are stateless: "no prompts or completions are stored in the model."
+      Azure hosts models in its own environment — "do NOT interact with any services
+      operated by providers" (e.g., OpenAI's ChatGPT or API are separate).
+    source: https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"

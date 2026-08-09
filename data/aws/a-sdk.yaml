@@ -81,14 +81,19 @@ capabilities:
     verified_by: "@notacryptodad"
 
   human_in_the_loop:
-    status: unknown
+    product: HumanInTheLoop intervention + Interrupts
+    status: documented
     notes: >
-      DOWNGRADED from `ga` by scripts/check_quotes.py: the phrase "human-in-the-loop" does
-      NOT appear in the README. The README mentions hooks, guardrails and steering
-      handlers, which are control features but not evidence of interrupt/resume or
-      approval gates. Needs the docs site.
-    source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-08-04
+      First-class HITL support via two mechanisms:
+      1. HumanInTheLoop intervention handler — "pauses agent execution before tool calls
+      to request human approval." Configurable: allowedTools, enableTrust, custom evaluate
+      functions, and three collection modes (interrupt/resume, stdio, custom async callback).
+      2. Raw interrupts — "the interrupt system enables human-in-the-loop workflows by
+      allowing users to pause agent execution and request human input before continuing."
+      Supported in multi-agent patterns via BeforeNodeCallEvent hooks.
+      Session persistence across interrupt boundaries via FileSessionManager.
+    source: https://strandsagents.com/docs/user-guide/concepts/agents/human-in-the-loop/
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   policy_hooks:
@@ -105,15 +110,16 @@ capabilities:
     verified_by: "@notacryptodad"
 
   otel_traces:
-    status: unknown
+    status: documented
     notes: >
-      DOWNGRADED from `ga` by scripts/check_quotes.py. The README says it "traces every
-      decision by default" and mentions observability, but the strings "OpenTelemetry",
-      "OTel" and "otel" appear NOWHERE in it. Do not credit OTel conformance without
-      evidence — that was an inference, and this row is specifically about OTel/GenAI
-      semconv. Needs the docs site.
-    source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-08-04
+      "Strands natively integrates with OpenTelemetry, an industry standard for distributed
+      tracing." Full OTel semantic conventions for GenAI (gen_ai.* attributes). Hierarchical
+      trace structure: Agent Span → Cycle Spans → LLM Spans + Tool Spans.
+      Export to Jaeger, Grafana Tempo, AWS X-Ray, Datadog, Langfuse, Opik via OTLP.
+      StrandsTelemetry class handles setup; also auto-instrumented when deployed on
+      AgentCore Runtime. Attribute redaction opt-in via OTEL_SEMCONV_STABILITY_OPT_IN.
+    source: https://strandsagents.com/docs/user-guide/observability-evaluation/traces/
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   in_repo_eval:
@@ -145,13 +151,16 @@ capabilities:
     verified_by: "@notacryptodad"
 
   oss_release_cadence:
-    status: unknown
+    status: documented
+    value: multiple per week
     notes: >
-      Releases section renders empty on the repo page; release links are split by tag
-      prefix (python/, typescript/) implying independent per-SDK versioning.
-      Version numbers only in badge images, not readable as text.
-    source: null
-    verified_on: null
+      Very high cadence — Python at v1.51.0, TypeScript at v1.12.0, MCP at v0.2.9 as of
+      2026-08-07. Releases are tagged independently per SDK (python/vX.Y.Z, typescript/vX.Y.Z).
+      Follows semver 2.0.0. Published to PyPI and npm. Multiple releases per week observed
+      from the GitHub releases page.
+    source: https://github.com/strands-agents/harness-sdk/releases
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
 
   oss_runtime_lockin:
     status: none
@@ -176,6 +185,12 @@ capabilities:
     verified_by: "@notacryptodad"
 
   sdk_telemetry_phone_home:
-    status: unknown
-    source: null
-    verified_on: null
+    status: none
+    notes: >
+      No telemetry phone-home found. The SDK's telemetry module (StrandsTelemetry) is
+      entirely user-controlled: traces are only emitted when you configure an exporter
+      (OTLP endpoint, console, etc.). No automatic reporting to AWS or any analytics
+      service. Open-source under Apache-2.0 — code is auditable.
+    source: https://strandsagents.com/docs/user-guide/observability-evaluation/traces/
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

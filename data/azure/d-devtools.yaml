@@ -1,0 +1,35 @@
+provider: azure
+bucket: d
+product: GitHub Copilot
+aliases: [Copilot, GH Copilot]
+notes: >
+  GitHub Copilot is the Microsoft-ecosystem AI coding tool, sold separately from M365
+  Copilot. Business $19/user/month, Enterprise $39/user/month. Agent mode, cloud agent,
+  code review, MCP support, model choice. Requires separate GitHub subscription — NOT
+  bundled with M365 Copilot or Azure.
+
+capabilities:
+  ide_integration:
+    status: unknown
+  cli_agent:
+    status: unknown
+  agentic_coding:
+    status: unknown
+  model_choice_coding:
+    status: unknown
+  model_choosable:
+    status: unknown
+  mcp_support_coding:
+    status: unknown
+  codebase_indexing:
+    status: unknown
+  code_review:
+    status: unknown
+  code_data_retention:
+    status: unknown
+  coding_seat_pricing:
+    status: unknown
+  coding_free_tier:
+    status: unknown
+  launch_stage_investigation:
+    status: unknown

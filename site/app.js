@@ -138,18 +138,23 @@ function render() {
         const keys = cells.map((c) => (c ? c.status + '|' + (c.product || '') : '·'));
         if (new Set(keys).size <= 1) return false;
       }
-      // Drop rows no active provider has any cell for at all (unless searching).
       if (!state.query && !state.hideUnknown && cells.every((c) => c === undefined)) return false;
       return true;
     });
     if (!rows.length) return;
 
-    const h = document.createElement('div'); h.className = 'dim'; h.textContent = dim.name;
-    main.appendChild(h);
+    const details = document.createElement('details');
+    details.open = true;
+    details.className = 'dim-section';
+    const summary = document.createElement('summary');
+    summary.className = 'dim';
+    summary.textContent = dim.name;
+    details.appendChild(summary);
+
     if (dim.reframe && dim.reframe[bucket]) {
       const rf = document.createElement('div'); rf.className = 'reframe';
       rf.textContent = dim.reframe[bucket].trim();
-      main.appendChild(rf);
+      details.appendChild(rf);
     }
 
     const t = document.createElement('table');
@@ -172,7 +177,8 @@ function render() {
     t.innerHTML = head + body;
     t.querySelectorAll('td.cell').forEach((td) =>
       td.onclick = () => openCell(td.dataset.p, bucket, td.dataset.r, main));
-    main.appendChild(t);
+    details.appendChild(t);
+    main.appendChild(details);
   });
 
   if (!shownRows) main.insertAdjacentHTML('beforeend',
@@ -197,8 +203,40 @@ function openCell(pkey, bucket, rowId) {
     '" target="_blank" rel="noopener">' + esc(cell.source) + '</a></pre>';
   if (!cell.notes && !cell.source)
     b += '<p class="empty">No notes or source recorded for this cell.</p>';
+  b += '<div class="k" style="margin-top:16px"><a class="contribute" href="' +
+    esc(contributeUrl(pkey, bucket, rowId)) +
+    '" target="_blank" rel="noopener">&#9873; Report stale / Suggest update</a></div>';
   $('#dlgBody').innerHTML = b;
   $('#dlg').showModal();
+}
+
+const REPO_URL = 'https://github.com/notacryptodad/compareAI';
+
+function contributeUrl(pkey, bucket, rowId) {
+  const db = state.db;
+  const cell = cellOf(pkey, bucket, rowId);
+  const row = db.dimensions.flatMap((d) => d.rows).find((r) => r.id === rowId) || {};
+  const provider = db.providers[pkey].short;
+  const bucketName = db.buckets[bucket].name;
+  const title = '[Data update] ' + provider + ' / bucket ' + bucket.toUpperCase() + ' / ' + (row.label || rowId);
+  const status = cell ? cell.status : 'unknown';
+  const verifiedOn = cell && cell.verified_on ? cell.verified_on : 'n/a';
+  const source = cell && cell.source ? cell.source : 'none';
+  const body = '## Current data\n\n' +
+    '- **Provider:** ' + provider + '\n' +
+    '- **Bucket:** ' + bucket.toUpperCase() + ' — ' + bucketName + '\n' +
+    '- **Capability:** ' + (row.label || rowId) + '\n' +
+    '- **Status:** ' + status + '\n' +
+    '- **Verified on:** ' + verifiedOn + '\n' +
+    '- **Source:** ' + source + '\n\n' +
+    '## What\'s changed?\n\n' +
+    '<!-- Paste a URL and quote from the vendor\'s documentation showing updated information -->\n\n' +
+    '## Evidence\n\n' +
+    '<!-- Screenshot or verbatim quote from the vendor page -->\n';
+  return REPO_URL + '/issues/new?' +
+    'title=' + encodeURIComponent(title) +
+    '&body=' + encodeURIComponent(body) +
+    '&labels=data-update';
 }
 
 function esc(s) {

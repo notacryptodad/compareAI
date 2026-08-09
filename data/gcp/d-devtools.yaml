@@ -1,0 +1,34 @@
+provider: gcp
+bucket: d
+product: Gemini Code Assist
+aliases: [Code Assist, Duet AI for Developers]
+notes: >
+  Gemini Code Assist is Google Cloud's AI coding tool. Includes a free tier
+  (Code Assist Standard) and enterprise tier. Supports VS Code, JetBrains, Cloud Shell
+  Editor, and Cloud Workstations. Formerly Duet AI for Developers.
+
+capabilities:
+  ide_integration:
+    status: unknown
+  cli_agent:
+    status: unknown
+  agentic_coding:
+    status: unknown
+  model_choice_coding:
+    status: unknown
+  model_choosable:
+    status: unknown
+  mcp_support_coding:
+    status: unknown
+  codebase_indexing:
+    status: unknown
+  code_review:
+    status: unknown
+  code_data_retention:
+    status: unknown
+  coding_seat_pricing:
+    status: unknown
+  coding_free_tier:
+    status: unknown
+  launch_stage_investigation:
+    status: unknown

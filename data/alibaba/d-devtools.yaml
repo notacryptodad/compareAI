@@ -1,0 +1,34 @@
+provider: alibaba
+bucket: d
+product: Tongyi Lingma
+aliases: [通义灵码, Lingma, Token Plan Team Edition]
+notes: >
+  Tongyi Lingma (通义灵码) is Alibaba Cloud's AI coding assistant. Available as
+  VS Code and JetBrains extensions. Enterprise version integrates with Alibaba Cloud
+  for codebase indexing and team management.
+
+capabilities:
+  ide_integration:
+    status: unknown
+  cli_agent:
+    status: unknown
+  agentic_coding:
+    status: unknown
+  model_choice_coding:
+    status: unknown
+  model_choosable:
+    status: unknown
+  mcp_support_coding:
+    status: unknown
+  codebase_indexing:
+    status: unknown
+  code_review:
+    status: unknown
+  code_data_retention:
+    status: unknown
+  coding_seat_pricing:
+    status: unknown
+  coding_free_tier:
+    status: unknown
+  launch_stage_investigation:
+    status: unknown

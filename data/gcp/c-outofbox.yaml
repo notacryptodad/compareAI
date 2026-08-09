@@ -75,17 +75,23 @@ capabilities:
     verified_by: "@notacryptodad"
 
   seat_pricing:
-    status: unknown
+    status: documented
+    value:
+      business: USD 21/seat/month
+      standard: USD 30/seat/month (annual)
+      plus: USD 30+/seat/month (annual)
     notes: >
-      NOT stated on this page. Editions ARE named — "Standard, Plus, Pay-as-you-go, and
-      Frontline editions", with Business documented separately in a Help Center — and the
-      docs reference "Get subscriptions and assign licenses", implying seat assignment.
-      But no seat rates or terms appear, so pricing stays unknown.
-      A "Pay-as-you-go" edition is unusual for a packaged assistant (M365 Copilot and
-      Q Business are both subscription-first) and worth confirming: if real, it removes the
-      per-seat commitment barrier that defines this category.
-    source: https://docs.cloud.google.com/gemini/enterprise/docs
-    verified_on: 2026-08-04
+      Gemini Business: $21/seat/month — "Great for individuals, small businesses, and teams
+      up to 300—no IT setup needed." 30-day free trial.
+      Gemini Enterprise Standard and Plus: "Starting at $30 per seat per month" (annual).
+      "Looking for advanced features and enterprise-grade compliance? Contact sales about
+      Gemini Enterprise app - Standard or Plus editions."
+      Business lacks "some security and management capabilities and offers less cloud
+      storage" per press reports.
+      Notable: a SEPARATE product from Google Workspace Gemini features (which are now
+      included in Workspace Business/Enterprise plans at no extra charge since Jan 2025).
+    source: https://cloud.google.com/gemini-enterprise/business
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   license_bundling:
@@ -112,29 +118,90 @@ capabilities:
     verified_by: "@notacryptodad"
 
   model_choosable:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Model selection IS available — the locations page shows per-model availability:
+      Gemini 3.5 Flash, Gemini 3.1 Pro, Gemini 3.6 Flash listed with different residency
+      constraints per region. Administrators can toggle specific models (e.g. "turn on the
+      Gemini 3.6 Flash toggle"). This is model-choosable at the ADMIN level (which models
+      are available to users), not end-user model selection. Similar to M365 Copilot where
+      the underlying model is managed but admins control rollout.
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/locations
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   index_freshness:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Two data ingestion modes documented: federation (live queries to source) and
+      indexing (copy into search index). "Data federation gets the required information
+      directly from the original data source without copying it into the Vertex AI Search
+      index. Data ingestion (indexing) copies data into the Vertex AI Search index,
+      enabling features like Knowledge Graph and Natural Language Processing."
+      Federation = real-time freshness; indexing = connector sync schedule.
+      Analytics metrics "refreshed about every 6 hours" — suggests near-real-time for
+      search but not instant. No explicit SLA on index freshness.
+    source: https://cloud.google.com/agentspace/agentspace-enterprise/docs/introduction-to-connectors-and-data-stores
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   index_residency:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    value: [global, us, eu, ca, in, asia-northeast1, sg, europe-west2]
+    notes: >
+      Same locations as the platform tier. "When ingesting data, you need to select the
+      region where you want to store the data, such as global, the US, or the EU."
+      "Data stored in the US or EU regions require data encryption." CMEK available for
+      US/EU multi-regions only. In-country regions (CA, IN, JP, SG, UK) available with
+      allowlist. The global location "provides better end-user response times, the latest
+      model versions, and the most up-to-date features."
+      API endpoints differ: eu-discoveryengine.googleapis.com / us-discoveryengine.googleapis.com.
+    source: https://cloud.google.com/agentspace/docs/locations
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   admin_analytics:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "Analytics give you insight into the usage trends, search quality, and end-user
+      engagement of your app. The console provides an interactive dashboard experience
+      powered by Looker." Metrics include: daily/weekly/monthly active users, search
+      session counts, per-search and per-session metrics. Filterable by date range, query,
+      device type, data store. Comparison mode available (baseline vs. comparison period).
+      "For data stores in US and EU multi-regions, viewing search analytics is in Public
+      preview. Search analytics are GA for global data stores."
+      Analytics can be disabled at app creation with disableAnalytics: true.
+    source: https://cloud.google.com/agentspace/agentspace-enterprise/docs/view-analytics
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   dlp_tenant_isolation:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Multi-layered security: VPC Service Controls integration ("enacts security measures"
+      including blocking public internet access and gating access via Access Context
+      Manager), CMEK for US/EU multi-regions, Access Transparency, and IAM-based tenant
+      isolation. VPC-SC "primarily aims to prevent data exfiltration by creating a secure
+      service perimeter around your projects and resources." Actions to external services
+      blocked by default under VPC-SC, requiring allowlisting.
+      Model Armor provides DLP-adjacent screening: "blocks any response from the Gemini
+      Enterprise assistant that triggers Sensitive Data Protection (SDP) filters."
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/use-vpc-service-controls
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   guardrails:
-    status: unknown
-    source: null
-    verified_on: null
+    product: Model Armor
+    status: documented
+    notes: >
+      "Model Armor is a Google Cloud service that enhances the security and safety of your
+      AI applications by proactively screening the prompts and responses given by the
+      Gemini Enterprise assistant." Available on all editions at no additional cost.
+      Enforcement types: Inspect-and-block (default) or Inspect-only.
+      Fail modes: FAIL_CLOSED (block all when Model Armor unavailable, default) or
+      FAIL_OPEN (allow through). "Gemini Enterprise provides a Service Level Agreement.
+      When Gemini Enterprise is configured to use Model Armor, blocked queries don't count
+      as SLA violations."
+      Document screening: attached documents screened against configured policies.
+      Audit logging via Data Access logs for screening verdicts.
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/enable-model-armor
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   training_data_policy:
     status: documented
     notes: >
@@ -145,8 +212,3 @@ capabilities:
     source: https://cloud.google.com/terms/data-processing-addendum
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
-  coding_agent_plan:
-    status: unknown
-    notes: Gemini Code Assist is a separate product, not covered by this page.
-    source: null
-    verified_on: null

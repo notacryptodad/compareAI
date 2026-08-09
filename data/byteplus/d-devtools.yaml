@@ -1,0 +1,34 @@
+provider: byteplus
+bucket: d
+product: unknown
+aliases: []
+notes: >
+  BytePlus does not appear to have a publicly documented developer coding tool
+  comparable to GitHub Copilot or Kiro. ByteDance has internal tools (Trae AI, Marscode)
+  but their availability under BytePlus branding is unconfirmed. Research needed.
+
+capabilities:
+  ide_integration:
+    status: unknown
+  cli_agent:
+    status: unknown
+  agentic_coding:
+    status: unknown
+  model_choice_coding:
+    status: unknown
+  model_choosable:
+    status: unknown
+  mcp_support_coding:
+    status: unknown
+  codebase_indexing:
+    status: unknown
+  code_review:
+    status: unknown
+  code_data_retention:
+    status: unknown
+  coding_seat_pricing:
+    status: unknown
+  coding_free_tier:
+    status: unknown
+  launch_stage_investigation:
+    status: unknown

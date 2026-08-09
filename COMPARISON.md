@@ -12,7 +12,7 @@ where launch stage does not apply. ✅ GA appears only where the vendor says
 which is itself the finding, and why every provider reads `documented` rather than
 AWS/Azure reading GA while Google reads blank.
 
-**Data as of 2026-08-09** · 242 verified cells across 14 provider-buckets
+**Data as of 2026-08-09** · 260 verified cells across 19 provider-buckets
 
 Legend: `ga` ✅ GA · `documented` 📄 Documented · `preview` 🟡 Preview · `limited` 🟠 Limited · `partner` 🔵 Partner · `oss` ⚪ OSS · `none` ❌ No · `unknown` ·
 
@@ -46,7 +46,7 @@ Products compared: **AWS**: Strands Agents · **Azure**: Microsoft Agent Framewo
 
 | Capability | AWS | Azure | GCP | Alibaba |
 |---|---|---|---|---|
-| MCP client support | 📄 Documented | · | 📄 Documented | 📄 Documented |
+| MCP client support | 📄 Documented | 📄 Documented<br>MCPToolDefinition / hostedtool.MCPServer | 📄 Documented | 📄 Documented |
 | Built-in tool library shipped with the SDK | 📄 Documented<br>strands-agents-tools | · | · | · |
 | OpenAPI -> tool import | · | · | 📄 Documented | · |
 | Code interpreter / sandbox | · | · | · | 📄 Documented<br>local, Docker, Apple Container, +5 |
@@ -61,15 +61,15 @@ Products compared: **AWS**: Strands Agents · **Azure**: Microsoft Agent Framewo
 
 | Capability | AWS | Azure | GCP | Alibaba |
 |---|---|---|---|---|
-| Human-in-the-loop (interrupt/resume, approval gates) | · | 📄 Documented | 📄 Documented | 📄 Documented |
+| Human-in-the-loop (interrupt/resume, approval gates) | 📄 Documented<br>HumanInTheLoop intervention + Interrupts | 📄 Documented | 📄 Documented | 📄 Documented |
 | Callback/hook points for custom policy | 📄 Documented | · | · | 📄 Documented |
 
 ### Operate — observability, eval, deployment
 
 | Capability | AWS | Azure | GCP | Alibaba |
 |---|---|---|---|---|
-| OpenTelemetry / GenAI semconv; span-level tool-call traces | · | 📄 Documented | · | ❌ No |
-| In-repo eval harness runnable in your own CI | 📄 Documented<br>strands-agents/evals | 📄 Documented | 📄 Documented | · |
+| OpenTelemetry / GenAI semconv; span-level tool-call traces | 📄 Documented | 📄 Documented | · | ❌ No |
+| In-repo eval harness runnable in your own CI | 📄 Documented<br>strands-agents/evals | 📄 Documented | 📄 Documented | 📄 Documented |
 
 ### Commercial (OSS health for bucket A)
 
@@ -79,7 +79,7 @@ Products compared: **AWS**: Strands Agents · **Azure**: Microsoft Agent Framewo
 |---|---|---|---|---|
 | License | 📄 Documented<br>Apache-2.0 | 📄 Documented<br>MIT | 📄 Documented<br>Apache-2.0 | 📄 Documented<br>Apache-2.0 |
 | Governance (single-vendor vs foundation; external maintainers?) | 📄 Documented<br>single-vendor | 📄 Documented<br>single-vendor | 📄 Documented<br>single-vendor | 📄 Documented<br>single-vendor |
-| Release cadence, breaking-change history, deprecation policy | · | 📄 Documented | 📄 Documented | 📄 Documented |
+| Release cadence, breaking-change history, deprecation policy | 📄 Documented<br>multiple per week | 📄 Documented | 📄 Documented | 📄 Documented |
 | Does the SDK force you onto that vendor's runtime? | ❌ No | ❌ No | ❌ No | ❌ No |
 | Community signal (contributors, issue response, production adopters) | 📄 Documented | 📄 Documented | 📄 Documented | 📄 Documented |
 
@@ -89,7 +89,7 @@ Products compared: **AWS**: Strands Agents · **Azure**: Microsoft Agent Framewo
 
 | Capability | AWS | Azure | GCP | Alibaba |
 |---|---|---|---|---|
-| Does the SDK phone home telemetry by default, and can you disable it? | · | · | · | ❌ No |
+| Does the SDK phone home telemetry by default, and can you disable it? | ❌ No | ❌ No | ❌ No | ❌ No |
 
 ---
 
@@ -104,12 +104,12 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
 | Code-first vs low-code builder | · | 📄 Documented<br>both | · | · | 📄 Documented<br>both |
-| Multi-agent patterns | · | · | · | 📄 Documented<br>orchestrator / sub-agent delegation | · |
+| Multi-agent patterns | · | · | · | 📄 Documented<br>orchestrator / sub-agent delegation | 📄 Documented<br>Agent orchestration applications |
 | Workflow engine (graph/DAG, durable, resumable) | · | · | · | · | 📄 Documented |
 | Managed agent runtime | ✅ GA<br>AgentCore Runtime | ✅ GA<br>Agent Runtime | ✅ GA<br>Agent Runtime | 📄 Documented<br>ModelArk Managed Agents | 📄 Documented<br>百炼 / Bailian application platform (Agent 1.0) |
-| Managed agent loop (define + invoke an agent in one API call) | ✅ GA<br>AgentCore Harness | ✅ GA<br>Prompt agents (Foundry) | · | 📄 Documented<br>ModelArk Managed Agents | 📄 Documented<br>百炼 visual agent builder (Agent 1.0) |
+| Managed agent loop (define + invoke an agent in one API call) | ✅ GA<br>AgentCore Harness | ✅ GA<br>Prompt agents (Foundry) | 🟡 Preview<br>Managed Agents API | 📄 Documented<br>ModelArk Managed Agents | 📄 Documented<br>百炼 visual agent builder (Agent 1.0) |
 | Session lifecycle API (start, manage, event stream) | · | · | · | 📄 Documented | · |
-| Long-running agents (max session duration, async/background) | 📄 Documented | · | 📄 Documented | 📄 Documented | · |
+| Long-running agents (max session duration, async/background) | 📄 Documented | 📄 Documented<br>Background Responses + Hosted Agents | 📄 Documented | 📄 Documented | · |
 | Framework agnosticism | 📄 Documented<br>CrewAI, LangGraph, LlamaIndex, +4 | 📄 Documented<br>Microsoft Agent Framework, LangGraph, OpenAI Agents SDK, +3 | 📄 Documented<br>ADK, LangGraph, LangChain, +4 | · | · |
 | Agent-to-agent (A2A) protocol support | · | 🟡 Preview | · | · | · |
 | Can agents you build be published INTO the vendor's packaged product? | · | 📄 Documented | · | · | · |
@@ -121,7 +121,6 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 | First-party frontier models | · | · | · | 📄 Documented<br>Dola Seed 2.0, Seed 2.0 Pro, Seed 2.0 Lite, +2 | 📄 Documented<br>Qwen-Max, Qwen-Plus, Qwen-Flash |
 | Third-party model catalog | 📄 Documented | 📄 Documented | · | · | 📄 Documented<br>DeepSeek, Kimi, GLM |
 | OpenAI-compatible endpoint | · | 📄 Documented<br>Responses API | · | · | 📄 Documented |
-| Coding-agent plan / third-party coding-tool integration | · | · | · | · | 📄 Documented |
 
 ### Tools & context
 
@@ -132,7 +131,7 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 | Managed MCP registry / catalog | 🟡 Preview<br>AgentCore Registry / AWS Agent Registry | 📄 Documented<br>Toolbox | 📄 Documented<br>Skill Registry | · | · |
 | Uploadable skill packs (reusable capability bundles) | · | · | · | 📄 Documented | · |
 | Code interpreter / sandbox | 📄 Documented<br>AgentCore Code Interpreter | 📄 Documented | 🟡 Preview<br>Code Execution (Sandbox) | 📄 Documented | 📄 Documented |
-| Managed browser / computer use | 📄 Documented<br>AgentCore Browser | · | 📄 Documented<br>Computer Use (Sandbox) | ❌ No | · |
+| Managed browser / computer use | 📄 Documented<br>AgentCore Browser | · | 📄 Documented<br>Computer Use (Sandbox) | ❌ No | ❌ No |
 | Built-in web search tool | · | 🟡 Preview | · | · | · |
 | Agent payments / microtransactions | 🟡 Preview<br>AgentCore Payments | · | · | · | · |
 | Managed knowledge base / RAG | ❌ No | 📄 Documented<br>file search, SharePoint, WorkIQ, +1 | 📄 Documented<br>RAG Engine | 📄 Documented<br>Knowledge base | 📄 Documented |
@@ -142,16 +141,16 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
 | Short-term session/thread memory | 📄 Documented<br>AgentCore Memory | 📄 Documented | ✅ GA<br>Sessions | · | · |
-| Long-term memory (semantic, episodic, preference) | 📄 Documented<br>AgentCore Memory | 🟡 Preview | ✅ GA<br>Memory Bank | 📄 Documented<br>Persistent memory | · |
+| Long-term memory (semantic, episodic, preference) | 📄 Documented<br>AgentCore Memory | 🟡 Preview | ✅ GA<br>Memory Bank | 📄 Documented<br>Persistent memory | ❌ No |
 
 ### Trust — identity, guardrails, human-in-the-loop
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
-| Agent workload identity | 📄 Documented<br>AgentCore Identity | 📄 Documented | 📄 Documented | 📄 Documented | · |
+| Agent workload identity | 📄 Documented<br>AgentCore Identity | 📄 Documented | 📄 Documented | 📄 Documented | 📄 Documented |
 | Delegated end-user auth (OAuth token vault, 3LO, on-behalf-of) | 📄 Documented<br>AgentCore Identity | 📄 Documented | 📄 Documented | 📄 Documented | · |
 | Least-privilege scoping of tool access; per-tool policy | ✅ GA<br>Policy in AgentCore | · | · | 📄 Documented | · |
-| Guardrails | 📄 Documented | 📄 Documented | · | 📄 Documented | · |
+| Guardrails | 📄 Documented | 📄 Documented | 📄 Documented<br>Safety Filters + Model Armor + DLP | 📄 Documented | 📄 Documented<br>AI Guardrails + AI Gateway |
 
 ### Operate — observability, eval, deployment
 
@@ -172,7 +171,7 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 |---|---|---|---|---|---|
 | Pricing axes | 📄 Documented | 📄 Documented | 📄 Documented | 📄 Documented | 📄 Documented |
 | Which primitives bill separately | 📄 Documented | · | · | · | · |
-| Support tier & SLA on the agent runtime specifically | · | · | · | · | · |
+| Support tier & SLA on the agent runtime specifically | 📄 Documented<br>99.9% | ❌ No | 📄 Documented<br>99.5% (online inference), 99.9% (Agent Search API) | · | · |
 
 ### Sovereignty & reach
 
@@ -181,9 +180,9 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 | Region availability OF THE AGENT RUNTIME | 📄 Documented | ✅ GA | 🟠 Limited | 📄 Documented<br>Johor (ap-southeast-1), Dublin (eu-west-1) | 📄 Documented<br>Singapore, US (Virginia), China (Beijing), +3 |
 | Per-tool regional availability (does every tool work in every region?) | · | 📄 Documented | · | · | · |
 | Hard service limits (files, messages, tools, versions) | · | 📄 Documented | · | · | · |
-| Launch-stage evidence trail (where the vendor does/doesn't state GA) | · | · | · | · | · |
+| Launch-stage evidence trail (where the vendor does/doesn't state GA) | · | · | · | · | 🟡 Preview |
 | Data residency, in-region processing, cross-region inference behavior | · | 📄 Documented | 📄 Documented | · | · |
-| Training-on-customer-data policy, retention, abuse-monitoring opt-out | 📄 Documented | · | 📄 Documented | 📄 Documented | 📄 Documented |
+| Training-on-customer-data policy, retention, abuse-monitoring opt-out | 📄 Documented | 📄 Documented | 📄 Documented | 📄 Documented | 📄 Documented |
 | Certifications | 📄 Documented | 📄 Documented | 📄 Documented | 📄 Documented<br>ISO 9001, ISO 20000, ISO 22301, +10 | · |
 | Gov / sovereign cloud availability | · | 📄 Documented<br>US Gov Virginia, US Gov Arizona | · | · | · |
 
@@ -207,43 +206,92 @@ Products compared: **AWS**: Amazon Q Business · **Azure**: Microsoft 365 Copilo
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
-| Is the underlying model choosable, or fixed and opaque? | ❌ No | ❌ No | · | · | 📄 Documented |
-| Coding-agent plan / third-party coding-tool integration | ❌ No | · | · | · | 📄 Documented |
+| Is the underlying model choosable, or fixed and opaque? | ❌ No | ❌ No | 📄 Documented | · | 📄 Documented |
 
 ### Tools & context
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
 | Prebuilt SaaS/enterprise connectors | 📄 Documented | 📄 Documented | 📄 Documented | · | 📄 Documented |
-| Enterprise index freshness (real-time vs batch crawl) | 📄 Documented | 📄 Documented | · | · | 📄 Documented |
+| Enterprise index freshness (real-time vs batch crawl) | 📄 Documented | 📄 Documented | 📄 Documented | · | 📄 Documented |
 
 ### Trust — identity, guardrails, human-in-the-loop
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
-| Guardrails | 📄 Documented | 📄 Documented | · | · | · |
+| Guardrails | 📄 Documented | 📄 Documented | 📄 Documented<br>Model Armor | · | 📄 Documented<br>AI Guardrails |
 | Permission-aware retrieval (ACL trimming at query time) | 📄 Documented | 📄 Documented | 📄 Documented | · | · |
-| DLP, tenant isolation, admin controls | 📄 Documented | 📄 Documented | · | · | · |
+| DLP, tenant isolation, admin controls | 📄 Documented | 📄 Documented | 📄 Documented | · | 📄 Documented |
 
 ### Operate — observability, eval, deployment
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
-| Admin & adoption analytics, answer-feedback loop | · | 📄 Documented | · | · | 📄 Documented |
+| Admin & adoption analytics, answer-feedback loop | · | 📄 Documented | 📄 Documented | · | 📄 Documented |
 
 ### Commercial (OSS health for bucket A)
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
-| Per-seat cost, minimum seats, annual commitment | 📄 Documented | 📄 Documented | · | · | · |
-| Bundling with licenses you already own | ❌ No | 📄 Documented | 📄 Documented | · | · |
+| Per-seat cost, minimum seats, annual commitment | 📄 Documented | 📄 Documented | 📄 Documented | · | 📄 Documented |
+| Bundling with licenses you already own | ❌ No | 📄 Documented | 📄 Documented | · | ❌ No |
 
 ### Sovereignty & reach
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
 | Training-on-customer-data policy, retention, abuse-monitoring opt-out | 📄 Documented | 📄 Documented | 📄 Documented | · | 📄 Documented |
-| Where the enterprise index physically lives | 📄 Documented<br>us-east-1, us-west-2, eu-west-1, +1 | 📄 Documented | · | · | 📄 Documented |
+| Where the enterprise index physically lives | 📄 Documented<br>us-east-1, us-west-2, eu-west-1, +1 | 📄 Documented | 📄 Documented<br>global, us, eu, +5 | · | 📄 Documented |
+
+---
+
+## Bucket D — AI coding tools (*code*)
+
+> Which AI coding tool fits my dev team?
+
+Products compared: **AWS**: Kiro · **Azure**: GitHub Copilot · **GCP**: Gemini Code Assist · **BytePlus**: unknown · **Alibaba**: Tongyi Lingma
+
+### Build & orchestrate
+
+| Capability | AWS | Azure | GCP | BytePlus | Alibaba |
+|---|---|---|---|---|---|
+| IDE integration (VS Code, JetBrains, Vim/Neovim, other) | · | · | · | · | · |
+| CLI / terminal agent mode | · | · | · | · | · |
+| Agentic coding (multi-file edits, task execution, tool use) | · | · | · | · | · |
+
+### Model access
+
+| Capability | AWS | Azure | GCP | BytePlus | Alibaba |
+|---|---|---|---|---|---|
+| Is the underlying model choosable, or fixed and opaque? | · | · | · | · | · |
+| Model choice in coding tool | · | · | · | · | · |
+
+### Tools & context
+
+| Capability | AWS | Azure | GCP | BytePlus | Alibaba |
+|---|---|---|---|---|---|
+| MCP support in coding tool | · | · | · | · | · |
+| Codebase indexing / repo-wide context | · | · | · | · | · |
+| AI code review (PR review, inline suggestions) | · | · | · | · | · |
+
+### Trust — identity, guardrails, human-in-the-loop
+
+| Capability | AWS | Azure | GCP | BytePlus | Alibaba |
+|---|---|---|---|---|---|
+| Code snippet retention & training policy | · | · | · | · | · |
+
+### Commercial (OSS health for bucket A)
+
+| Capability | AWS | Azure | GCP | BytePlus | Alibaba |
+|---|---|---|---|---|---|
+| Per-seat pricing (individual / business / enterprise tiers) | · | · | · | · | · |
+| Free tier or usage-based option | · | · | · | · | · |
+
+### Sovereignty & reach
+
+| Capability | AWS | Azure | GCP | BytePlus | Alibaba |
+|---|---|---|---|---|---|
+| Launch-stage evidence trail (where the vendor does/doesn't state GA) | · | · | · | · | · |
 
 ---
 
@@ -258,20 +306,25 @@ is what produced this project's first fairness bug:
 
 | Provider | Bucket | Cells | Sourced | Verified | Stage stated |
 |---|---|---|---|---|---|
-| Alibaba | A | 19 | 18 (95%) | 18 (95%) | 0 (0%) |
-| Alibaba | B | 24 | 19 (79%) | 16 (67%) | 0 (0%) |
-| Alibaba | C | 15 | 12 (80%) | 10 (67%) | 0 (0%) |
-| AWS | A | 17 | 15 (88%) | 13 (76%) | 0 (0%) |
-| AWS | B | 29 | 29 (100%) | 28 (97%) | 8 (28%) |
-| AWS | C | 14 | 13 (93%) | 13 (93%) | 0 (0%) |
-| Azure | A | 17 | 16 (94%) | 15 (88%) | 0 (0%) |
-| Azure | B | 35 | 34 (97%) | 32 (91%) | 7 (20%) |
-| Azure | C | 15 | 15 (100%) | 14 (93%) | 0 (0%) |
+| Alibaba | A | 19 | 19 (100%) | 19 (100%) | 0 (0%) |
+| Alibaba | B | 23 | 21 (91%) | 21 (91%) | 1 (4%) |
+| Alibaba | C | 14 | 14 (100%) | 13 (93%) | 0 (0%) |
+| Alibaba | D | 12 | 0 (0%) | 0 (0%) | 0 (0%) |
+| AWS | A | 17 | 17 (100%) | 17 (100%) | 0 (0%) |
+| AWS | B | 29 | 29 (100%) | 29 (100%) | 8 (28%) |
+| AWS | C | 13 | 12 (92%) | 12 (92%) | 0 (0%) |
+| AWS | D | 12 | 0 (0%) | 0 (0%) | 0 (0%) |
+| Azure | A | 17 | 17 (100%) | 17 (100%) | 0 (0%) |
+| Azure | B | 35 | 35 (100%) | 35 (100%) | 7 (20%) |
+| Azure | C | 14 | 14 (100%) | 14 (100%) | 0 (0%) |
+| Azure | D | 12 | 0 (0%) | 0 (0%) | 0 (0%) |
 | BytePlus | B | 26 | 25 (96%) | 24 (92%) | 0 (0%) |
 | BytePlus | C | 0 | — | — | — |
-| GCP | A | 16 | 15 (94%) | 15 (94%) | 0 (0%) |
-| GCP | B | 25 | 23 (92%) | 22 (88%) | 5 (20%) |
-| GCP | C | 15 | 8 (53%) | 7 (47%) | 0 (0%) |
+| BytePlus | D | 12 | 0 (0%) | 0 (0%) | 0 (0%) |
+| GCP | A | 16 | 16 (100%) | 16 (100%) | 0 (0%) |
+| GCP | B | 25 | 25 (100%) | 25 (100%) | 6 (24%) |
+| GCP | C | 14 | 14 (100%) | 14 (100%) | 0 (0%) |
+| GCP | D | 12 | 0 (0%) | 0 (0%) | 0 (0%) |
 
 **Stage stated is near-zero everywhere** — vendors document capabilities without
 saying whether they are GA. That is a finding about the industry's disclosure, and

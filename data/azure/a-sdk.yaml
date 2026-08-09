@@ -82,14 +82,20 @@ capabilities:
     verified_by: "@notacryptodad"
 
   mcp_client:
-    status: unknown
+    product: MCPToolDefinition / hostedtool.MCPServer
+    status: documented
     notes: >
-      NO evidence on the repo page. "MCP Registry" appears only in GitHub's own site-wide
-      navigation, not in the README, feature list, or samples.
-      Given Foundry Agent Service supports remote MCP servers, MAF very likely does too —
-      but that is inference, not evidence. Needs the docs site or a samples directory.
-    source: null
-    verified_on: null
+      Full MCP client support. "Connect your Foundry agents to Model Context Protocol (MCP)
+      servers by using the MCP tool." Supported in Python, C#, JavaScript, Java, and REST.
+      Two modes: (1) hosted MCP tools where Foundry manages the MCP server connection
+      server-side, and (2) Toolbox-based MCP where tools are bundled into a managed MCP
+      endpoint. Supports public and private (VNet-isolated) MCP server endpoints.
+      Tool approval workflow configurable: always, never, or per-tool.
+      Announced at Build 2025 as a partnership with Anthropic to make MCP "a first-class
+      standard across Windows 11, GitHub, Copilot Studio, and Azure AI Foundry."
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
 
   oss_license:
     status: documented
@@ -186,10 +192,17 @@ capabilities:
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   sdk_telemetry_phone_home:
-    status: unknown
+    status: none
     notes: >
-      No mention of telemetry collection, opt-in/opt-out, or phone-home behavior in the
-      README or release notes.
-    source: https://github.com/microsoft/agent-framework
+      No phone-home to Microsoft. Instrumentation is enabled by default (as of PR #5865,
+      merged 2026-05-20) but emits ONLY to user-configured OpenTelemetry exporters — no
+      hardcoded Microsoft endpoint. "ENABLE_INSTRUMENTATION" defaults to true; set to
+      "false" to opt out, or call disable_instrumentation() for sticky process-wide
+      disable. All telemetry is OTel-standard (traces, logs, metrics per GenAI semconv)
+      routed to whatever OTLP endpoint the user configures (Aspire Dashboard, Jaeger, Azure
+      Monitor, etc.). Without an exporter configured, no data leaves the process.
+      Sensitive data (prompts, responses) requires explicit opt-in via
+      enable_sensitive_telemetry() or ENABLE_SENSITIVE_DATA=true.
+    source: https://learn.microsoft.com/en-us/agent-framework/agents/observability
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"

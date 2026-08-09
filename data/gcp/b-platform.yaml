@@ -68,17 +68,22 @@ capabilities:
     verified_by: "@notacryptodad"
 
   managed_agent_loop:
-    status: unknown
+    product: Managed Agents API
+    status: preview
     notes: >
-      NO managed-loop equivalent found. GCP's model is code-first: you write an agent
-      using ADK/LangGraph/etc. and deploy it to Agent Runtime. "Agent Studio" appears in
-      some navigation but the page 404s and no documentation describes a declarative
-      "define agent via config, platform runs the loop" option.
-      The closest is ADK's minimal boilerplate (Agent class + deploy command), but you
-      still write Python. Unlike AWS Harness ("single API call") or Azure prompt agents
-      ("no application code to maintain"), GCP requires code.
-      Worth monitoring — Google may add this as Gemini Enterprise Agent Platform matures.
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+      "Managed Agents API on Agent Platform lets you build managed, autonomous agents with
+      a single API call."
+      Powered by the "Antigravity harness" — each agent runs in a sandbox where it
+      "reasons, plans, uses agent skills, executes code, searches the web, and reads and
+      writes files." You configure via the Agents API (control plane): "create agents from
+      configurations and configure their execution environments, including mounting external
+      data sources and defining network allowlists."
+      The Interactions API is the runtime interface for communicating with deployed agents.
+      LAUNCH STAGE: explicitly PREVIEW — "These Pre-GA products are in various stages of
+      internal testing and review" with a warning "do not use proprietary, sensitive, or
+      other confidential data." So GCP DOES have a managed loop, but it's behind AWS (GA)
+      and Azure (GA) on maturity.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/managed-agents
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
@@ -280,9 +285,22 @@ capabilities:
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   runtime_sla:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    value: 99.5% (online inference), 99.9% (Agent Search API)
+    notes: >
+      TWO SEPARATE SLAs cover the platform:
+      1. Gemini Online Inference API on Gemini Enterprise Agent Platform: 99.5% Monthly
+         Uptime (or 95% for "shorter availability" models). Provisioned Throughput adds a
+         latency SLA: 99% Monthly Latency Target Attainment.
+      2. Agent Search API on Gemini Enterprise Agent Platform: 99.9% Monthly Uptime.
+      Financial credits: 10% at 99.0-99.5%, 25% at 95-99%, 50% below 95%.
+      Claim window: 30 days, requires log files showing downtime periods.
+      Per-project, per-region measurement.
+      NOTE: the Gemini Enterprise (bucket C) SLA is separate: Stream Assist (assistant
+      chat) = 99.5%, Search = 99.9%.
+    source: https://cloud.google.com/vertex-ai/generative-ai/sla
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   long_running_agents:
     status: documented
     notes: >
@@ -313,9 +331,22 @@ capabilities:
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   guardrails:
-    status: unknown
-    source: null
-    verified_on: null
+    product: Safety Filters + Model Armor + DLP
+    status: documented
+    notes: >
+      Multi-layered safety system documented:
+      1. Non-configurable filters — block CSAM and PII automatically.
+      2. Configurable content filters — per-category (Hate Speech, Harassment, Sexually
+      Explicit, Dangerous Content) with thresholds BLOCK_LOW/MEDIUM/HIGH/NONE.
+      3. Jailbreak classifier — dedicated filter for prompt injection attempts (off by default).
+      4. Model Armor — enterprise-grade service on Agent Gateway: "inspecting all prompts and
+      responses that pass through the gateway." Covers prompt injection, jailbreaks,
+      sensitive data, malware detection, and safe browsing.
+      5. DLP — redaction via Sensitive Data Protection API with custom infoType detectors.
+      6. Gemini-as-a-filter — second model call for custom content/brand safety policies.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/safety
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   iac_coverage:
     status: documented
     notes: >

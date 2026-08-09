@@ -1,0 +1,34 @@
+provider: aws
+bucket: d
+product: Kiro
+aliases: [Amazon Q Developer, Q Developer]
+notes: >
+  Kiro is the AWS-ecosystem AI coding tool, replacing Amazon Q Developer (which is being
+  faded out). IDE-first experience with agentic capabilities, specs-driven development,
+  and steering rules. Previously known as Amazon Q Developer.
+
+capabilities:
+  ide_integration:
+    status: unknown
+  cli_agent:
+    status: unknown
+  agentic_coding:
+    status: unknown
+  model_choice_coding:
+    status: unknown
+  model_choosable:
+    status: unknown
+  mcp_support_coding:
+    status: unknown
+  codebase_indexing:
+    status: unknown
+  code_review:
+    status: unknown
+  code_data_retention:
+    status: unknown
+  coding_seat_pricing:
+    status: unknown
+  coding_free_tier:
+    status: unknown
+  launch_stage_investigation:
+    status: unknown
