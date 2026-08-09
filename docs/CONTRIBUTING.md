@@ -147,6 +147,12 @@ This is one of the most useful things you can contribute: it documents a gap in 
 *vendor's* disclosure. The validator requires a `notes` explaining what the page failed
 to state, so these can't be confused with unresearched cells.
 
+## Further reading
+
+- **[GEO readiness of vendor docs](insights/geo-readiness.md)** — why JS-rendered docs
+  make providers invisible to AI search tools (Perplexity, Google AI Overview) and what
+  that means for this comparison's methodology and the vendors' discoverability.
+
 ## Accepted sources, per bucket
 
 | Bucket | Authoritative source |
