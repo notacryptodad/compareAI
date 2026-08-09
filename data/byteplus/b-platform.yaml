@@ -136,13 +136,17 @@ capabilities:
     verified_by: "@notacryptodad"
 
   tool_least_privilege:
-    status: unknown
+    status: documented
     notes: >
-      Doc title "Tool permission policy" exists alongside "Agent", "Skills", "Tools" —
-      a per-tool policy concept comparable to AgentCore Policy. Unverified depth.
-      If real, this is a notable strength for a provider often assumed to be behind.
-    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
-    verified_on: 2026-08-04
+      Tool permission policies confirmed from the rendered tools page:
+      "Tool permission policies are used to control whether tool calls initiated by an
+      agent are executed automatically or paused for confirmation."
+      Common practices: "Use the default auto-allow behavior for built-in tools",
+      "Use default manual confirmation for MCP tools, or auto-allow only whitelisted tools."
+      This is a genuine per-tool-type permission system — comparable to AgentCore Policy.
+      The granularity (per-tool-name whitelisting) goes beyond simple on/off.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553719
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   code_interpreter:
@@ -159,53 +163,73 @@ capabilities:
     verified_by: "@notacryptodad"
 
   browser_use:
-    status: unknown
+    status: none
     notes: >
-      NOT FOUND — no browser-use or web-browsing page title in the captured navigation.
-      Absence in a nav-only capture is weak evidence; recheck before recording `none`.
-    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
-    verified_on: 2026-08-04
+      No browser-use or web-browsing capability found. The built-in toolset includes
+      "Web Fetch" (fetch content from a URL) and "Web Search" (start a web search) but
+      these are API-level tools, NOT a browser agent that navigates/clicks/screenshots.
+      No equivalent to GCP's Computer Use sandbox or AWS's browser automation.
+      Confirmed from full rendered page content via Playwright — this is genuine absence,
+      not a fetch limitation.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553719
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   long_term_memory:
-    status: unknown
+    status: documented
+    product: Persistent memory
     notes: >
-      Doc titles under "Manage agent context": "Upload and mount files",
-      "Persistent memory". Also "Context management", "Context caching overview",
-      "Files API tutorial".
-    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
-    verified_on: 2026-08-04
+      "Persistent memory" is a documented capability under "Manage agent context".
+      Context management also includes: "Upload and mount files", "Context caching
+      overview", "Files API tutorial". The overview confirms "context management" as one of
+      the components the platform handles for you (vs. DIY). Context is "automatically
+      compressed, and the Event API retains all content without loss."
+      Whether this is cross-session persistence (like Vertex Memory Bank) or within-session
+      only needs the dedicated page — but "Persistent" in the title suggests cross-session.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553713
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   knowledge_base:
-    status: unknown
+    status: documented
+    product: Knowledge base
     notes: >
-      Substantial documented section: "Create a knowledge base", "Knowledge retrieval",
-      "Knowledge Q&A", "Create a knowledge service".
+      Confirmed from navigation AND the overview page's feature listing. Multiple
+      sub-pages: "Create a knowledge base", "Knowledge retrieval", "Knowledge Q&A",
+      "Create a knowledge service". Also an "App Lab" section for application building.
+      Depth of RAG implementation (chunking, embedding model choice, etc.) not verified
+      from this pass — needs the dedicated knowledge base page via Playwright.
     source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   first_party_models:
-    status: unknown
+    status: documented
+    value: [Dola Seed 2.0, Seed 2.0 Pro, Seed 2.0 Lite, Seed 2.0 Mini, Dola Seed 2.1 Turbo]
     notes: >
-      MODEL FAMILY RESOLVED from the rendered pricing table, and it is NOT what earlier
-      revisions guessed: the LLM family is "Seed" (seed-1-6, seed-1-8-251228,
-      seed-2-0-pro-260328, seed-2-0-lite, seed-2-0-mini, seed-2-0-code-preview-260328),
-      with Seedance for video, Seedream/Seededit for image, and a "dola-" prefix on some
-      agent-facing IDs (dola-seed-2-1-turbo, dola-seedream-5-0-pro-260628). The Managed
-      Agents overview refers to "Dola models".
-      NEITHER Skylark NOR Doubao appears — both were plausible guesses from the ByteDance
-      relationship and both would have been wrong. Date-suffixed IDs mean pinned snapshots.
-    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
-    verified_on: 2026-08-04
+      Model family is "Seed" (NOT Skylark, NOT Doubao — earlier guesses were wrong).
+      Dola Seed 2.0: "Flagship general-purpose agentic model — Built for complex reasoning
+      and long-chain, multi-step task execution in the Agent era"
+      Variants: seed-2-0-pro (reasoning), seed-2-0-lite (balanced), seed-2-0-mini (low-cost),
+      seed-2-0-code-preview (coding), dola-seed-2-1-turbo (latest agent-optimized).
+      Non-LLM: Seedance 2.0 (video), Seedream 5.0 (image), Seededit (image editing).
+      Third-party models also available: DeepSeek v4, GLM-5-2, GLM-4-7.
+      Date-suffixed IDs (e.g. seed-2-0-lite-260228) are pinned model snapshots.
+    source: https://docs.byteplus.com/en/docs/ModelArk/1544106
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   delegated_user_auth:
-    status: unknown
-    notes: 'Doc title "Use Vaults authentication" — a credential-vault concept. Unverified.'
-    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
-    verified_on: 2026-08-04
+    status: documented
+    notes: >
+      "Use Vaults authentication" documented as a section under Managed Agents. The
+      overview states the platform handles "IAM, key injection, and runtime environment
+      isolation" — so credentials are platform-managed. Whether this supports delegated
+      end-user auth (3LO / OAuth on behalf of user) vs. just service-level credentials
+      is not confirmed from available pages. Recording as documented (credential vault
+      exists) but the depth vs. GCP's 3LO or Azure's Entra delegation is unclear.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553713
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   tool_calling:
@@ -281,25 +305,59 @@ capabilities:
     source: null
     verified_on: null
   otel_traces:
-    status: unknown
-    source: null
-    verified_on: null
+    status: none
+    notes: >
+      No OpenTelemetry or tracing capability found in Managed Agents documentation.
+      Searched overview, tools, and advanced capabilities pages — zero mentions of
+      OTel, tracing, distributed tracing, or observability export. The platform does
+      persist events ("append-only" event log with "later replay") which serves as an
+      audit trail, but this is NOT the same as OTel-compatible trace export.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553713
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   eval_service:
-    status: unknown
-    source: null
-    verified_on: null
+    status: none
+    notes: >
+      No evaluation service found. Navigation shows no eval/benchmark section under
+      Managed Agents. "PromptPilot" exists as a separate section but that is prompt
+      optimization, not agent evaluation. No equivalent to GCP's Evaluation Service or
+      ADK's eval framework documented.
+    source: https://docs.byteplus.com/en/docs/ModelArk/Introduction
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   guardrails:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Tool permission policies serve as the primary guardrail mechanism — controlling
+      "whether tool calls initiated by an agent are executed automatically or paused for
+      confirmation." MCP tools default to manual confirmation; built-in tools default to
+      auto-allow. This is execution-level control, not content-safety guardrails (no
+      equivalent to Bedrock Guardrails or M365's content harm filters documented).
+      Also: "permission isolation" named as a platform-managed component, and IAM-based
+      credential isolation ("keys do not enter sandbox processes").
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553719
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   agent_workload_identity:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "Based on BytePlus IAM + zero-trust credential isolation, keys do not enter sandbox
+      processes." This is the platform's workload identity model — agents operate under
+      IAM-managed credentials that are injected at runtime without being exposed to the
+      sandbox execution environment. API keys are region-scoped and isolated.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553713
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   private_networking:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "Network configuration" is listed as a platform capability in the AP region (but NOT
+      in the EU region — the capability availability table shows it as AP-only). This
+      suggests VPC/private networking options exist for AP deployments. Depth not verified
+      from the overview — needs the dedicated network configuration page.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2191806
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   certifications:
     status: documented
     value: [ISO 9001, ISO 20000, ISO 22301, ISO 27001, ISO 27017, ISO 27018, ISO 27701, SOC 1, SOC 2, SOC 3, PCI DSS, CSA STAR, MTCS Level 3]
@@ -315,6 +373,15 @@ capabilities:
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   training_data_policy:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "BytePlus ModelArk Data Processing" document referenced in the region availability
+      page as a related document. The overview page states sessions are isolated and
+      events are persisted per-session — no cross-customer data sharing described.
+      A dedicated data processing policy exists but was not fetched this pass. The trust
+      center (separately verified) documents GDPR compliance, suggesting a no-training
+      commitment exists in the DPA. (Paraphrase — exact policy wording needs the dedicated
+      page.)
+    source: https://docs.byteplus.com/en/docs/ModelArk/2191806
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

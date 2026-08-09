@@ -12,7 +12,7 @@ where launch stage does not apply. ✅ GA appears only where the vendor says
 which is itself the finding, and why every provider reads `documented` rather than
 AWS/Azure reading GA while Google reads blank.
 
-**Data as of 2026-08-09** · 232 verified cells across 14 provider-buckets
+**Data as of 2026-08-09** · 238 verified cells across 14 provider-buckets
 
 Legend: `ga` ✅ GA · `documented` 📄 Documented · `preview` 🟡 Preview · `limited` 🟠 Limited · `partner` 🔵 Partner · `oss` ⚪ OSS · `none` ❌ No · `unknown` ·
 
@@ -118,7 +118,7 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
-| First-party frontier models | · | · | · | · | 📄 Documented<br>Qwen-Max, Qwen-Plus, Qwen-Flash |
+| First-party frontier models | · | · | · | 📄 Documented<br>Dola Seed 2.0, Seed 2.0 Pro, Seed 2.0 Lite, +2 | 📄 Documented<br>Qwen-Max, Qwen-Plus, Qwen-Flash |
 | Third-party model catalog | 📄 Documented | 📄 Documented | · | · | 📄 Documented<br>DeepSeek, Kimi, GLM |
 | OpenAI-compatible endpoint | · | 📄 Documented<br>Responses API | · | · | 📄 Documented |
 | Coding-agent plan / third-party coding-tool integration | · | · | · | · | 📄 Documented |
@@ -132,37 +132,37 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 | Managed MCP registry / catalog | 🟡 Preview<br>AgentCore Registry / AWS Agent Registry | 📄 Documented<br>Toolbox | 📄 Documented<br>Skill Registry | · | · |
 | Uploadable skill packs (reusable capability bundles) | · | · | · | 📄 Documented | · |
 | Code interpreter / sandbox | 📄 Documented<br>AgentCore Code Interpreter | 📄 Documented | 🟡 Preview<br>Code Execution (Sandbox) | 📄 Documented | 📄 Documented |
-| Managed browser / computer use | 📄 Documented<br>AgentCore Browser | · | 📄 Documented<br>Computer Use (Sandbox) | · | · |
+| Managed browser / computer use | 📄 Documented<br>AgentCore Browser | · | 📄 Documented<br>Computer Use (Sandbox) | ❌ No | · |
 | Built-in web search tool | · | 🟡 Preview | · | · | · |
 | Agent payments / microtransactions | 🟡 Preview<br>AgentCore Payments | · | · | · | · |
-| Managed knowledge base / RAG | ❌ No | 📄 Documented<br>file search, SharePoint, WorkIQ, +1 | 📄 Documented<br>RAG Engine | · | 📄 Documented |
+| Managed knowledge base / RAG | ❌ No | 📄 Documented<br>file search, SharePoint, WorkIQ, +1 | 📄 Documented<br>RAG Engine | 📄 Documented<br>Knowledge base | 📄 Documented |
 
 ### Memory & state
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
 | Short-term session/thread memory | 📄 Documented<br>AgentCore Memory | 📄 Documented | ✅ GA<br>Sessions | · | · |
-| Long-term memory (semantic, episodic, preference) | 📄 Documented<br>AgentCore Memory | 🟡 Preview | ✅ GA<br>Memory Bank | · | · |
+| Long-term memory (semantic, episodic, preference) | 📄 Documented<br>AgentCore Memory | 🟡 Preview | ✅ GA<br>Memory Bank | 📄 Documented<br>Persistent memory | · |
 
 ### Trust — identity, guardrails, human-in-the-loop
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
-| Agent workload identity | 📄 Documented<br>AgentCore Identity | 📄 Documented | 📄 Documented | · | · |
-| Delegated end-user auth (OAuth token vault, 3LO, on-behalf-of) | 📄 Documented<br>AgentCore Identity | 📄 Documented | 📄 Documented | · | · |
-| Least-privilege scoping of tool access; per-tool policy | ✅ GA<br>Policy in AgentCore | · | · | · | · |
-| Guardrails | 📄 Documented | 📄 Documented | · | · | · |
+| Agent workload identity | 📄 Documented<br>AgentCore Identity | 📄 Documented | 📄 Documented | 📄 Documented | · |
+| Delegated end-user auth (OAuth token vault, 3LO, on-behalf-of) | 📄 Documented<br>AgentCore Identity | 📄 Documented | 📄 Documented | 📄 Documented | · |
+| Least-privilege scoping of tool access; per-tool policy | ✅ GA<br>Policy in AgentCore | · | · | 📄 Documented | · |
+| Guardrails | 📄 Documented | 📄 Documented | · | 📄 Documented | · |
 
 ### Operate — observability, eval, deployment
 
 | Capability | AWS | Azure | GCP | BytePlus | Alibaba |
 |---|---|---|---|---|---|
-| OpenTelemetry / GenAI semconv; span-level tool-call traces | 📄 Documented<br>AgentCore Observability | ✅ GA | 📄 Documented | · | 📄 Documented |
+| OpenTelemetry / GenAI semconv; span-level tool-call traces | 📄 Documented<br>AgentCore Observability | ✅ GA | 📄 Documented | ❌ No | 📄 Documented |
 | Native APM tie-in | 📄 Documented<br>Amazon CloudWatch | 📄 Documented<br>Application Insights | · | · | · |
-| Evaluation service | ✅ GA<br>AgentCore Evaluations | 📄 Documented | 📄 Documented<br>Evaluation Service | · | 📄 Documented |
+| Evaluation service | ✅ GA<br>AgentCore Evaluations | 📄 Documented | 📄 Documented<br>Evaluation Service | ❌ No | 📄 Documented |
 | Versioning, aliases, canary, rollback | · | 📄 Documented | · | · | · |
 | IaC coverage and CI/CD story | 📄 Documented | 📄 Documented | 📄 Documented | · | · |
-| Private networking | ✅ GA | 📄 Documented | 📄 Documented | · | · |
+| Private networking | ✅ GA | 📄 Documented | 📄 Documented | 📄 Documented | · |
 | Automated agent optimization | 🟡 Preview<br>AgentCore Optimization | 📄 Documented<br>agent optimizer | · | · | · |
 | Managed end-user feedback collection | · | · | 📄 Documented<br>Feedback service | · | · |
 
@@ -183,7 +183,7 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 | Hard service limits (files, messages, tools, versions) | · | 📄 Documented | · | · | · |
 | Launch-stage evidence trail (where the vendor does/doesn't state GA) | · | · | · | · | · |
 | Data residency, in-region processing, cross-region inference behavior | · | 📄 Documented | 📄 Documented | · | · |
-| Training-on-customer-data policy, retention, abuse-monitoring opt-out | 📄 Documented | · | 📄 Documented | · | 📄 Documented |
+| Training-on-customer-data policy, retention, abuse-monitoring opt-out | 📄 Documented | · | 📄 Documented | 📄 Documented | 📄 Documented |
 | Certifications | 📄 Documented | 📄 Documented | 📄 Documented | 📄 Documented<br>ISO 9001, ISO 20000, ISO 22301, +10 | · |
 | Gov / sovereign cloud availability | · | 📄 Documented<br>US Gov Virginia, US Gov Arizona | · | · | · |
 
@@ -267,7 +267,7 @@ is what produced this project's first fairness bug:
 | Azure | A | 17 | 16 (94%) | 15 (88%) | 0 (0%) |
 | Azure | B | 34 | 33 (97%) | 31 (91%) | 6 (18%) |
 | Azure | C | 15 | 15 (100%) | 14 (93%) | 0 (0%) |
-| BytePlus | B | 25 | 18 (72%) | 11 (44%) | 0 (0%) |
+| BytePlus | B | 25 | 24 (96%) | 23 (92%) | 0 (0%) |
 | BytePlus | C | 0 | — | — | — |
 | GCP | A | 16 | 15 (94%) | 15 (94%) | 0 (0%) |
 | GCP | B | 24 | 22 (92%) | 22 (92%) | 5 (21%) |
