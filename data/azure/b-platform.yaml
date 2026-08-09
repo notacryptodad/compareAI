@@ -64,6 +64,20 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
 
+  managed_agent_loop:
+    product: Prompt agents (Foundry)
+    status: ga
+    notes: >
+      "Author a prompt agent in the Foundry portal or define it with SDKs and REST, and
+      Foundry runs it for you. No application code to maintain, no compute to pay for."
+      This is the managed-loop tier: you supply config (model + prompt + tools), Foundry
+      runs the agent loop. Contrast with Hosted agents where you supply the code/container.
+      Cost: "Per-call inference + tool usage" only — no compute charge.
+      Inherits the GA status of Foundry Agent Service overall.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   openai_compatible_endpoint:
     status: documented
     product: Responses API

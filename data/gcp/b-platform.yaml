@@ -67,6 +67,21 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
 
+  managed_agent_loop:
+    status: unknown
+    notes: >
+      NO managed-loop equivalent found. GCP's model is code-first: you write an agent
+      using ADK/LangGraph/etc. and deploy it to Agent Runtime. "Agent Studio" appears in
+      some navigation but the page 404s and no documentation describes a declarative
+      "define agent via config, platform runs the loop" option.
+      The closest is ADK's minimal boilerplate (Agent class + deploy command), but you
+      still write Python. Unlike AWS Harness ("single API call") or Azure prompt agents
+      ("no application code to maintain"), GCP requires code.
+      Worth monitoring — Google may add this as Gemini Enterprise Agent Platform matures.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   framework_agnosticism:
     status: documented
     value: [ADK, LangGraph, LangChain, LlamaIndex, AG2, A2A, custom]

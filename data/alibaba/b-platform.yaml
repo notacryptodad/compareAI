@@ -148,6 +148,22 @@ capabilities:
     source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
+  managed_agent_loop:
+    product: 百炼 visual agent builder (Agent 1.0)
+    status: documented
+    notes: >
+      「可视化模式可快速创建智能体应用（Agent 1.0）和工作流应用」 — the visual mode lets you
+      create agent applications without code. The platform runs the agent loop; you
+      configure model, prompt, knowledge base, and plugins via UI. This is the most
+      no-code-forward managed loop in the comparison — aimed at "business staff with no
+      coding background" (「无代码基础的业务人员也能独立完成工作流设计」).
+      Publishing is one-click to web, DingTalk bots, WeChat official accounts.
+      CONTRAST with AWS Harness and Azure prompt agents which are API-declarative (still
+      requires a developer to call an API); Alibaba's is GUI-declarative (a business user
+      can do it). BytePlus is in between (API-first but with a console option).
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   authoring_mode:
     status: documented
     value: both

@@ -77,6 +77,24 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
 
+  managed_agent_loop:
+    product: ModelArk Managed Agents
+    status: documented
+    notes: >
+      "ModelArk Managed Agents delivers the full infrastructure stack at the agent layer.
+      Developers only need to define agent behavior, send user events, and subscribe to
+      result streams, while ModelArk handles all underlying complexity."
+      Explicitly positioned as the managed-loop alternative to the model API: "use the
+      model API when you need fine-grained control over the agent loop; use Managed Agents
+      when you want ModelArk to host the agent and you want to focus on business logic."
+      The platform handles: AgentLoop, tool calls, context management, sandbox scheduling,
+      checkpoint resume, and permission isolation. Four-step quickstart: create agent,
+      create environment, start session, send message.
+      No launch stage stated — hence `documented`, not `ga`.
+    source: https://docs.byteplus.com/en/docs/ModelArk/2553713
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   session_management:
     status: documented
     notes: >

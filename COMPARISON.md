@@ -12,7 +12,7 @@ where launch stage does not apply. ✅ GA appears only where the vendor says
 which is itself the finding, and why every provider reads `documented` rather than
 AWS/Azure reading GA while Google reads blank.
 
-**Data as of 2026-08-09** · 238 verified cells across 14 provider-buckets
+**Data as of 2026-08-09** · 242 verified cells across 14 provider-buckets
 
 Legend: `ga` ✅ GA · `documented` 📄 Documented · `preview` 🟡 Preview · `limited` 🟠 Limited · `partner` 🔵 Partner · `oss` ⚪ OSS · `none` ❌ No · `unknown` ·
 
@@ -107,7 +107,7 @@ Products compared: **AWS**: Amazon Bedrock AgentCore · **Azure**: Microsoft Fou
 | Multi-agent patterns | · | · | · | 📄 Documented<br>orchestrator / sub-agent delegation | · |
 | Workflow engine (graph/DAG, durable, resumable) | · | · | · | · | 📄 Documented |
 | Managed agent runtime | ✅ GA<br>AgentCore Runtime | ✅ GA<br>Agent Runtime | ✅ GA<br>Agent Runtime | 📄 Documented<br>ModelArk Managed Agents | 📄 Documented<br>百炼 / Bailian application platform (Agent 1.0) |
-| Managed agent loop (define + invoke an agent in one API call) | ✅ GA<br>AgentCore Harness | · | · | · | · |
+| Managed agent loop (define + invoke an agent in one API call) | ✅ GA<br>AgentCore Harness | ✅ GA<br>Prompt agents (Foundry) | · | 📄 Documented<br>ModelArk Managed Agents | 📄 Documented<br>百炼 visual agent builder (Agent 1.0) |
 | Session lifecycle API (start, manage, event stream) | · | · | · | 📄 Documented | · |
 | Long-running agents (max session duration, async/background) | 📄 Documented | · | 📄 Documented | 📄 Documented | · |
 | Framework agnosticism | 📄 Documented<br>CrewAI, LangGraph, LlamaIndex, +4 | 📄 Documented<br>Microsoft Agent Framework, LangGraph, OpenAI Agents SDK, +3 | 📄 Documented<br>ADK, LangGraph, LangChain, +4 | · | · |
@@ -259,18 +259,18 @@ is what produced this project's first fairness bug:
 | Provider | Bucket | Cells | Sourced | Verified | Stage stated |
 |---|---|---|---|---|---|
 | Alibaba | A | 19 | 18 (95%) | 18 (95%) | 0 (0%) |
-| Alibaba | B | 23 | 18 (78%) | 15 (65%) | 0 (0%) |
+| Alibaba | B | 24 | 19 (79%) | 16 (67%) | 0 (0%) |
 | Alibaba | C | 15 | 12 (80%) | 10 (67%) | 0 (0%) |
 | AWS | A | 17 | 15 (88%) | 13 (76%) | 0 (0%) |
 | AWS | B | 29 | 29 (100%) | 28 (97%) | 8 (28%) |
 | AWS | C | 14 | 13 (93%) | 13 (93%) | 0 (0%) |
 | Azure | A | 17 | 16 (94%) | 15 (88%) | 0 (0%) |
-| Azure | B | 34 | 33 (97%) | 31 (91%) | 6 (18%) |
+| Azure | B | 35 | 34 (97%) | 32 (91%) | 7 (20%) |
 | Azure | C | 15 | 15 (100%) | 14 (93%) | 0 (0%) |
-| BytePlus | B | 25 | 24 (96%) | 23 (92%) | 0 (0%) |
+| BytePlus | B | 26 | 25 (96%) | 24 (92%) | 0 (0%) |
 | BytePlus | C | 0 | — | — | — |
 | GCP | A | 16 | 15 (94%) | 15 (94%) | 0 (0%) |
-| GCP | B | 24 | 22 (92%) | 22 (92%) | 5 (21%) |
+| GCP | B | 25 | 23 (92%) | 22 (88%) | 5 (20%) |
 | GCP | C | 15 | 8 (53%) | 7 (47%) | 0 (0%) |
 
 **Stage stated is near-zero everywhere** — vendors document capabilities without
