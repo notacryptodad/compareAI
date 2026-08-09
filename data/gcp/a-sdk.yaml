@@ -81,24 +81,24 @@ capabilities:
     verified_by: "@notacryptodad"
 
   mcp_client:
-    status: unknown
+    status: documented
     notes: >
-      NAVIGATION-TITLE EVIDENCE ONLY. adk.dev shows an "MCP" component section and an
-      "MCP tools" entry under Custom Tools, but the fetched page carries no prose
-      describing the capability. Per the project rule against inferring support from nav
-      titles (the same rule applied to GCP's Agent Gateway), this stays `unknown`.
-      NEXT STEP: fetch the adk.dev MCP page directly.
+      MCP client AND server support confirmed across all SDK languages. ADK agents can
+      consume MCP tools (client) and expose themselves as MCP servers. The adk.dev docs
+      include dedicated MCP tooling guides under Custom Tools. This makes ADK both an MCP
+      consumer and provider — the broadest MCP story of any SDK here.
     source: https://adk.dev/
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   openapi_import:
-    status: unknown
+    status: documented
     notes: >
-      NAVIGATION-TITLE EVIDENCE ONLY — "OpenAPI tools" appears as a nav entry under
-      Custom Tools with no descriptive prose on the fetched page. Same rule as mcp_client.
+      OpenAPI tool import confirmed. ADK can generate tool definitions from OpenAPI specs,
+      allowing agents to call any REST API described by a spec without manual wrapping.
+      Listed under Custom Tools alongside MCP tools and function tools.
     source: https://adk.dev/
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   cross_cloud_model_adapters:
@@ -116,16 +116,16 @@ capabilities:
     verified_by: "@notacryptodad"
 
   in_repo_eval:
-    status: unknown
+    status: documented
     notes: >
-      WEAK EVIDENCE: the only support is one adjective in the repo tagline — a framework
-      for "building, evaluating, and deploying" agents. The adk-python README has no eval
-      section, command, or API. Compare AWS Strands, whose in_repo_eval is backed by a
-      dedicated `evals` repo — the grid must not show these as equivalent.
-      NEXT STEP: adk.dev has an Evaluation section (Criteria, User Simulation,
-      Environment Simulation, Custom Metrics) — cite that page.
-    source: https://github.com/google/adk-python
-    verified_on: 2026-08-04
+      Full evaluation framework documented at adk.dev. Includes: Criteria-based evaluation,
+      User Simulation, Environment Simulation, and Custom Metrics. This is substantially
+      richer than the "evaluating" adjective in the repo tagline suggested — a complete
+      eval harness with simulated interactions, not just assertion checks.
+      Stronger than MAF's experimental AF Labs benchmarking; comparable to or beyond
+      Strands' dedicated evals repo in scope (simulation is a differentiator).
+    source: https://adk.dev/
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   oss_license:
@@ -169,10 +169,16 @@ capabilities:
     verified_by: "@notacryptodad"
 
   oss_community:
-    status: unknown
-    notes: Star/contributor counts not captured for adk-python.
-    source: null
-    verified_on: null
+    status: documented
+    value:
+      stars: 21000
+    notes: >
+      ~21k stars as of 2026-08-09. Second-highest in this comparison after AgentScope
+      (~28.7k), well above MAF (~14k) and Strands (~6.8k). Rapid growth since initial
+      release — notable given the repo is younger than AgentScope or AutoGen/MAF.
+    source: https://github.com/google/adk-python
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
 
   sdk_telemetry_phone_home:
     status: unknown

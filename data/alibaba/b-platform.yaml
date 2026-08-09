@@ -183,9 +183,16 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
   code_interpreter:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Code execution capability available within agent applications. The high-code
+      deployment path supports Python project deployment as backend services
+      (「高代码应用则支持将 Python 项目部署为后端服务」). Whether this includes a sandboxed
+      code interpreter for end-user-generated code (like AWS AgentCore's or GCP's) vs.
+      developer-authored code execution is not clearly distinguished on the overview page.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   browser_use:
     status: unknown
     source: null
@@ -199,18 +206,38 @@ capabilities:
     source: null
     verified_on: null
   otel_traces:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      The high-code deployment path includes observability:
+      「高代码应用则支持将 Python 项目部署为后端服务，具备自动化运维、可观测、日志服务等能力」
+      — automated ops, observability, and logging. This is platform-level internal
+      monitoring, NOT necessarily OpenTelemetry-compatible export. Whether it conforms to
+      OTel standards or is proprietary Alibaba Cloud monitoring (ARMS/SLS) is not stated.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   eval_service:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Model evaluation and comparison tools available within Model Studio. The platform
+      supports model fine-tuning with evaluation metrics. Whether a dedicated agent-level
+      evaluation service (like GCP's Evaluation Service or ADK's eval framework) exists
+      is not confirmed from the overview — this may be model-eval only, not agent-eval.
+    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   pricing_axes:
-    status: unknown
-    notes: Pricing differs per region per the region note; rates not captured.
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Consumption-based pricing per the CN docs:
+      「按规格时长和模型调用计费，不支持节省计划或资源包等预付费形式」
+      — billed by spec-duration and model calls. NO savings plan or prepaid resource pack.
+      Pricing differs per region. New-user free quota limited to Singapore.
+      This is pure pay-as-you-go with no commitment discount — simpler than AWS/Azure but
+      potentially more expensive at scale.
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   runtime_sla:
     status: unknown
     source: null

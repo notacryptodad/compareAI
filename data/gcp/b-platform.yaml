@@ -255,34 +255,68 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
   pricing_axes:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Token-based pricing. Gemini Enterprise Agent Platform charges per input/output token
+      for model calls, with separate rates for different Gemini model tiers. Sessions,
+      Memory Bank, and Code Execution have additional usage-based charges (billing started
+      2026-01-28 per the release notes). No per-seat or flat-rate option documented.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   runtime_sla:
     status: unknown
     source: null
     verified_on: null
   long_running_agents:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Agent Runtime supports long-running agent executions. Sessions persist state across
+      interactions, and the runtime handles scaling/lifecycle. No explicit time cap
+      documented (contrast AWS AgentCore's "up to 8 hours"). The combination of Sessions
+      (GA) + Memory Bank (GA) enables agents that maintain context over extended periods.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   agent_workload_identity:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Agent Runtime operates under Google Cloud IAM. Service accounts provide workload
+      identity for deployed agents. VPC Service Controls (Yes for Runtime, Sessions,
+      Memory Bank, Code Execution) enforce network-level identity boundaries. Standard
+      GCP Workload Identity Federation applies for cross-cloud access.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   delegated_user_auth:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      3LO (three-legged OAuth) supported for delegated user authorization. Agents can act
+      on behalf of end users when accessing Google Workspace or third-party APIs. This is
+      the standard Google OAuth consent flow applied to agent workloads.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   guardrails:
     status: unknown
     source: null
     verified_on: null
   iac_coverage:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Terraform provider support for Gemini Enterprise Agent Platform resources. Google's
+      standard Terraform provider (google/google-beta) covers agent deployment
+      configuration. No CloudFormation equivalent (GCP-native).
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   training_data_policy:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Google Cloud's Data Processing Addendum (DPA) commits that customer data is not used
+      to train or improve Google's models. This applies to Gemini Enterprise Agent Platform
+      as a covered Cloud service. Same commitment as Azure and AWS Q Business; contrast
+      AWS AgentCore's "may use" clause.
+    source: https://cloud.google.com/terms/data-processing-addendum
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

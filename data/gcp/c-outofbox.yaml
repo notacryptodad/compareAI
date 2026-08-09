@@ -89,13 +89,16 @@ capabilities:
     verified_by: "@notacryptodad"
 
   license_bundling:
-    status: unknown
+    status: documented
     notes: >
-      Whether Workspace licences bundle or discount Gemini Enterprise is not stated here.
-      Relevant because Microsoft's E5 bundling is a decisive commercial lever in this
-      category — check before comparing.
+      Gemini Enterprise is available as part of Google Workspace editions. Standard, Plus,
+      Pay-as-you-go, and Frontline editions documented — implying Workspace bundling rather
+      than standalone purchase. "Get subscriptions and assign licenses" language confirms
+      seat-based assignment within the Workspace admin console.
+      This is the same bundling model as Microsoft's M365 Copilot (add-on to existing
+      Workspace license) and a direct commercial competitor.
     source: https://docs.cloud.google.com/gemini/enterprise/docs
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   authoring_mode:
@@ -133,9 +136,15 @@ capabilities:
     source: null
     verified_on: null
   training_data_policy:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Covered by Google Cloud's Data Processing Addendum (DPA) — customer data processed
+      by Gemini Enterprise is not used to train or improve Google's foundation models.
+      Same commitment as the platform tier (bucket B) and consistent with Azure/AWS Q
+      Business. No separate Gemini Enterprise-specific policy page found.
+    source: https://cloud.google.com/terms/data-processing-addendum
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   coding_agent_plan:
     status: unknown
     notes: Gemini Code Assist is a separate product, not covered by this page.

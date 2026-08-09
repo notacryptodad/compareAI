@@ -69,18 +69,16 @@ capabilities:
     verified_by: "@notacryptodad"
 
   cross_cloud_model_adapters:
-    status: unknown
+    status: documented
+    value: [Microsoft Foundry, Azure OpenAI, OpenAI, GitHub Copilot SDK]
     notes: >
-      Ecosystem named: Microsoft Foundry, Azure OpenAI, OpenAI, and the GitHub Copilot
-      SDK. Additional LLM providers are described as being added over time. (Paraphrase.)
-      No rival-cloud provider (Bedrock, Gemini/Vertex) is named — a narrower stated
-      surface than Strands or ADK. Quickstarts use `FoundryChatClient` (Python) and
-      `AIProjectClient` (.NET) with Azure credentials.
-      POSSIBLE CAVEAT, UNCONFIRMED: a summarising fetch reported terms placing
-      third-party/non-Azure models outside Microsoft's product warranty. check_quotes.py
-      could not find that wording on this page — verify before publishing.
+      "support for Microsoft Foundry, Azure OpenAI, OpenAI, and the GitHub Copilot SDK"
+      with "more being added continuously".
+      No rival-cloud provider (Bedrock, Gemini/Vertex) is named — narrower than Strands
+      (Bedrock + OpenAI + Gemini + Ollama) or AgentScope (8 providers). Supports non-Azure
+      OpenAI directly but no AWS/GCP adapter documented.
     source: https://github.com/microsoft/agent-framework
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   mcp_client:
@@ -112,33 +110,33 @@ capabilities:
     verified_by: "@notacryptodad"
 
   oss_release_cadence:
-    status: unknown
+    status: documented
     notes: >
-      No GA or preview label anywhere in the README. Release/package versions were NOT
-      captured by our fetch (GitHub lazy-loads those panels; badges are images) — this is
-      a fetch limitation, NOT evidence that no releases exist. Spot check shows tags such
-      as python-1.13.0 and dotnet-1.16.0 do exist.
+      No formal schedule published. Continuous/rolling releases — multiple per week observed.
+      Recent: dotnet-1.17.0 (Aug 4), python-1.13.0 (July 30), dotnet-1.16.0 (July 30),
+      python-1.12.1 (July 23). Separate .NET and Python release tracks.
       One sub-area IS explicitly early-stage: "AF Labs: Experimental packages for
       cutting-edge features including benchmarking, reinforcement learning, and research
       initiatives".
       Migration-from-SK/AutoGen history is itself a breaking-change signal worth noting.
     source: https://github.com/microsoft/agent-framework
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   oss_runtime_lockin:
-    status: unknown
+    status: none
     notes: >
-      Evidence ON THIS PAGE (the repo): the quickstart defaults to Azure credentials
-      (`FoundryChatClient`, `AIProjectClient`), and the README carries a Third-Party
-      Systems clause placing non-Microsoft systems outside Microsoft Product Terms —
-      soft pressure toward Azure.
-      Evidence on the Azure Learn page (a DIFFERENT source — see the b-platform file):
-      Foundry also hosts LangGraph, OpenAI Agents SDK and Anthropic Agent SDK, and MAF
-      code can call the Responses API from any process. Do not credit that to this URL.
-      Needs a deployment-portability doc to resolve definitively.
+      No runtime lock-in at the framework level. README states support for "local
+      development, self-hosted protocols, Foundry-hosted infrastructure, Azure Functions,
+      and Durable Task Framework" — multiple deployment targets including local.
+      "architecture choices open as requirements evolve" and "both local development and
+      cloud deployment" explicitly stated.
+      Soft pressure toward Azure: quickstart defaults to Azure credentials, and a
+      Third-Party Systems clause places non-Microsoft systems outside product terms.
+      Same pattern as Strands/Bedrock and AgentScope/DashScope — default is vendor, but
+      not required. Verdict: `none` (consistent with the other two).
     source: https://github.com/microsoft/agent-framework
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   oss_community:
@@ -158,19 +156,40 @@ capabilities:
     verified_by: "@notacryptodad"
 
   in_repo_eval:
-    status: unknown
-    notes: AF Labs mentions "benchmarking" as experimental; not a stable eval harness.
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "AF Labs: Experimental packages for cutting-edge features including benchmarking,
+      reinforcement learning, and research initiatives"
+      Lives in python/packages/lab. Marked experimental — not a stable production eval
+      harness like strands-agents/evals, but present.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   local_dev_loop:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "both local development and cloud deployment" stated. Deployment targets include
+      "local development, self-hosted protocols, Foundry-hosted infrastructure, Azure
+      Functions, and Durable Task Framework". Default quickstart uses AzureCliCredential
+      but local dev without cloud credentials is explicitly supported.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   otel_traces:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "Built-in OpenTelemetry integration for distributed tracing, monitoring, and
+      debugging"
+      Also confirmed in Foundry tracing docs (a different source): MAF is listed among
+      frameworks with OTel integration alongside LangChain, LangGraph, and OpenAI Agents SDK.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   sdk_telemetry_phone_home:
     status: unknown
-    source: null
-    verified_on: null
+    notes: >
+      No mention of telemetry collection, opt-in/opt-out, or phone-home behavior in the
+      README or release notes.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

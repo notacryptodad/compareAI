@@ -369,24 +369,42 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
   long_running_agents:
-    status: unknown
+    status: documented
     notes: >
-      "extended runtime support for asynchronous agents" is claimed but NO maximum
-      session/execution duration is stated on the overview page. Needs the quotas page.
-    source: null
-    verified_on: null
+      "AgentCore Runtime supports both real-time interactions and long-running workloads up
+      to 8 hours, enabling complex agent reasoning and asynchronous workloads that may
+      involve multi-agent collaboration or extended problem-solving sessions."
+      Max execution: 8 hours. Instances compute type supports persistent, multi-day sessions
+      for GPU workloads. Async/extended runtime mode has a dedicated documentation page.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   knowledge_base:
-    status: unknown
+    status: none
     notes: >
-      Not an AgentCore service. Bedrock Knowledge Bases is a separate Bedrock feature —
-      verify separately rather than crediting it to AgentCore.
-    source: null
-    verified_on: null
+      Not an AgentCore service. AgentCore Memory handles conversation context (short-term
+      and long-term session memory), not document retrieval. RAG comes from Amazon Bedrock
+      Knowledge Bases, a separate Bedrock feature billed under Bedrock pricing. Do not
+      credit it to AgentCore.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   guardrails:
-    status: unknown
-    notes: Bedrock Guardrails is separate from AgentCore; verify separately.
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      AgentCore Policy provides guardrails integration — not the same service as standalone
+      Bedrock Guardrails, but integrated:
+      "Policy in Amazon Bedrock AgentCore enables developers to define and enforce security
+      controls for AI agent interactions with tools by creating a protective boundary around
+      agent operations."
+      "you can also consult information providers, such as Guardrails, that emit a signal at
+      evaluation time — such as a content-safety or prompt-attack score — and make decisions
+      based on the emitted score."
+      Policy uses Cedar language or natural language for deterministic enforcement. Content
+      safety/prompt-injection scoring comes via the Guardrails provider integration.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   private_networking:
     status: ga
     notes: >

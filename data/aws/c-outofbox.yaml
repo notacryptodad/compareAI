@@ -96,41 +96,84 @@ capabilities:
     verified_by: "@notacryptodad"
 
   model_choosable:
-    status: unknown
+    status: none
     notes: >
-      Built on Bedrock, but the page does not say whether an admin picks the model.
+      Built on Bedrock, but no user-selectable model option is documented. The product is
+      described as powered by an LLM but no admin or end-user control over model choice is
+      stated. Fixed and opaque by evidence of absence — confirmed on re-read 2026-08-09.
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   index_residency:
-    status: unknown
-    notes: Region list is on a separate quotas-and-regions page (not fetched).
-    source: null
-    verified_on: null
+    status: documented
+    value: [us-east-1, us-west-2, eu-west-1, ap-southeast-2]
+    notes: >
+      Index data resides in the AWS region where the application is deployed. Four regions:
+      US East (N. Virginia), US West (Oregon), Europe (Ireland), Asia Pacific (Sydney).
+      No cross-region replication by default. Production workloads run across 3 AZs.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/quotas-regions.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   admin_analytics:
     status: unknown
+    notes: >
+      Analytics/metrics pages exist (insights-dashboard, metrics) but returned no body
+      content — may require auth or JS rendering. CloudTrail logging confirmed for audit.
+      Cannot verify feature depth without a reachable fetch.
     source: null
     verified_on: null
   dlp_tenant_isolation:
-    status: unknown
-    source: null
-    verified_on: null
-  license_bundling:
-    status: unknown
-    source: null
-    verified_on: null
-  training_data_policy:
-    status: unknown
-    source: null
-    verified_on: null
-  index_freshness:
-    status: unknown
-    source: null
-    verified_on: null
-  coding_agent_plan:
-    status: unknown
+    status: documented
     notes: >
-      Amazon Q Developer / Kiro are separate products, not covered by this page.
-    source: null
-    verified_on: null
+      "Amazon Q Business supports access control for your data so that the right users can
+      access the right content. Its responses to questions are based on the content that
+      your end user has permissions to access."
+      "You can use AWS IAM Identity Center or AWS Identity and Access Management to manage
+      end user access for Amazon Q Business."
+      Tenant isolation via IAM Identity Center; permission-aware responses. Guardrails page
+      shows blocked phrases, hallucination mitigation, response scope controls. No dedicated
+      DLP feature (PII detection/masking) found — security through IAM and shared
+      responsibility model.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+  license_bundling:
+    status: none
+    notes: >
+      Q Business is sold as standalone per-user subscription (Lite and Pro tiers) plus index
+      capacity. No bundling with AWS commitments (Enterprise Support, Savings Plans, etc.)
+      documented. (Paraphrase of tiers page.)
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+  training_data_policy:
+    status: documented
+    notes: >
+      "Amazon Q Business does not use customer data for service improvement or for improving
+      underlying LLMs."
+      Explicit no-training commitment. No opt-out needed — off by default.
+      CONTRAST with AgentCore's "may use and store your content to improve your service
+      experience" — the two AWS products take opposite positions on this.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/service-improvement.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+  index_freshness:
+    status: documented
+    notes: >
+      Batch/scheduled sync, not real-time. Admins configure sync run schedules via the
+      CreateDataSource API or console. No real-time streaming ingestion documented.
+      Index charges include "100 hours of data source connector usage (time that it takes to
+      scan and index new, updated, or deleted documents)". (Paraphrase.)
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/supported-connectors.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+  coding_agent_plan:
+    status: none
+    notes: >
+      Q Business is focused on enterprise Q&A, task automation, and workflow actions — not
+      coding. Amazon Q Developer (a separate product) has coding agent capabilities.
+      No coding agent feature found in Q Business docs.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

@@ -198,18 +198,6 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
 
-  otel_traces:
-    status: unknown
-    notes: >
-      Tracing EXISTS — "End-to-end tracing, metrics, and Application Insights
-      integration. See every decision your agent makes." But this row is specifically
-      about OpenTelemetry / GenAI semconv, and the page never mentions OpenTelemetry;
-      only Application Insights is named. `unknown` for OTel conformance, matching how
-      GCP and AWS are treated for the same evidentiary gap. Do not assume neutral export.
-    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
-    verified_on: 2026-08-04
-    verified_by: "@notacryptodad"
-
   apm_integration:
     status: documented
     value: Application Insights
@@ -360,30 +348,77 @@ capabilities:
     source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
-  pricing_axes:
-    status: unknown
+  otel_traces:
+    status: ga
     notes: >
-      Partially known: prompt agents "Per-call inference + tool usage"; hosted agents add
-      "container compute". Actual rates need the pricing page.
-    source: null
-    verified_on: null
+      "OpenTelemetry (OTel) provides standardized protocols for collecting and routing
+      telemetry data. Foundry uses OpenTelemetry semantic conventions so traces are
+      consistent across supported tools and integrations."
+      "Tracing is generally available for prompt and hosted agents."
+      Stored in Azure Monitor Application Insights. Workflow and external agents tracing
+      is preview.
+      LAUNCH STAGE: explicitly GA for prompt/hosted agents — one of very few explicit GA
+      statements in this entire dataset.
+    source: https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+  pricing_axes:
+    status: documented
+    notes: >
+      Two pricing models by agent type:
+      Prompt agents: "Per-call inference + tool usage" — no container compute.
+      Hosted agents: "Per-call inference + tool usage + container compute".
+      Pre-purchase available: "Agent Commit Units" (ACUs) — "$100 in retail cost equals
+      100 ACUs". (Paraphrase of pricing page structure.)
+      Specific per-token rates not confirmed on pages examined.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   runtime_sla:
     status: unknown
+    notes: >
+      SLA page (azure.microsoft.com/en-us/support/legal/sla/ai-foundry/) returned 404.
+      Service is GA but specific uptime commitment percentage not confirmed.
     source: null
     verified_on: null
   long_running_agents:
     status: unknown
-    source: null
-    verified_on: null
+    notes: >
+      Quotas page lists file and message limits (100,000 messages per thread) but no
+      maximum session duration or time limit for agent runs. Session-level state persistence
+      is supported for hosted agents. No async/long-running time cap documented.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   iac_coverage:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "In this quickstart, you deploy a Microsoft Foundry resource and project by using a
+      Microsoft Bicep template."
+      "For production-ready Bicep templates that cover common Foundry deployment scenarios,
+      see the infrastructure-setup-bicep folder in the Foundry samples repository."
+      Bicep + Azure CLI + ARM explicitly supported. Terraform not mentioned in
+      Foundry-specific docs (would work via azurerm provider but not explicitly documented).
+    source: https://learn.microsoft.com/en-us/azure/foundry/how-to/create-resource-template
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   certifications:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Inherits Azure's compliance portfolio. Azure broadly (including Foundry as an Azure
+      service) is SOC 2 Type 2 attested. ISO 27001, HIPAA, GDPR documented at the platform
+      level. No Foundry Agent Service-specific certification page found — coverage is via
+      Azure's umbrella rather than a per-service attestation like AWS provides.
+    source: https://learn.microsoft.com/en-us/azure/compliance/offerings/offering-soc-2
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   training_data_policy:
     status: unknown
-    source: null
-    verified_on: null
+    notes: >
+      No explicit training data policy statement found on Foundry Agent Service pages.
+      Azure's general DPA typically prohibits using customer data to train models, but not
+      confirmed on a Foundry-specific page. M365 Copilot has explicit language (see
+      azure/c) but that is a different product.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

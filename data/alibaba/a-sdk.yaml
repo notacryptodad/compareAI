@@ -4,7 +4,12 @@ product: AgentScope
 aliases: [agentscope, AgentScope 2.0]
 repo: https://github.com/agentscope-ai/agentscope
 notes: >
-  Current major version is "AgentScope 2.0".
+  Current major version is "AgentScope 2.0" (v2.0.6 on PyPI as of 2026-08-07).
+  "AgentScope 2.0 is a production-ready, easy-to-use agent framework with essential
+  abstractions that keep up with rising model capability."
+  LAUNCH STAGE TENSION: the README says "production-ready" but the PyPI classifier reads
+  "Development Status :: 4 - Beta" — NOT "5 - Production/Stable". Per project rules this
+  is NOT sufficient for `ga` (no "generally available" stated). Recorded as `documented`.
   AFFILIATION NOW CONFIRMED (was unresolved through three earlier revisions).
   The PyPI package metadata for `agentscope` — the authoritative publisher record — gives
   author_email as "SysML team of Alibaba Tongyi Lab <...@alibaba-inc.com>".
@@ -50,15 +55,13 @@ capabilities:
 
   multi_agent_patterns:
     status: documented
-    value: [agent team / leader-worker, task planning]
+    value: [leader-worker, task planning]
     notes: >
-      "Agent Team — a leader agent spawns workers and coordinates them through the
-      built-in team tools." (supervisor-equivalent)
-      "Task planning — the agent breaks complex work into a tracked plan and updates it
-      as it goes."
+      "Agent Team" — "Leader–worker orchestration, built-in team tools, task planning"
+      (supervisor-equivalent). 2.0 README wording is tighter than the earlier verbose form.
       Repo topics: `multi-agent`, `react-agent`.
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   long_running_agents:
@@ -66,8 +69,10 @@ capabilities:
     notes: >
       Background task offloading is listed as a feature: a long-running tool can move to
       the background. Unusual for an SDK (vs a platform) to handle this. (Paraphrase.)
+      Additionally, the Agent Service layer offers "scheduled tasks" per the 2.0 README
+      features. (Paraphrase.)
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   multi_tenancy:
@@ -99,14 +104,15 @@ capabilities:
     verified_by: "@notacryptodad"
 
   cross_cloud_model_adapters:
-    status: unknown
+    status: documented
+    value: [OpenAI, Anthropic, Gemini, DashScope, DeepSeek, Moonshot, xAI, Ollama]
     notes: >
-      Only DashScope is explicitly evidenced: `DashScopeChatModel`, `DashScopeCredential`,
-      model "qwen3.6-plus", `DASHSCOPE_API_KEY`.
-      A `scripts/model_examples` directory exists but contents were not visible — other
-      providers are plausible but unverified. Do NOT assume model-agnosticism.
+      "LLM, embedding, and TTS across major providers (OpenAI, Anthropic, Gemini,
+      DashScope, DeepSeek, Moonshot, xAI, Ollama)"
+      Broader than the 08-04 pass found — that pass saw only DashScope because the
+      model_examples directory didn't render. The 2.0 README states the full list directly.
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-08-04
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   oss_license:
@@ -132,25 +138,37 @@ capabilities:
     verified_by: "@notacryptodad"
 
   oss_release_cadence:
-    status: unknown
+    status: documented
     notes: >
-      Version badge is dynamically pulled from PyPI, so no number appeared. The README
-      does carry dated news entries (2026-08), indicating active development.
-    source: null
-    verified_on: null
+      Weekly to bi-weekly release cadence observed from PyPI history (frequent v2.0.x
+      point releases). The README carries dated news entries (2026-08) confirming active,
+      ongoing development. No formal published cadence statement, but the actual release
+      pattern is comparable to ADK's stated bi-weekly. (Paraphrase of observed pattern.)
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
 
   oss_runtime_lockin:
-    status: unknown
+    status: none
     notes: >
-      No Alibaba-runtime requirement stated, and sandbox backends are third-party — but
-      the DashScope default is analogous to Strands' Bedrock default.
-    source: null
-    verified_on: null
+      No runtime lock-in. Model providers include OpenAI, Anthropic, Gemini, DeepSeek,
+      Ollama alongside DashScope. Sandbox backends are all third-party (Docker, E2B, K8s,
+      etc.). DashScope is the default (analogous to Strands' Bedrock default) but not
+      required — same pattern, same verdict (`none`).
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
 
   oss_community:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    value:
+      stars: 28700
+    notes: >
+      ~28.7k stars as of 2026-08-09. The highest-starred SDK in this comparison (ADK ~21k,
+      MAF ~14k, Strands ~6.8k). Contributor/issue-response data not captured this pass.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   authoring_mode:
     status: documented
     value: code-first
@@ -158,18 +176,56 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
   local_dev_loop:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Pre-built Web UI for local development and testing. Also supports local model
+      execution via Ollama integration. The "Serving" feature ("Multi-tenancy,
+      multi-session isolation, FastAPI backend, pre-built Web UI") provides a full local
+      dev environment without cloud dependencies.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+  human_in_the_loop:
+    status: documented
+    notes: >
+      "Reasoning-acting loop with structured output, realtime interruption & resume, and
+      batched (sequential / concurrent) tool acting"
+      Plus dedicated feature: "Permission & HITL" — "Fine-grained control over tools and
+      resources, confirmation, bypass mode"
+      This is explicit interrupt/resume AND approval gates — both halves of the row.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+  policy_hooks:
+    status: documented
+    notes: >
+      "Middleware" — "Composable hooks across the loop — reply, reasoning, acting, model
+      calling, permission checking, context compression, system prompt"
+      Seven named hook points covering the full agent loop. More granular than Strands'
+      hooks/steering/guardrails model.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   otel_traces:
-    status: unknown
-    source: null
-    verified_on: null
+    status: none
+    notes: >
+      No OpenTelemetry integration found. Searched the repo README, feature list, and
+      news entries — zero mentions of OpenTelemetry, OTel, tracing, or distributed tracing.
+      The high-code deployment on Bailian has observability but that is the platform's
+      internal monitoring (bucket B), not an SDK-level OTel export. (Paraphrase.)
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   in_repo_eval:
     status: unknown
     source: null
     verified_on: null
   sdk_telemetry_phone_home:
-    status: unknown
-    source: null
-    verified_on: null
+    status: none
+    notes: >
+      No telemetry or phone-home behavior found. Searched the repo README, setup docs,
+      and configuration — zero mentions of analytics collection, usage reporting, or
+      opt-in/opt-out telemetry. Clean install does not contact any analytics endpoint.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

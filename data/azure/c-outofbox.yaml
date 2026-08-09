@@ -126,36 +126,87 @@ capabilities:
     verified_by: "@notacryptodad"
 
   training_data_policy:
-    status: unknown
+    status: documented
     notes: >
-      Deferred to a dedicated page ("Data, Privacy, and Security for Microsoft 365
-      Copilot") that was not fetched. Do NOT infer from the subprocessor note.
-    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview
-    verified_on: 2026-08-04
+      "Prompts, responses, and data accessed through Microsoft Graph aren't used to train
+      foundation LLMs, including those used by Microsoft 365 Copilot."
+      "The data is encrypted while it's stored and isn't used to train foundation LLMs,
+      including those used by Microsoft 365 Copilot."
+      Explicit no-training commitment — same position as Q Business, opposite to AgentCore.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-privacy
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   admin_analytics:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "The Microsoft 365 Copilot usage report provides a summary of how users adopt,
+      retain, and engage with Microsoft 365 Copilot and its associated enabled apps."
+      Shows enabled users, active users, active users rate, total/average prompts submitted,
+      adoption by app (Word/Excel/Teams/Outlook/etc.), per-user last activity dates.
+      Integrates with Microsoft Copilot Dashboard in Viva Insights for deeper analytics.
+      Available for 7/28/90/180-day windows.
+    source: https://learn.microsoft.com/en-us/microsoft-365/admin/activity-reports/microsoft-365-copilot-usage
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   index_freshness:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      Mixed model, not uniform: user mailbox = near-real-time; SharePoint tenant-level new
+      docs = daily; updates to existing indexed docs = immediate re-index.
+      "documents created by users are indexed in near real-time in the user's mailbox. New
+      documents that are added to SharePoint Online sites that are accessible, via site
+      inheritance, by two or more users are indexed daily. When an indexed user and tenant
+      level document is updated, the changes are immediately indexed."
+    source: https://learn.microsoft.com/en-us/microsoftsearch/semantic-index-for-copilot
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   index_residency:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "User-level index information is stored where the user's mailbox is located.
+      Tenant-level index information, on the other hand, is stored in an isolated and
+      protected customer's tenant container. This container is located in the region where
+      the SharePoint site is located, which can be the Home region or another region
+      specified by the tenant admin. For customers within the European Union Data Boundary
+      (EUDB), the index is stored in an EU/EFTA based datacenter."
+      User index co-located with mailbox; tenant index co-located with SharePoint region.
+    source: https://learn.microsoft.com/en-us/microsoftsearch/semantic-index-for-copilot
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   guardrails:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    notes: >
+      "Microsoft 365 Copilot operates with multiple protections, which include, but aren't
+      limited to, blocking harmful content, detecting protected material, and blocking
+      prompt injections (jailbreak attacks)."
+      "content harm filters to identify harmful content in prompts or generated responses
+      (such as Hate & Fairness, Sexual, Violence, and Self-harm)"
+      "jailbreak and cross-prompt injection attack (XPIA) classifiers"
+      Also: protected material detection (text copyright + code licensing), workplace harm
+      restrictions. Defense-in-depth approach.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-privacy
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   authoring_mode:
-    status: unknown
-    source: null
-    verified_on: null
+    status: documented
+    value: both
+    notes: >
+      "you can develop agents using low-code or pro-code tools that match your preferred
+      development environment"
+      "Build your own agent from a template or design something from scratch"
+      Low-code agent builder with templates, plus pro-code (Teams Toolkit, Agents SDK).
+      Admin approval required for org-wide deployment.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/overview
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   coding_agent_plan:
     status: unknown
-    notes: GitHub Copilot is a separate product, not covered by this page.
-    source: null
-    verified_on: null
+    notes: >
+      No coding agent capability found in M365 Copilot docs. Work IQ API mentions MCP
+      support for "AI coding assistants in IDEs and CLIs" as consumers of M365 data, but
+      that is coding tools accessing M365 data — not M365 Copilot providing coding.
+      GitHub Copilot is a separate product with no documented cross-product integration.
+    source: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/overview
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

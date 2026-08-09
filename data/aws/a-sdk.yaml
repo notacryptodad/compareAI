@@ -29,19 +29,26 @@ capabilities:
     verified_by: "@notacryptodad"
 
   multi_agent_patterns:
-    status: unknown
+    status: documented
     notes: >
-      README says only "multi-agent patterns ... are all built in" — does not enumerate
-      supervisor/swarm/graph/handoff. Needs the docs site to confirm which are offered.
-      Related repo agent-sop provides "natural language workflows".
-    source: null
-    verified_on: null
+      "MCP, streaming, multi-agent patterns, and structured output are all built in."
+      Confirmed present but does NOT enumerate which specific patterns (supervisor, swarm,
+      graph, handoff). Related repo agent-sop provides "natural language workflows".
+      Needs the docs site for pattern-level detail.
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
 
   local_dev_loop:
-    status: unknown
-    notes: A `strandly/` CLI exists in the monorepo; capabilities not verified.
-    source: null
-    verified_on: null
+    status: documented
+    product: strandly
+    notes: >
+      "strandly/ Developer CLI for local builds and workspace tooling"
+      Confirmed as a local development tool in the monorepo. Detailed capabilities beyond
+      "local builds and workspace tooling" not elaborated in the README.
+    source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
 
   mcp_client:
     status: documented
