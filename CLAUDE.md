@@ -12,44 +12,6 @@ The site lives in `dist/` (built by `uv run scripts/build_data.py`). Always serv
 python3 -m http.server -d dist        # or: npx serve dist
 ```
 
-## Network: this host has domain-access restrictions — use jump-claude for web fetching
-
-**This machine cannot reliably reach every domain the research needs.** When a fetch or
-fact-check has to hit external vendor sites, route it through the **jump-claude** skill,
-which runs a Claude agent on a remote box with unrestricted egress:
-
-```
-~/.claude/skills/jump-claude/jump-claude.sh setup
-~/.claude/skills/jump-claude/jump-claude.sh launch <session> --task-file <f> --workdir '~' --model opus --effort high
-~/.claude/skills/jump-claude/jump-claude.sh status/tail/wait/result <session>
-```
-
-Scope the remote task tightly and demand verbatim quotes + source URLs back (the whole
-project rests on traceable evidence — see `docs/CONTRIBUTING.md`).
-
-**Know when the restriction actually bites — don't reflexively spin up the remote box.** As
-of the 2026-08 research, plain local `curl`/WebFetch *did* reach `aws.amazon.com`,
-`docs.cloud.google.com`, `help.aliyun.com`, `docs.volcengine.com` and `docs.byteplus.com`
-(all HTTP 200). The restriction is **selective**, so:
-
-1. Try locally first for a single known URL.
-2. If it hangs, times out, or DNS-fails, that's the restriction — hand the task to
-   jump-claude rather than fighting it.
-3. Also use jump-claude when a different network *vantage point* is the actual need —
-   e.g. confirming a page is globally reachable vs. blocked-here, or when a vendor's
-   announcement feed / API is shaped differently by region.
-
-The two things that genuinely required the remote box last time were **discovery routes**,
-not raw reachability: the AWS What's New JSON search API
-(`aws.amazon.com/api/dirs/items/search?item.directoryId=whats-new-v2&q=<term>`) and the
-Google Vertex AI **release notes** (launch stages live there, still under the pre-rename
-product name — not in the product docs).
-
-### Collecting remote output back to local
-
-`jump-claude.sh result <session>` returns the agent's final text. For files written outside
-the project workdir, use `jump-claude.sh fetch <session> <path>` to pull them back.
-Prefer `--workdir '~/compareAI'` for repo-relative output so `fetch` just works.
 
 ## Data & verification rules (load-bearing — CI enforces them)
 

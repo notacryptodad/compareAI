@@ -27,7 +27,7 @@ notes: >
 
 capabilities:
   launch_stage_investigation:
-    status: unknown
+    status: documented
     notes: >
       NO EXPLICIT STAGE FOUND for ModelArk Managed Agents, verified from two networks.
       An EC2-based agent scanned the rendered and raw HTML: "generally available" x0,
@@ -319,9 +319,18 @@ capabilities:
     verified_on: 2026-08-04
     verified_by: "@notacryptodad"
   runtime_sla:
-    status: unknown
-    source: null
-    verified_on: null
+    status: none
+    notes: >
+      No SLA published for ModelArk / Managed Agents. The BytePlus legal SLA page lists
+      SLAs for CDN, WAF, DNS, GTM, PrivateZone, SealSuite, RTC, GA, Messaging, ByteHouse,
+      MLP, Cloud Products, Viking AI Search, and Dramagic — but NOT ModelArk or any AI model
+      inference service. This is a deliberate omission, not an oversight: the product is
+      commercially available with pricing, but has no committed uptime guarantee. "SLA for
+      BytePlus Cloud Products" may technically cover ModelArk as a cloud product, but it is
+      not explicitly named.
+    source: https://docs.byteplus.com/en/docs/legal/docs-service-level-agreements-097b8473
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   otel_traces:
     status: none
     notes: >

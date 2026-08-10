@@ -3,32 +3,135 @@ bucket: d
 product: Kiro
 aliases: [Amazon Q Developer, Q Developer]
 notes: >
-  Kiro is the AWS-ecosystem AI coding tool, replacing Amazon Q Developer (which is being
-  faded out). IDE-first experience with agentic capabilities, specs-driven development,
-  and steering rules. Previously known as Amazon Q Developer.
+  Kiro is the AWS AI coding IDE, replacing Amazon Q Developer. Built on Code OSS
+  (VS Code). Uses spec-driven development (specs → design → implementation) with
+  parallel agents and property-based tests. Built on Amazon Bedrock. Credit-based
+  pricing with no daily/weekly rate limits. Currently in preview.
 
 capabilities:
   ide_integration:
-    status: unknown
+    status: documented
+    value: [Kiro IDE, CLI, Web]
+    notes: >
+      Kiro is a standalone IDE built on VS Code / Code OSS. Also offers CLI and Web
+      access. Unlike Copilot which is a plugin, Kiro IS the IDE. Supports the VS Code
+      extension ecosystem. Available for macOS, Windows, and Linux.
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   cli_agent:
-    status: unknown
+    status: documented
+    notes: >
+      CLI mode available — Kiro supports terminal-based agent interactions. Additionally,
+      the underlying Amazon Q Developer CLI capabilities are subsumed into Kiro. Supports
+      agentic workflows from the command line.
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   agentic_coding:
-    status: unknown
+    status: preview
+    notes: >
+      Spec-driven development is the differentiator: users write specs, Kiro designs the
+      implementation plan, parallel agents execute across files, property-based tests are
+      auto-generated. The agentic pipeline chains: requirements → design doc → implementation
+      → tests. Multi-file autonomous edits with rollback. "Kiro" itself is in preview — no
+      GA announcement found.
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   model_choice_coding:
-    status: unknown
+    status: documented
+    value: [Anthropic Claude, open-weight models]
+    notes: >
+      Built on Amazon Bedrock; supports Anthropic Claude models and open-weight models.
+      "Auto" mode selects the best model for the task. Model selection is configurable
+      but the list is curated by AWS (not BYOK like Copilot).
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   model_choosable:
-    status: unknown
+    status: documented
+    notes: >
+      Yes — users can select between available models. Auto mode handles selection
+      automatically. Model choice is more constrained than Copilot's (Bedrock models
+      only, not arbitrary external providers).
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   mcp_support_coding:
-    status: unknown
+    status: documented
+    notes: >
+      MCP support confirmed. Kiro supports AGENTS.md and Skills.md files for
+      configuring agent behavior and tools. MCP servers can be configured to extend
+      the agent's tool access. Additionally supports "hooks" for pre/post-processing.
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   codebase_indexing:
-    status: unknown
+    status: documented
+    notes: >
+      Repo-wide context via spec-driven approach — Kiro reads the full project structure
+      and uses specs to understand intent. Workspace awareness for multi-file operations.
+      The Bedrock foundation provides large context windows for codebase understanding.
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   code_review:
     status: unknown
+    notes: >
+      No explicit PR review feature found in Kiro documentation. The spec-driven workflow
+      generates tests alongside code (property-based testing), which serves a verification
+      role. Dedicated code review (like Copilot's PR review) not confirmed.
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   code_data_retention:
-    status: unknown
+    status: documented
+    notes: >
+      Split by tier: Free tier data may be used for service improvement. Enterprise users
+      have opt-out plus CMK (Customer Managed Key) encryption for data at rest. Built on
+      Bedrock's data handling — Bedrock's policy is that customer data is not used for
+      model training unless explicitly opted in. Enterprise workloads get the Bedrock
+      data isolation guarantees.
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   coding_seat_pricing:
-    status: unknown
+    status: preview
+    notes: >
+      Credit-based pricing model. No daily or weekly rate limits — usage is metered via
+      credits. Currently free during preview period. Enterprise pricing not yet announced.
+      Distinct from the old Q Developer pricing which was $19/seat/mo (Pro) and $25/seat/mo
+      (Business).
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   coding_free_tier:
-    status: unknown
+    status: preview
+    notes: >
+      Free during preview. Post-GA pricing structure expected to be credit-based. The
+      absence of rate limits during preview is a differentiator vs Copilot Free's strict
+      limits (2000 completions/mo, 50 chats).
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   launch_stage_investigation:
-    status: unknown
+    status: preview
+    notes: >
+      Kiro is in preview (as of August 2026). No GA announcement found. The product
+      launched in preview mid-2025 as the successor to Amazon Q Developer. AWS has not
+      stated a GA timeline.
+    source: https://kiro.dev
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

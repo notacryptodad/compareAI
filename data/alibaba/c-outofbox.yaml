@@ -79,14 +79,19 @@ capabilities:
     verified_by: "@notacryptodad"
 
   permission_aware_retrieval:
-    status: unknown
+    status: none
     notes: >
-      NOT established, and this is the most important gap in this file. ACL-trimmed
-      retrieval is the row that separates an enterprise assistant from a chatbot, and the
-      CN overview says nothing about whether knowledge-base answers respect the asking
-      user's document permissions. Do NOT assume either way.
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
+      NOT AVAILABLE at the knowledge-base retrieval layer. The Retrieve API uses
+      workspace-level RAM permissions (AliyunBailianDataFullAccess grants sfm:Retrieve)
+      but there is NO per-document ACL filtering based on the end user's identity. The
+      SearchFilters parameter filters by tags/metadata, not by user permissions. Contrast
+      Amazon Q Business which filters responses "based on the content that your end user
+      has permissions to access." Alibaba's model is workspace-scoped isolation
+      (different workspaces for different teams) rather than per-user document ACLs within
+      a shared knowledge base. This remains the most significant enterprise gap for this
+      product as a business assistant.
+    source: https://www.alibabacloud.com/help/en/model-studio/api-bailian-2023-12-29-retrieve
+    verified_on: 2026-08-09
     verified_by: "@notacryptodad"
 
   invoke_custom_agents:

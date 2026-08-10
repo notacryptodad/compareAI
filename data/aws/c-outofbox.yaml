@@ -116,13 +116,21 @@ capabilities:
     verified_on: 2026-08-09
     verified_by: "@notacryptodad"
   admin_analytics:
-    status: unknown
+    status: documented
     notes: >
-      Analytics/metrics pages exist (insights-dashboard, metrics) but returned no body
-      content — may require auth or JS rendering. CloudTrail logging confirmed for audit.
-      Cannot verify feature depth without a reachable fetch.
-    source: null
-    verified_on: null
+      Two analytics dashboards available at no additional charge in all supported regions:
+      (1) Amazon Q Business Analytics dashboard — tracks daily/weekly/monthly active users,
+      total conversations, total queries, average queries per user/conversation, thumbs
+      up/down feedback with reason breakdown, unsuccessful query responses (not-found vs
+      guardrail-blocked), plugin usage trends, and conversation trends.
+      (2) Amazon Q Apps Analytics dashboard — tracks Q App creators, daily active users,
+      total Q Apps, active Q Apps, runs, and published apps.
+      CloudWatch integration provides raw metrics (namespace AWS/QBusiness): DocumentsIndexed,
+      ThumbsUpCount, ThumbsDownCount, ActiveUsers, TimeToFirstToken, Latency. Metrics
+      retained 15 months. Alarms configurable. No additional charge for the dashboards.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/analytics-dashboard.html
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
   dlp_tenant_isolation:
     status: documented
     notes: >

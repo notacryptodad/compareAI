@@ -4,32 +4,147 @@ product: GitHub Copilot
 aliases: [Copilot, GH Copilot]
 notes: >
   GitHub Copilot is the Microsoft-ecosystem AI coding tool, sold separately from M365
-  Copilot. Business $19/user/month, Enterprise $39/user/month. Agent mode, cloud agent,
-  code review, MCP support, model choice. Requires separate GitHub subscription — NOT
-  bundled with M365 Copilot or Azure.
+  Copilot. Moved to usage-based billing (GitHub AI Credits) on June 1, 2026. Plans:
+  Free, Pro ($10/mo), Pro+ ($39/mo), Max ($100/mo), Business ($19/seat/mo),
+  Enterprise ($39/seat/mo). Supports VS Code, Visual Studio, JetBrains, Eclipse, Xcode,
+  NeoVim. Agent mode, MCP, workspace indexing, code review all GA in latest versions.
 
 capabilities:
   ide_integration:
-    status: unknown
+    status: documented
+    value: [VS Code, Visual Studio, JetBrains, Eclipse, Xcode, NeoVim]
+    notes: >
+      Feature matrix shows support across 6 IDEs. VS Code and Visual Studio have the
+      broadest feature parity. NeoVim is limited to code completion only. Eclipse and Xcode
+      have most features including agent mode and MCP.
+    source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   cli_agent:
-    status: unknown
+    status: documented
+    notes: >
+      Copilot CLI is a supported surface. Supported models table shows "Copilot CLI" as
+      a distinct client alongside IDE and GitHub.com. Copilot CLI supports 1 million token
+      context window and configurable reasoning levels.
+    source: https://docs.github.com/copilot/reference/ai-models/supported-models
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   agentic_coding:
-    status: unknown
+    status: documented
+    notes: >
+      Agent mode is GA across VS Code, Visual Studio, JetBrains, Eclipse, and Xcode.
+      "Core agentic capabilities, including custom agents, sub-agents, and plan agent,
+      are now generally available." Agent hooks are in public preview. Copilot cloud agent
+      is a separate service for running agent tasks in the cloud.
+    source: https://github.blog/changelog/2026-03-11-major-agentic-capabilities-improvements-in-github-copilot-for-jetbrains-ides/
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   model_choice_coding:
-    status: unknown
+    status: documented
+    value: [GPT-5.4, GPT-5.3-Codex, GPT-5.5, GPT-5.6, Claude Opus 4.8, Claude Opus 5, Claude Sonnet 5, Claude Fable 5, Gemini 3.5 Flash, Gemini 3.1 Pro, Kimi K2.7 Code, Kimi K3]
+    notes: >
+      Extensive model choice. "Auto model selection is now generally available" — "routes
+      to models like GPT-5.4, GPT-5.3-Codex, Sonnet 4.6, and Haiku 4.5 depending on your
+      plan and policies." Manual selection also available. BYOK (Bring Your Own Key) is in
+      preview. Premium request billing varies by model multiplier.
+    source: https://docs.github.com/copilot/reference/ai-models/supported-models
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   model_choosable:
-    status: unknown
+    status: documented
+    notes: >
+      Yes — extensive model choice. Users can switch between auto and any specific model.
+      "Stay in control: Switch between auto and any specific model at any time." Admin
+      policies can restrict available models.
+    source: https://github.blog/changelog/2026-03-12-copilot-auto-model-selection-is-generally-available-in-jetbrains-ides/
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   mcp_support_coding:
-    status: unknown
+    status: documented
+    notes: >
+      "Model Context Protocol (MCP) support with GitHub Copilot is now generally available
+      for JetBrains, Eclipse, and Xcode!" Also GA in VS Code and Visual Studio. Supports
+      local and remote MCP servers. "For organization and enterprise administrators, access
+      to MCP is regulated by the MCP servers in Copilot policy. The MCP policy is disabled
+      by default." Auto-approve configurable at server and tool level.
+    source: https://github.blog/changelog/2025-08-13-model-context-protocol-mcp-support-for-jetbrains-eclipse-and-xcode-is-now-generally-available/
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   codebase_indexing:
-    status: unknown
+    status: documented
+    notes: >
+      "Workspace indexing" is supported (GA) in VS Code, Visual Studio, JetBrains, and
+      Eclipse. Enterprise plan adds the ability to "index an organization's codebase for a
+      deeper understanding of the customer's knowledge for more tailored suggestions."
+    source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   code_review:
-    status: unknown
+    status: documented
+    notes: >
+      "Copilot code review" is GA in VS Code, Visual Studio, JetBrains, and Xcode.
+      Available on Pro plan and above. As of June 2026, "Copilot code review consumes
+      GitHub Actions minutes, in addition to GitHub AI Credits."
+    source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   code_data_retention:
-    status: unknown
+    status: documented
+    notes: >
+      SPLIT POLICY by plan tier: "Copilot Business and Copilot Enterprise users are not
+      affected" — their data is NOT used for training. For Free/Pro/Pro+: "from April 24
+      onward we will begin using interaction data—specifically inputs, outputs, code
+      snippets, and associated context—from Copilot Free, Pro, and Pro+ users to train and
+      improve our AI models unless you opt out." Business/Enterprise: "Prompts are
+      transmitted only to generate Suggestions in real-time, are deleted once Suggestions
+      are generated, and are not used for any other purpose."
+    source: https://github.blog/changelog/2026-03-25-updates-to-our-privacy-statement-and-terms-of-service-how-we-use-your-data/
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   coding_seat_pricing:
-    status: unknown
+    status: documented
+    value:
+      free: $0
+      pro: $10/month
+      pro_plus: $39/month
+      max: $100/month
+      business: $19/seat/month
+      enterprise: $39/seat/month
+    notes: >
+      Six tiers. Usage-based billing (GitHub AI Credits) since June 1, 2026. "Base plan
+      pricing is not changing. Copilot Pro remains $10/month, Pro+ remains $39/month,
+      Business remains $19/user/month, and Enterprise remains $39/user/month." Each plan
+      includes monthly AI Credits; additional spend optional with budget controls.
+    source: https://docs.github.com/en/copilot/get-started/plans
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   coding_free_tier:
-    status: unknown
+    status: documented
+    notes: >
+      "GitHub Copilot Free is a new free pricing tier with limited functionality for
+      individual developers." Includes 2,000 completions per month, 50 chat requests,
+      access to Haiku 4.5, GPT-5 mini, and more via auto model selection only.
+    source: https://github.com/features/copilot/plans
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   launch_stage_investigation:
-    status: unknown
+    status: documented
+    notes: >
+      No single GA statement for the overall product — it has been shipping for years.
+      Individual features have their own stages: Agent mode GA (March 2026), MCP GA
+      (August 2025 for JetBrains/Eclipse/Xcode), code review GA, workspace indexing GA.
+      BYOK and Vision remain in preview.
+    source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

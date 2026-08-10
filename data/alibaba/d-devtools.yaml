@@ -1,34 +1,148 @@
 provider: alibaba
 bucket: d
-product: Tongyi Lingma
-aliases: [通义灵码, Lingma, Token Plan Team Edition]
+product: Qoder CN
+aliases: [通义灵码, Tongyi Lingma, Lingma, 千码]
 notes: >
-  Tongyi Lingma (通义灵码) is Alibaba Cloud's AI coding assistant. Available as
-  VS Code and JetBrains extensions. Enterprise version integrates with Alibaba Cloud
-  for codebase indexing and team management.
+  Tongyi Lingma (通义灵码) was renamed to Qoder CN on May 20, 2026. Full-featured AI
+  coding IDE and plugin ecosystem. Available as standalone Qoder CN IDE, JetBrains
+  plugin, VS Code plugin, CLI, mobile, and QoderWork (team collaboration). Supports
+  multi-model selection (GLM, DeepSeek, Kimi, MiniMax). Credit-based pricing from
+  free to ¥199/seat/mo (VPC deployment).
 
 capabilities:
   ide_integration:
-    status: unknown
+    status: documented
+    value: [Qoder CN IDE, JetBrains, VS Code, CLI, Mobile, QoderWork]
+    notes: >
+      Six surfaces. The standalone Qoder CN IDE is the primary offering. JetBrains and
+      VS Code plugins available for developers who prefer existing IDEs. Mobile app for
+      on-the-go coding assistance. QoderWork is a team collaboration environment. CLI
+      for terminal-based usage.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   cli_agent:
-    status: unknown
+    status: documented
+    notes: >
+      CLI mode available as one of the 6 supported surfaces. Terminal-based agent
+      interactions for scripting and automation workflows. Part of the unified Qoder CN
+      platform.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   agentic_coding:
-    status: unknown
+    status: documented
+    notes: >
+      "Quest 2.0" is the agentic coding feature — task planning with autonomous execution.
+      "Expert team" mode for complex multi-step tasks. Supports multi-file batch edits
+      with autonomous planning and execution. The agent can decompose tasks, plan
+      implementation, and execute across files.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   model_choice_coding:
-    status: unknown
+    status: documented
+    value: [GLM, DeepSeek, Kimi, MiniMax]
+    notes: >
+      Model selector allows switching between multiple Chinese AI models. GLM (Zhipu),
+      DeepSeek, Kimi (Moonshot), and MiniMax are available. The selection is switchable
+      during use. This is a curated set of Chinese foundation models — no Western models
+      (Claude, GPT) in the list, reflecting the China-market focus.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   model_choosable:
-    status: unknown
+    status: documented
+    notes: >
+      Yes — users can switch between available models during use. The model selector
+      UI allows real-time switching. Admin policies in Teams/Enterprise tiers can
+      restrict available models.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   mcp_support_coding:
-    status: unknown
+    status: documented
+    notes: >
+      MCP support confirmed with both STDIO and SSE transport modes. Supports up to 10
+      concurrent MCP servers per workspace. This is explicit MCP protocol support, not
+      just a plugin system.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   codebase_indexing:
-    status: unknown
+    status: documented
+    notes: >
+      Enterprise and VPC tiers include codebase indexing for organization-wide code
+      understanding. Teams tier adds shared code context. The exact indexing mechanism
+      (embeddings, AST, search) is not detailed in public docs, but the capability is
+      present for enterprise customers.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   code_review:
-    status: unknown
+    status: documented
+    notes: >
+      Code review capabilities available as part of the IDE experience. AI-powered
+      suggestions and explanations. Whether a dedicated PR-level review feature exists
+      (like Copilot's automated PR review) is not confirmed from the public docs.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   code_data_retention:
-    status: unknown
+    status: documented
+    notes: >
+      Enterprise features include: SSO integration, audit logs, VPC deployment option,
+      and IP whitelist. VPC tier (¥199/seat/mo) provides full data isolation with
+      on-premise deployment. Standard tiers route through Alibaba Cloud servers with
+      standard Alibaba Cloud data protection policies. Alibaba Cloud's general policy
+      states they do not use customer data for model training.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   coding_seat_pricing:
-    status: unknown
+    status: documented
+    value:
+      free: ¥0
+      pro: ¥59/month
+      pro_plus: ¥169/month
+      teams: ¥99/seat/month
+      enterprise: ¥149/seat/month
+      vpc: ¥199/seat/month
+    notes: >
+      Six tiers, credit-based model. Free tier with limited usage. Pro (¥59/mo) and
+      Pro+ (¥169/mo) for individuals. Teams (¥99/seat/mo) adds collaboration features.
+      Enterprise (¥149/seat/mo) adds SSO, audit, admin controls. VPC (¥199/seat/mo) adds
+      on-premise deployment with full data isolation.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   coding_free_tier:
-    status: unknown
+    status: documented
+    notes: >
+      Free tier available with limited credits/usage. Provides basic code completion and
+      chat. Upgrade to Pro or higher for full features, higher limits, and team
+      capabilities.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   launch_stage_investigation:
-    status: unknown
+    status: documented
+    notes: >
+      Product has been commercially available for over a year (originally as Tongyi Lingma,
+      renamed to Qoder CN on May 20, 2026). No "preview" or "beta" labels on the current
+      product. Individual features may have their own maturity stages but the core product
+      is shipping and commercially available with paid tiers.
+    source: https://help.aliyun.com/zh/lingma
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

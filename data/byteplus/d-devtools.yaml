@@ -1,34 +1,140 @@
 provider: byteplus
 bucket: d
-product: unknown
-aliases: []
+product: Trae AI
+aliases: [TraeCode, Trae]
 notes: >
-  BytePlus does not appear to have a publicly documented developer coding tool
-  comparable to GitHub Copilot or Kiro. ByteDance has internal tools (Trae AI, Marscode)
-  but their availability under BytePlus branding is unconfirmed. Research needed.
+  Trae AI (TraeCode) is ByteDance's AI coding IDE. Built on VS Code foundation.
+  Features SOLO mode for autonomous end-to-end development. Supports multiple models
+  including GPT-5.4, Seed-2.1-Turbo, MiniMax-M3, Kimi-K2.5, and Gemini-3 series.
+  Custom model providers include BytePlus and Volcano Engine. Pricing: Free / Pro
+  $10/mo. International product (trae.ai) — ByteDance's developer tool offering
+  alongside BytePlus cloud.
 
 capabilities:
   ide_integration:
-    status: unknown
+    status: documented
+    value: [TraeCode IDE]
+    notes: >
+      TraeCode is a standalone IDE built on VS Code foundation. Single IDE rather than
+      a plugin ecosystem — similar approach to Kiro (standalone) vs Copilot (plugin).
+      Supports the VS Code extension marketplace for compatibility.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   cli_agent:
     status: unknown
+    notes: >
+      No dedicated CLI agent mode found in Trae AI documentation. The IDE is the primary
+      surface. Terminal integration exists within the IDE but a standalone CLI tool (like
+      Gemini CLI or Copilot CLI) is not documented.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   agentic_coding:
-    status: unknown
+    status: documented
+    notes: >
+      SOLO mode is the autonomous agent feature — handles end-to-end development tasks
+      autonomously. Can plan, implement, test, and iterate on code changes across multiple
+      files. Positioned as a fully autonomous coding agent that can complete tasks without
+      step-by-step guidance.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   model_choice_coding:
-    status: unknown
+    status: documented
+    value: [GPT-5.4, Seed-2.1-Turbo, MiniMax-M3, Kimi-K2.5, Gemini-3 series]
+    notes: >
+      Extensive model choice — multi-provider. Includes OpenAI (GPT-5.4), ByteDance's own
+      Seed models (Seed-2.1-Turbo), MiniMax-M3, Moonshot (Kimi-K2.5), and Google (Gemini-3
+      series). Custom model providers can be configured including BytePlus Model Platform
+      and Volcano Engine. Broader model access than most competitors.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   model_choosable:
-    status: unknown
+    status: documented
+    notes: >
+      Yes — users can select from available models. Custom model providers are also
+      configurable, allowing connection to BytePlus, Volcano Engine, or other endpoints.
+      One of the most open model-choice approaches alongside Copilot.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   mcp_support_coding:
     status: unknown
+    notes: >
+      MCP not explicitly mentioned in available Trae AI documentation. The tool has
+      extensive extension/tool support through its VS Code foundation, but explicit MCP
+      protocol support (like Copilot's or Kiro's) is not confirmed. May support MCP
+      through VS Code extensions but no first-party documentation found.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   codebase_indexing:
-    status: unknown
+    status: documented
+    notes: >
+      Workspace awareness through the IDE. The tool understands the project structure
+      for context-aware suggestions. Whether server-side indexing (like Copilot Enterprise
+      or Code Assist Enterprise) is available for organizations is not confirmed.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   code_review:
     status: unknown
+    notes: >
+      No dedicated code review feature documented. SOLO mode handles code changes but a
+      PR-level review tool or inline review suggestions beyond standard IDE features are
+      not confirmed.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   code_data_retention:
     status: unknown
+    notes: >
+      Data retention and training policies not clearly documented in available English
+      sources. ByteDance/BytePlus privacy policies would apply. Whether code snippets are
+      used for model training is not explicitly stated in the product documentation found.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   coding_seat_pricing:
-    status: unknown
+    status: documented
+    value:
+      free: $0
+      pro: $10/month
+    notes: >
+      Two tiers documented: Free and Pro ($10/month). Additional usage packages available
+      for purchase beyond Pro tier limits. Simpler pricing structure than Copilot's 6 tiers
+      or Qoder CN's 6 tiers. Enterprise/team pricing not prominently documented.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   coding_free_tier:
-    status: unknown
+    status: documented
+    notes: >
+      Free tier available with access to core features. Pro tier ($10/mo) adds higher
+      limits and additional model access. The free tier is generous enough for individual
+      use — similar positioning to Copilot Free.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"
+
   launch_stage_investigation:
-    status: unknown
+    status: documented
+    notes: >
+      Trae AI is commercially available with paid tiers (Free + Pro at $10/mo). No
+      "preview" or "beta" labels on the current product. The product has been shipping
+      commercially. Individual features like SOLO mode may have their own maturity stages.
+    source: https://trae.ai
+    verified_on: 2026-08-09
+    verified_by: "@notacryptodad"

@@ -167,9 +167,7 @@ function render() {
       body += '<tr><td class="cap">' + esc(r.label) + '</td>';
       provs.forEach((p) => {
         const cell = cellOf(p, bucket, r.id);
-        const clickable = cell && (cell.notes || cell.source);
-        body += '<td class="' + (clickable ? 'cell' : '') + '"' +
-          (clickable ? ' data-p="' + p + '" data-r="' + r.id + '"' : '') + '>' +
+        body += '<td class="cell" data-p="' + p + '" data-r="' + r.id + '">' +
           badge(cell) + '</td>';
       });
       body += '</tr>';
