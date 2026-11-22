@@ -1,178 +1,147 @@
 provider: aws
 bucket: c
 product: Amazon Q Business
-aliases: [Q Business, Amazon Q, Amazon Quick]
+aliases: [Q Business, Amazon Q Business]
 notes: >
-  MOST IMPORTANT FACT ABOUT THIS PRODUCT, and it is the first line of its own docs:
-  "Amazon Q Business is no longer open to new customers. For capabilities similar to
-  Q Business, explore Amazon Quick."
-  Anyone reading a cloud comparison to make a buying decision cannot act on Q Business at
-  all — so every capability row below is historical/for-existing-customers context, not a
-  purchasable option. Successor is "Amazon Quick"; that product is NOT yet researched here.
-  This is exactly the kind of fact a stale comparison table would get catastrophically
-  wrong, and it is why the 90/180-day staleness rules exist.
+  Amazon Q Business is no longer open to new customers. AWS says it will continue bug
+  fixes and security updates for existing customers, but new feature requests will not
+  be considered. AWS recommends Amazon Quick for new generative or agentic AI solutions
+  and documents a phased migration path, including Bring Your Own Index. All capability
+  rows below describe the existing Q Business product and must not be read as a new-
+  customer availability claim. (Paraphrase.)
 
 capabilities:
   packaged_assistant:
     status: none
     product: Amazon Q Business
     notes: >
-      Recorded `none` for PURCHASABILITY, on a positive vendor statement (the rule for
-      `none`): "Amazon Q Business is no longer open to new customers."
-      The capability itself is real and documented for existing customers:
-      "Amazon Q Business is a fully managed, generative-AI powered assistant that you can
-      configure to answer questions, provide summaries, generate content, and complete
-      tasks based on your enterprise data."
-    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-04
+      The current availability notice explicitly says Amazon Q Business is no longer
+      open to new customers. The assistant capability remains documented for existing
+      customers, but the product is not a new-customer purchasing option. (Paraphrase.)
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/qbusiness-availability-change.html
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   permission_aware_retrieval:
     status: documented
     notes: >
-      Strong on paper — this is the row that separates a real enterprise assistant from a
-      chatbot, and Q Business leads with it:
-      "It allows end users to receive immediate, permissions-aware responses from
-      enterprise data sources with citations".
-      "Its responses to questions are based on the content that your end user has
-      permissions to access. You can use AWS IAM Identity Center or AWS Identity and
-      Access Management to manage end user access".
-      Caveat: an explicit opt-out exists — "anonymous applications" that "don't require
-      user authentication", for public-facing use.
+      Q Business provides permissions-aware answers with citations and bases responses on
+      content the end user can access. AWS documents IAM Identity Center and IAM for
+      managing end-user access. Anonymous applications are a separate documented option
+      for public-facing use. (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-04
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   prebuilt_connectors:
     status: documented
     notes: >
-      "out-of-the-box connections to multiple supported data sources" — the docs page does
-      NOT state a connector count; named examples are Amazon S3, SharePoint and Salesforce,
-      with Amazon Kendra usable as a retriever.
-      Third-party actions via plugins. Integrations and browser extensions surface it in
-      Slack, Microsoft Teams and Microsoft Office, and it can be embedded in your own apps.
-      Data accessors let verified ISVs retrieve from your index. (Paraphrase.)
+      Q Business documents out-of-the-box data-source connections and names Amazon S3,
+      Microsoft SharePoint, and Salesforce, with Amazon Kendra available as a retriever.
+      The connector guide also documents scheduled sync configuration through the API.
+      (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-04
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   guardrails:
     status: documented
     notes: >
-      Built on Bedrock, so it inherits those controls: "Because Amazon Q Business is built
-      on Amazon Bedrock, users can take full advantage of the controls implemented in
-      Amazon Bedrock to enforce safety, security, and the responsible use of artificial
-      intelligence (AI)." AWS also "implements automated abuse detection".
-      Grounding control: you "control whether the responses should only use your enterprise
-      data, or use both enterprise data and model knowledge".
-      Hallucination mitigation "checks supported chat responses for inconsistencies and
-      automatically corrects them in real-time during conversations."
+      Q Business is built on Amazon Bedrock and can use Bedrock safety and security
+      controls. Its documentation also describes response-scope controls and
+      hallucination mitigation for supported chat responses. (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-04
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   seat_pricing:
     status: documented
     notes: >
-      TWO-AXIS BILLING, which is unusual for a packaged assistant and easy to miss when
-      budgeting: "Amazon Q Business charges you both for user subscriptions to
-      applications, and for index capacity."
-      Per-seat alone is therefore NOT the whole cost — index capacity is metered separately.
-      Tier detail is on a separate subscription-and-index pricing page (not fetched).
-    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-04
+      Q Business charges for user subscriptions and index capacity separately. The
+      current tiers page documents Lite and Pro subscriptions plus starter and enterprise
+      index types. The availability notice means these are existing-customer terms, not
+      a new-customer availability claim. (Paraphrase.)
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   invoke_custom_agents:
     status: documented
     notes: >
-      "You can use Amazon Q Business to create and share task automation applications, or
-      perform routine actions like submitting time-off requests and sending meeting
-      invites." Third-party actions go through plugins.
-      Whether it can invoke an AgentCore-hosted agent is NOT stated — do not assume the
-      B->C bridge that Azure documents explicitly.
+      Q Business supports task-automation applications and routine actions such as time-
+      off requests and meeting invitations. The current page does not establish a bridge
+      to an AgentCore-hosted custom agent, so no such bridge is asserted. (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-04
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   model_choosable:
-    status: none
+    status: unknown
     notes: >
-      Built on Bedrock, but no user-selectable model option is documented. The product is
-      described as powered by an LLM but no admin or end-user control over model choice is
-      stated. Fixed and opaque by evidence of absence — confirmed on re-read 2026-08-09.
+      The current Q Business overview describes a Bedrock-powered assistant but does not
+      document an administrator or end-user model-selection control. Preserve unknown
+      rather than infer a fixed or selectable model. (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   index_residency:
     status: documented
     value: [us-east-1, us-west-2, eu-west-1, ap-southeast-2]
     notes: >
-      Index data resides in the AWS region where the application is deployed. Four regions:
-      US East (N. Virginia), US West (Oregon), Europe (Ireland), Asia Pacific (Sydney).
-      No cross-region replication by default. Production workloads run across 3 AZs.
+      The current supported-regions page lists four Q Business service Regions. It also
+      warns that Pro subscriptions in Ireland and Sydney have a limited feature set.
+      (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/quotas-regions.html
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   admin_analytics:
     status: documented
     notes: >
-      Two analytics dashboards available at no additional charge in all supported regions:
-      (1) Amazon Q Business Analytics dashboard — tracks daily/weekly/monthly active users,
-      total conversations, total queries, average queries per user/conversation, thumbs
-      up/down feedback with reason breakdown, unsuccessful query responses (not-found vs
-      guardrail-blocked), plugin usage trends, and conversation trends.
-      (2) Amazon Q Apps Analytics dashboard — tracks Q App creators, daily active users,
-      total Q Apps, active Q Apps, runs, and published apps.
-      CloudWatch integration provides raw metrics (namespace AWS/QBusiness): DocumentsIndexed,
-      ThumbsUpCount, ThumbsDownCount, ActiveUsers, TimeToFirstToken, Latency. Metrics
-      retained 15 months. Alarms configurable. No additional charge for the dashboards.
+      Q Business has separate analytics dashboards for application usage and Q Apps. AWS
+      says the dashboards are available at no additional charge in all Regions where Q
+      Business is offered. (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/analytics-dashboard.html
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   dlp_tenant_isolation:
     status: documented
     notes: >
-      "Amazon Q Business supports access control for your data so that the right users can
-      access the right content. Its responses to questions are based on the content that
-      your end user has permissions to access."
-      "You can use AWS IAM Identity Center or AWS Identity and Access Management to manage
-      end user access for Amazon Q Business."
-      Tenant isolation via IAM Identity Center; permission-aware responses. Guardrails page
-      shows blocked phrases, hallucination mitigation, response scope controls. No dedicated
-      DLP feature (PII detection/masking) found — security through IAM and shared
-      responsibility model.
+      Q Business enforces access-aware answers based on end-user permissions and documents
+      IAM Identity Center and IAM as access-management options. The reviewed official
+      overview does not establish a separate PII-masking or DLP product feature, so this
+      row records permission-based isolation only. (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   license_bundling:
-    status: none
+    status: unknown
     notes: >
-      Q Business is sold as standalone per-user subscription (Lite and Pro tiers) plus index
-      capacity. No bundling with AWS commitments (Enterprise Support, Savings Plans, etc.)
-      documented. (Paraphrase of tiers page.)
+      The current tiers page documents user subscriptions and index capacity, but it does
+      not state whether those charges are bundled with AWS commitments or support plans.
+      Preserve unknown rather than infer that no bundling exists. (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   training_data_policy:
     status: documented
     notes: >
-      "Amazon Q Business does not use customer data for service improvement or for improving
-      underlying LLMs."
-      Explicit no-training commitment. No opt-out needed — off by default.
-      CONTRAST with AgentCore's "may use and store your content to improve your service
-      experience" — the two AWS products take opposite positions on this.
+      AWS states that Amazon Q Business does not use customer data for service improvement
+      or for improving underlying LLMs. (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/service-improvement.html
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   index_freshness:
     status: documented
     notes: >
-      Batch/scheduled sync, not real-time. Admins configure sync run schedules via the
-      CreateDataSource API or console. No real-time streaming ingestion documented.
-      Index charges include "100 hours of data source connector usage (time that it takes to
-      scan and index new, updated, or deleted documents)". (Paraphrase.)
+      Q Business data sources use configured sync run schedules through the console or
+      CreateDataSource API. The reviewed connector documentation supports scheduled
+      ingestion and does not document real-time streaming ingestion. (Paraphrase.)
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/supported-connectors.html
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"

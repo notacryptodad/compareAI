@@ -1,331 +1,272 @@
 provider: alibaba
 bucket: b
-product: Alibaba Cloud Model Studio
-aliases: [Model Studio, DashScope, 百炼, Bailian]
+product: Alibaba Cloud Model Studio Managed Agents
+aliases: [Model Studio, DashScope, 百炼, Bailian, Managed Agents, AgentStudio]
 notes: >
-  "a one-stop model service platform."
-  SCOPE CAUTION: the page fetched is Model Studio's overview, which is a MODEL platform,
-  not an agent platform. It does NOT document an agent runtime, agent builder, workflow
-  designer, knowledge base, or MCP support. Agents appear only incidentally.
-  THE FAIRNESS RULE PAID OFF: the suspicion that the EN page understated Alibaba was
-  correct. The CN-language Bailian (百炼) docs at help.aliyun.com document a full agent
-  application builder — visual AND high-code modes, workflow orchestration, knowledge-base
-  RAG, plugins and MCP — none of which appears on the EN "what is Model Studio" page.
-  Cells below now cite the CN docs where those are the authoritative source. Had this
-  project shipped on EN docs alone it would have shown Alibaba as having no agent platform,
-  which would have been simply false.
-  「阿里云百炼是一站式大模型开发与应用平台，集成千问及主流第三方模型。」
+  The current Model Studio overview presents a model service with text, vision, speech,
+  multimodal, and embedding APIs, online inference, inference scheduling, and model
+  training. Model Studio also documents two different agent surfaces: the older
+  application builder, whose application-development features are explicitly preview,
+  and the newer Managed Agents API with agents, cloud environments, sessions, and event
+  streaming. These surfaces should not be treated as one maturity level. (Paraphrase.)
 
 capabilities:
   launch_stage_investigation:
     status: preview
     notes: >
-      LAUNCH STAGE RESOLVED via the EN application introduction page (a DIFFERENT source
-      from the CN overview): "This tab contains the following features: Applications (agent
-      application and workflow application), Components (prompt engineering and plug-in),
-      and Data (knowledge base and application data). These are all preview features. Use
-      them with caution in production environments."
-      The CN pages carried no stage words (公测/邀测/正式商用 etc.) but the EN international
-      docs explicitly state PREVIEW for ALL application features. This is the vendor stating
-      a stage, satisfying the `preview` status requirement.
-      PREVIOUS RESEARCH MISS: this was marked unknown because only the CN docs were
-      checked; the EN application-introduction page was not fetched until 2026-08-09.
+      The official application introduction says that the Applications, Components, and
+      Data features in the Application Development tab are preview features and should be
+      used cautiously in production. This stage applies to that application-builder
+      surface, not automatically to every Model Studio API. (Paraphrase.)
     source: https://www.alibabacloud.com/help/en/model-studio/application-introduction
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   workflow_engine:
     status: documented
     notes: >
-      Visual workflow orchestration, explicitly aimed at non-coders:
-      「可视化流程编排，无代码基础的业务人员也能独立完成工作流设计。」
-      Workflow applications are a distinct application type from agent applications.
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
+      Model Studio documents workflow applications that use visual node orchestration to
+      chain multi-step tasks into a controlled execution path. (Paraphrase.)
+    source: https://www.alibabacloud.com/help/en/model-studio/application-introduction
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   multi_agent_patterns:
     product: Agent orchestration applications
     status: documented
     notes: >
-      The EN docs confirm "agent orchestrations" as a distinct application type alongside
-      agents and workflows: "You can integrate Model Studio applications—such as agents,
-      workflows, or agent orchestrations—into your business systems using the DashScope SDK
-      or HTTP." The application introduction page states agent applications "autonomously
-      understand user intent, make decisions, and call external tools" while workflow
-      applications use "visual node orchestration to chain multi-step, complex tasks."
-      Multi-agent topology names (supervisor/swarm) are NOT used — the model is
-      orchestration-based, similar to GCP's graph + delegation pattern.
-    source: https://www.alibabacloud.com/help/en/model-studio/application-calling-guide
-    verified_on: 2026-08-09
+      Model Studio has a separate agent-orchestration application API. The official page
+      establishes orchestration as an application type but does not name supervisor,
+      swarm, or another topology, so no topology is inferred. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/call-single-agent-application
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
-  long_term_memory:
-    status: none
+  long_running_agents:
+    status: documented
     notes: >
-      Explicitly absent. The FAQ states: "Does the Assistant API have memory-related
-      capabilities? The memory configuration feature is not currently supported."
-      Applications support multi-round conversation via session_id (cloud-stored history)
-      or messages array — this is short-term context, not long-term memory like AgentCore
-      Memory or Vertex Memory Bank. The application introduction mentions "memory" as a
-      platform capability ("integrating capabilities such as knowledge base retrieval,
-      external tool calls, and memory") but the FAQ contradicts this for the API layer.
-      Recording `none` on the strength of the FAQ's explicit denial.
-    source: https://www.alibabacloud.com/help/en/model-studio/faq-about-alibaba-cloud-model-studio
-    verified_on: 2026-08-09
+      Managed Agents runs work through sessions and streams events asynchronously. The
+      quickstart states that an agent, environment, and session are created separately
+      and that task execution continues through the event stream. The page does not
+      promise a maximum duration or a specific long-running SLA. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/managed-agents-quickstart
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  managed_agent_runtime:
+    product: Managed Agents
+    status: documented
+    notes: >
+      Managed Agents provides a cloud Environment for agent execution. The quickstart
+      creates an Agent, a cloud Environment, and a Session, then submits work to the
+      session. This is documented runtime behavior, not a GA claim. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/managed-agents-quickstart
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  managed_agent_loop:
+    product: Managed Agents
+    status: documented
+    notes: >
+      The Managed Agents API creates an agent with a model and system prompt, binds it to
+      an environment and session, and accepts tasks through the session events API. The
+      service therefore manages the agent execution loop, while the documentation does
+      not state a launch stage. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/managed-agents-quickstart
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  session_management:
+    status: documented
+    notes: >
+      Sessions have explicit create, event-stream, send, status, and stop-reason flows.
+      The current quickstart documents multi-turn context retention and distinguishes
+      normal completion, approval-required, retry-exhausted, and terminated states.
+      (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/managed-agents-quickstart
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  authoring_mode:
+    status: documented
+    value: [no-code, low-code]
+    notes: >
+      The application introduction describes agent applications as natural-language,
+      no-code configuration and workflow applications as visual, low-code orchestration.
+      It does not establish the older high-code wording as the current application
+      builder interface. (Paraphrase.)
+    source: https://www.alibabacloud.com/help/en/model-studio/application-introduction
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   first_party_models:
     status: documented
-    value: [Qwen-Max, Qwen-Plus, Qwen-Flash]
+    value: [Qwen4-Max, Qwen3.7-Plus, Qwen3.8-Flash]
     notes: >
-      "the proprietary Qwen series and third-party models such as DeepSeek, Kimi, and GLM."
-      Qwen-Max: "The highest-performing model in the Qwen series, suited for complex,
-      multi-step tasks"; "The latest qwen3.7-max delivers significant reasoning
-      improvements over its predecessor."
-      Qwen-Plus is positioned as the balanced tier and Qwen-Flash as the low-cost,
-      low-latency tier. (Paraphrase.)
-      Modalities: "text generation, visual understanding, image generation, video
-      generation, speech recognition and synthesis, and embedding."
-      Specialized: "long-text processing, translation, data mining, intent recognition,
-      role-playing, and deep research."
-    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
+      The current Model Studio overview and pricing documentation list Qwen4-Max and the
+      Qwen 3.x Max, Plus, and Flash families. The values shown here are representative
+      current first-party model names, not an exhaustive catalog. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   third_party_catalog:
     status: documented
-    value: [DeepSeek, Kimi, GLM]
+    value: [DeepSeek, Kimi, GLM, MiniMax]
     notes: >
-      REGIONAL RESTRICTION worth surfacing prominently: "DeepSeek is available only in the
-      China (Beijing) region."
-    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
+      The current Token Plan Team Edition page lists DeepSeek, Moonshot Kimi, Zhipu GLM,
+      and MiniMax model IDs alongside Qwen and Alibaba models. Availability and model
+      IDs vary by region and subscription surface. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/token-plan-team-overview
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   openai_compatible_endpoint:
     status: documented
     notes: >
-      "Model Studio is OpenAI-compatible. Update the API key, base URL, and model name to
-      migrate existing OpenAI code."
-      Base URL pattern: https://{WorkspaceId}.<region>.maas.aliyuncs.com/compatible-mode/v1
-      — except US (Virginia), which uses dashscope-us.aliyuncs.com.
-    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
+      Model Studio documents OpenAI-compatible Responses and Chat Completions endpoints,
+      with a workspace- and region-specific base URL. The current overview also shows
+      compatible calls in Python, JavaScript, Java, Go, C#, and Ruby. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   runtime_regions:
-    status: documented
-    value: [Singapore, US (Virginia), China (Beijing), China (Hong Kong), Japan (Tokyo), Germany (Frankfurt)]
+    status: unknown
     notes: >
-      Six regions for the MODEL platform (not an agent runtime — do not compare directly
-      with AgentCore's 20).
-      CRITICAL PORTABILITY GOTCHA: regions differ in "endpoints and base URLs, API keys
-      (not interchangeable across regions), supported models," plus features and pricing.
-      API keys are NOT interchangeable across regions — a real migration cost.
-      New-user free quota is limited to Singapore.
-    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
+      Current pages document region-specific endpoints and region restrictions, but the
+      refreshed overview does not provide one authoritative complete region list for all
+      Model Studio capabilities. Availability must therefore be checked per model and
+      API surface. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
-  managed_agent_runtime:
-    status: documented
-    product: 百炼 / Bailian application platform (Agent 1.0)
+  mcp_server_hosting:
+    status: unknown
     notes: >
-      CORRECTS AN EARLIER `unknown` THAT CAME FROM READING ONLY ENGLISH DOCS.
-      The CN docs describe agent applications and a hosted high-code deployment path:
-      「可视化模式可快速创建智能体应用（Agent 1.0）和工作流应用」 — the visual mode creates
-      agent applications (Agent 1.0) and workflow applications; and
-      「高代码应用则支持将 Python 项目部署为后端服务，具备自动化运维、可观测、日志服务等能力」
-      — high-code applications deploy a Python project as a backend service with automated
-      ops, observability and logging. That is a managed runtime in substance.
-      Version marker is "Agent 1.0"; no GA/公测/beta label appears, hence `documented`.
-      Publishing targets are unusually consumer-oriented:
-      「支持将应用发布至网页、钉钉机器人、微信公众号及音视频互动智能体等多种平台」
-      — web, DingTalk bots, WeChat official accounts, and audio/video interactive agents.
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
+      The MCP page documents connecting Responses API requests to an MCP server and
+      points to cloud-deployed MCP services. It does not establish that Model Studio
+      hosts arbitrary customer MCP servers, so this row remains unknown. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/mcp
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
-  managed_agent_loop:
-    product: 百炼 visual agent builder (Agent 1.0)
-    status: documented
-    notes: >
-      「可视化模式可快速创建智能体应用（Agent 1.0）和工作流应用」 — the visual mode lets you
-      create agent applications without code. The platform runs the agent loop; you
-      configure model, prompt, knowledge base, and plugins via UI. This is the most
-      no-code-forward managed loop in the comparison — aimed at "business staff with no
-      coding background" (「无代码基础的业务人员也能独立完成工作流设计」).
-      Publishing is one-click to web, DingTalk bots, WeChat official accounts.
-      CONTRAST with AWS Harness and Azure prompt agents which are API-declarative (still
-      requires a developer to call an API); Alibaba's is GUI-declarative (a business user
-      can do it). BytePlus is in between (API-first but with a console option).
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-09
-    verified_by: "@notacryptodad"
-  authoring_mode:
-    status: documented
-    value: both
-    notes: >
-      Both modes, stated explicitly: 「提供可视化和高代码两种开发模式」 — visual and
-      high-code development modes. Visual mode is aimed at non-developers:
-      「可视化流程编排，无代码基础的业务人员也能独立完成工作流设计。」
-      The EN overview showed only a "Playground", which is why this was previously unknown.
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
-    verified_by: "@notacryptodad"
+
   knowledge_base:
     status: documented
     notes: >
-      Knowledge-base RAG is a first-class capability:
-      「通过知识库（RAG）接入私有数据和专业领域知识」
-      (approx: connect private data and domain knowledge via a knowledge base / RAG).
-      Billed independently: 「按规格时长和模型调用计费，不支持节省计划或资源包等预付费形式」
-      — metered by spec-duration plus model calls, with NO savings plan or prepaid resource
-      pack available. That exclusion is a real budgeting constraint worth surfacing.
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
-    verified_by: "@notacryptodad"
-  mcp_server_hosting:
-    status: documented
-    notes: >
-      MCP is documented alongside plugins as the mechanism for calling external services:
-      「通过插件和模型上下文协议（MCP）调用外部服务。」
-      NOTE: this establishes MCP *consumption* by applications. Whether Model Studio HOSTS
-      MCP servers (the AgentCore Gateway equivalent) is NOT established by this sentence —
-      do not equate the two without a dedicated MCP page.
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
-    verified_by: "@notacryptodad"
-  code_interpreter:
-    status: documented
-    notes: >
-      Code execution capability available within agent applications. The high-code
-      deployment path supports Python project deployment as backend services
-      (「高代码应用则支持将 Python 项目部署为后端服务」). Whether this includes a sandboxed
-      code interpreter for end-user-generated code (like AWS AgentCore's or GCP's) vs.
-      developer-authored code execution is not clearly distinguished on the overview page.
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-09
-    verified_by: "@notacryptodad"
-  browser_use:
-    status: none
-    notes: >
-      No browser use / computer use capability documented for Model Studio applications.
-      Agent applications call "external tools such as knowledge bases and MCP services"
-      but no browser automation, screen interaction, or web navigation feature is named.
-      Not found in application introduction, FAQ, or billing docs.
+      Agent applications can call knowledge-base retrieval, and the application
+      introduction identifies knowledge-base retrieval as a built-in application
+      capability. The page does not define refresh cadence or query-time ACL trimming.
+      (Paraphrase.)
     source: https://www.alibabacloud.com/help/en/model-studio/application-introduction
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
+  code_interpreter:
+    status: unknown
+    notes: >
+      The refreshed Managed Agents quickstart documents cloud environments but does not
+      characterize them as a user-facing sandboxed code interpreter. The old high-code
+      application wording is not used to infer this capability. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/managed-agents-quickstart
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  browser_use:
+    product: UI Agent
+    status: documented
+    notes: >
+      Model Studio documents a UI Agent that understands and operates terminal screens
+      across mobile, vehicle, television, and PC environments. This supports computer
+      interaction, but the page does not promise a general web-browser automation
+      runtime. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/ui-agent-api
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
   agent_workload_identity:
     status: documented
     notes: >
-      RAM (Resource Access Management) provides workload identity for Model Studio.
-      "You can use your Alibaba Cloud account to grant different workspace permissions
-      to different RAM users. Data is isolated between workspaces." API keys are
-      workspace-scoped and non-interchangeable across regions. Token Plan Team Edition
-      seats are bound to individual members with per-member API Keys — logical identity
-      per agent workload. Standard Alibaba Cloud IAM applies.
-    source: https://www.alibabacloud.com/help/en/model-studio/faq-about-alibaba-cloud-model-studio
-    verified_on: 2026-08-09
+      Model Studio uses Alibaba Cloud accounts, RAM users, workspaces, and workspace
+      API keys. The current documentation establishes workspace-scoped access control,
+      but does not establish a distinct IAM principal automatically created per agent.
+      (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/model-calling-in-sub-workspace
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   guardrails:
-    product: AI Guardrails + AI Gateway
+    product: AI safety guardrails
     status: documented
     notes: >
-      "AI Guardrails provides two content safety offerings: Guardrails for AI application
-      protection and Content Moderation for user-generated content (UGC) safety."
-      AI Gateway integration provides centralized policy enforcement: "AI Gateway secures
-      data during interactions with a large language model (LLM). It provides privacy
-      protection for data sent to external models and filters content returned to users."
-      Protection dimensions: Content compliance, Sensitive content detection, Prompt attack
-      detection, Model hallucination detection. Enforcement: block or monitor mode.
-      Per-consumer matching rules allow different policies for different callers.
-      Cloud Config compliance rules enforce that guardrails are enabled and invoked.
-    source: https://www.alibabacloud.com/help/en/content-moderation/latest/how-to-open-and-use-ai-security-guardrail-products-and
-    verified_on: 2026-08-09
+      Model Studio supports an AI safety guardrail service for inspecting model inputs
+      and outputs for sensitive or high-risk content. The current page says the service
+      is available only in the China (Beijing) region and supports text and image models.
+      (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/content-security
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   otel_traces:
-    status: documented
+    status: unknown
     notes: >
-      The high-code deployment path includes observability:
-      「高代码应用则支持将 Python 项目部署为后端服务，具备自动化运维、可观测、日志服务等能力」
-      — automated ops, observability, and logging. This is platform-level internal
-      monitoring, NOT necessarily OpenTelemetry-compatible export. Whether it conforms to
-      OTel standards or is proprietary Alibaba Cloud monitoring (ARMS/SLS) is not stated.
-    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
-    verified_on: 2026-08-09
+      Managed Agents exposes an event stream, but the current official pages checked do
+      not establish OpenTelemetry export or GenAI semantic-convention spans. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/managed-agents-quickstart
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   eval_service:
-    status: documented
+    status: unknown
     notes: >
-      Model evaluation and comparison tools available within Model Studio. The platform
-      supports model fine-tuning with evaluation metrics. Whether a dedicated agent-level
-      evaluation service (like GCP's Evaluation Service or ADK's eval framework) exists
-      is not confirmed from the overview — this may be model-eval only, not agent-eval.
-    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
-    verified_on: 2026-08-09
+      The refreshed Model Studio and Managed Agents pages do not establish a dedicated
+      agent-trajectory evaluation service, LLM-as-judge workflow, or CI gate. Model
+      evaluation claims are not inferred from model APIs alone. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/what-is-model-studio
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   pricing_axes:
     status: documented
     notes: >
-      CORRECTS EARLIER FINDING — the CN overview understated the pricing complexity.
-      The EN docs reveal a rich multi-axis pricing model:
-      1. Pay-as-you-go: per-token billing (input/output), tiered by request size. Example:
-         qwen3.7-max $2.5/M input, $7.5/M output (with 50% limited-time discount).
-      2. AI General-purpose Savings Plan: commit monthly spend (starting USD 150) for up
-         to 47% discount. Terms: 3/6/12/24 months. Covers model calls, tool calls, cache,
-         batch inference. NOT model-specific — applies across categories.
-      3. LLM Savings Plan: model-family-specific alternative, narrower coverage.
-      4. Token Plan (Team Edition): per-seat subscription ($30-$200/seat/month).
-      5. Free quota: 1M tokens per new model activation, valid 90 days.
-      Deduction order: free quota > model-specific plans > general savings plan > PAYG.
-      Knowledge base billing is separate and NOT covered by savings plans.
-      Batch inference at 50% of real-time price.
+      Model Studio model invocation is pay-as-you-go by default. Current pricing docs
+      describe input and output token billing, tiered prices, batch discounts, and
+      context-cache pricing. The Token Plan Team Edition is a separate seat-and-Credits
+      subscription with shared usage packages. (Paraphrase.)
     source: https://www.alibabacloud.com/help/en/model-studio/model-pricing
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   runtime_sla:
     status: documented
     value: 99.9%
     notes: >
-      SLA FOUND — published June 2026: "We shall use commercially reasonable endeavors to
-      provide a Monthly Uptime Percentage of no less than 99.9% each billing month."
-      Service Credit tiers: <99.9% → 10%, <99% → 25%, <95% → 50%. Claims must be filed
-      within 30 days of billing month end. Applies ONLY to paid model inference, NOT to
-      free services, trial services, Model Unit service, third-party inference, model
-      experience, or AI subscriptions (Coding Plan / Token Plan). Knowledge base billing
-      is also excluded from the SLA scope.
+      The Model Studio Model Inference SLA defines a 99.9 percent monthly uptime target
+      for paid model-inference service. The SLA excludes free and trial services,
+      third-party inference, Model Unit, and AI subscription services. (Paraphrase.)
     source: https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-model-studio-model-inference-service-level-agreement
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   certifications:
     status: documented
     value: [SOC 2]
     notes: >
-      "Alibaba Cloud Model Studio has achieved SOC 2 compliance with an unqualified opinion,
-      validating its controls for Security, Availability, and Confidentiality." This is a
-      product-specific SOC 2 for Model Studio — not just inherited from Alibaba Cloud's
-      platform-wide certifications (which additionally include ISO 27001, ISO 27017,
-      ISO 27018, ISO 27701, SOC 1, SOC 3). The privacy notice also reaffirms: "Alibaba
-      Cloud strictly protects your data privacy and will never use your data for model
-      training. All data transmitted during application building and model training is
-      encrypted with AES-256."
+      The official security and privacy page says Model Studio has SOC 2 compliance with
+      an unqualified opinion. (Paraphrase.)
     source: https://www.alibabacloud.com/help/en/model-studio/privacy-notice
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
+
   training_data_policy:
     status: documented
     notes: >
-      STRONGEST DATA-USE COMMITMENT IN THIS COMPARISON, and it was nearly missed:
-      "Alibaba Cloud protects data privacy and will never use your data for model
-      training. All data transmitted when building applications or training models is
-      encrypted."
-      Contrast AWS AgentCore, whose overview states it "may use and store your content to
-      improve your service experience or performance". Leaving this cell blank while
-      surfacing AWS's clause would have made the most favourable fact for a CN provider
-      invisible and the least favourable one for AWS prominent — exactly the asymmetry the
-      fairness rule exists to prevent.
-    source: https://www.alibabacloud.com/help/en/model-studio/what-is-model-studio
-    verified_on: 2026-08-04
+      Alibaba Cloud states that Model Studio will not use customer data for model
+      training and that data transmitted during application building and model training
+      is encrypted with AES-256. The same page says Model Studio stores data generated
+      from model and application calls, so the non-training statement should not be
+      read as a no-retention promise. (Paraphrase.)
+    source: https://www.alibabacloud.com/help/en/model-studio/privacy-notice
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"

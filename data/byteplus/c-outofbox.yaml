@@ -1,21 +1,180 @@
 provider: byteplus
 bucket: c
-product: null
+product: BytePlus ArkClaw Enterprise
+aliases: [ArkClaw, ArkClaw Enterprise]
 notes: >
-  NOT RESEARCHED — and deliberately left empty rather than filled with inference.
-  Attempts made 2026-08-04: byteplus.com/en/product/byteplus-agent returned only a page
-  title ("BytePlus | AI-Native Cloud for Enterprise Growth") with no body; the whole
-  BytePlus web estate (marketing site and docs.byteplus.com alike) renders content
-  client-side and is unreadable with an HTTP-fetch toolchain. See the same limitation
-  documented at length in byteplus/b-platform.yaml.
-  WHAT IS AND IS NOT CLAIMED HERE: this file asserts nothing about whether BytePlus offers
-  a packaged enterprise assistant. It may; it may not. An empty bucket-C file must NOT be
-  read as evidence of absence — that inference is exactly the failure mode the project's
-  fairness rule exists to prevent, and it would systematically disadvantage the provider
-  whose docs happen to be the hardest to scrape.
-  Its Managed Agents documentation (bucket B) proves BytePlus is active in this space, so
-  the prior should be curiosity, not a negative verdict.
-  NEXT STEP: a headless browser, or a reader who can access the rendered pages directly.
-  Logged as the top BytePlus task in the README roadmap.
+  Refreshed 2026-11-22 from the current first-party ArkClaw Enterprise product page.
+  This replaces the previous empty bucket-C placeholder: the page now documents a
+  packaged enterprise AI productivity product with assistants, skills, enterprise
+  integrations, memory, governance, and knowledge-management features. The page uses
+  Contact sales / Get started rather than publishing per-seat prices, so pricing and
+  commercial stage remain unknown where the page does not state them. (Paraphrase.)
 
-capabilities: {}
+capabilities:
+  packaged_assistant:
+    product: BytePlus ArkClaw Enterprise
+    status: documented
+    notes: >
+      ArkClaw Enterprise is presented as a managed enterprise AI productivity product
+      with role-specific digital employees and assistants for office automation, HR
+      recruiting, R&D, marketing content, writing, analysis, and reporting. It connects
+      those assistants to enterprise communication and work systems. The page provides
+      Get started and Contact sales actions but no published per-seat price. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  authoring_mode:
+    status: documented
+    notes: >
+      The page documents natural-language skill generation and an enterprise skill
+      engine for reviewing, publishing, distributing, discovering, reusing, and
+      governing official and custom skills. It does not define a full visual workflow
+      builder, so this cell records the documented natural-language and managed-skill
+      path only. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  model_choosable:
+    status: documented
+    notes: >
+      The Standard plan description explicitly includes flexible model switching and
+      token controls. The page does not enumerate the model catalog or say whether all
+      models are available in every plan. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  prebuilt_connectors:
+    status: documented
+    notes: >
+      The page documents IM login and enterprise integration for Lark, WeCom, DingTalk,
+      and other IM tools. It also describes bringing ArkClaw digital employees into
+      enterprise communication workflows. The page does not publish a complete connector
+      count or a connector-by-connector authentication matrix. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  conversation_history:
+    status: documented
+    notes: >
+      The current plan descriptions include personal and enterprise memory isolation, and
+      the product page describes memory management as a way to improve accuracy and reduce
+      cost. Retention and deletion controls for conversation history are not specified.
+      (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  guardrails:
+    status: documented
+    notes: >
+      ArkClaw Enterprise documents a model security firewall, skill risk scans against
+      data leaks, zero-trust authentication, and protection against PII, credential,
+      data-leakage, prompt-injection, skill/plugin, and memory risks. The page does not
+      specify detector metrics or a complete policy language. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  tool_audit_trail:
+    status: documented
+    notes: >
+      The page documents unified identity, granular permissions, audit logs, and
+      end-to-end audit and traceability at the Ultimate tier. This establishes an
+      operator-facing audit feature but does not state event retention duration.
+      (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  dlp_tenant_isolation:
+    status: documented
+    notes: >
+      The product page documents workspace, department, and user quota controls, SSO,
+      granular permissions, tenant-oriented security and governance, and protection
+      against data leakage. It does not provide a formal tenant-boundary or DLP
+      configuration reference. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  admin_analytics:
+    status: documented
+    notes: >
+      ArkClaw Enterprise advertises observable and manageable operations, batch monitoring,
+      auditing, cost and quota controls, and operational governance. It does not claim a
+      separate answer-quality feedback or adoption dashboard on this page. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  seat_pricing:
+    status: unknown
+    notes: >
+      Four plans are named Starter, Standard, Premium, and Ultimate, with different
+      compute, storage, security, integration, and skill features. The current page
+      offers Contact sales and publishes no per-seat prices, minimum seats, or annual
+      commitment terms. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  license_bundling:
+    status: unknown
+    notes: >
+      The current product page does not state whether ArkClaw Enterprise is bundled with
+      an existing BytePlus, Lark, WeCom, or other enterprise license. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  addon_surcharges:
+    status: unknown
+    notes: >
+      The current product page describes plan differences but does not disclose add-on,
+      connector, index, or usage surcharges. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  index_freshness:
+    status: unknown
+    notes: >
+      ArkClaw Enterprise describes a smart drive and enterprise knowledge hub with
+      permissions, storage, transfer, analysis, and collaboration, but the reviewed page
+      does not state crawl or refresh frequency. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  permission_aware_retrieval:
+    status: unknown
+    notes: >
+      The page mentions knowledge permissions and enterprise access controls, but does not
+      explicitly state query-time ACL trimming for retrieved answers. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  training_data_policy:
+    status: unknown
+    notes: >
+      The current ArkClaw Enterprise page describes privacy and security controls but does
+      not state whether customer content is used for model training, how long it is
+      retained, or how abuse monitoring can be opted out. (Paraphrase.)
+    source: https://www.byteplus.com/en/product/arkclaw-enterprise
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
+
+  certifications:
+    status: unknown
+    notes: >
+      The reviewed ArkClaw Enterprise page does not state a certification scope for this
+      product. Platform-level BytePlus trust-center certifications are not attributed to
+      ArkClaw without an explicit service mapping. (Paraphrase.)
+    source: https://www.byteplus.com/en/trust-center
+    verified_on: 2026-11-22
+    verified_by: "@notacryptodad"
