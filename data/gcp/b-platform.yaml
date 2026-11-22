@@ -227,11 +227,12 @@ capabilities:
   runtime_sla:
     status: documented
     notes: >
-      No new runtime-specific SLA wording was established in the current pages reviewed for
-      this refresh. The existing SLA evidence is retained separately from the runtime feature
-      documentation. (Paraphrase.)
+      The current Gemini Online Inference API SLA covers generateContent and streamGenerateContent
+      with a 99.5% monthly uptime target. Provisioned Throughput streamGenerateContent also has a
+      99% monthly latency-target attainment objective, subject to the documented model and endpoint
+      exclusions. (Paraphrase.)
     source: https://cloud.google.com/vertex-ai/generative-ai/sla
-    verified_on: 2026-08-09
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
 
   long_running_agents:
@@ -290,10 +291,11 @@ capabilities:
   training_data_policy:
     status: documented
     notes: >
-      The current Google Cloud terms and Gemini Enterprise documentation remain the relevant
-      first-party evidence for customer-data handling. The current platform pages reviewed here
-      do not restate a separate Agent Platform-specific training-use guarantee, so this row is
-      not expanded beyond the existing Google Cloud policy evidence. (Paraphrase.)
-    source: https://cloud.google.com/terms/data-processing-addendum
-    verified_on: 2026-08-09
+      Google’s current zero-data-retention guidance says Google will not use customer data to
+      train or fine-tune AI/ML models without prior permission or instruction. The guidance applies
+      to all managed models on Gemini Enterprise Agent Platform, including GA and pre-GA models,
+      while documenting limited retention exceptions for abuse monitoring and some grounding
+      features. (Paraphrase.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention
+    verified_on: 2026-11-22
     verified_by: "@notacryptodad"
