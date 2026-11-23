@@ -24,8 +24,11 @@ capabilities:
       LAUNCH STAGE IS PER-LANGUAGE: as of 2026-11-23 the adk.dev banner reads
       "ADK TypeScript 2.0 GA" ("is now available with graph workflows support!").
       The Go 2.0 GA banner recorded on 2026-08-04 is no longer on adk.dev (banner
-      rotated, not a downgrade). Python, Java and Kotlin carry NO stage label on adk.dev —
-      hence `documented`, not `ga`, for the row as a whole.
+      rotated, not a downgrade). CORRECTED 2026-11-23: the ADK 2.0 page
+      (https://adk.dev/2.0/, a different page) states GA dates for Python (2026-05-19),
+      Go (2026-06-30) and TypeScript (2026-08-21) — see launch_stage_investigation. Java
+      and Kotlin carry NO stage label on adk.dev — hence `documented`, not `ga`, for the
+      row as a whole.
       (The Python floor is now 3.11+ per the adk-python repo, a different page; it was
       3.10+ in August.)
     source: https://adk.dev/
@@ -68,6 +71,58 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  long_running_agents:
+    status: documented
+    notes: >
+      SDK-LEVEL BACKGROUND EXECUTION, two mechanisms. (1) Ambient agents: "You can
+      configure ADK agents with triggers to respond to events and perform work, known as
+      ambient agents." "These agents can run as background processes to process data,
+      monitor events, and respond asynchronously without human intervention." Triggers are
+      the /run endpoint (any event source) or trigger endpoints for Pub/Sub and Eventarc,
+      with a built-in concurrency semaphore and exponential-backoff retry. Page badged
+      Python v1.29.0, Go v1.1.0. (2) Long-running tools — the function tools page (a
+      different page, https://adk.dev/tools-custom/function-tools/) describes
+      LongRunningFunctionTool for tasks that "require a significant amount of processing
+      time, without blocking the agent's execution."
+      No maximum session duration is set by the SDK; that ceiling belongs to whichever
+      runtime hosts it (Agent Runtime, Cloud Run, GKE — see gcp/b-platform.yaml).
+      (Paraphrase except quoted text.)
+    source: https://adk.dev/runtime/ambient-agents/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  multi_tenancy:
+    status: unknown
+    notes: >
+      NO MULTI-TENANT CLAIM FOUND. ADK sessions are scoped by app name, user id and
+      session id (userId "Links the conversation to a particular user."), and a
+      SessionService "can handle multiple Session (s)" — that is per-user session
+      scoping, not tenant isolation. Searched for the words tenant, multi-tenant and isolation
+      on adk.dev's sessions, session, safety, A2A, ambient-agents and integrations pages
+      and the adk-python README: no hits. Tenant isolation is left to the hosting
+      runtime (Agent Runtime, see gcp/b-platform.yaml). Not `none` — the vendor does not
+      say it is unsupported. (Paraphrase except quoted text.)
+    source: https://adk.dev/sessions/session/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  a2a_protocol:
+    status: documented
+    notes: >
+      Both directions — expose an ADK agent as an A2A server and consume remote A2A
+      agents. "With Agent Development Kit (ADK), you can build complex multi-agent systems
+      where different agents need to collaborate and interact using Agent2Agent (A2A)
+      Protocol". Page badged Python, Go, Java; quickstarts exist for consuming in Kotlin
+      too. STAGE IS PER-LANGUAGE: "A2A support is experimental in ADK Go, ADK Java, and
+      ADK Kotlin." Python carries no stage label — hence `documented`.
+      Mechanics (intro page, a different page, https://adk.dev/a2a/intro/): an exposed
+      agent becomes an A2AServer, and "This RemoteA2aAgent acts as a client that knows
+      how to communicate with the A2AServer you exposed earlier." (Paraphrase except
+      quoted text.)
+    source: https://adk.dev/a2a/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   human_in_the_loop:
     status: documented
     notes: >
@@ -78,15 +133,82 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  short_term_memory:
+    status: documented
+    notes: >
+      Session + State model, BYO or managed. A Session "Represents a single, ongoing
+      interaction between a user and your agent system." holding the event history, and
+      session.state holds per-conversation scratch data. SessionService manages session
+      lifecycle; "in-memory implementations are provided for both services; these are
+      designed specifically for local testing and fast development". Managed option:
+      VertexAiSessionService persists sessions in Agent Runtime (see the session page,
+      a different page, https://adk.dev/sessions/session/). Badged all five languages.
+      (Paraphrase except quoted text.)
+    source: https://adk.dev/sessions/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpointer_backends:
+    status: documented
+    notes: >
+      SessionService is the checkpointer interface: "ADK provides different
+      SessionService implementations, allowing you to choose the storage backend that best
+      suits your needs". First-party backends: InMemorySessionService (all languages);
+      VertexAiSessionService — managed via Agent Runtime (Python, Go, Java, Kotlin);
+      DatabaseSessionService, which "Connects to a relational database (e.g., PostgreSQL,
+      MySQL, SQLite) to store session data persistently in tables." (Python v0.1.0, Go
+      v0.1.0 only). Java adds a Firestore session service (a different page,
+      https://adk.dev/integrations/firestore-session-service/). Partner session-store integrations in the
+      catalog (https://adk.dev/integrations/) are Aerospike and Redis. No DynamoDB /
+      Cosmos backend is first-party. (Paraphrase except quoted text.)
+    source: https://adk.dev/sessions/session/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpoint_resume:
+    status: documented
+    notes: >
+      "The Resume feature of ADK allows an agent workflow to pick up where it left off,
+      avoiding the need to restart the entire workflow." Enabled with a
+      ResumabilityConfig on the App object; resume by invocation ID via the API server or
+      Runner.run_async. Badged Python v1.16.0, Kotlin v0.1.0 only. CAVEATS: "Resume is not
+      supported by default for Custom Agents." and "Resuming a workflow from the ADK Web
+      user interface or using the ADK command line (CLI) tool is not currently supported."
+      The 2.0 Workflow Runtime also lists retry (see workflow_engine). Durable-execution
+      partners in the integrations catalog (https://adk.dev/integrations/, a different
+      page) include Dapr ("Durable, long-running and self-recovering agents"), DBOS,
+      Temporal and Restate. (Paraphrase except quoted text.)
+    source: https://adk.dev/runtime/resume/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  policy_hooks:
+    status: documented
+    notes: >
+      Callbacks in all five languages (badged Python v0.1.0 through Kotlin v0.1.0):
+      "Callbacks are a cornerstone feature of ADK, providing a powerful mechanism to hook
+      into an agent's execution process." Hook points: before/after agent, before/after
+      model, before/after tool — each can inspect, modify or short-circuit.
+      Plugins (a different page, https://adk.dev/plugins/, Python v1.7.0, TypeScript
+      v0.2.5, Go v0.4.0, Java v0.3.0, Kotlin v0.7.0) register the same hooks globally on
+      the Runner/App; the page names policy enforcement as a use — "Implement security
+      guardrails, such as a function that checks if users are authorized to use a specific
+      tool and prevent its execution if they do not have permission." — and recommends
+      Plugins over Callbacks for guardrails. (Paraphrase except quoted text.)
+    source: https://adk.dev/callbacks/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   local_dev_loop:
     status: documented
     notes: >
-      "Interactive CLI" via `adk run` and a "Web UI" via `adk web`.
-      AGENTS CLI (adk.dev home page, a different page): "Use your favorite AI-enabled
-      developer environment to scaffold, build, test, evaluate, and deploy with Agents
-      CLI." Agents CLI is the Agent Platform's own CLI ("the unified command-line
-      interface and skill set for the Agent Platform", per the Agent Runtime page), so it
-      is not added as an ADK alias.
+      An interactive CLI via `adk run` and a web UI via `adk web` (Paraphrase.).
+      AGENTS CLI (adk.dev home page, a different page, https://adk.dev/): "Use your
+      favorite AI-enabled developer environment to scaffold, build, test, evaluate, and
+      deploy with Agents CLI." Agents CLI is the Agent Platform's own CLI ("the unified
+      command-line interface and skill set for the Agent Platform", per the Agent Runtime
+      page, https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/runtime),
+      so it is not added as an ADK alias.
       (An earlier revision also quoted a "Develop locally, scale globally" tagline;
       check_quotes.py could not find that string, so it has been removed.)
     source: https://github.com/google/adk-python
@@ -105,6 +227,62 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  tool_calling:
+    status: documented
+    notes: >
+      Function tools in all five languages (badged Python v0.1.0, TypeScript v0.2.0, Go
+      v0.1.0, Java v0.1.0, Kotlin v0.1.0). "When you assign a function to an agent’s tools
+      list, the framework automatically wraps it as a FunctionTool", generating the schema
+      from the signature and docstring. Also long-running function tools and
+      Agent-as-a-Tool.
+      PARALLEL CALLS (performance page, a different page,
+      https://adk.dev/tools-custom/performance/): "Starting with Agent Development Kit
+      (ADK) version 1.10.0 for Python, the framework attempts to run any agent-requested
+      function tools in parallel." — only for async tools, and that page is badged Python
+      only. (Paraphrase except quoted text.)
+    source: https://adk.dev/tools-custom/function-tools/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  bundled_tools:
+    status: documented
+    notes: >
+      "Check out the following pre-built tools and integrations that you can use with ADK
+      agents." The catalog mixes Google-built tools — Google Search ("Perform web searches
+      using Google Search with Gemini"), Gemini Code Execution, Computer Use ("Operate
+      computer user interfaces using Gemini models"), BigQuery, Bigtable, Spanner, Google
+      Maps, Model Armor, a Bash Tool ("Execute bash commands within a secure,
+      resource-limited local sandbox") — with ~100 third-party and partner integrations
+      (Atlassian, GitHub, Notion, Stripe, vector DBs, observability vendors). The
+      adk-python tools package also ships load_web_page, url_context, Vertex AI Search and
+      enterprise search tools (repo directory listing, src/google/adk/tools).
+      CAVEAT: some Gemini built-in tools carry a one-tool-per-agent limitation
+      ("One tool per agent limitation", a different page,
+      https://adk.dev/tools/limitations/), worked around by wrapping in AgentTool.
+      (Paraphrase except quoted text; no tool count published.)
+    source: https://adk.dev/integrations/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_skills:
+    status: documented
+    notes: >
+      "An agent Skill is a self-contained unit of functionality that an ADK agent can use
+      to perform a specific task." It "encapsulates the necessary instructions, resources,
+      and tools required for a task, based on the Agent Skill specification" — SKILL.md
+      frontmatter + body plus references/assets/scripts directories, loaded incrementally
+      via SkillToolset from code or the filesystem. Badged Python v1.25.0, TypeScript
+      v0.6.1, Go v1.2.0, Kotlin v0.1.0; "The Skills feature is experimental in ADK
+      TypeScript and ADK Kotlin." Python/Go carry no stage label — hence `documented`.
+      REMOTE CATALOG: the Google Cloud Skill Registry integration (a different page,
+      https://adk.dev/integrations/skills-registry/, badged Python v1.27.0 Preview) lets
+      agents "dynamically search, discover, and fetch remote Skills cataloged within a
+      central repository" (see gcp/b-platform.yaml skills_registry). (Paraphrase except
+      quoted text.)
+    source: https://adk.dev/skills/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   openapi_import:
     status: documented
     notes: >
@@ -114,6 +292,29 @@ capabilities:
       Python v0.1.0) — no TypeScript/Go/Java/Kotlin support is stated. (Paraphrase except
       the quoted sentence.)
     source: https://adk.dev/tools-custom/openapi-tools/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  code_interpreter:
+    status: documented
+    notes: >
+      PLUGGABLE EXECUTOR INTERFACE, Google-managed backends. Default: Gemini's own
+      server-side code execution — "The Code execution functionality in the Gemini API
+      allows the model to perform tasks like calculations, data manipulation, or running
+      small scripts." (BuiltInCodeExecutor, badged Python v0.1.0 / Java v0.2.0; single
+      tool per agent). Other executors in the adk-python code_executors package:
+      UnsafeLocalCodeExecutor, ContainerCodeExecutor, VertexAiCodeExecutor,
+      GkeCodeExecutor and AgentEngineSandboxCodeExecutor (repo directory listing).
+      Agent Runtime Code Execution (a different page,
+      https://adk.dev/integrations/code-exec-agent-runtime/, Python v1.17.0) "uses
+      sandboxed environments for improved security" and lets code and data persist across
+      requests; the GKE executor (a different page,
+      https://adk.dev/integrations/gke-code-executor/, Python v1.14.0) "provides a secure
+      and scalable method for running LLM-generated code by leveraging Google Kubernetes
+      Engine (GKE)". Third-party sandboxes appear only as partner integrations in the
+      catalog (Daytona). Contrast AgentScope's third-party-first model.
+      (Paraphrase except quoted text.)
+    source: https://adk.dev/integrations/code-execution/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -129,6 +330,48 @@ capabilities:
       not adk.dev; it was gemini-2.5-flash in August); adk.dev's own example uses
       gemini-flash-latest.
     source: https://adk.dev/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  model_routing:
+    status: preview
+    notes: >
+      TypeScript-only and Experimental. "Model routing is experimental and may change in
+      future releases." RoutedLlm lets a routing function pick a model per request,
+      "enabling model fallback on error, A/B testing between models, and auto-routing by
+      input complexity." "If the selected model fails before producing any output, the
+      routing function is called again with error context so it can select a different
+      model." Page badged TypeScript v1.0.0 only. A sibling agent-level RoutedAgent is
+      also TypeScript-only and Experimental (https://adk.dev/agents/routing/, a different
+      page).
+      OTHER ROUTES (unlabelled): Python's Model Consult tool (v2.11.0) escalates hard steps
+      from a fast executor model to a stronger advisor model
+      (https://adk.dev/integrations/model-consult/); and the Apigee AI Gateway wrapper
+      (ApigeeLlm, Python/Java) puts model traffic behind an Apigee proxy offering "Semantic
+      Caching and advanced model routing" (a different page,
+      https://adk.dev/agents/models/apigee/) — that routing is Apigee's, not ADK's.
+      `preview` reflects the Experimental label on the SDK's own routing feature.
+      (Paraphrase except quoted text.)
+    source: https://adk.dev/agents/models/routing/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openai_compatible_endpoint:
+    status: documented
+    notes: >
+      CLIENT SIDE: ADK can call OpenAI-compatible endpoints; no OpenAI-compatible SERVING
+      endpoint for ADK agents was found (the ADK API server is ADK's own /run, /run_sse
+      REST API). Per language: Go has a native openaimodel package (Responses API by
+      default, or Chat Completions) — "Nearly every OpenAI-compatible provider implements
+      the Chat Completions API" — but "The OpenAI model support feature is experimental
+      in ADK Go."; Kotlin has a native ChatCompletions model; Python goes through LiteLLM,
+      which the LiteLLM page (a different page, https://adk.dev/agents/models/litellm/)
+      describes as "providing a standardized, OpenAI-compatible interface to over 100+
+      LLMs". Python/Java can also use Apigee's CompletionsHTTPClient, "a generic HTTP
+      client designed for compatibility with the OpenAI API format"
+      (https://adk.dev/agents/models/apigee/, a different page). Page badged Go v2.1.0,
+      Kotlin v1.4.0. (Paraphrase except quoted text.)
+    source: https://adk.dev/agents/models/openai/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -218,6 +461,23 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  sdk_instrumentation_portability:
+    status: documented
+    value: any-otel-backend
+    notes: >
+      Portable. "ADK emits data using the standard OTLP format, ensuring that your traces
+      will seamlessly integrate into any OTel-compatible backend (e.g., Google Cloud
+      Trace, Jaeger, Grafana Tempo, Datadog)." Export is configured with the standard
+      OTEL_EXPORTER_OTLP_* environment variables; Cloud Trace is one option
+      (--otel_to_cloud), not a requirement. The integrations catalog
+      (https://adk.dev/integrations/, a different page) also lists third-party
+      observability integrations — Arize AX, Langfuse, Phoenix, Weave, MLflow Tracing,
+      Datadog, Grafana Cloud, AgentOps. Caveat: traces page badged Python, Go and Kotlin
+      only. (Paraphrase except quoted text.)
+    source: https://adk.dev/observability/traces/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   sdk_telemetry_phone_home:
     status: documented
     notes: >
@@ -239,5 +499,25 @@ capabilities:
       GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY env var is set. (Paraphrase except the
       quoted fragments.)
     source: https://raw.githubusercontent.com/google/adk-python/main/src/google/adk/utils/_google_client_headers.py
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    status: ga
+    notes: >
+      STAGE FOUND on the ADK 2.0 page: "ADK Python 2.0 is released for general
+      availability as of May 19, 2026." "ADK Go 2.0 is released for general availability
+      as of June 30, 2026." "ADK TypeScript 2.0 is released for general availability as
+      of August 21, 2026." No GA statement for Java or Kotlin on that page; the adk.dev
+      home banner (https://adk.dev/, a different page) currently shows only "ADK
+      TypeScript 2.0 GA". The release-notes page (https://adk.dev/release-notes/) just
+      points to each language repo's release notes.
+      FEATURE-LEVEL LABELS (from feature pages): Experimental — model/agent routing
+      (TypeScript), A2A (Go, Java, Kotlin), Skills (TypeScript, Kotlin), OpenAI model
+      support (Go); Preview — Google Cloud Skill Registry integration (Python). Most other
+      feature pages carry only Supported-in-ADK version badges, no stage.
+      Status follows the launch-stage convention (taxonomy hint): the row carries the headline product's stated stage. `ga` reflects the Python, Go and TypeScript 2.0 GA statements; Java and Kotlin
+      have none. (Paraphrase except quoted text.)
+    source: https://adk.dev/2.0/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

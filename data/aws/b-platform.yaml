@@ -44,15 +44,17 @@ capabilities:
       dynamic AI agents and tools ... fast cold starts for real-time interactions,
       extended runtime support for asynchronous agents, true session isolation,
       built-in identity, and support for multi-modal and multi-agent agentic workloads."
-      Tied for widest region coverage — 20 regions incl. GovCloud, matched by Gateway,
+      Tied for widest region coverage — 24 regions incl. GovCloud and China, matched by Gateway,
       Identity, Built-in Tools and Observability (region detail: agentcore-regions.html).
       LAUNCH STAGE (from the What's New feed, a DIFFERENT source from the docs page cited
-      below): "Amazon Bedrock AgentCore is now generally available" — 2025-10-13, after
+      below; https://aws.amazon.com/about-aws/whats-new/2025/10/amazon-bedrock-agentcore-available/):
+      "Amazon Bedrock AgentCore is now generally available" — 2025-10-13, after
       entering preview 2025-07-16.
       2026-11-23: the region table now splits Runtime into microVMs (all 24 regions incl.
       China and GovCloud) and Instances (15 regions; EC2-backed, in your account). A
       next-generation microVM runtime (platform version V2) launched 2026-09-18 per
-      What's New, with faster cold starts and elastic memory. That post says "Today, AWS
+      What's New (https://aws.amazon.com/about-aws/whats-new/2026/09/new-agentcore-runtime-generally-available/),
+      with faster cold starts and elastic memory. That post says "Today, AWS
       announces the availability of the next generation of AgentCore Runtime" and names five
       launch regions; it does not use GA wording.
       INSTANCES STAGE (What's New 2026-08-06, a DIFFERENT source;
@@ -78,10 +80,182 @@ capabilities:
       Spain, Malaysia, Hyderabad, Thailand and both China regions. GovCloud was ADDED since
       August. Region facts throughout this file come from agentcore-regions.html,
       NOT from the overview page cited on each cell — see the runtime_regions row.
-      LAUNCH STAGE: "AgentCore harness is now generally available" — 2026-06-17, per the
-      What's New feed (a DIFFERENT source from the docs page cited below). The most recently
+      LAUNCH STAGE: "AgentCore harness is now generally available" — 2026-06-17, per the What's New feed (a DIFFERENT source from the docs page cited below); the same wording is in the release notes, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html. The most recently
       GA'd AgentCore service, which explains why it was absent from earlier lineups.
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  managed_agent_harness:
+    product: AgentCore Harness
+    status: ga
+    notes: >
+      The textbook case for this row. "The managed agent harness in AgentCore turns that
+      work into configuration. You declare what your agent does (model, tools, skills,
+      instructions); AgentCore handles the environment, compute, memory, identity,
+      networking, and observability that turn the config into a running agent."
+      "Every harness session is stateful by default and runs in a secure, isolated microVM
+      per session (backed by AgentCore runtime)." "The harness is powered by Strands
+      Agents". Escape hatch: "export to Strands code and run it on AgentCore runtime when
+      configuration isn’t enough." Pricing: "There is no separate harness charge. You pay
+      only for the underlying AgentCore capabilities you use."
+      LAUNCH STAGE (this page): "AgentCore harness is available in GA across all regions
+      shown here". The release notes (a DIFFERENT page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html) say
+      "The managed AgentCore harness is now generally available in all AWS Regions where
+      AgentCore is supported." The region table shows 16 of 24 (see managed_agent_loop).
+      Same product as managed_agent_loop; this row records the configure-not-code harness.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  authoring_mode:
+    product: AgentCore Harness (configuration) and AgentCore Runtime (code)
+    status: documented
+    notes: >
+      BOTH modes, split across two AgentCore services. From the cited comparison page:
+      "For nearly every feature, the pattern is the same: Harness - configuration, no code.
+      Runtime - you write code, usually with the AgentCore SDK plus your framework."
+      On the harness, "You declare what the agent is (model, system prompt, tools, memory,
+      limits) as configuration, and AgentCore runs the loop." The harness can export to
+      Strands code (see managed_agent_harness).
+      NO visual agent builder in AgentCore. Visual authoring lives in sibling services.
+      Amazon Bedrock Flows (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/flows.html) lets you "quickly
+      build complex generative AI workflows using a visual builder". AWS Step Functions
+      Workflow Studio can add harness steps (see workflow_engine). (Paraphrase of the last
+      sentence.)
+      The older console-configured agent product is closing. Amazon Bedrock Agents "will no
+      longer be open to new customers starting on July 30, 2026" (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html),
+      and AWS recommends migrating to the AgentCore harness.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-vs-runtime.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  multi_agent_patterns:
+    product: AgentCore (Runtime code-defined agents; Harness subagent tool)
+    status: documented
+    notes: >
+      AWS's own migration guide rates AgentCore's multi-agent support as partial. Its
+      capability table maps Bedrock Agents Classic multi-agent collaboration to: "Limited.
+      The supervisor pattern is possible by exposing agents as MCP tools (agent-as-tool).
+      Routing mode multi-agent is not straightforward today. Full multi-agent collaboration
+      requires custom framework code." The code-defined path on AgentCore supports
+      "Multi-agent collaboration and supervisor patterns" through your own framework.
+      HARNESS: a built-in subagent tool "Lets the agent delegate a self-contained task to a
+      fresh child agent and receive its result." "The child is not a separately configured
+      harness." (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-tools.html).
+      So the harness offers parent-child delegation, but no configured agent teams.
+      (Paraphrase.) Cross-agent calls can also use A2A on Runtime (see a2a_protocol).
+      SIBLING FAMILY CLOSING: Bedrock Agents Classic had a managed supervisor/collaborator
+      model, but "You can no longer sign up for Amazon Bedrock Agents (now Amazon Bedrock
+      Agents Classic)." (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/agents-multi-agent-collaboration.html).
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  workflow_engine:
+    product: AWS Step Functions (AgentCore harness integration); Amazon Bedrock Flows
+    status: documented
+    notes: >
+      AgentCore itself has no graph or DAG engine. The harness does not run non-agent-loop
+      patterns; on Runtime you write them yourself (harness-vs-runtime.html feature grid).
+      (Paraphrase.) The durable workflow engine is a sibling AWS service. From the cited
+      What's New post (2026-06-03): "AWS Step Functions is a visual workflow service that
+      orchestrates AWS services with built-in error handling, parallel execution, and human
+      approval steps." With the harness integration, "You can run multiple agents in
+      parallel or in sequence at different decision points in a single workflow and add
+      human approval before critical actions." It also says "Agent context can be persisted
+      across invocations using a session ID that works within or across workflow
+      executions." At that date the post called the harness "currently in preview"; the
+      harness reached GA on 2026-06-17 (see managed_agent_harness). The post states no
+      separate stage for the integration.
+      The reverse direction exists too. "Amazon Bedrock AgentCore Gateway includes a
+      built-in Step Functions connector." (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-target-connector-step-functions.html),
+      so agents can start state machines as MCP tools.
+      Amazon Bedrock Flows (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/flows.html) is the
+      prompt-chaining option: "build workflows by linking prompts, foundational models, and
+      other AWS services to create end-to-end solutions".
+    source: https://aws.amazon.com/about-aws/whats-new/2026/06/aws-step-functions-agentcore/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  voice_agents:
+    product: AgentCore Runtime bidirectional streaming (+ Amazon Nova 2 Sonic)
+    status: documented
+    notes: >
+      CAVEAT: no first-class managed voice-agent TYPE was found in AgentCore. Voice is a
+      hosting pattern for agent code you write and deploy to Runtime. There is no voice
+      agent you configure, and no voice-specific session-limit or region table.
+      (Paraphrase.) What is documented: Runtime bidirectional streaming "is essential for
+      interactive applications such as conversational voice agents". WebSocket "supports
+      text-based streaming, structured message exchange, and audio streaming with no
+      additional infrastructure required". WebRTC "is well-suited for voice agents in
+      browser and mobile applications". Per the WebRTC page, WebRTC needs VPC network mode
+      and a TURN relay; Kinesis Video Streams managed TURN is one option. (Paraphrase.)
+      The speech-to-speech model is Amazon Nova 2 Sonic (Nova user guide, a DIFFERENT
+      page; https://docs.aws.amazon.com/nova/latest/nova2-userguide/using-conversational-speech.html):
+      "Amazon Nova 2 Sonic enables real-time conversational AI with speech input and output."
+      Amazon Connect's AI agents for contact centers were not assessed here; that is a
+      contact-center product rather than an AgentCore agent type. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-bidirectional-streaming.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  session_management:
+    product: AgentCore Runtime sessions (+ Amazon Bedrock Managed Agents, powered by OpenAI, preview)
+    status: documented
+    notes: >
+      Sessions are implicit. "A new session is created on the first invoke with a unique
+      runtimeSessionId provided by your application." A session is Active, Idle or Stopped.
+      Stop happens "due to inactivity (default 15 minutes), reaching max compute lifetime
+      (default 8 hours), an explicit stop by invoking the StopRuntimeSession API, or if the
+      compute is deemed unhealthy based on health checks." "The session transitions back to
+      Active on the next invocation and a new compute is provisioned". There is no separate
+      create-session call or session event-log API on Runtime. (Paraphrase of the last
+      sentence.)
+      NEW: session endpoints. "A session endpoint is an authenticated HTTPS URL that
+      addresses one runtime session." (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-session-endpoints.html).
+      It carries HTTP, gRPC and WebSocket traffic to servers inside the session, on allowed
+      ports only. (Paraphrase.)
+      SIBLING WITH AN EXPLICIT SESSION/EVENT API: Amazon Bedrock Managed Agents, powered by
+      OpenAI. "This feature is in public preview." (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/bedrock-managed-agents-openai.html).
+      "You create a session, provide instructions and an execution environment, and submit
+      messages." It reports idle, in_progress and failed states, and messages are posted
+      as events (sessions page,
+      https://docs.aws.amazon.com/bedrock/latest/userguide/bedrock-managed-agents-openai-sessions.html).
+      (Paraphrase of the last sentence.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-sessions.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  multi_tenancy:
+    product: AgentCore Runtime (+ AgentCore Memory namespaces)
+    status: documented
+    notes: >
+      Session isolation is strong; tenant mapping is mostly yours. "Each session in
+      AgentCore Runtime receives its own dedicated microVM with isolated compute, memory,
+      and filesystem resources." After a session, "the entire microVM is terminated and
+      memory is sanitized".
+      CAVEAT: "For agent runtimes on platform version V1 or on Instances, AgentCore does not
+      enforce session-to-user mappings." Platform version V2 on microVMs pins a session
+      created with a user identity to that user. Even so, "On every platform version and
+      compute type, your client backend must maintain the relationship between users and
+      their session IDs." There is no tenant object in Runtime. (Paraphrase of the last
+      sentence.)
+      Memory adds tenant scoping. Flexible namespace variables (What's New 2026-08-28, a
+      different page;
+      https://aws.amazon.com/about-aws/whats-new/2026/08/agentcorememory-flexible-namespaces)
+      scope "long-term memories along any application-specific dimension - such as
+      organization, tenant, team, or environment". See memory_namespacing.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-sessions.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -105,12 +279,63 @@ capabilities:
       industry-leading eight-hour execution windows and complete session isolation by
       adding support for the Agent-to-Agent (A2A) protocol, with broader A2A support coming
       soon across all AgentCore services." The same post opens "Amazon Bedrock AgentCore is
-      now generally available". So A2A is GA on Runtime; other services were "coming soon"
-      as of 2025-10-13.
+      now generally available". So A2A is GA on Runtime; other services were described as
+      coming soon as of 2025-10-13.
       The AgentCore docs have a page for it, "Deploy A2A servers in AgentCore Runtime"
-      (runtime-a2a.html, a different page): AgentCore "acts as a proxy between clients and
+      (a different page; https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-a2a.html):
+      AgentCore "acts as a proxy between clients and
       your A2A server" (that page, quoted separately).
     source: https://aws.amazon.com/about-aws/whats-new/2025/10/amazon-bedrock-agentcore-available/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  distribution_to_packaged_products:
+    product: AWS Agent Registry -> Amazon Quick
+    status: documented
+    notes: >
+      YES, through the registry. "Today, Amazon Quick announces integration with AWS Agent
+      Registry, enabling users to discover and use resources from their organization's AWS
+      Agent Registry directly within Amazon Quick." "AWS Agent Registry supports MCP servers
+      and agents, which users can now search and browse directly within Amazon Quick." "Once
+      enabled, these resources can be shared with teams for use across chat, agents, apps,
+      flows, and deep research." The stated aim: "This integration bridges the gap between
+      technical teams who build agents with Amazon Bedrock AgentCore and business users who
+      work in Amazon Quick."
+      MECHANICS: a Quick admin connects the registry, and users enable an agent "with a few
+      clicks". So the path is build, register, then enable in Quick, with no separate
+      publish step. (Paraphrase of the last sentence.) Six regions at launch (N. Virginia,
+      Oregon, Sydney, Tokyo, Frankfurt, Ireland). The post states no launch stage.
+      A second channel is AWS Marketplace. "Customers can now also procure and deploy A2A
+      servers on AgentCore Runtime through AWS Marketplace" (a different page;
+      https://aws.amazon.com/about-aws/whats-new/2025/11/marketplace-a2a-server-bedrock-agentcore-runtime/).
+    source: https://aws.amazon.com/about-aws/whats-new/2026/08/aws-agent-registry-agents-mcp-servers-quick/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  first_party_models:
+    product: Amazon Nova (on Amazon Bedrock)
+    status: documented
+    value: [Nova 2 Lite, Nova 2 Sonic, Nova 2.5 Sonic, Nova Micro, Nova Lite, Nova Pro, Nova Multimodal Embeddings, Nova Reel]
+    notes: >
+      Amazon's own family is Nova, served on Bedrock. From the cited model-card index:
+      "Nova 2 Lite is Amazon's cost-efficient multimodal model for simple automation,
+      document processing, and customer support across text, images, and video." "Nova 2.5
+      Sonic is Amazon's latest speech-to-speech foundation model with improved reasoning,
+      instruction following, and tool calling for real-time, agentic voice applications."
+      Nova Canvas is now described in the past tense ("Nova Canvas was Amazon's image
+      generation model.").
+      FRONTIER TIER IS PREVIEW: the Nova 2 launch (What's New 2025-12-02, a different page;
+      https://aws.amazon.com/about-aws/whats-new/2025/12/nova-2-foundation-models-amazon-bedrock/)
+      named "Amazon Nova 2 Pro (Preview), our most intelligent model for highly complex,
+      multistep tasks." Nova 2 Pro has no card on the cited index as of 2026-11-23.
+      (Paraphrase.) Custom frontier models: "We are excited to announce the general
+      availability of Nova Forge, a new service to build your own frontier models using
+      Nova." (a different page;
+      https://aws.amazon.com/about-aws/whats-new/2025/12/amazon-nova-forge-frontier-models-nova/).
+      Nova Forge runs on SageMaker AI.
+      Positioning note: AWS sells Nova on price-performance. Its strongest models on Bedrock
+      are third-party (Anthropic, OpenAI). (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-amazon.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -120,6 +345,136 @@ capabilities:
       "any foundation model in or outside of Amazon Bedrock including OpenAI, Google's
       Gemini, Anthropic's Claude, Amazon Nova, Meta Llama, and Mistral models"
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  byo_open_weights:
+    product: Amazon Bedrock Custom Model Import + Provisioned Throughput
+    status: ga
+    notes: >
+      STATUS CHANGE 2026-11-23 (fact-check, symmetry with Azure): documented -> ga. "Amazon
+      Bedrock Custom Model Import now generally available" (a different page, the 2024-10
+      What's New post,
+      https://aws.amazon.com/about-aws/whats-new/2024/10/amazon-bedrock-custom-model-import/).
+      BYO weights: Custom Model Import loads open-source models you customized elsewhere,
+      such as Mistral AI or Llama. (Paraphrase.) "You can use a model that you import with
+      on demand throughput." Narrow footprint: "Custom model import is supported in the
+      following regions: eu-central-1 us-east-1 us-east-2 us-west-2". "You can't use Custom
+      Model Import with the following Amazon Bedrock features. Batch inference
+      CloudFormation". The page now steers you to check the catalog first for stock open
+      weights. (Paraphrase.)
+      PROVISIONED THROUGHPUT (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html): "You can
+      purchase Provisioned Throughput to provision a higher level of throughput for a model
+      at a fixed cost." "If you customized a model, you must purchase Provisioned
+      Throughput to be able to use it." Terms are no commitment, 1 month or 6 months.
+      Cross-region inference does not combine with it: "Inference profiles currently don't
+      support Provisioned Throughput." (another different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html).
+      Full self-hosting of open weights is on Amazon SageMaker AI (JumpStart and
+      endpoints), outside Bedrock. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tuning:
+    product: Amazon Bedrock model customization and prompt caching
+    status: ga
+    notes: >
+      STATUS CHANGE 2026-11-23 (fact-check, symmetry with GCP): documented -> ga. All three
+      have a stated GA in What's New (different pages): "Fine-tuning for Anthropic's Claude
+      3 Haiku in Amazon Bedrock is now generally available"
+      (https://aws.amazon.com/about-aws/whats-new/2024/11/fine-tuning-anthropics-claude-3-haiku-amazon-bedrock/),
+      "Amazon Bedrock Model Distillation is now generally available"
+      (https://aws.amazon.com/about-aws/whats-new/2025/05/amazon-bedrock-model-distillation-generally-available/)
+      and "Amazon Bedrock announces general availability of prompt caching"
+      (https://aws.amazon.com/about-aws/whats-new/2025/04/amazon-bedrock-general-availability-prompt-caching/).
+      All three are offered.
+      FINE-TUNING: "With Amazon Bedrock, you can train a foundation model to improve
+      performance on specific tasks (known as fine-tuning)." The cited table lists Nova
+      (incl. Nova 2 Lite), Titan, Claude 3 Haiku and Llama 3.x models. Most are in one
+      region, us-east-1 or us-west-2. (Paraphrase.) Reinforcement fine-tuning also exists;
+      it improves a model "through feedback signals called rewards" (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/reinforcement-fine-tuning.html).
+      DISTILLATION (another different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/model-distillation.html): "Model
+      distillation is the process of transferring knowledge from a larger more intelligent
+      model (known as teacher) to a smaller, faster, cost-efficient model (known as
+      student)."
+      PROMPT CACHING (another different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html): "Prompt
+      caching is an optional feature that you can use with supported models on Amazon
+      Bedrock to reduce inference response latency and input token costs." It comes in
+      implicit and explicit types. TTLs of 5 minutes and 1 hour apply to recent Claude
+      models. (Paraphrase.)
+      The fine-tuning, RFT and distillation docs pages state no stage; the prompt-caching
+      page labels the stage per model (Generally Available or Gated). (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/custom-model-fine-tuning.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  model_routing:
+    product: Amazon Bedrock intelligent prompt routing + AgentCore Gateway model fallback
+    status: documented
+    notes: >
+      Two mechanisms, plus cross-region inference.
+      COST/QUALITY ROUTING (cited page): "Amazon Bedrock intelligent prompt routing provides
+      a single serverless endpoint to efficiently route requests between different
+      foundational models within the same model family." "It can dynamically predict the
+      response quality of each model for each request, and then route the request to the
+      model with the best response quality." Limits: the router stays inside one model
+      family, and the supported list is older Nova and Llama models. (Paraphrase.)
+      FALLBACK (What's New 2026-10-22, a different page;
+      https://aws.amazon.com/about-aws/whats-new/2026/10/agentcore-gateway-invokemodel-fallback/):
+      "With model fallback, the gateway automatically routes a request to an alternative
+      model or provider when the primary destination is throttled, out of capacity, or
+      unreachable". "A built-in circuit breaker skips destinations that are currently
+      failing". It is available where Gateway is, "(except those in China)". This can
+      cross providers, unlike prompt routing. (Paraphrase.)
+      Global cross-region inference is another lever; AWS lists it at about 10% savings
+      over geographic profiles. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-routing.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openai_compatible_endpoint:
+    product: Amazon Bedrock (bedrock-runtime and bedrock-mantle endpoints)
+    status: documented
+    notes: >
+      YES, both Chat Completions and Responses. "The OpenAI Chat Completions API generates
+      conversational responses using Amazon Bedrock models." There are two endpoints:
+      bedrock-runtime (path /openai/v1, SigV4 or a Bedrock API key) and bedrock-mantle
+      (compatibility). "Use the bedrock-runtime endpoint for new applications." (Paraphrase
+      of the endpoint list.)
+      GAP: "bedrock-runtime doesn't implement the OpenAI-compatible GET /models operation",
+      so client.models.list() fails there.
+      RESPONSES API (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/inference-responses-api.html):
+      "Amazon Bedrock provides the OpenAI Responses API on both the bedrock-runtime and
+      bedrock-mantle endpoints." The two differ: "Requests on bedrock-runtime are always
+      synchronous, server-side tools aren't available, and only the default project is
+      supported." On the agent side, Harness accepts "any OpenAI-compatible model provider"
+      (overview page, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html). No stage is stated on these pages.
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/inference-chat-completions.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_calling:
+    product: Amazon Bedrock (Responses, Chat Completions, Converse, InvokeModel)
+    status: documented
+    notes: >
+      "Amazon Bedrock supports three modes of tool use, depending on which API you call and
+      which model family you use". Client-side tool use is "Available with the Responses,
+      Chat Completions, Converse, and InvokeModel APIs." In server-side mode, "You register
+      a Lambda function or AgentCore Gateway, and Amazon Bedrock invokes the tool on the
+      model's behalf." It is "Currently available on the Responses API." The third mode is
+      Anthropic-defined tools (computer use, bash, text editor, memory). (Paraphrase.)
+      PARALLEL CALLS: the Bedrock tool-use pages do not state parallel tool-call support;
+      it is model-dependent. (Paraphrase.) Gateway does handle concurrency: "A client can
+      initiate multiple tools/call requests within the same session, even while an
+      elicitation is pending." (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-mcp-elicitation.html).
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -141,7 +496,8 @@ capabilities:
     status: ga
     notes: >
       STATUS CHANGE 2026-11-23: preview -> GA. From the 2026-08-31 What's New announcement
-      (a DIFFERENT source from the docs page cited below): "AWS Agent Registry is now
+      (a DIFFERENT source from the docs page cited below;
+      https://aws.amazon.com/about-aws/whats-new/2026/08/aws-agent-registry-generally-available/): "AWS Agent Registry is now
       generally available." GA added CloudFormation/Terraform/CDK provisioning, tagging,
       cross-account sharing via AWS RAM, and org-wide auto-detection of AgentCore Runtimes
       and Gateways. The same post says "You can also discover and use registry resources
@@ -150,7 +506,8 @@ capabilities:
       preview: "manual and URL-based record creation, approval workflows, semantic and
       keyword search, and AWS CloudTrail audit trails". "The registry is also exposed as an
       MCP server that builders can query directly from their IDEs." At GA the post listed
-      "five AWS Regions". The AgentCore release notes (August 2026, another DIFFERENT source) also
+      "five AWS Regions". The AgentCore release notes (August 2026, another DIFFERENT source;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html) also
       announce GA and are the source for encryption: "AWS Agent Registry is now generally
       available, with auto-detection and customer managed key encryption" and "Encrypt
       registry data at rest with a customer managed key from AWS KMS that you own and
@@ -164,6 +521,110 @@ capabilities:
       The region table says AWS Agent Registry; the service table says Registry.
       History: preview announced 2026-04-09.
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  skills_registry:
+    product: AWS Agent Registry
+    status: ga
+    notes: >
+      Same service as mcp_registry. Skills are a first-class record type, not just a tag.
+      "you can publish MCP servers, tools, agents, agent skills, and custom resources into a
+      searchable registry, control access through an approval workflow". "Skill records can
+      carry a full skill package, which you upload or synchronize from Amazon S3 or GitHub."
+      The page suggests organising registries by resource type, such as a "skill registry".
+      (Paraphrase.) Discovery is through hybrid search, browsing and a native MCP endpoint,
+      and access is controlled by IAM or JWT. (Paraphrase.)
+      The release notes (a DIFFERENT page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html) say
+      "AWS Agent Registry now stores and serves skill packages." The package format is
+      "a .zip archive that contains the skill’s SKILL.md and the files that the skill
+      uses". The same page carries the stage: "AWS Agent Registry is now generally
+      available." (August 2026). No separate stage is stated for skill packages.
+      Separate from the AWS-curated skills catalog that Harness can attach.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_skills:
+    product: AgentCore Harness (Skills)
+    status: ga
+    notes: >
+      "Agent Skills are bundles of markdown and scripts that give the agent domain
+      knowledge on demand." "Each skill follows the open AgentSkills.io standard" (SKILL.md
+      plus optional scripts, references and assets). Metadata goes into the system prompt
+      and full instructions load on demand. (Paraphrase.) "The harness supports four skill
+      sources": AWS Skills from the AWS Agent Toolkit, Git (HTTPS), your own S3 bucket, and
+      a filesystem path. "Skills are fetched once per session on the first invocation."
+      Skills can be set on the harness or overridden per invocation. (Paraphrase.)
+      On Runtime, skills are custom code (harness-vs-runtime.html grid). (Paraphrase.) For
+      storing and sharing skill packages, see skills_registry (AWS Agent Registry).
+      STAGE: skills are a harness feature, and the harness page (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) says
+      "AgentCore harness is available in GA across all regions shown here". The harness GA
+      entry in the release notes (another different page,
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html)
+      names skills among what GA adds: "the AWS-curated skills catalog with a one-toggle
+      setup".
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-skills.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_gateway:
+    product: AgentCore Gateway
+    status: ga
+    notes: >
+      CHANGED from a pure MCP tool gateway. It now describes itself as a "fully managed AI
+      gateway that provides a single, secure entry point for agentic traffic—connecting
+      agents to tools, to other agents, and to large language models (LLMs)". "Rather than
+      serving only as an MCP tool gateway, Gateway routes and secures any agentic traffic
+      through one endpoint". This covers MCP tools, "passthrough targets (including
+      Agent-to-Agent (A2A) traffic)", and "a unified, model-based routing endpoint" for
+      inference.
+      WHAT IT ENFORCES: auth, in both directions ("inbound authentication (verifying agent
+      identity) and outbound authentication (connecting to tools)"), plus credential
+      injection and semantic tool selection. Gateway rules route by caller IAM principal
+      or path, for A/B tests and fallback. (Paraphrase.)
+      POLICY: Policy in AgentCore attaches policy engines to gateways and "intercepts all
+      agent traffic through Amazon Bedrock AgentCore Gateways and evaluates each request
+      against defined policies in the policy engine before allowing tool access" (a
+      DIFFERENT page; https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html).
+      LIMIT: "Policy evaluation applies only to MCP tools." (another DIFFERENT page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/use-gateway-with-policy.html).
+      Per the release notes, passthrough targets offer "unified authentication, policy
+      enforcement, and observability", and "You can provide an API schema to enable policy
+      engine features such as guardrails." A Runtime can be set to accept invocations only
+      from the gateway, so callers cannot bypass it (release notes,
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html).
+      (Paraphrase of the last sentence.)
+      VERDICT: yes, a policy enforcement point for agent traffic. Its policy depth is
+      strongest for MCP tool calls. (Paraphrase.)
+      LAUNCH STAGE: Gateway shipped in the platform GA (2025-10-13 What's New,
+      https://aws.amazon.com/about-aws/whats-new/2025/10/amazon-bedrock-agentcore-available/):
+      "Amazon Bedrock AgentCore is now generally available". The newer passthrough and
+      inference targets have no separately stated stage.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openapi_import:
+    product: AgentCore Gateway (OpenAPI targets)
+    status: documented
+    notes: >
+      "Gateway supports OpenAPI 3.0 specifications for defining API targets." Later on the
+      same page: "OpenAPI versions 3.0 and 3.1 are supported (Swagger 2.0 is not
+      supported)". "The Gateway translates incoming MCP requests into HTTP requests to
+      these APIs and handles the response formatting." So OpenAPI import yields MCP tools.
+      (Paraphrase.)
+      CONSTRAINTS: "The OpenAPI specification must include operationId fields for all
+      operations that you want to expose as tools." "Only application/json content type
+      is fully supported". "Complex schema features like oneOf, anyOf, and allOf are not
+      supported". Smithy models and API Gateway stages are sibling target types.
+      (Paraphrase.)
+      Bedrock Agents Classic action groups also took OpenAPI schemas (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html), but
+      that product is closed to new customers.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-schema-openapi.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -192,6 +653,58 @@ capabilities:
     status: documented
     notes: '"short-term memory for multi-turn conversations"'
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  memory_namespacing:
+    product: AgentCore Memory
+    status: documented
+    notes: >
+      NAMESPACING: "This lets you isolate memories by session and by actor." "Using the
+      actor ID helps the system know which user the memory belongs to, keeping each user's
+      data separate and organized." Long-term records live under a strategy namespace path.
+      "The slash prevents prefix collisions in multi-tenant applications". Up to five
+      custom namespace keys per memory, such as a tenant ID. (Paraphrase; What's New
+      2026-08-28.)
+      TTL (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/long-term-record-ttl.html):
+      "By default, long-term memory records do not expire." The TTL is
+      "recordExpiryDurationDays - The number of days (minimum 31) after which records
+      expire." Short-term events now keep up to 10 years: "Amazon Bedrock AgentCore Memory
+      now lets you keep short-term memory events for up to 10 years, up from one year."
+      (What's New 2026-11-17, another different page;
+      https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-bedrock-agentcore-memory-10-year-retention).
+      The quotas page still lists a 365-day maximum event expiration, so the docs disagree.
+      (Paraphrase.)
+      DELETION: "The DeleteMemoryRecord API removes individual memory records from your
+      AgentCore Memory" (another different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/long-term-delete-memory-records.html).
+      Events have a DeleteEvent API too. (Paraphrase.)
+      EXPORT: no bulk export or per-user erase API is documented. You list and retrieve
+      records yourself. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/memory-organization.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpoint_resume:
+    product: AgentCore Runtime session storage (preview) and capacity provider volumes
+    status: documented
+    notes: >
+      FILESYSTEM CHECKPOINTS, not agent-loop checkpoints. Two managed options: "Session
+      storage (Preview) - Per-session storage on microVM runtimes that persists across
+      stop/resume cycles." and "Capacity provider volumes - Amazon EBS volumes on Instances
+      runtimes". Session storage "Survives stop/resume; 14-day idle expiry; resets on
+      version update". It is still preview; Instances is GA (see managed_agent_runtime).
+      (Paraphrase of the last sentence.) Without it, "By default, the compute (microVM)
+      associated with a session is ephemeral." (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-sessions.html).
+      After a stop or crash, "The session transitions back to Active on the next invocation
+      and a new compute is provisioned" (same page). Replaying the agent's own state after
+      a failure is up to your framework, for example with a checkpointer on AgentCore
+      Memory. (Paraphrase.)
+      Durable retries at the workflow level come from Step Functions (see
+      workflow_engine). (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-filesystem-configurations.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -229,12 +742,12 @@ capabilities:
     notes: >
       "deterministic control to ensure agents operate within defined boundaries and
       business rules". CHANGED since August: rules are authored "using natural language or
-      a policy language — Dogwood, which is compatible with Cedar (AWS's open-source policy
+      a policy language — Dogwood", "which is compatible with Cedar (AWS's open-source policy
       language)" (was natural language or Cedar). "Integrates with AgentCore Gateway, to
       intercept every tool call before execution."
       22 of 24 regions, absent only from China. GovCloud was ADDED since August.
       LAUNCH STAGE: "Policy in Amazon Bedrock AgentCore is now generally available" —
-      2026-03-03, per the What's New feed (a DIFFERENT source from the docs page below).
+      2026-03-03, per the What's New feed (a DIFFERENT source from the docs page below), https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/.
       Announced as preview 2025-12-02, so roughly a 3-month preview.
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
     verified_on: 2026-11-23
@@ -293,7 +806,8 @@ capabilities:
       execution path, audit intermediate outputs, and debug performance bottlenecks."
       Emits "standardized OpenTelemetry (OTEL)-compatible format" — works with any
       OTel-compatible stack. All 24 regions.
-      The pricing page (a different page) adds: "The telemetry data is ingested and stored
+      The pricing page (a different page; https://aws.amazon.com/bedrock/agentcore/pricing/)
+      adds: "The telemetry data is ingested and stored
       in your Amazon CloudWatch account."
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
     verified_on: 2026-11-23
@@ -304,6 +818,27 @@ capabilities:
     value: Amazon CloudWatch
     notes: '"AgentCore Observability powered by Amazon CloudWatch"'
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  cost_attribution:
+    product: Amazon Bedrock cost attribution (+ AgentCore resource tags)
+    status: documented
+    notes: >
+      MODEL TOKENS, from Bedrock (cited page): "Amazon Bedrock provides multiple ways to
+      attribute model inference usage and costs to specific users, teams, applications,
+      environments, or experiments." The mechanisms are IAM principal attribution,
+      application inference profiles, Projects, Workspaces and per-request metadata tagging
+      with invocation logs. Billed-dollar data goes to Cost Explorer or CUR 2.0.
+      (Paraphrase.) To slice by agent, tenant or session, tag each request yourself.
+      (Paraphrase.)
+      AGENTCORE: no per-agent or per-session cost report was found. You tag resources
+      (a different page; https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/tagging.html):
+      "Tags enable you to categorize your AWS resources in different ways, for example, by
+      purpose, owner, or environment." Gateway rate limits can cap tokens per agent, per the
+      FAQ. Step Functions execution history shows token usage for harness steps.
+      (Paraphrase of the last two sentences.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/cost-management.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -318,13 +853,38 @@ capabilities:
       add TypeScript agent framework support (September 2026).
       22 of 24 regions, absent only from China (was 16 in August).
       LAUNCH STAGE: "Amazon Bedrock AgentCore Evaluations is now generally available" —
-      2026-03-31, per the What's New feed (a DIFFERENT source from the docs page below).
+      2026-03-31, per the What's New feed (a DIFFERENT source from the docs page below), https://aws.amazon.com/about-aws/whats-new/2026/03/agentcore-evaluations-generally-available/.
       Announced as preview 2025-12-02. Batch Evaluations went GA in July 2026. Dataset
-      evaluation and dataset generation are "in public preview" (release notes, November).
-      The pricing page (a different page) lists "Includes CI/CD integration with configurable
+      evaluation and dataset generation are "in public preview" (release notes, November, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html). The pricing page (a different page, https://aws.amazon.com/bedrock/agentcore/pricing/) lists "Includes CI/CD integration with configurable
       quality thresholds" and "Production monitoring with sampling rules and dashboard
       aggregation", and says "Model usage costs are included for built-in evaluators".
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  versioning_rollout:
+    product: AgentCore Runtime and Harness versions/endpoints (+ Optimization A/B testing)
+    status: documented
+    notes: >
+      VERSIONS AND ALIASES: "Each AgentCore Runtime in Amazon Bedrock AgentCore is
+      automatically versioned". "Versions are immutable once created". "Endpoints can point
+      to specific versions, allowing you to maintain different environments (e.g.,
+      development, staging, production)". DEFAULT follows the latest version; named
+      endpoints move only when you update them. (Paraphrase.)
+      ROLLBACK (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-session-endpoints.html):
+      a runtime endpoint lets you "keep development and production on different versions
+      and promote or roll back without changing callers." The harness works the same way:
+      "Harness versioning works the same way as AgentCore Runtime versioning" (another
+      different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-versioning.html).
+      CANARY: an endpoint has no traffic weights. Traffic splitting comes from Gateway rules
+      and Optimization A/B tests, and per the release notes "A/B Testing is now Generally
+      Available" (another different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html).
+      (Paraphrase except the quote.) Default caps are 1,000 versions and 10 endpoints per
+      agent, both adjustable (see service_limits).
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agent-runtime-versioning.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -332,29 +892,41 @@ capabilities:
     product: AgentCore Optimization
     status: ga
     notes: >
-      STATUS CHANGE 2026-11-23: preview -> GA for the core of the service. The AgentCore
-      release notes (a DIFFERENT source from the docs page below; July 2026 section) state
+      STATUS CHANGE 2026-11-23: preview -> GA for the core of the service. The AgentCore release notes (https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html, a DIFFERENT source from the docs page below; July 2026 section) state
       "Recommendations is now Generally Available" and "A/B Testing is now Generally
       Available". These are two of the three things the overview lists: "AI-generated
       recommendations, versioned configuration bundles, and A/B testing." No stage is
       stated for configuration bundles.
-      STILL PREVIEW: Insights. The pricing page says "Insights (Preview)" and "Free during
+      STILL PREVIEW: Insights. The pricing page (https://aws.amazon.com/bedrock/agentcore/pricing/) says "Insights (Preview)" and "Free during
       public preview"; the release notes say "Failure Insights is now in Public Preview".
       "Supports system prompt and tool description optimization with traffic splitting
       through AgentCore Gateway for A/B testing."
       21 of 24 regions; absent from China and GovCloud.
-      History: "launches capabilities for optimizing agent performance in preview" —
-      2026-04-30, What's New.
+      History: "launches capabilities for optimizing agent performance in preview" — 2026-04-30, What's New, https://aws.amazon.com/about-aws/whats-new/2026/05/bedrock-agentcore-optimization-preview/.
       RECONCILED 2026-11-23 with a parallel refresh that kept the whole row `preview` on
       the pricing page's Insights wording. The pricing page (a different page) applies the
       preview label to Insights only: "Insights is free during public preview; pricing will
       be announced before general availability". Recommendations and A/B tests carry no
       preview label there, and the release notes state their GA. The row stays `ga`, with
-      Insights as the preview exception. The Insights docs page (a different page) says
+      Insights as the preview exception. The Insights docs page (a different page, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/insights.html) says
       "Legacy Insights preview is deprecated". New report-style Insights jobs stopped on
       2026-10-16, and current Insights run inside online or batch evaluations. That page
       states no stage for the current Insights. (Paraphrase of the last two sentences.)
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  feedback_service:
+    status: unknown
+    notes: >
+      No managed end-user feedback capture was located for AWS. Searched on 2026-11-23: the
+      AgentCore developer guide table of contents, AgentCore release notes, AgentCore FAQ and
+      pricing page, and the Amazon Bedrock user guide table of contents. The closest items
+      are AgentCore Evaluations (automated and custom evaluators) and Bedrock model
+      evaluation jobs that use human reviewers. Neither collects thumbs-up or comments from
+      end users alongside traces. (Paraphrase.) Amazon Connect and Amazon Quick were not
+      checked for this row. Re-check later.
+    source: null
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -369,7 +941,6 @@ capabilities:
       The region table no longer shows a preview label (seen on a different page,
       agentcore-regions.html). It now lists 12 of 24 regions, up from 4.
       Wallet providers: Coinbase and Stripe Privy.
-      No taxonomy row covers agent payments yet — candidate new row in d3 or d7.
     source: https://aws.amazon.com/about-aws/whats-new/2026/08/bedrock-agentcore-payments-ga/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -397,6 +968,80 @@ capabilities:
       except Runtime Instances, Payments, Optimization, Web Search API and Web Answer.
       Web Answer is US East (N. Virginia) only.
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_region_variance:
+    status: documented
+    value:
+      builtin_tools_browser_code_interpreter: 24
+      gateway: 24
+      web_search_tool: 7
+      web_search_api: 6
+      web_answer: 1
+      custom_model_import: 4
+    notes: >
+      NO, tools do not work in every region. From the region table: the built-in tools row
+      (Browser, Code Interpreter) and Gateway cover all 24 columns. Web Search Tool covers 7,
+      the Web Search API 6, and Web Answer only US East (N. Virginia). Policy enforcement
+      on gateway tool calls is in 22, with China excluded. (Paraphrase.)
+      Gateway model fallback is offered where Gateway is, except China (What's New
+      2026-10-22). Bedrock Custom Model Import is in 4 regions (eu-central-1, us-east-1,
+      us-east-2, us-west-2), and most fine-tuning is single-region. (Paraphrase; see
+      model_routing, byo_open_weights and tuning.)
+      Harness tools inherit the harness footprint, which is 16 of 24 regions. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  service_limits:
+    status: documented
+    notes: >
+      "You can request increases for some quotas, and other quotas cannot be increased."
+      FIXED (not adjustable), Runtime: request timeout 15 minutes, payload 100 MB,
+      streaming 60 minutes, async jobs 8 hours on microVMs and 14 days on Instances. Image
+      size is 2 GB on V1 and 10 GB on V2, environment variables 4 KB per agent, and a
+      session gets at most 8 vCPU/32 GB. Memory: 6 strategies per memory resource, 100
+      messages per CreateEvent, and 5 CreateEvent calls per second per actor per session.
+      (Paraphrase.)
+      ADJUSTABLE: 1,000 agents per account, 1,000 versions per agent, 10 endpoints per
+      agent, and active sessions of 5,000 (N. Virginia, Oregon) or 2,500 elsewhere. Gateway
+      allows 100 targets per gateway and 1,000 tools per target. (Paraphrase.)
+      Unlike a terminal revision cap, the version limit is adjustable. Versions are also
+      created automatically on every update, so busy pipelines should watch the count.
+      (Paraphrase.) The page lists a 365-day maximum for EventExpirationDuration, while the
+      2026-11-17 What's New raised short-term retention to 10 years. (Paraphrase.)
+      "AgentCore harness is a logical resource." Harness inherits all Runtime quotas.
+      (Paraphrase of the last sentence.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    product: Amazon Bedrock AgentCore
+    status: ga
+    notes: >
+      HEADLINE STAGE: "Amazon Bedrock AgentCore is now generally available" — 2025-10-13 (a
+      different page, https://aws.amazon.com/about-aws/whats-new/2025/10/amazon-bedrock-agentcore-available/).
+      Convention (2026-11-23 fact-check): this meta-row carries the headline product's stated stage, the same rule as byteplus/b-platform, alibaba/b-platform and aws/d-devtools.
+      WHERE AWS STATES STAGE: mostly in the What's New feed and the AgentCore release notes
+      (cited), rather than service pages. The release notes carry lines like "Recommendations
+      is now Generally Available" and "Failure Insights is now in Public Preview". The full
+      timeline is in this file's header. One docs page does state it: the harness page
+      (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) says
+      "AgentCore harness is available in GA across all regions shown here". The filesystem
+      page labels session storage as Preview. (Paraphrase of the last sentence.)
+      STALE STAGE ON THE FAQ (another different page;
+      https://aws.amazon.com/bedrock/agentcore/faqs/): it still says "The managed harness
+      (preview) in AgentCore" five months after harness GA. It also says "AgentCore is
+      available in fifteen AWS Regions" while the region table shows 24 columns.
+      BEDROCK SIBLINGS: the pages for Chat Completions, Responses, prompt routing, Custom
+      Model Import, fine-tuning, distillation, structured KBs and Flows state no stage.
+      The prompt-caching table labels models per row as Generally Available or Gated.
+      Bedrock Managed Agents, powered by OpenAI, is labelled public preview. Bedrock Agents
+      Classic entered maintenance mode on 2026-07-30. (Paraphrase of this paragraph.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -440,21 +1085,70 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
-  training_data_policy:
-    status: unknown
+  data_residency:
+    product: AgentCore cross-region inference (Memory, Policy, Evaluations) + Bedrock CRIS
+    status: documented
     notes: >
-      STATUS CHANGE 2026-11-23: documented -> unknown, because the evidence was REMOVED.
-      In August the overview page said AgentCore may use and store your content to
-      improve your service experience, for your use only and not for other customers.
-      (Paraphrase of the removed sentence; it is no longer on that page.) It is gone as of
-      2026-11-23, and an AWS docs search did not find it moved anywhere. The cited
-      Data protection page now has only a Gateway-specific line: "Customer content is not
-      used to provide and maintain the AgentCore Gateway service." It makes no general
-      training or service-improvement statement for AgentCore.
-      A CloudWatch page (a DIFFERENT source) states "AgentCore is not covered by the AI
-      services opt-out policy." So the current policy is unstated, not confirmed safe.
-      Re-check when AWS publishes a replacement statement.
-    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/data-protection.html
+      STORAGE stays in-region; INFERENCE may not. "For AgentCore Memory, Policy in
+      AgentCore (in select regions), and AgentCore Evaluations, cross-region inference
+      requests are kept within the AWS Regions that are part of the geography where the
+      data originally resides." "Although the data remains stored only in the primary
+      region, when using cross-region inference, your input prompts and output results may
+      move outside of your primary region."
+      GLOBAL EXCEPTIONS: Policy requests from Hyderabad, Malaysia, Thailand, Canada (Central)
+      and São Paulo (the page's prose names only the last two; its Policy table lists all
+      five), and Evaluations requests from Hyderabad, Malaysia, Mumbai, Seoul, Singapore and Thailand,
+      go to all commercial regions. (Paraphrase.) "Starting December 14, 2026, inference
+      requests originating in South America (São Paulo) (sa-east-1) also use global
+      cross-region inference" for Evaluations.
+      "Data originating in AWS GovCloud (US) never leaves the partition and is never routed
+      to commercial AWS Regions."
+      AUDIT GAP: "Amazon CloudWatch and AWS CloudTrail logs won't specify the AWS Region in
+      which data inference occurs." Bedrock model calls differ: there, "CloudTrail logs all
+      cross-Region inference requests in your source Region." (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html).
+      Abuse-detection copies follow the inference: "To the extent we store data for abuse
+      detection, your input prompts and output results will be stored in the destination
+      region." (another different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html).
+      OPT-OUT: for Memory, use a built-in-with-overrides strategy; for Evaluations, use
+      custom evaluators. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/cross-region-inference.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  training_data_policy:
+    product: Amazon Bedrock (model inference); AgentCore has no service-wide statement
+    status: documented
+    notes: >
+      STATUS CHANGE 2026-11-23: unknown -> documented, scored on the sibling family that
+      runs the model calls. Bedrock FAQ (cited): "No, AWS and the third-party model
+      providers will not use any inputs to or outputs from Amazon Bedrock to train Amazon
+      Nova, Amazon Titan, or any third-party models." "With Amazon Bedrock, your content is
+      not used to improve the base models and is not shared with any model providers."
+      RETENTION (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/data-retention.html): "Amazon
+      Bedrock gives you explicit control over whether the prompts and outputs from your
+      inference requests are retained." Mode none means "Zero data retention." Mode default
+      follows each model's policy. (Paraphrase of the last sentence.)
+      ABUSE MONITORING (another different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/abuse-detection.html): "For
+      Anthropic Claude Fable 5, Claude Fable 5.1, and Claude Fable 5.2, Amazon Bedrock
+      retains all traffic for up to 30 days for automated offline abuse detection." For
+      most OpenAI models, "classifier-flagged traffic will be retained for up to 30 days for
+      automated offline abuse detection." "Retained inputs and outputs are stored and
+      processed by AWS and are not shared with third-party model providers."
+      AGENTCORE CAVEAT: in August the AgentCore overview said AgentCore may use and store
+      your content to improve your service experience, for your use only. That sentence is
+      gone, and no replacement was located. The AgentCore data-protection page (another
+      different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/data-protection.html)
+      only says "Customer content is not used to provide and maintain the AgentCore Gateway
+      service." An earlier pass reported a CloudWatch docs line that AgentCore is outside
+      the AI services opt-out policy; it was not re-located on 2026-11-23. (Paraphrase of
+      this paragraph except the quote.) So model inference is covered, while AgentCore's
+      own handling of stored memory and traces is unstated. (Paraphrase.)
+    source: https://aws.amazon.com/bedrock/faqs/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -469,8 +1163,35 @@ capabilities:
       $0.20 per GB retrieved and $0.10 per GB-month stored. Long-term storage is still $0.75
       built-in or $0.25 self-managed per 1,000 records/month, and retrieval $0.50 per 1,000.
       Harness no longer appears on the pricing page. The August quote calling it free of
-      extra charge is gone from this page. The harness docs page (a different page) says
+      extra charge is gone from this page. The harness docs page (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) says
       "There is no separate harness charge."
+    source: https://aws.amazon.com/bedrock/agentcore/pricing/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  free_tier_commitments:
+    product: AgentCore pricing (+ Bedrock Provisioned Throughput, AWS Marketplace)
+    status: documented
+    notes: >
+      FREE TIER: account-level credits only, plus two service-specific free tiers. "New
+      AWS customers receive up to $200 in Free Tier credits." "Registry comes with a Free
+      Tier, where every month your first 5,000 records, first 1,000,000 Search API calls,
+      and first 2,000,000 combined Get and List API calls are free of charge." Web Search
+      gives 5,000 free queries a month (see web_search_tool). (Paraphrase of the last
+      sentence.)
+      COMMITMENTS: the default is "flexible, consumption-based pricing with no upfront
+      commitments or minimum fees." Runtime v2 lists a cheaper "committed baseline,
+      launching by October 2026"; the page still says this as of 2026-11-23. On Runtime
+      Instances, "Your EC2 Savings Plans, Reserved Instances, and On-Demand Capacity
+      Reservations apply to the compute — not to the management fee." Bedrock Provisioned
+      Throughput offers 1-month and 6-month terms (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html): "The
+      longer the commitment duration, the more discounted the hourly price becomes."
+      MARKETPLACE: Gateway has an AWS Marketplace connector, and "Customers can now also
+      procure and deploy A2A servers on AgentCore Runtime through AWS Marketplace" (another
+      different page;
+      https://aws.amazon.com/about-aws/whats-new/2025/11/marketplace-a2a-server-bedrock-agentcore-runtime/).
     source: https://aws.amazon.com/bedrock/agentcore/pricing/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -479,13 +1200,14 @@ capabilities:
     status: documented
     value: 99.9%
     notes: >
-      AgentCore inherits the Amazon Bedrock SLA at the GA tier. Per the FAQs page:
+      AgentCore inherits the Amazon Bedrock SLA. Per the FAQs page:
       "The SLA for Amazon Bedrock applies to AgentCore." The Bedrock SLA commits to 99.9%
       monthly uptime, with credits 10% (99.0–99.9%), 25% (95.0–99.0%), 100% (<95.0%).
       Availability measured per 5-minute interval on API requests; only HTTP 500s count as
       errors (throttling/4xx excluded). Claim requires AWS Support case within 2 billing
-      cycles. Latency commitments are NOT in the public SLA — must be negotiated into MSA.
-      (The numeric terms come from the Bedrock SLA page, a DIFFERENT source; that page is
+      cycles. The public SLA makes no latency commitment. (Paraphrase.)
+      (The numeric terms come from the Bedrock SLA page, a DIFFERENT source,
+      https://aws.amazon.com/bedrock/sla/; that page is
       "Last Updated: October 4, 2023" and was re-read 2026-11-23. The 99.9%, 10/25/100%,
       5-minute interval and second-billing-cycle terms were confirmed.)
     source: https://aws.amazon.com/bedrock/agentcore/faqs/
@@ -521,13 +1243,56 @@ capabilities:
       two tools, AgenticRetrieveStream (multi-step agentic retrieval with a cited answer)
       and Retrieve (single hybrid search).
       LAUNCH STAGE from the AgentCore release notes (a DIFFERENT source; July 2026
-      section): "Amazon Bedrock Managed Knowledge Base is now Generally Available". The
+      section; https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html): "Amazon Bedrock Managed Knowledge Base is now Generally Available". The
       notes name six native connectors (S3, SharePoint, Confluence, Google Drive, OneDrive,
       Web Crawler), hybrid search and reranking.
       CAVEAT: the knowledge base itself is an Amazon Bedrock resource billed on Bedrock
       pricing. It is NOT one of the 13 services on the AgentCore overview page; AgentCore
       exposes it through Gateway. The August `none` was correct for the August lineup.
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-target-connector-managed-kb.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  text_to_sql:
+    product: Amazon Bedrock Knowledge Bases (structured data stores)
+    status: documented
+    notes: >
+      "Amazon Bedrock Knowledge Bases allows you to connect to structured data stores, which
+      contain data that conforms to a predefined schema." Queries run through Retrieve or
+      RetrieveAndGenerate. A standalone GenerateQuery call "converts natural language
+      queries into SQL queries that are appropriate to the data source being queried."
+      ENGINE: "Amazon Bedrock Knowledge Bases uses Amazon Redshift as the query engine for
+      querying your data store." (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-prereq-structured.html).
+      Data can sit in Redshift or the AWS Glue Data Catalog. (Paraphrase.)
+      LIMIT: for GenerateQuery, "Queries must be written in English." (another different
+      page; https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-generate-query.html).
+      For agents: the AgentCore Managed Knowledge Base connector covers document RAG (see
+      knowledge_base). To reach a structured KB, an agent calls the Bedrock API or a
+      Gateway target. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  ai_service_tools:
+    product: AgentCore Gateway built-in connectors (+ Harness built-in tools)
+    status: documented
+    notes: >
+      The built-in list is short. "Amazon Bedrock AgentCore lets you add the following
+      built-in connectors as targets in your gateway: Amazon Bedrock Managed Knowledge Bases
+      Web Search Tool Web Answer AWS Step Functions AWS Marketplace".
+      NO prebuilt OCR, speech or translation tools. Textract, Transcribe or Translate must
+      be wired in yourself as Smithy, OpenAPI or Lambda targets. (Paraphrase.) The FAQ (a
+      different page; https://aws.amazon.com/bedrock/agentcore/faqs/) lists AWS services as
+      tool sources: "These include AWS services (S3, DynamoDB, Aurora, Redshift, Lambda),
+      pre-built connectors such as (Web Search tool, Bedrock Managed Knowledge Base), and
+      third-party services."
+      Harness and Runtime add Browser and Code Interpreter (see browser_use and
+      code_interpreter). Web search is covered by web_search_tool. On the model side, Nova 2
+      models "offer built-in tools such as code interpreter and web grounding" (What's New
+      2025-12-02, a different page;
+      https://aws.amazon.com/about-aws/whats-new/2025/12/nova-2-foundation-models-amazon-bedrock/).
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-target-connectors.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -546,6 +1311,48 @@ capabilities:
       page now also covers authoring in Dogwood. Content safety/prompt-injection scoring
       comes via the Guardrails provider integration.
     source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  human_in_the_loop:
+    product: AgentCore Harness inline functions + Gateway MCP elicitation
+    status: documented
+    notes: >
+      HARNESS: inline functions are "Tool schemas that execute on the client side, not on
+      the harness VM." "The harness pauses when the tool is called and returns the call to
+      your code, which decides what to do and sends a result back. This is the pattern for
+      human-in-the-loop approvals and custom integrations."
+      GATEWAY (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-mcp-elicitation.html):
+      "Elicitation is an MCP feature that allows an MCP server to request additional
+      information from the client during a tool call." "AgentCore Gateway forwards
+      elicitation requests from MCP server targets to your clients".
+      WORKFLOW: Step Functions can "add human approval before critical actions" around
+      harness steps (What's New, another different page;
+      https://aws.amazon.com/about-aws/whats-new/2026/06/aws-step-functions-agentcore/).
+      No managed approval queue or reviewer UI exists in AgentCore; your client handles
+      the pause. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-tools.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_audit_trail:
+    product: AgentCore Gateway + AWS CloudTrail (+ AgentCore Observability)
+    status: documented
+    notes: >
+      "Using the information collected by CloudTrail, you can determine the request that
+      was made to Gateway, who made the request, when it was made, and additional
+      details." There are management events and data events.
+      COST AND OPT-IN (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/enabling-cloudtrail-data-event-logging.html):
+      tool calls are data events. "Data event logging incurs additional charges." "You must
+      explicitly enable data events as they are not captured by default." So per-call
+      audit is off until you build a trail.
+      Spans for each tool call also land in CloudWatch through Observability (see
+      otel_traces). Harness, Registry, Browser and Web Search API calls have their own
+      CloudTrail pages. Whether each record names the end user on whose behalf the call
+      ran was not verified here. (Paraphrase of this paragraph.)
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-cloudtrail.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -604,13 +1411,36 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  sovereign_cloud:
+    product: AgentCore in AWS GovCloud (US-West) and AWS China Regions
+    status: documented
+    notes: >
+      GOV: "Amazon Bedrock AgentCore brings enterprise-grade agentic AI capabilities to
+      workloads with elevated compliance needs in the AWS GovCloud (US-West) Region." (What's
+      New 2026-05-05, cited.) The region table now shows GovCloud (US-West) for every
+      service except Runtime Instances, Payments, Optimization, the Web Search API and Web
+      Answer. (Paraphrase; see runtime_regions.) Data in GovCloud "never leaves the
+      partition" (a different page;
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/cross-region-inference.html).
+      CHINA: Beijing and Ningxia are in the region table with Runtime microVMs, Gateway,
+      Identity, Built-in Tools and Observability only. (Paraphrase.)
+      EUROPEAN SOVEREIGN CLOUD: the AgentCore region table has no AWS European Sovereign
+      Cloud column. The Bedrock and AgentCore endpoint pages in the AWS General Reference
+      list no ESC endpoint, and the What's New feed has no Bedrock or AgentCore launch
+      there as of 2026-11-23. AWS does not positively say it is unavailable, so treat ESC as unavailable
+      but unconfirmed. (Paraphrase.)
+    source: https://aws.amazon.com/about-aws/whats-new/2026/05/bedrock-agentcore-launch-aws-govcloud-us/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   web_search_tool:
     product: AgentCore Web Search (Web Search API and Web Search Tool connector)
     status: ga
     notes: >
       Two GA surfaces, each with a vendor-stated stage:
       - Web Search Tool, a Gateway connector called over MCP. The AgentCore release notes
-        (a DIFFERENT source; doc-history.html, July 2026) say "Web Search Tool is now
+        (a DIFFERENT source; July 2026;
+        https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html) say "Web Search Tool is now
         Generally Available". "Built on Amazon's search infrastructure, it combines a
         proprietary web index with structured knowledge graph data."
       - Web Search API (InvokeWebSearch). The What's New post of 2026-11-10 (another

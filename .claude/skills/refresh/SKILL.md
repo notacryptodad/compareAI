@@ -65,6 +65,18 @@ For each cell to refresh, note:
 - The current `source` URL (or where to look if `source: null`)
 - Whether the page is JS-rendered (BytePlus/Volcengine/some Alibaba pages — needs Playwright)
 - Whether this host can reach it (try locally first; fall back to jump-claude)
+- **Which product families could carry it.** A cell scores the provider, not just the bucket
+  file's headline product. Search sibling families before settling on `unknown`/`none`:
+
+  | Provider | Headline (bucket B) | Also search |
+  |---|---|---|
+  | AWS | Bedrock AgentCore | Amazon Bedrock (models, Guardrails, Knowledge Bases, fine-tuning), Nova / Nova Sonic, SageMaker |
+  | Azure | Foundry Agent Service | Foundry Models (Azure OpenAI, catalog), API Management AI gateway, Azure AI Search / Foundry IQ, Azure AI Speech / Voice Live |
+  | GCP | Gemini Enterprise Agent Platform | Vertex AI / Gemini models, Model Garden, Gemini Live API, Agent Gateway |
+  | BytePlus | ModelArk Managed Agents | BytePlus AgentKit, ModelArk model service, ArkClaw |
+  | Alibaba | Model Studio | Model Studio models (Qwen), AI Gateway / Higress, AgentRun, AgentLoop, Agent Sandbox |
+
+  When the evidence comes from a sibling family, set the cell's `product:` to that product.
 
 ---
 
@@ -366,6 +378,18 @@ Before finishing, ask: "Did I apply the same standard to all five providers?"
 - If you found a policy statement for one, look for the equivalent page for others
 - If you left a cell unknown for one provider, make sure you didn't mark it documented
   for another on identical evidence
+- If a cell is unknown or missing for one provider but filled for others, check whether the
+  capability lives in that provider's sibling product family (see the Phase 2 table)
+  rather than its headline product
+
+## Subagent briefs (paste into every research / fix / fact-check prompt)
+
+Subagents don't inherit CLAUDE.md or this machine's rules. Every brief must say:
+- run Python only via `uv run` — never `python3`, `python` or `pip`, including one-liners
+- never `rm` — move unwanted files to `~/Documents/trashllm`
+- no state-changing git (no add/commit/rebase/stash/checkout/reset); no commits
+- edit only the files assigned to that agent
+- second-page quotes carry the page's full URL in the note, so `check_quotes.py` can verify
 
 The project's worst bug was exactly this asymmetry. It takes 60 seconds to check and
 prevents the most damaging class of error.

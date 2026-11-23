@@ -8,14 +8,14 @@ notes: >
   Q Business, explore Amazon Quick."
   Anyone reading a cloud comparison to make a buying decision cannot act on Q Business at
   all — so every capability row below is historical/for-existing-customers context, not a
-  purchasable option. Successor is "Amazon Quick"; that product is NOT yet researched here.
+  purchasable option. Successor is "Amazon Quick" (now AWS Quick); see the 2026-11-23 SCORING
+  DECISION below.
   This is exactly the kind of fact a stale comparison table would get catastrophically
   wrong, and it is why the 90/180-day staleness rules exist.
   2026-11-23 REFRESH: the Q Business docs still say "no longer open to new customers" and
   still point to "Amazon Quick". The successor was renamed since then: the What's New post
   of 2026-11-09, "Amazon Quick is now AWS Quick", says "Amazon Quick, the AI workspace built
-  only for work, is now AWS Quick". AWS Quick is still not researched here. It is the
-  candidate replacement product for this bucket. Amazon Quick / AWS Quick is a SEPARATE
+  only for work, is now AWS Quick". Amazon Quick / AWS Quick is a SEPARATE
   successor product, not an alias of Q Business, so it is deliberately left out of
   `aliases`. Recent What's New items include plugins,
   Flows, and "AWS Quick introduces enterprise guardrails (preview)".
@@ -26,6 +26,19 @@ notes: >
   a phased approach, starting with the Bring Your Own Index (BYOI) capability", which
   brings an existing Q Business index into Quick. Customers using anonymous access or API
   integration into custom applications are told to contact AWS Support.
+  SCORING DECISION (2026-11-23 cross-product sweep): the file stays headlined on Amazon Q
+  Business, and AWS Quick is used as CELL-LEVEL evidence. Each such cell sets
+  `product: AWS Quick` and says how Q Business compares. Why keep the headline: the
+  existing cells were verified against Q Business pages, so moving the headline would mean
+  re-verifying every row against Quick. Q Business is also still supported for existing
+  customers. Per the project rule (a cell scores the PROVIDER), a Q Business gap that Quick
+  fills is credited to AWS with product AWS Quick. Cells currently on Quick:
+  model_choosable, license_bundling, web_search_tool, ai_service_tools, sovereign_cloud.
+  Several Q Business cells also note Quick's position for comparison.
+  RECOMMENDATION: re-headline this bucket to AWS Quick in a dedicated pass. It is the only
+  AWS bucket-C product open to new customers, and its pages (docs.aws.amazon.com/quick/)
+  are static HTML that check_quotes can verify. After that, Q Business would be the
+  historical sibling.
 
 capabilities:
   packaged_assistant:
@@ -39,6 +52,22 @@ capabilities:
       configure to answer questions, provide summaries, generate content, and complete
       tasks based on your enterprise data."
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  authoring_mode:
+    status: documented
+    value: low-code / no-code
+    notes: >
+      Admins set it up in the console: connectors, guardrails, and plugins defined from
+      OpenAPI schemas. End users build Q Apps without code: "These Q Apps can be easily
+      created by anyone at the click of a button, transforming their conversations with an
+      Amazon Q Business assistant into reusable and shareable Amazon Q Apps." Q Apps need
+      the Pro tier. (Paraphrase beyond the quote.)
+      The successor keeps the no-code model. The AWS Quick document history (a different
+      page, https://docs.aws.amazon.com/quick/latest/userguide/doc-history.html) describes Quick Flows as "Intelligent workflows combining
+      generative AI with automated actions through no-code interface".
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/purpose-built-qapps.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -112,16 +141,64 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
-  model_choosable:
-    status: unknown
+  web_search_tool:
+    status: documented
+    product: AWS Quick
     notes: >
-      STATUS CHANGE 2026-11-23: none -> unknown. Built on Bedrock, but the docs do not
-      state whether an admin or end user can choose the model. The product is described as
-      a generative-AI powered assistant built on Amazon Bedrock, and no model-choice
-      control is described. That is absence of
-      evidence, not a positive "not offered" statement, so `none` is not justified.
-      (Paraphrase.)
-    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html
+      Q Business has no built-in web search tool in the pages read. It offers an LLM-only
+      "general knowledge" mode, and its Web Crawler is an index-time connector, not a live
+      search tool. (Paraphrase.)
+      AWS Quick has one: "AWS Quick comes with built-in web search capability. AWS Quick
+      chat automatically searches both your connected data sources and the web". "You can
+      turn web search off for any query by choosing the globe icon in the chat panel."
+      Admins can switch it off for Quick Research. The admin-controls page (a different
+      page, https://docs.aws.amazon.com/quick/latest/userguide/admin-controls.html) says "Administrators can enable or disable web search
+      functionality for their organization."
+      The Regions page (a different page, https://docs.aws.amazon.com/quick/latest/userguide/regions.html) adds a residency caveat: "AWS
+      Quick makes cross-Region calls for web search in the Chat, Agents, and Research
+      features."
+    source: https://docs.aws.amazon.com/quick/latest/userguide/using-quick-chat.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  ai_service_tools:
+    status: documented
+    product: AWS Quick
+    value: [Amazon Bedrock, Amazon Textract, Amazon Comprehend, Amazon Comprehend Medical]
+    notes: >
+      Q Business uses AI services only at index time: it extracts meaning from images,
+      audio and video during ingestion, and these are not tools the assistant calls
+      (priced per image and per minute on the Q Business pricing page). (Paraphrase.)
+      AWS Quick exposes AWS AI services as callable connectors: "you can create connectors
+      that interact directly with AWS services like Amazon Bedrock, Amazon Textract, and
+      Amazon Comprehend." The supported-types page (a different page,
+      https://docs.aws.amazon.com/quick/latest/userguide/action-connector-apis-supported-types.html) also lists "Amazon Comprehend
+      Medical - Medical text analysis and entity extraction." No Translate, Transcribe or
+      Polly connector is listed there. Web search is covered separately in web_search_tool.
+    source: https://docs.aws.amazon.com/quick/latest/userguide/builtin-services-integration.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  model_choosable:
+    status: documented
+    product: AWS Quick
+    value: mode tiers (Fast / Balanced / Smart) plus thinking effort; underlying model not named
+    notes: >
+      STATUS CHANGE 2026-11-23: unknown -> documented, on evidence from the successor
+      product. Q Business itself is silent: its docs call it a generative-AI assistant
+      built on Amazon Bedrock and describe no model-choice control. (Paraphrase.)
+      AWS Quick offers a choice of mode, not of model. "AWS Quick chat provides multiple
+      response modes that you choose based on your task." Fast, Balanced and Smart trade
+      speed for depth; Smart "Provides the highest-quality responses, with the most
+      thorough reasoning and longer response times." Thinking effort (Low, Medium, High) is
+      set separately on Balanced and Smart. The page names no underlying model.
+      (Paraphrase beyond quotes.)
+      The Regions page (a different page,
+      https://docs.aws.amazon.com/quick/latest/userguide/regions.html) says cross-Region
+      inference gives "Access to a variety of models suitable for different tasks", and
+      that "AWS Quick manages this cross-Region inference routing for you." So it is
+      choosable at the tier level and opaque at the model level.
+    source: https://docs.aws.amazon.com/quick/latest/userguide/using-quick-chat.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -153,6 +230,95 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  conversation_history:
+    status: documented
+    value: 30-day retention; user delete; personalization on by default
+    notes: >
+      "Amazon Q Business stores conversations for up to 30 days". Users can view, start
+      and delete conversations. Uploaded documents "deleted when the conversation is
+      deleted, or after 30 days of inactivity", and they cannot be deleted one at a time.
+      Personalization comes from IAM Identity Center profile data (location, job). The
+      personalization page (a different page, https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/personalizing-chat-responses.html)
+      says "responses are personalized by default" and that it can be turned off in admin
+      controls. No admin-configurable retention period was found. (Paraphrase beyond
+      quotes.)
+      The successor goes further: AWS Quick keeps memories that users can view, edit and
+      delete, with privacy controls over learning from conversations (Quick settings
+      page, https://docs.aws.amazon.com/quick/latest/userguide/settings.html, paraphrase).
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-web-experience.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_audit_trail:
+    status: documented
+    notes: >
+      PARTIAL. CloudTrail can record the chat APIs as data events: Chat, ChatSync and
+      PutFeedback are in the data-event table. "By default, CloudTrail doesn't log data
+      events." (Paraphrase of the table.) CloudWatch conversation logs (a different page,
+      https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/monitoring-cloudwatch-logs.html) can "deliver user conversations and response
+      feedback in Amazon Q Business for you to analyze". The log examples carry user
+      email, conversation and message ids, but no plugin or action field. So a per-plugin
+      invocation record (which action, on whose behalf) is NOT documented. Plugin
+      management calls (CreatePlugin and similar) are CloudTrail management events.
+      (Paraphrase.)
+      The successor documents more. AWS Quick's CloudWatch logs (a different page,
+      https://docs.aws.amazon.com/quick/latest/userguide/monitoring-cloudwatch-logs.html) include APPS_LOGS covering "app opens, dataset
+      queries, app storage operations, action invocations, and model invocations", along
+      with DLP_LOGS and connector success metrics.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/logging-using-cloudtrail.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  feedback_service:
+    status: documented
+    notes: >
+      Built in, end to end. In the web experience, users can rate "by using the
+      thumbs-up or thumbs-down button". Thumbs-down offers fixed reasons, such as not
+      helpful, not based on company documents, or sources inaccurate. (Paraphrase.)
+      The PutFeedback API (a different page,
+      https://docs.aws.amazon.com/amazonq/latest/api-reference/API_PutFeedback.html)
+      "Enables your end user to provide feedback on their Amazon Q Business generated chat
+      responses." Feedback goes to CloudWatch Logs as a Feedback log type, joined to the
+      conversation and message ids, and shows up in the analytics dashboard (see
+      admin_analytics). (Paraphrase.)
+      AWS Quick keeps the same pattern with FEEDBACK_LOGS.
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-web-experience.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  certifications:
+    status: documented
+    value: [HIPAA, SOC 1, SOC 2, SOC 3, PCI, ISO 42001]
+    notes: >
+      "Amazon Q Business is compliant with the following:" HIPAA, SOC 1/2/3, PCI and ISO
+      42001. Reports are available through AWS Artifact. ISO 27001 and FedRAMP are not
+      listed on this page. (Paraphrase of the list.)
+      The successor is in scope for more programs. The AWS Quick page (a different page,
+      https://docs.aws.amazon.com/quick/latest/userguide/sec-compliance.html) says "AWS Quick, across its web, desktop, and mobile clients,
+      is in scope for the following programs:" FedRAMP, HIPAA, PCI DSS, SOC 1/2/3, ISO
+      9001/27001/27018/27019, C5 and HITRUST CSF. (Paraphrase of the list.)
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/compliance-validation.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  sovereign_cloud:
+    status: documented
+    product: AWS Quick
+    value: AWS GovCloud (US-West) with agentic features; GovCloud (US-East) and China (Beijing) without
+    notes: >
+      Q Business has no gov or sovereign region. Its Supported Regions table lists only
+      us-east-1, us-west-2, eu-west-1 and ap-southeast-2 (see index_residency). Nothing
+      positively rules GovCloud out, so this is not a `none`. (Paraphrase.)
+      AWS Quick's Regions table has an Agentic Features column. It marks AWS GovCloud
+      (US-West) us-gov-west-1 Yes, while AWS GovCloud (US-East) and China (Beijing) appear
+      with No, meaning Quick Sight only. (Paraphrase of the table.) Quick is also in scope
+      for FedRAMP (see certifications).
+      CAVEAT: the cross-Region inference table on the same page does not list
+      us-gov-west-1, so where GovCloud inference runs is not stated.
+    source: https://docs.aws.amazon.com/quick/latest/userguide/regions.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   dlp_tenant_isolation:
     status: documented
     notes: >
@@ -170,14 +336,41 @@ capabilities:
     verified_by: "@notacryptodad"
 
   license_bundling:
-    status: unknown
+    status: documented
+    product: AWS Quick
     notes: >
-      STATUS CHANGE 2026-11-23: none -> unknown. Q Business is sold as a standalone
-      per-user subscription (Lite and Pro tiers) plus index capacity. The tiers page and
-      the pricing page do not say whether it is bundled with AWS commitments such as
-      Enterprise Support or Savings Plans, and no positive "not bundled" statement was
-      found. (Paraphrase of tiers page; re-read 2026-11-23.)
-    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html
+      STATUS CHANGE 2026-11-23: unknown -> documented, on AWS Quick evidence. Q Business
+      itself is a standalone per-user subscription (Lite or Pro) plus index capacity, with
+      no bundling into other AWS commitments stated on its tiers or pricing pages. Its Pro
+      tier does include Amazon Q in QuickSight (Reader Pro) per the Q Business pricing
+      page (https://aws.amazon.com/q/business/pricing/). (Paraphrase.)
+      The successor has the licenses-you-already-own effect, through existing QuickSight
+      seats. The Quick pricing FAQ says "In regions where Quick is available, Quick Sight
+      Reader per-user licenses are upgraded to Quick Essentials." It also says "BI Author
+      licenses, available on Enterprise accounts, receive an upgrade to Enterprise licenses
+      until March 31, 2027." So an existing QuickSight estate brings Quick entitlements
+      with it. It is not bundled with AWS Support plans or Savings Plans; in the other
+      direction, Quick Essentials and above include 24/7 AWS Support. (Paraphrase for the
+      last sentence.)
+    source: https://aws.amazon.com/quick/pricing/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  addon_surcharges:
+    status: documented
+    notes: >
+      Q Business bills by surcharge beyond seats. "You are charged for index units per
+      hour depending on the type of index and the number of units." A Starter index unit
+      costs $0.140/hour and an Enterprise index unit $0.264/hour. Multimedia is extra: $0.003
+      per image, $0.006/minute of audio and $0.050/minute of video. Each index unit
+      includes "100 hours of connector usage per month", so connectors are not charged
+      per connector, and Q Apps and plugins need the Pro tier. (Paraphrase beyond quotes.)
+      SUCCESSOR, for comparison (AWS Quick pricing, a different page,
+      https://aws.amazon.com/quick/pricing/): a $250 per-account monthly infrastructure fee
+      on organization plans, metered agent hours, and "Index storage overages charged at
+      $5/GB/month beyond total pooled allocation." "Additional agent hours available for
+      Enterprise at $3 per agent hour, metered to the second."
+    source: https://aws.amazon.com/q/business/pricing/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -203,5 +396,30 @@ capabilities:
       real-time streaming ingestion documented. Separately, each index type includes up to
       100 hours of data source connector usage per the tiers page (a different page).
     source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/supported-connectors.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    product: Amazon Q Business
+    status: ga
+    notes: >
+      Status follows the launch-stage convention (taxonomy hint): the row carries the headline product's stated stage. Q Business states GA ("Amazon Q Business is now generally available.", quoted
+      below). Caveat: it is closed to new customers from July 31, 2026 (see below).
+      Q Business: stages are on the document history page. "This is the initial preview
+      release" (November 28, 2023). "Amazon Q Business is now generally available."
+      (April 30, 2024). "General availability (GA) of Amazon Q Apps" (July 10, 2024).
+      Then the end of sales: "Amazon Q Business will no longer be open to new customers
+      starting on July 31, 2026." The GA claim is therefore historical, and the product
+      cannot be bought new.
+      AWS Quick: its document history (a different page, https://docs.aws.amazon.com/quick/latest/userguide/doc-history.html) introduces
+      the suite under "New AWS Quick capabilities" (October 20, 2025) with no GA wording.
+      It labels some features as preview, for example "Added preview extension
+      documentation for Excel, Word, and PowerPoint". The What's New post "AWS Quick
+      introduces enterprise guardrails (preview)" (a different page,
+      https://aws.amazon.com/about-aws/whats-new/2026/11/aws-quick-enterprise-guardrails-preview/)
+      is another. No GA
+      statement for Quick as a whole was found on the docs landing page, pricing page, FAQ
+      or document history. (Paraphrase beyond quotes.)
+    source: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/doc-history.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

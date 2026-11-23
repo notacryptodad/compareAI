@@ -36,11 +36,74 @@ capabilities:
         bring a .zip file"). Cost model: "Per-call inference + tool usage + container
         compute".
       Explicit GA statement, found on the quotas page (a DIFFERENT source from this cell's
-      overview page — see runtime_regions), still present 2026-11-23:
+      overview page — see runtime_regions;
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions),
+      still present 2026-11-23:
       "Foundry Agent Service is generally available (GA). Some sub-features are in public
       preview and might have different constraints."
       Note the second sentence carefully — GA is the SERVICE, not every sub-feature; memory,
       the Copilot harness, and the agent optimizer are preview.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  managed_agent_harness:
+    product: Microsoft Copilot harness
+    status: preview
+    notes: >
+      "The Copilot harness is an optional managed runtime for prompt agents. Foundry operates
+      the harness and its execution environment. Your resource remains a prompt agent, and
+      you continue to invoke it through the Responses API. You don't deploy or maintain
+      harness code." When to use it: "Use the Copilot harness when your prompt agent needs
+      supported multi-step tool, skill, file, or command workflows and you want Foundry to
+      operate the runtime." When to use a hosted agent instead: "Use a hosted agent when you
+      need to own the framework, orchestration, middleware, runtime policy, dependencies, or
+      process model."
+      Pre-wired pieces: a per-conversation workspace and a sandbox. "Foundry provides a
+      service-managed, isolated execution environment, called a sandbox, for operations such
+      as processing files and running commands." Skills, Toolbox tools and generated files
+      are configured on the agent definition rather than coded.
+      Stage: the page carries the standard "Items marked preview in this article are
+      currently in preview" banner, and says "You select the harness during agent creation
+      and can't switch an existing agent during the initial public preview."
+      Constraints: "Bring your own model (BYOM) isn't currently supported with the Copilot
+      harness." Opt-in is a creation-time choice ("Select Use the Microsoft Copilot
+      harness"), and the azd flow needs AZD_ALPHA_ENABLE_AGENTS_MANAGED_HARNESS=true.
+      Region and setting limits are on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions:
+      "The Copilot harness is available in a subset of the regions that support prompt
+      agents." That is 22 regions (Paraphrase.). The harness also owns sampling and context
+      settings: temperature, tool_choice, max_tool_calls, truncation and context_management
+      must not be set by the caller (Paraphrase.).
+      Close to AWS AgentCore Harness in shape: you configure a vendor-run loop and don't host
+      code.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/use-tools-skills-copilot-harness
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  voice_agents:
+    product: Voice-based prompt agents (via Voice Live)
+    status: ga
+    notes: >
+      A first-class third agent type, not just a speech API used as a tool.
+      "Voice-based prompt agents support real-time, spoken conversations without requiring
+      you to host voice orchestration." "Foundry Agent Service manages the agent lifecycle
+      and uses Voice Live for speech recognition, turn taking, model interaction, and speech
+      synthesis." "You connect to the agent over a real-time WebSocket instead of sending
+      individual text requests."
+      Stage: "Voice agents are generally available, with some features still in preview."
+      The preview items need an opt-in header: GPT-Live sessions, inline subagents and
+      Handoff, SIP bindings and transfer, telephony campaigns, and post-call delivery
+      (Paraphrase.). Also: "Voice API general availability doesn't change the status of
+      separately documented preview models, monitoring, evaluation, or WebRTC capabilities."
+      Session limit and region table are on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions:
+      "Maximum voice session duration 60 minutes". Stored voice conversations and
+      Microsoft-managed audio are retained for 60 days (Paraphrase.). The region table has a
+      "Voice-based agents" column marked Yes in 28 of its 30 regions. Poland Central and
+      Spain Central are No (Paraphrase.). "For voice-based agents, the region must support
+      Agent Service and the required Voice Live capabilities for the selected model and
+      channel."
     source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -111,12 +174,210 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  first_party_models:
+    product: Foundry Models sold by Azure (Azure OpenAI + Microsoft models)
+    status: documented
+    value:
+      - Azure OpenAI GPT series (OpenAI-built, hosted and sold by Azure)
+      - MAI-Thinking-1 (preview)
+      - MAI-Image (preview)
+      - MAI-Voice / MAI-Transcribe (via Azure Speech)
+      - Phi
+      - Microsoft-Decision-1.1
+    notes: >
+      WHAT FIRST-PARTY MEANS HERE. The model docs don't call Azure OpenAI models
+      first-party. Microsoft's category is "Foundry Models sold by Azure": "Models sold by
+      Azure are also hosted by Azure and operated by Azure as part of the Foundry Models
+      service. They include all Azure OpenAI models and specific, selected models from top
+      providers". "These models are billed through your Azure subscription, covered by Azure
+      service-level agreements, and supported by Microsoft." The only "First Party" wording
+      found is a billing term, on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/concepts/foundry-models-overview:
+      "Foundry Models sold by Azure are billed via Azure meters as First Party Consumption
+      Services." That category also covers partner models sold by Azure (Cohere, DeepSeek,
+      Meta, Mistral AI, xAI), so it says who sells the model, not who built it (Paraphrase.).
+      MICROSOFT-BUILT MODELS: "Microsoft models include various model groups such as Model
+      Router, MAI models, Phi models, healthcare AI models, and more." Microsoft's own
+      frontier text model is still preview. From a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai-thinking:
+      "MAI-Thinking-1 (preview) is a reasoning model from Microsoft for workloads that depend
+      on multi-step reasoning, such as math, coding, and enterprise scenarios." In the
+      Microsoft-models table, MAI-Thinking-1 and the MAI-Image 2.5/2.6 models are Preview and
+      Microsoft-Decision-1.1 is Generally available. MAI-Voice and MAI-Transcribe come through
+      Azure Speech (Paraphrase.).
+      OPENAI-PARTNERSHIP MODELS: the Azure OpenAI tab lists GPT-6.2, GPT-6.1, GPT-6 and
+      GPT-5.x series, plus gpt-oss open-weight reasoning models, Sora and audio models
+      (Paraphrase.).
+      Status is `documented` because stages differ by model.
+    source: https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  byo_open_weights:
+    product: Fireworks on Foundry, Foundry managed compute, provisioned throughput
+    status: ga
+    notes: >
+      Three routes:
+      1. Fireworks on Foundry. Customers can "Import and deploy custom model weights (bring
+      your own model, or BYOM) onto Fireworks' on-demand GPU-backed infrastructure." It can
+      also "Scale up using Provisioned throughput". Stage: "While Fireworks on Foundry is
+      generally available, an administrator must enable the service within your Azure
+      subscription." Odd detail: you turn it on through the Azure Preview features portal
+      (the Fireworks.EnableDeploy flag) even though the service is stated GA (Paraphrase.).
+      2. Managed compute for open models (Hugging Face and others), on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/concepts/foundry-models-overview:
+      "Model weights are deployed to dedicated virtual machines with managed compute."
+      "You're billed for the virtual machine core hours the deployments use." Managed compute
+      needs a hub-based project in the classic Foundry portal. Serving fine-tuned LoRA
+      adapters on managed compute is still preview (Paraphrase.).
+      3. Provisioned throughput (PTU) for models sold by Azure, on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/provisioned-throughput:
+      "Provisioned throughput is a deployment type in Microsoft Foundry that provides
+      dedicated model processing throughput for your deployment."
+      `ga` rests on the Fireworks statement. The managed-compute route states no stage.
+    source: https://learn.microsoft.com/en-us/azure/foundry/how-to/fireworks/enable-fireworks-models
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tuning:
+    product: Training in Microsoft Foundry (Managed Training, Programmed Training) + prompt caching
+    status: documented
+    notes: >
+      "Microsoft Foundry provides two training approaches. Managed Training runs a training
+      job from your data and settings. Programmed Training (preview) lets you control
+      training steps in Python." "Both use Foundry-managed training infrastructure; you
+      don't provision training GPUs."
+      Methods under Managed Training: "Model-specific SFT, DPO, and RFT; distillation through
+      teacher-generated SFT data." So distillation is a recipe built on SFT, not a separate
+      service (Paraphrase.). "Programmed Training is in preview and requires explicit access
+      approval."
+      Training types: Standard (in-region, keeps data residency), Data zone (US only), Global
+      (cheaper, data and weights copied out of region), and Developer (idle capacity, can be
+      preempted, no SLA or residency guarantee) (Paraphrase.).
+      Prompt caching, on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/prompt-caching:
+      "For supported models, cache reads are billed at a discount on input token pricing for
+      Standard deployment types." "On GPT-5.6 models and later model families, cache writes
+      can incur charges in addition to discounted cache reads."
+      No stage is stated for Managed Training itself, hence `documented`.
+    source: https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/fine-tuning-considerations
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  model_routing:
+    product: Model router (Foundry Models)
+    status: ga
+    notes: >
+      "It's a routing model, trained by Microsoft on billions of interactions, that judges
+      how demanding each request is and sends it to the model best suited to answer it."
+      "As of November 18, 2026, model router routes across 45 models from OpenAI, Anthropic,
+      Microsoft AI, xAI, DeepSeek, Meta, and Fireworks."
+      Cost-tiering: three routing modes, Balanced (default), Quality and Cost, set per
+      deployment (Paraphrase.). Fallback: "If the selected model returns a retryable error,
+      model router fails over to the next-best model automatically, with nothing to
+      configure."
+      Stage: "Version 2025-11-18 is generally available and is the default for new
+      deployments." Several features are preview: Auto (model set to auto), session
+      affinity, per-request controls, serving from your own capacity first, the Messages
+      API, and automatic model selection in AI Gateway (Paraphrase.).
+      Agent use: a model-router deployment can be the model for Foundry Agent Service and for
+      Agent Framework, LangGraph, OpenAI Agents SDK, Google ADK, CrewAI and the Claude Agent
+      SDK (Paraphrase.). Gateway-level load balancing and failover also exist in API
+      Management (see agent_gateway).
+    source: https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-router
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   code_interpreter:
     status: documented
     notes: >
       "Foundry offers built-in tools such as web search, file search, code interpreter, and
       memory". Also usable inside a toolbox.
     source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_calling:
+    product: Function calling (Foundry Agent Service; parallel calls via Foundry Models)
+    status: documented
+    notes: >
+      "Microsoft Foundry agents support function calling, which lets you extend agents with
+      custom capabilities." Your app runs the function and returns the output.
+      TIME LIMIT: "Runs expire 10 minutes after creation. Submit your tool outputs before
+      they expire." Portal gap: "the portal doesn't support adding, removing, or updating
+      function definitions on an agent." Use the SDK or REST API.
+      Parallel calls are model-dependent. From a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/function-calling:
+      "Parallel function calls allow you to perform multiple function calls together,
+      allowing for parallel execution and retrieval of results."
+      Region gap: function calling is missing in Brazil South, North Central US, South Central
+      US and West US (see tool_region_variance). Cap: 128 tools per agent (see
+      service_limits). No stage is stated, hence `documented`.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openapi_import:
+    product: OpenAPI tool (Foundry Agent Service)
+    status: documented
+    notes: >
+      "Connect your Microsoft Foundry agents to external APIs using OpenAPI 3.0 and 3.1
+      specifications." "Use anonymous, API key, or project managed identity authentication."
+      Spec rule: "Each function must have an operationId (required for the OpenAPI tool)."
+      AUTH CAVEAT: "OpenAPI tools don't support OAuth identity passthrough", including inside
+      a toolbox. OAuth support for MCP tools does not carry over to OpenAPI tools
+      (Paraphrase.). So OpenAPI calls run as the project's managed identity or a shared key,
+      not as the end user.
+      Alternative: API Management can expose existing REST APIs as MCP servers (see
+      agent_gateway). No stage is stated, hence `documented`.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/openapi
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  ai_service_tools:
+    product: Foundry Tools (Azure Speech, Language, Translator) + Agent Service built-in tools
+    status: documented
+    notes: >
+      The Agent Service pricing page points agents at the Azure AI services. It names
+      ready-to-use Speech, Language and Translator APIs (Paraphrase.) "that can be invoked by
+      your agents".
+      Built-in, metered tools on the same page: File Search storage, Code Interpreter, Web
+      Search and Custom Search (Paraphrase.). Speech is built in for voice agents. Voice Live
+      handles speech recognition and synthesis (see voice_agents). Web search runs on Web IQ
+      or Grounding with Bing (see web_search_tool).
+      GAP: no dedicated built-in tool type was found for Translator, Language or Document
+      Intelligence. The Toolbox supported-tools list has MCP, web search, Foundry IQ, code
+      interpreter, file search, OpenAPI, A2A, browser automation, Fabric IQ, Work IQ, tool
+      search and Skills. Those AI services are reached through OpenAPI, MCP or function
+      tools (Paraphrase of
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview).
+    source: https://azure.microsoft.com/en-us/pricing/details/foundry-agent-service/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  text_to_sql:
+    product: Microsoft Fabric data agent (reached via the Fabric IQ tool, preview)
+    status: ga
+    notes: >
+      The capability lives in Microsoft Fabric, not in Agent Service itself. "Data agent in
+      Microsoft Fabric is a generally available feature that enables you to build your own
+      conversational Q&A systems by using generative AI." Query generation: "Natural language
+      to SQL (NL2SQL) for relational databases (Lakehouse/Warehouse)." It also generates DAX
+      for semantic models and KQL for KQL databases. "Users don't need to write SQL, DAX, or
+      KQL themselves." Up to five data sources per data agent (Paraphrase.).
+      THE AGENT-SERVICE HOOKUP IS PREVIEW. From a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/fabric-iq (titled
+      "Connect agents to Microsoft Fabric with Fabric IQ (preview)"): "Requests use the
+      identity configured for the connection and honor Fabric permissions and governance
+      policies." The older tool is deprecated (scheduled for deprecation on November 6, 2026). From a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/fabric: "The
+      Microsoft Fabric data agent tool in Foundry Agent Service is scheduled for deprecation
+      on November 6, 2026."
+      Cost: needs paid F2 or higher Fabric capacity, or Power BI Premium P1 or higher
+      (Paraphrase.).
+      `ga` scores the Fabric data agent, the provider's text-to-SQL product. Calling it from a
+      Foundry agent is preview.
+    source: https://learn.microsoft.com/en-us/fabric/data-science/concept-data-agent
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -140,6 +401,25 @@ capabilities:
       A separate Computer Use tool exists with narrower regional coverage (see
       tool_region_variance).
     source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/browser-automation
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_payments:
+    status: unknown
+    notes: >
+      No first-party Microsoft agent-payments service (wallets, x402, spending limits) was
+      found on 2026-11-23. Microsoft Learn search for the terms x402, agent payments, Agent
+      Payments Protocol and agentic commerce returned no Foundry, Azure or Agent
+      Framework payment feature. The Foundry Agent Service overview and Foundry what's-new
+      pages do not mention payments (Paraphrase.).
+      The only hit is THIRD-PARTY, on this Agent Framework community-projects page: a
+      community middleware (BotsRated), "Function middleware that checks the payTo of an
+      x402 payment tool call against the payTo addresses BotsRated observed for that
+      seller". The page warns "Microsoft doesn't own, test, or support these projects."
+      That is not a Microsoft offering.
+      Not `none`: Microsoft has not said it does not offer agent payments. Re-check after
+      Ignite and Build.
+    source: https://learn.microsoft.com/en-us/agent-framework/integrations/community-projects
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -183,6 +463,83 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  skills_registry:
+    product: Foundry Skills (versioned Skills API)
+    status: preview
+    notes: >
+      "Skills follow the open Agent Skills format and are stored centrally in Foundry
+      through the versioned Skills API." Versioning: "every update creates a new immutable
+      version". Discovery: you can "attach it to a toolbox so compatible MCP clients
+      discover it alongside tools", reference it from a Copilot-harness prompt agent, or
+      download it into a hosted agent. A prebuilt catalog in the Foundry Toolkit for VS Code
+      lists ready-made skills (docx, pptx, xlsx, pdf, design and writing packs). There you
+      "select Add on a skill card to register it in your Foundry project".
+      Stage: page titled "Use skills in Foundry (preview)", with the standard preview banner,
+      and "All Skills API calls require Foundry-Features: Skills=V1Preview".
+      FIT CAVEAT: the store is PROJECT-scoped. "A prompt agent that uses the Copilot harness
+      can reference an existing skill in the same Foundry project." This page states no
+      org-wide or cross-project sharing, approval workflow or governance policy, so this is
+      narrower than an org-level registry like GCP Skill Registry (Paraphrase.).
+      Org-wide discovery of tools (not skills) is closer to the Toolbox (see mcp_registry)
+      and AI Gateway (see agent_gateway).
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/skills
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_skills:
+    product: Foundry Skills (versioned Skills API)
+    status: preview
+    notes: >
+      Uploadable skill packs exist. "A skill is a folder with a SKILL.md file at its root and
+      can include scripts, reference material, assets, and other supporting files." Upload
+      formats: "Create a skill version from inline content, a SKILL.md file, or a ZIP
+      archive." "Skills follow the open Agent Skills format and are stored centrally in
+      Foundry through the versioned Skills API."
+      Consumers: a Copilot-harness prompt agent, a toolbox, or a hosted or local agent that
+      downloads the skill (Paraphrase.). From a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview:
+      "Tools define what an agent can do. Skills define how it performs a task." "Agents
+      discover and load skills automatically through MCP resources at startup."
+      Stage: "All Skills API calls require Foundry-Features: Skills=V1Preview". The page is
+      titled "Use skills in Foundry (preview)".
+      Same product as skills_registry. That row covers project-scoped storage and discovery;
+      this row covers the artifact format. Comparable to BytePlus CreateSkill.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/skills
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_gateway:
+    product: AI gateway in Azure API Management (plus the newer Azure AI Gateway)
+    status: documented
+    notes: >
+      "The AI gateway in Azure API Management is a set of capabilities that help you manage
+      your AI backends effectively. Use these capabilities to secure, scale, monitor, and
+      govern AI models, agents, and tools that back your intelligent apps and workloads."
+      Agent and MCP traffic in scope: "Expose your existing REST APIs as MCP servers, and
+      support passthrough to MCP servers." "Import and manage A2A agent APIs."
+      WHAT IT ENFORCES (Paraphrase.): authentication and authorization, including OAuth to
+      APIs and MCP servers via credential manager; token quotas and rate limits across apps;
+      load balancing and failover; semantic caching; Azure AI Content Safety moderation of
+      LLM prompts; and logging and monitoring of AI interactions.
+      Stage: no stage is stated for the gateway itself. It is a feature set of API
+      Management, "it's not a separate offering". Hence `documented`. Sub-features ARE
+      labelled preview: the unified model API and "AI gateway in Microsoft Foundry
+      (preview)".
+      Dedicated product that coexists with API Management, with migration guides offered: Azure AI Gateway (Paraphrase of
+      https://learn.microsoft.com/en-us/azure/ai-gateway/overview, last updated 2026-11-18,
+      no stage stated). It is a managed gateway for AI model and MCP server traffic, a shared
+      point of control for how apps and agents reach models and tools. It shares the
+      Microsoft.ApiManagement resource provider but is a different resource type.
+      Agent Service integration is OPT-IN PER CONNECTION. Foundry prompt agents can use
+      models behind Azure AI Gateway or API Management as connected models; BYOM is not
+      supported with the Copilot harness, and the Foundry UI integration is rolling out
+      gradually (Paraphrase of
+      https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/ai-gateway). No page
+      says all Agent Service traffic routes through it by default.
+    source: https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   web_search_tool:
     status: documented
     notes: >
@@ -218,6 +575,97 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  memory_namespacing:
+    product: Memory (Foundry Agent Service)
+    status: preview
+    notes: >
+      Per-end-user namespacing via scope: "You control access using the scope parameter,
+      which segments memory across users to ensure secure and isolated experiences." "Each
+      scope in the memory store keeps an isolated collection of memory items." With the
+      memory search tool, scope can resolve from an x-memory-user-id header per call
+      (Paraphrase.). "Without the header, the scope falls back to the caller's Microsoft Entra
+      identity (TID and OID)." Low-level memory APIs need an explicit scope on every request
+      (Paraphrase.).
+      TTL: store-level default TTL in seconds. "A default_ttl_seconds value of 0 indicates no
+      expiration." TTL applies only to stores created after TTL support shipped
+      (Paraphrase.).
+      DELETION (GDPR-relevant): "You can delete memories for a specific scope to remove
+      user-specific data, or you can delete the entire memory store to remove all memories
+      across all scopes." Item-level CRUD exists. No dedicated export API is named, so
+      export means listing items yourself (Paraphrase.).
+      SCALE CAVEAT, on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-memory: "Maximum
+      scopes per memory store: 100" and "Maximum memories per scope: 10,000". With one scope
+      per end user, one store holds 100 users, so larger apps need many stores (Paraphrase.).
+      Stage: "Memory (preview) in Foundry Agent Service and the Memory Store API (preview)"
+      are under preview terms.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/memory-usage
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  session_management:
+    product: Hosted agents (Foundry Agent Service)
+    status: documented
+    notes: >
+      "A session ID identifies a logical session with persisted state, including $HOME and
+      files uploaded via the /files endpoint." "Sessions are created on first use." Lifecycle
+      API: "List sessions, terminate sessions, and upload or download files per session."
+      Idle timeout is set per agent version, 2 to 240 minutes (default 15). Sessions are
+      deleted after 30 days of inactivity. States are Active, Idle (compute released, state
+      persisted) and Resumed (Paraphrase.).
+      Preview layer: "The preview session compute APIs expose runtime operations: discovery,
+      explicit start, exec, container log stream, ports, lifecycle-policy changes, and
+      read-only egress summaries."
+      Event stream: on the Responses protocol the platform manages the stream
+      (ResponseEventStream with lifecycle events). On Invocations you write raw SSE yourself
+      (Paraphrase.).
+      Prompt agents have no session object. State is a conversation ID via the Responses API
+      (Paraphrase.). No stage is stated for sessions, hence `documented`.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  multi_tenancy:
+    product: Hosted agents (per-session sandboxes + durable state store)
+    status: documented
+    notes: >
+      Session isolation: "Hosted agents run in per-session VM-isolated sandboxes." "Sessions
+      are isolated from each other."
+      Per-end-user data partitioning in the state store: "A store can also partition its
+      items per end user, so one store name is safe to share across the users of a
+      multitenant agent." Memory uses per-user scopes the same way (see memory_namespacing).
+      CAVEAT: isolation is per session and per end user, not per tenant. No doc describes a
+      tenant object, per-tenant quotas or per-tenant keys on an agent endpoint
+      (Paraphrase.). In basic setup, agent state sits in Microsoft-managed storage that is
+      only logically separated (see data_residency). Billing is per session, so cost rises
+      with concurrent users (see separately_billed_primitives).
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpoint_resume:
+    product: Hosted agents (resilient execution + durable state store)
+    status: documented
+    notes: >
+      "Long-running hosted agents can keep working after the request that started them
+      disconnects. They can also recover after their hosting process stops unexpectedly."
+      "Foundry Agent Service and the AgentServer SDKs provide durable work identity,
+      persisted inputs, lease-based recovery, and stream replay."
+      LIMIT: "Recovery reenters the handler from its beginning. It isn't deterministic
+      replay, and it doesn't restore local variables or an in-memory call stack." Your code
+      must save its own progress and avoid repeating side effects (Paraphrase.).
+      Where checkpoints go, on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-state-store:
+      "Framework checkpoints, so a bring-your-own agent framework such as LangGraph or
+      Microsoft Agent Framework can resume its own graph or workflow state." "The state
+      store is available only to hosted agents."
+      Prompt agents have no checkpoint API, and function-call runs expire after 10 minutes
+      (see tool_calling). In-process checkpointing is an Agent Framework feature (bucket A;
+      see azure/a-sdk.yaml checkpoint_resume). No stage is stated, hence `documented`.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/long-running-agent-resilience
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   agent_workload_identity:
     status: documented
     notes: >
@@ -238,6 +686,56 @@ capabilities:
       (On-Behalf-Of)", "Unauthenticated access, where appropriate".
       Ephemeral (Responses API) agents also get "On-Behalf-Of authentication".
     source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_least_privilege:
+    product: Agent identity (Microsoft Entra Agent ID) + MCP allowed_tools + Foundry tool governance policies
+    status: documented
+    notes: >
+      Deny-by-default identity: "A newly created agent identity starts without resource
+      permissions. Foundry doesn't automatically assign RBAC roles or other downstream
+      permissions to it." "Apply least privilege to the identity used for each tool call."
+      "Per-agent identities let you scope permissions and audit activity to individual
+      agents." Legacy agents that share the project identity lack this separation
+      (Paraphrase.). Delegated access: "Agent identity acting on behalf of the user is in
+      preview and requires agent blueprint endpoint access."
+      Per-tool allowlist on MCP, from a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol:
+      "To restrict tool access, set allowed_tools to a nonempty list of tool names." TRAP:
+      an empty list allows every tool on the server (Paraphrase.).
+      Org-level policy, from a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/control-plane/overview: "Apply policies
+      for model deployments, agent kinds and hosted-agent container images, approved tools,
+      and network egress. Coverage and enforcement vary by policy and agent type."
+      Weak spot: OpenAPI tools authenticate as the project managed identity or a key, not
+      the per-agent identity (see openapi_import). No stage is stated for the identity
+      model, hence `documented`.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_audit_trail:
+    product: Microsoft Entra Agent ID logs + Foundry tracing (Application Insights)
+    status: documented
+    notes: >
+      Two halves, in two systems. Who got access is in Microsoft Entra sign-in logs: "These
+      logs show which agent identity obtained a token for which resource, including on
+      behalf of which user for delegated access." Entra audit logs record agent identity
+      creation and deletion (Paraphrase.).
+      What each tool call did is in tracing: "With tracing enabled, inspect tool calls per
+      agent in the Application Insights resource connected to your Foundry project." The
+      overview (a different page, https://learn.microsoft.com/en-us/azure/foundry/agents/overview)
+      promises: "Inspect every model call, tool invocation, and decision with agent tracing".
+      CAVEATS: the tool-call record exists only if tracing is enabled and an Application
+      Insights resource is connected (Paraphrase.). For external tools Microsoft puts
+      logging on you:
+      "Review and log that access according to your organization's policies." The MCP page
+      (a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol)
+      says "Log approvals and tool calls for auditing and troubleshooting."
+      No single who/what/when/on-whose-behalf record joins the two halves (Paraphrase.).
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -282,6 +780,50 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  cost_attribution:
+    product: Foundry cost management (Monitor > Cost, cost controls)
+    status: preview
+    notes: >
+      "You can estimate what a workload will cost, see what each subscription, project,
+      agent, and model deployment costs, cap spending before it runs over, and lower the
+      cost of each request." "Cost in the Foundry portal comes from the same Azure Cost
+      Management data that finance teams see in the Azure portal".
+      STAGES, from the page's Status column (Paraphrase.): the per-project, per-agent and
+      per-model view (Monitor > Cost) is Preview. So are the Fleet and Operations views that
+      tie cost to runs, requests, tool calls and tokens. Budget alerts or blocking on spend
+      or tokens (cost controls) are Preview. Cost Management analysis by meter and tag is
+      GA, with the project tag in preview. AI gateway token limits per project are GA.
+      Token counts per agent: from a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/how-to-monitor-agents-dashboard,
+      "This dashboard helps you understand token usage, latency, success rates, and
+      evaluation outcomes for production traffic."
+      GAP: no per-tenant or per-session cost view was found. Hosted agents bill each session
+      separately, but no doc shows cost by session (Paraphrase.). Per-tenant metering means
+      emitting your own token metrics with custom dimensions through API Management (see
+      agent_gateway).
+    source: https://learn.microsoft.com/en-us/azure/foundry/concepts/manage-costs
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  feedback_service:
+    status: unknown
+    notes: >
+      No managed end-user feedback service (thumbs up/down or comments traced with
+      telemetry, like GCP's Feedback service) was found for Foundry Agent Service on
+      2026-11-23. Searched: the Agent Service overview, hosted agents, the tracing concept
+      page, the Agent Monitoring Dashboard, the Foundry observability concept page, cost
+      and governance (control plane) pages, and Learn search for end-user feedback, human
+      feedback and thumbs up across Foundry and Azure Monitor / Application Insights. None
+      describes an API for collecting end-user feedback (Paraphrase.).
+      The dashboard covers operational and evaluation signals only: "This dashboard helps
+      you understand token usage, latency, success rates, and evaluation outcomes for
+      production traffic."
+      Copilot Studio (bucket C) was not checked; it is a separate product. Not `none`:
+      Microsoft has not said it does not offer this.
+    source: https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/how-to-monitor-agents-dashboard
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   agent_optimization:
     product: agent optimizer
     status: preview
@@ -314,6 +856,81 @@ capabilities:
       Caveat: per the A2A how-to, requests without a version header are served v0.3
       (preview) by default, so production callers must select v1.0 explicitly.
     source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  multi_agent_patterns:
+    product: A2A tool (Foundry Agent Service) + Foundry workflows (preview, retiring)
+    status: documented
+    value: [agent-as-tool delegation over A2A, sequential, group chat, human in the loop]
+    notes: >
+      Managed multi-agent support comes through three mechanisms, each at a different stage:
+      1. Agent-to-agent delegation (GA): "The A2A tool enables agent-to-agent communication
+      through a standardized protocol, allowing your Foundry agent to exchange context and
+      collaborate with external agents." "Use the generally available a2a tool type for new
+      integrations." Limits: text only and no streaming (Paraphrase.). As a target, a hosted
+      agent accepts only single-turn A2A v1.0 SendMessage calls (see a2a_protocol).
+      2. Visual workflows (preview, RETIRING). On a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow, the templates
+      are Human in the loop, Sequential and Group chat (Paraphrase.). "Microsoft Foundry is
+      retiring workflows on December 1, 2026." See workflow_engine.
+      3. Voice agents: inline subagents and Handoff are preview opt-ins (see voice_agents).
+      Supervisor, handoff and magentic patterns written as code come from Microsoft Agent
+      Framework (bucket A; see azure/a-sdk.yaml multi_agent_patterns). They run here only
+      when deployed as a hosted agent.
+      Status is `documented`: only the A2A tool carries a GA label, and no page states a
+      stage for "multi-agent" as a whole.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/agent-to-agent
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  workflow_engine:
+    product: Foundry workflows (preview; retiring 2026-12-01) -> Agent Framework workflows on hosted agents
+    status: preview
+    notes: >
+      Page titled "Build a workflow in Microsoft Foundry (Preview)". "Workflows are UI-based
+      tools in Microsoft Foundry. Use them to create declarative, predefined sequences of
+      actions that orchestrate agents and business logic in a visual builder." Nodes include
+      if/else, go to and for each, with Power Fx expressions and a YAML view (Paraphrase.).
+      "Each save creates a new, unchangeable version."
+      RETIREMENT, EIGHT DAYS AFTER THIS CHECK: "Microsoft Foundry is retiring workflows on
+      December 1, 2026." "After December 1, 2026, the visual designer and in-portal workflow
+      execution aren't supported, but Foundry continues to run YAML-based workflow
+      definitions when you deploy them as a hosted agent". Recommended paths are Agent
+      Framework (declarative YAML or code), Azure Logic Apps for a visual designer, or A2A
+      for simple hand-offs (Paraphrase.).
+      Constraint: "Hosted agents aren't supported in the workflow designer."
+      Durability and resume for the code path come from hosted-agent resilience (see
+      checkpoint_resume). Workflow-agent tracing is preview (see otel_traces).
+      Status `preview` follows the page title. Read it as preview, then retired. The
+      managed graph engine after December 1 is Agent Framework running inside a hosted
+      agent.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  human_in_the_loop:
+    product: MCP tool approvals (Foundry Agent Service)
+    status: documented
+    notes: >
+      Approval gates on MCP tool calls. require_approval defaults to always. It also accepts
+      never, or per-tool always/never lists (Paraphrase.). With "always": "A developer needs
+      to provide approval for every call." The response returns an mcp_approval_request item.
+      You resume by sending an mcp_approval_response in the same conversation (Paraphrase.).
+      Guidance: "Require approval for high-risk operations, especially tools that write data
+      or change resources." The approval UI is yours to build. The sample says "In
+      production, implement your own approval UX and policy."
+      Other HITL paths: workflow human-in-the-loop nodes, on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow: "Create
+      human-in-the-loop steps (for example, approvals or clarifying questions)." That page is
+      preview and retiring December 1, 2026. For hosted agents, from a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/long-running-agent-resilience:
+      "Use an agent framework checkpointer for graph state and human-in-the-loop suspension."
+      Browser automation adds Live View and Take control (see browser_use).
+      With function tools your own app runs the function, so it can hold the call for a
+      human. But the run expires after 10 minutes, which limits slow approvals (see
+      tool_calling). No stage is stated for MCP approvals, hence `documented`.
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -474,6 +1091,62 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  separately_billed_primitives:
+    product: Foundry Agent Service pricing
+    status: documented
+    notes: >
+      The agent itself is free. Everything around it is metered. "There is no additional
+      charge for creating or running Foundry-native agents using prompts and workflows.
+      However, you will incur charges for model token consumption through Foundry Models
+      and separate charges and licenses for Foundry Tools and Foundry IQ connections,
+      including Azure Logic Apps connectors, Microsoft Fabric, Microsoft SharePoint,
+      Grounding with Bing Search, and your own licensed data." "Hosted agents are billed
+      based on the underlying container compute consumed per hour."
+      Built-in tool meters, as the page rendered on 2026-11-23 (Paraphrase.; prices load by
+      JavaScript): File Search storage $0.11 per GB-day with 1 GB free; Code Interpreter
+      $0.033 per session; Web Search and Custom Search $14 per 1,000 transactions. The
+      default region showed N/A for hosted-agent vCPU-hour and GiB-hour. Voice agents bill
+      through Azure Speech pricing.
+      Hosted session billing, on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents:
+      "Allocation, not utilization, is billed." "Idle time before suspension is billed."
+      Each session is billed separately (Paraphrase.).
+      Memory, on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-memory:
+      "You're billed for usage of the underlying chat and embedding models you configure."
+      Also separate: Application Insights ingestion and retention, which the overview lists
+      among voice-agent charges (Paraphrase.),
+      Fabric capacity for Fabric data agents (see text_to_sql), and AI Gateway's own charges
+      (see model_routing).
+    source: https://azure.microsoft.com/en-us/pricing/details/foundry-agent-service/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  free_tier_commitments:
+    product: Microsoft Agent prepurchase plan, PTU reservations, Azure Marketplace
+    status: documented
+    notes: >
+      COMMITMENT: "Prepurchase plans are commit units (CUs) bought at discounted tiers in
+      your purchasing currency for a specific product." "Each prepurchase plan has a
+      one-year term." One plan covers Foundry, Copilot Studio, Copilot Cowork, Fabric and
+      GitHub usage (Paraphrase.). CHANNEL CHANGE: "Starting January 1, 2027, you can buy or
+      renew the Microsoft Agent prepurchase plan only through an Enterprise Agreement (EA)
+      or a Cloud Solution Provider (CSP) partner." MCA-E customers are pointed to an AI Flex
+      Plan. Prepurchase discounts don't stack with other discounts (Paraphrase.). PTU
+      reservations exist for provisioned throughput (see byo_open_weights).
+      FREE TIER: no free tier for Agent Service as such. Creating and running prompt agents
+      carries no charge, and the first 1 GB of File Search storage is free. Everything else
+      is metered (see separately_billed_primitives). The pricing page offers the general
+      Azure free account (Paraphrase of
+      https://azure.microsoft.com/en-us/pricing/details/foundry-agent-service/).
+      MARKETPLACE: some models are bought through Azure Marketplace. From a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/claude-models:
+      "Claude models in Foundry require an Azure Marketplace subscription and bill through
+      Claude Consumption Units (CCU)."
+    source: https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/agent-pre-purchase
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   runtime_sla:
     status: unknown
     notes: >
@@ -490,6 +1163,33 @@ capabilities:
       (overview page). Re-check the Microsoft Online Services SLA document before
       asserting either way.
     source: https://learn.microsoft.com/en-us/azure/foundry/how-to/high-availability-resiliency
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    product: Foundry Agent Service
+    status: ga
+    notes: >
+      Convention (2026-11-23 fact-check): this meta-row carries the headline product's stated stage, the same rule as byteplus/b-platform, alibaba/b-platform and aws/d-devtools. The headline stage is the service-level GA sentence quoted next.
+      WHERE AZURE STATES STAGES (2026-11-23 sweep). Service level, on this quotas page:
+      "Foundry Agent Service is generally available (GA). Some sub-features are in public
+      preview and might have different constraints."
+      Feature level: per-feature Learn pages, through a preview marker in the page title and the
+      standard preview banner
+      (Paraphrase.). Explicit GA sentences were found on the browser automation, voice
+      agents (overview), A2A tool, model router (version 2025-11-18), Fireworks on Foundry,
+      and Fabric data agent pages. The cost and FinOps page has its own Status column
+      (Paraphrase.).
+      RETIREMENTS also sit on feature pages, not in a central feed: Foundry workflows retire
+      December 1, 2026 (see workflow_engine). The Fabric data agent tool was scheduled for
+      deprecation on November 6, 2026 (see text_to_sql).
+      NO STAGE STATED for Toolbox, function calling, the OpenAPI tool, MCP tool approvals,
+      hosted-agent sessions and the state store, Managed Training, or the Foundry Models
+      catalog as a whole. Those rows are `documented`. Narrow preview labels inside those
+      pages (the .NET SDK, long-running MCP operations, session compute APIs) are not
+      stretched to the whole feature (Paraphrase.).
+      SLA: no Agent Service runtime SLA statement found (see runtime_sla).
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 

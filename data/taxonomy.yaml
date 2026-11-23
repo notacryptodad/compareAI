@@ -86,6 +86,21 @@ dimensions:
         label: Managed agent runtime
         buckets: [b]
         hint: The headline hosting service — serverless, session-isolated
+      managed_agent_harness:
+        label: Managed agent harness (pre-assembled, opt-in agent loop you configure)
+        buckets: [b]
+        hint: >
+          A vendor-assembled harness (tools, memory, context management already wired) that
+          you configure rather than code — AgentCore Harness, Foundry's Microsoft Copilot
+          harness. Distinct from managed_agent_runtime (hosts YOUR code) and close to, but
+          narrower than, managed_agent_loop. Added from research, 2026-11.
+      voice_agents:
+        label: Managed real-time voice agents
+        buckets: [b]
+        hint: >
+          A first-class voice / speech-to-speech agent type with session limits and region
+          table, not just a speech API callable as a tool (that is ai_service_tools).
+          Added from research, 2026-11.
       managed_agent_loop:
         label: Managed agent loop (define + invoke an agent in one API call)
         buckets: [b]
@@ -192,6 +207,22 @@ dimensions:
       mcp_registry:
         label: Managed MCP registry / catalog
         buckets: [b]
+      skills_registry:
+        label: Managed skills registry / catalog
+        buckets: [b]
+        hint: >
+          A governed catalog for discovering and sharing skill packs across an org — e.g.
+          GCP Skill Registry, AgentKit Skills Center. Separate from agent_skills (can you
+          upload a skill at all) and from mcp_registry (MCP servers / agents).
+          Added from research, 2026-11.
+      agent_gateway:
+        label: Agent gateway / policy enforcement point for agent traffic
+        buckets: [b]
+        hint: >
+          A managed proxy that agent LLM / MCP / A2A traffic routes through for auth, policy
+          and observability — e.g. GCP Agent Gateway, AgentKit Gateway. AWS AgentCore
+          Gateway is primarily tool/MCP exposure; record what each vendor's gateway enforces.
+          Added from research, 2026-11.
       bundled_tools:
         label: Built-in tool library shipped with the SDK
         buckets: [a]
@@ -224,6 +255,7 @@ dimensions:
         buckets: [b]
         hint: >
           Emerging category (x402 protocol, wallet integration, spending limits).
+          AgentCore Payments went GA 2026-08; re-checked for all providers 2026-11.
           Only AWS documents this as of 2026-08 — expect movement.
       knowledge_base:
         label: Managed knowledge base / RAG
@@ -448,6 +480,8 @@ dimensions:
       runtime_regions:
         label: Region availability OF THE AGENT RUNTIME
         buckets: [b]
+        hint: Usually far narrower than the cloud itself — the most under-disclosed
+              fact in the space
       tool_region_variance:
         label: Per-tool regional availability (does every tool work in every region?)
         buckets: [b]
@@ -459,6 +493,10 @@ dimensions:
       service_limits:
         label: Hard service limits (files, messages, tools, versions)
         buckets: [b]
+        hint: >
+          Fixed ceilings that cannot be raised by a quota request. Include any that are
+          TERMINAL rather than transient — e.g. Azure's 1,000-agent-revision cap fails every
+          subsequent create until versions are pruned.
       launch_stage_investigation:
         label: Launch-stage evidence trail (where the vendor does/doesn't state GA)
         buckets: [a, b, c, d]
@@ -467,13 +505,14 @@ dimensions:
           up empty. Added because stages turned out to live in announcement feeds and release
           notes rather than product docs — AWS's in What's New, Google's in Vertex AI release
           notes under the product's pre-rename name. Records negative results so the next
-          researcher doesn't redo the search.
-        hint: >
-          Fixed ceilings that cannot be raised by a quota request. Include any that are
-          TERMINAL rather than transient — e.g. Azure's 1,000-agent-revision cap fails every
-          subsequent create until versions are pruned.
-        hint: Usually far narrower than the cloud itself — the most under-disclosed
-              fact in the space
+          researcher doesn't redo the search. Status carries the bucket's headline product's
+          stated stage (a pre-rename statement counts), or `documented` if none is stated.
+          A sibling's stated stage counts when the cell's `product:` names it (a cell scores
+          the provider), but only within the same product family: another language SDK of
+          the headline SDK, or a component platform the provider sells alongside it. A
+          predecessor product (e.g. Semantic Kernel for Agent Framework) does not count.
+          A package-registry classifier (PyPI "Development Status", NuGet prerelease flag) is
+          metadata, not a stage statement: record it in the note but don't score from it.
       data_residency:
         label: Data residency, in-region processing, cross-region inference behavior
         buckets: [b]

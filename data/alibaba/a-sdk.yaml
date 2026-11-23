@@ -65,6 +65,86 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  tool_calling:
+    status: documented
+    value: [JSON-Schema tools, sequential and concurrent tool calls]
+    notes: >
+      "Each tool exposes itself to the LLM as a JSON Schema, and the agent invokes it
+      through a unified streaming interface." The Toolkit "exposes their JSON schemas to
+      the model, and dispatches each tool call to the right tool object".
+      PARALLEL CALLS: the Agent overview (a different page,
+      https://docs.agentscope.io/en/versions/2.0.12/building-blocks/agent/overview) lists
+      among the agent's duties "Automatically managing concurrent and sequential tool
+      execution". On the Python Tool page (a different page,
+      https://docs.agentscope.io/en/versions/2.0.12/building-blocks/tool/python-tool), the
+      is_concurrency_safe attribute of each tool declares whether it may run in parallel.
+      (Paraphrase except the quotes.)
+      Plain Python functions are wrapped as tools with FunctionTool, and MCP-server tools
+      with MCPTool.
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/tool/overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  bundled_tools:
+    status: documented
+    value: [Bash, PowerShell, Read, Write, Edit, Glob, Grep, TaskCreate, TaskGet, TaskList, TaskUpdate, AskUser]
+    notes: >
+      "AgentScope ships a set of ready-to-use tools covering common agent operations."
+      The built-in table lists shell tools (Bash, PowerShell), file tools (Read, Write,
+      Edit, Glob, Grep), plan tools (TaskCreate, TaskGet, TaskList, TaskUpdate) and
+      AskUser. The Toolkit also auto-registers two more, the reset_tools meta tool and the
+      Skill viewer. Built-in tools can run against Docker, E2B or other sandbox backends
+      ("Switch Tool Backend"). (Paraphrase except the quotes.)
+      Coding-agent shaped: there is NO built-in web search or web fetch tool. The page's
+      WebSearch class appears only as a "Create Custom Tool" example.
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/tool/python-tool
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_skills:
+    status: documented
+    notes: >
+      SDK level: "Skills are markdown-based instruction sets that extend agent capabilities
+      without writing new tool code. Each skill is a directory containing a SKILL.md file
+      with frontmatter metadata and detailed instructions." They are registered on the
+      Toolkit from a directory or a loader. At runtime the agent reads one through the
+      auto-registered Skill viewer tool. (Paraphrase except the quote.)
+      Service level, the "MCP & Skill Hub" (a different page,
+      https://docs.agentscope.io/en/versions/2.0.12/deploy/hub/skill-hub): "A skill hub is a
+      catalog of skills your users browse and install from inside the app." One hub ships
+      today, ClawSkillHub on the ClawHub public registry. "A local folder can also be
+      uploaded straight into a workspace, whether or not it came from a hub."
+      Same SKILL.md format as Claude-style skills. No versioned skill-artifact API like
+      BytePlus CreateSkill.
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/tool/skill
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openapi_import:
+    status: documented
+    product: Alibaba Cloud AI 网关 HTTP-to-MCP (consumed via AgentScope's MCP client)
+    notes: >
+      STATUS CHANGE 2026-11-23 (fact-check, same rule as aws/a-sdk and azure/a-sdk): oss ->
+      documented. With no SDK-native importer, the cell scores the provider's first-party
+      route consumed over MCP. The managed AI Gateway (a different page,
+      https://help.aliyun.com/zh/api-gateway/ai-gateway/product-overview/what-is-an-ai-gateway)
+      uses 「AI网关提供的HTTP to MCP转换能力，将现有API自动转换为MCP Server」. Uploading an
+      OpenAPI spec file as the import format is not stated there (see
+      alibaba/b-platform openapi_import). (Paraphrase except the quote.)
+      NO NATIVE IMPORTER IN AGENTSCOPE. The 2.0.12 tool docs (overview, Python tool, MCP,
+      skill and meta-tool pages) and the src/agentscope tree have no OpenAPI-to-tool
+      importer. The only OpenAPI items are the agent service's own OpenAPI spec and a
+      DingTalk channel client. (Paraphrase.)
+      Open-source alternative: Higress (a different page,
+      https://github.com/higress-group/higress) points to its openapi-to-mcp tool, with which
+      "you can quickly convert OpenAPI specifications into remote MCP servers for hosting."
+      AgentScope's MCP client (see mcp_client) then consumes the result. Higress "originated
+      at Alibaba" but "is now developed as a vendor-neutral CNCF project", so it is recorded
+      as the self-managed open-source alternative. (Paraphrase except the quotes.)
+    source: https://help.aliyun.com/zh/api-gateway/ai-gateway/product-overview/what-is-an-ai-gateway
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   multi_agent_patterns:
     status: documented
     value: [leader-worker, task planning, pipeline]
@@ -79,6 +159,51 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  workflow_engine:
+    status: preview
+    value: [GoalPipeline, TeamPipeline, "SOP engine (ordered, verified, resumable steps)"]
+    notes: >
+      Not a graph/DAG engine. AgentScope offers fixed-logic pipelines and an SOP engine.
+      Pipeline: "A pipeline composes several agents: the developer settles their order and
+      the conditions that move work between them before the run starts, and nothing changes
+      it afterwards." Two ship: GoalPipeline (executor plus verifier loop) and TeamPipeline
+      (a leader delegates to members through tool calls). (Paraphrase except the quote.)
+      "The pipeline module is experimental."
+      DURABLE AND RESUMABLE, via SOP (a different page,
+      https://docs.agentscope.io/en/versions/2.0.12/building-blocks/sop): "an SOP is a
+      sequence of ordered milestones, each with its own verifier and attempt budget, and
+      its run state can be written to disk and picked up again any time later." SOPRunState
+      is "Everything about one run, as plain data that can be saved and restored". "The SOP
+      module is experimental, and its interfaces may change in later releases."
+      STATUS 2026-11-23 (fact-check): `preview`, because both core mechanisms (pipelines and
+      SOP) are labelled experimental, and experimental counts as preview here. No branching or parallel-node graph primitive was found (contrast
+      LangGraph or the Agent Framework workflows).
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/pipeline/overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  a2a_protocol:
+    status: documented
+    value: client (A2AAgent) + server example
+    notes: >
+      CLIENT, first-party in the SDK: "AgentScope acts as an A2A client through the A2AAgent
+      class. It connects to any remote agent implementing A2A 1.0 or above". The client is
+      a local proxy. Model, tools, middleware, permissions and HITL are all decided by the
+      remote service. Installed through the a2a extra, pip install "agentscope[a2a]".
+      (Paraphrase except the quote.)
+      SERVER, as an example rather than a packaged server class. The examples/a2a README
+      (a different page,
+      https://raw.githubusercontent.com/agentscope-ai/agentscope/main/examples/a2a/README.md)
+      says "This example puts AgentScope on both ends of the" A2A 1.0 protocol, with
+      server.py wrapping an AgentScope Agent in an A2A AgentExecutor served over
+      JSON-RPC/SSE using the official a2a SDK. (Paraphrase except the quote.)
+      The sibling agentscope-java repo lists "A2A / AG-UI protocol support" in its
+      v2.0.0-RC2 news (a different page,
+      https://raw.githubusercontent.com/agentscope-ai/agentscope-java/main/README.md).
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/a2a
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   long_running_agents:
     status: documented
     notes: >
@@ -87,6 +212,65 @@ capabilities:
       background; its result later wakes the agent up and the conversation resumes."
       Unusual for an SDK (vs a platform) to handle this.
     source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  short_term_memory:
+    status: documented
+    value: bring-your-own (AgentState serialised to Redis or SQL storage)
+    notes: >
+      Session memory lives in the agent state: "The complete agent state serializes to
+      JSON, so a reply can pause in one process and resume in another. This is the basis
+      for multi-session services." AgentState holds the conversation context, the
+      compression summary, permission rules, tool state and the current reply position.
+      "RedisStorage is the built-in storage backend" for the SDK example. Sessions are keyed
+      by user_id, agent_id and session_id. (Paraphrase except the quotes.)
+      Context management is built in: automatic compaction, tool-result offload and context
+      injection run as middleware (README Context row). Self-hosted, not a managed memory
+      service. Long-term memory is separate (ReMe / Mem0 middleware).
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/agent/run-agent
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpointer_backends:
+    status: documented
+    value: [RedisStorage, "AsyncSQLAlchemyStorage (SQLite, PostgreSQL, MySQL)", custom StorageBase]
+    notes: >
+      Agent-service storage interface: "The StorageBase abstract class defines the
+      persistence contract for agents, sessions, credentials, messages, schedules, teams,
+      and knowledge base records. AgentScope ships with two built-in implementations".
+      These are RedisStorage (the default) and AsyncSQLAlchemyStorage, which "persists to
+      any database SQLAlchemy's async engine supports (SQLite, PostgreSQL, MySQL, …)".
+      Alembic migrations are included. (Paraphrase except the quotes.)
+      Caveat: the message bus (session locks, replay logs, wakeup signals) is
+      Redis-backed, so Redis stays a hard dependency of the service even when state is in
+      SQL.
+      Sibling agentscope-java (a different page,
+      https://raw.githubusercontent.com/agentscope-ai/agentscope-java/main/README.md) lists
+      "True distributed session and memory management (Redis / MySQL / PostgreSQL / OSS /
+      COS) with cross-replica session recovery."
+    source: https://docs.agentscope.io/en/versions/2.0.12/deploy/agent-service
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpoint_resume:
+    status: documented
+    notes: >
+      Several resume paths. INTERRUPT: "Once interrupted, the agent's context is left in a
+      consistent state and the conversation can be resumed immediately with a new message."
+      ACROSS PROCESSES: AgentState serialises to JSON, so "a reply can pause in one process
+      and resume in another" (the Run Agent page, a different page,
+      https://docs.agentscope.io/en/versions/2.0.12/building-blocks/agent/run-agent).
+      STEP-LEVEL DURABILITY in SOP runs: run state "can be written to disk and picked up
+      again any time later" (the SOP page, a different page,
+      https://docs.agentscope.io/en/versions/2.0.12/building-blocks/sop). The agent service
+      page (a different page, https://docs.agentscope.io/en/versions/2.0.12/deploy/agent-service)
+      also states that cron "schedules persist across restarts". (Paraphrase except the
+      quotes.)
+      CAVEAT: no automatic replay of a crashed in-flight step was found. Resume works from
+      the last persisted state, which the developer (or the agent service) saves after each
+      reply.
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/agent/interrupt-agent
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -126,6 +310,42 @@ capabilities:
       via MiniMaxChatModel (MiniMax-M3 by default)." Also "Model routing supported — use
       ModelRouterMiddleware to select an appropriate chat model for each reply."
     source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  model_routing:
+    status: documented
+    value: [per-reply routing (ModelRouterMiddleware), fallback model (ModelConfig)]
+    notes: >
+      ROUTING / COST-TIERING: "When different kinds of requests suit different models (for
+      example, everyday questions to a low-cost model and complex reasoning to a stronger
+      one), ModelRouterMiddleware picks the chat model for each reply automatically." The
+      router can be a classifier model (Jev via TypeSafe, or OpenAI Decisions) or any chat
+      model using structured output. It picks once per reply and keeps that choice across a
+      paused-and-resumed reply. (Paraphrase except the quotes.) Built-in safety net: "If the
+      router model fails, picks a candidate that does not exist, or the input has no user
+      text, the reply falls back to the agent's own model instead of failing."
+      FALLBACK: the agent's model_config parameter is documented as "Retry count and
+      fallback model" (Configure Agent, a different page,
+      https://docs.agentscope.io/en/versions/2.0.12/building-blocks/agent/configure-agent).
+      The same middleware page also shows a hand-written ModelFallbackMiddleware example.
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/middleware
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openai_compatible_endpoint:
+    status: documented
+    value: client only (consumes OpenAI-compatible endpoints)
+    notes: >
+      CLIENT: OpenAICredential has a base_url field, "Custom base URL for OpenAI-compatible
+      endpoints.". It backs both OpenAIChatModel and OpenAIResponseModel. The 2.0 release
+      notes (a different page, https://docs.agentscope.io/en/versions/2.0.12/release-notes)
+      also say "The OpenAI-compatible chat models reuse one openai.AsyncClient across
+      calls". (Paraphrase except the quotes.)
+      NOT A SERVER: the agent service exposes its own REST and SSE chat API, documented by
+      its own OpenAPI spec, and can rewrite SSE frames into AG-UI. No OpenAI Chat
+      Completions or Responses serving endpoint was found in the 2.0.12 docs. (Paraphrase.)
+    source: https://raw.githubusercontent.com/agentscope-ai/agentscope/main/src/agentscope/credential/_openai.py
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -251,6 +471,25 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  sdk_instrumentation_portability:
+    status: documented
+    value: any OTLP backend
+    notes: >
+      Portable, not vendor-locked. TracingMiddleware emits plain OpenTelemetry spans to
+      whatever TracerProvider and exporter you register. The example uses the standard
+      OTLPSpanExporter pointed at a local collector, and "These custom spans are emitted
+      alongside AgentScope's built-in spans and delivered to the same OTLP collector
+      configured in the TracerProvider." With no provider configured, "no spans are
+      created". Spans carry model name, provider, token counts, tool names, arguments and
+      results. (Paraphrase except the quotes.)
+      No named backend list and no Alibaba-specific exporter is required. Alibaba Cloud
+      ARMS / Model Studio Evolution are not mentioned on this page. The sibling
+      agentscope-java README links Agent Evolution on help.aliyun.com for observability,
+      which is an optional managed destination, not a dependency. (Paraphrase.)
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/middleware
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   in_repo_eval:
     status: documented
     product: OpenJudge (agentscope-ai/OpenJudge)
@@ -286,5 +525,31 @@ capabilities:
       The OpenTelemetry dependencies are for user-configured tracing (TracingMiddleware
       exports only to an OTLP endpoint you register) — not vendor phone-home. (Paraphrase.)
     source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    product: AgentScope (Java SDK carries the stated GA)
+    status: ga
+    value: Python 2.0.x no GA statement (PyPI "4 - Beta"); agentscope-java "v2.0.0 GA" (2026-07)
+    notes: >
+      PYTHON SDK (the headline repo) states no GA. The README and the 2.0.12 docs home (a
+      different page, https://docs.agentscope.io/en/versions/2.0.12) call it
+      "production-ready", but the PyPI classifier for 2.0.12 (a different page,
+      https://pypi.org/pypi/agentscope/json) is "Development Status :: 4 - Beta". The words generally available do not appear on the README, the docs home, the
+      FAQ or the 2.0.12 release notes. (Paraphrase except the quotes.)
+      FEATURE-LEVEL LABELS: the README news and the docs flag several features as
+      Experimental. These are the pipeline module, SOP, the realtime voice agent and
+      WebRTC voice in the agent service. "Distributed deployment" carries a WIP badge on
+      the agent-service page.
+      SIBLING JAVA SDK DOES STATE GA. The agentscope-java README news reads "[2026-07]
+      v2.0.0 GA: First production-ready release!" Current Maven Central line: 2.0.x stable,
+      with 2.1.0-BETA1 also published. (Paraphrase except the quotes.)
+      The Python SDK states no GA: production-ready is not GA wording, and a PyPI
+      classifier is package metadata, not a vendor stage statement. STATUS 2026-11-23 (fact-check round 3): `ga`, because the same
+      AgentScope family's Java SDK states "v2.0.0 GA", and a sibling's stated stage counts
+      when `product:` names it (taxonomy hint). Same shape as gcp/a-sdk, which is `ga` with
+      no GA for its Java and Kotlin SDKs.
+    source: https://raw.githubusercontent.com/agentscope-ai/agentscope-java/main/README.md
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

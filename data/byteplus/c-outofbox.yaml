@@ -208,16 +208,25 @@ capabilities:
     verified_by: "@notacryptodad"
 
   license_bundling:
-    status: unknown
+    product: BytePlus ArkClaw
+    status: documented
     notes: >
-      No bundling with licenses a customer already owns (Lark/Feishu, WeCom, DingTalk,
-      or other BytePlus products) was stated. The overview positions it as standalone:
-      "ArkClaw Enterprise evolves independently and is continuously updated without
-      being associated with a single application ecosystem."
-      Optional bundles exist only as add-on purchases. ModelArk Agent Plan Team and
-      Coding Plan Team model plans can be bought with seats (Managing seats docs page).
-      That is upsell, not license bundling. (Paraphrase.)
-    source: https://docs.byteplus.com/en/docs/ArkClaw/What_is_ArkClaw_Enterprise
+      CHANGED FROM `unknown` (2026-11-23 gap pass). A bundle exists, but in the sibling
+      individual-user product ArkClaw, not in ArkClaw Enterprise. ArkClaw comes free
+      with some ModelArk model subscriptions: "You can obtain entitled ArkClaw for free
+      by subscribing to Agent Plan Medium, Large, or Max. The expiration date of the
+      entitled ArkClaw will match that of your subscribed Agent Plan."
+      "You will not obtain entitled ArkClaw for free by subscribing to Agent Plan Small."
+      The Coding Plan Pro bundle was withdrawn: "Starting from 12:00, May 18, 2026,
+      subscriptions to the Coding Plan Pro package will no longer include free ArkClaw
+      trial benefits."
+      ArkClaw Enterprise itself is sold as standalone seats. Its overview (a different
+      page, https://docs.byteplus.com/en/docs/ArkClaw/What_is_ArkClaw_Enterprise) says it
+      "evolves independently and is continuously updated without being associated with a
+      single application ecosystem". ModelArk Agent Plan Team and Coding Plan Team can
+      be added to Enterprise seats, but as paid add-ons (see addon_surcharges). No
+      bundling with Lark/Feishu, WeCom or DingTalk licenses was found. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/ArkClaw/Activating_ModelArk_ArkClaw_
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -236,14 +245,29 @@ capabilities:
     verified_by: "@notacryptodad"
 
   index_freshness:
-    status: unknown
+    product: VikingDB Knowledge Engine
+    status: documented
     notes: >
-      The Knowledge Center page states no crawl, sync or refresh frequency. For Viking
-      it requires that "you have created the Viking knowledge base and imported
-      enterprise knowledge into the vector database", so ingestion and freshness sit in
-      the separate Viking service. Databases are queried through supplied credentials.
-      (Paraphrase.)
-    source: https://docs.byteplus.com/en/docs/ArkClaw/Managing_knowledge
+      CHANGED FROM `unknown` (2026-11-23 gap pass). BATCH, MANUAL RE-IMPORT, no
+      automatic sync. The ArkClaw Knowledge Center does not index content itself. Its
+      Viking option requires that "you have created the Viking knowledge base and
+      imported enterprise knowledge into the vector database" (a different page,
+      https://docs.byteplus.com/en/docs/ArkClaw/Managing_knowledge). The Viking
+      knowledge base docs (VikingDB Knowledge Engine, the source below) describe how
+      freshness works there:
+      "Importing documents from a TOS directory is a one-time operation; subsequent
+      changes to documents in the directory will not be automatically synchronized to
+      the knowledge base."
+      "Currently, to update documents in the knowledge base, users need to upload the
+      target document again and use the same doc_id to overwrite the original document."
+      Re-importing the same TOS directory picks up only new files. No crawl schedule or
+      change feed is documented. (Paraphrase.)
+      For the other Knowledge Center sources, RDS and self-managed databases are
+      connected with a host address and a query-permission account, with no import step
+      described. Our inference is that they are queried in place.
+      Feishu cloud documents are connected by installing the Viking Knowledge Assistant
+      Feishu app; no sync frequency is stated for them. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/RAG_Cloud/Import_documents
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -259,34 +283,240 @@ capabilities:
       and cloud-disk directories by department, user group or user). But no page seen
       says retrieved answers are filtered by the asker's source-system permissions.
       (Paraphrase.)
+      2026-11-23 GAP PASS, still `unknown`. Also checked: the cloud-disk page
+      (https://docs.byteplus.com/en/docs/ArkClaw/Claw_cloud_disk) scopes the personal
+      disk to its owner and team disks to team members, and offers semantic and image
+      search over the disk. It does not say whether that search is trimmed per user.
+      The Enterprise Core capabilities page (a different page,
+      https://docs.byteplus.com/en/docs/ArkClaw/Core_capabilities01) describes a
+      three-tier memory that "also supports fine-grained permission isolation". That
+      covers memory, not Knowledge Center retrieval. The two VikingDB Knowledge Engine
+      pages reviewed (Import documents, and the doc_update API) show no per-user
+      document ACL. Every Knowledge Center source is authorized with one admin AK/SK or
+      database account. (Paraphrase.)
     source: https://docs.byteplus.com/en/docs/ArkClaw/Managing_knowledge
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   training_data_policy:
-    status: unknown
+    product: BytePlus ModelArk
+    status: documented
     notes: >
-      No ArkClaw Enterprise page reviewed states whether customer content is used to
-      train models, or gives an abuse-monitoring opt-out. Related text: the
-      response-feedback page says "the platform will leverage the information you
-      provided to continuously improve ArkClaw response quality". That covers submitted
-      feedback, not a training commitment. Session-data collection for shared Claws
-      (used for admin insight dashboards) can be switched off by admins. Model calls go
-      through ModelArk, whose own data terms would apply but are not attributed here.
+      CHANGED FROM `unknown` (2026-11-23 gap pass), scored from the model layer.
+      ArkClaw Enterprise's default model sources (Agent Plan Team, Coding Plan Team,
+      Foundation models) are ModelArk services. The Billing instructions page (a
+      different page, https://docs.byteplus.com/en/docs/ArkClaw/Billing_instructions)
+      says that when ArkClaw invokes Foundation models "the token consumption fees will
+      be charged by the model service". The ModelArk data-processing page (the source)
+      makes a no-training commitment:
+      "As a data processor, BytePlus ModelArk collects and processes Customer Data solely
+      under customer instructions."
+      "Without the customer's prior authorization, BytePlus ModelArk will neither
+      interfere with the data processing nor use Customer Data for its own model
+      training."
+      Retention for abuse monitoring: "input and output triggered by the filter are
+      retained for 180 days in Malaysia". No opt-out from that retention is stated.
       (Paraphrase.)
-    source: https://docs.byteplus.com/en/docs/ArkClaw/Evaluating_and_providing_feedback_on_ArkClaw_responses_
+      LIMITS OF THIS ANSWER: it covers prompts and outputs sent to ModelArk models only.
+      It does not cover custom (OpenAI- or Anthropic-compatible) model pools, and no
+      ArkClaw Enterprise page states a training policy for data ArkClaw itself stores,
+      such as memory, cloud disk and conversations. The response-feedback page says
+      "the platform will leverage the information you provided to continuously improve
+      ArkClaw response quality" (a different page,
+      https://docs.byteplus.com/en/docs/ArkClaw/Evaluating_and_providing_feedback_on_ArkClaw_responses_).
+      Admins can switch off session-data collection for shared Claws, which feeds the
+      admin insight dashboards. The individual ArkClaw edition asks users to agree to a
+      User Experience Improvement Program Agreement at activation. Its page
+      (docs.byteplus.com/en/docs/87732/2288511) returned a server error when we tried
+      to read it. (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/BytePlus_ModelArk_Data_Processing
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   certifications:
-    status: unknown
+    product: BytePlus cloud platform (platform-level certifications)
+    status: documented
     notes: >
+      STATUS CHANGE 2026-11-23 (fact-check, symmetry with byteplus/b-platform and
+      azure/b-platform): unknown -> documented, scored as platform-level certifications
+      with the caveat that no page maps them to ArkClaw Enterprise.
       The BytePlus trust center lists platform-level certifications: "Some of our
       international security and privacy protection certifications include ISO 27001,
       27017, 27701, 27018, CSA STAR, SOC2, PCI DSS."
       Neither the trust center nor its compliance sub-page maps these certifications to
       ArkClaw Enterprise. The ArkClaw docs reviewed do not claim a certification scope.
       They are therefore not attributed to this product. (Paraphrase.)
+      2026-11-23 GAP PASS. The compliance sub-page
+      (https://www.byteplus.com/en/trust-center/compliance) now also lists ISO 42001,
+      ISO 9001/20000/22301, SOC 1/3, PCI 3DS, APEC and Global CBPR/PRP, DPTM and MTCS
+      Level 3, all worded as covering the BytePlus cloud platform. It has no per-product
+      scope list. The ArkClaw Enterprise overview, Core capabilities, admin and employee
+      release notes, Billing and FAQ pages contain no certification name; the
+      compliance language there is generic. The bucket-B cell records the same
+      certifications as platform-level for ModelArk and AgentKit. (Paraphrase.)
     source: https://www.byteplus.com/en/trust-center
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  web_search_tool:
+    product: BytePlus ArkClaw Enterprise
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 gap pass). Built in, and billed per call by a separate
+      BytePlus service: "When ArkClaw triggers the web search, the fees for web_search
+      calls will be charged by the web search service."
+      "During your use of ArkClaw, if you actively invoke the model service or web
+      search service, separate charges will apply based on a pay-as-you-go method."
+      The billing link goes to Searchinfinity pricing (a different page,
+      https://docs.byteplus.com/en/docs/searchinfinity/Searchinfinity_pricing), which
+      lists "Web search-Flux" at "$0.006/request" and "Web search-Omnira" at
+      "$0.003/request".
+      The Enterprise Core capabilities page (a different page,
+      https://docs.byteplus.com/en/docs/ArkClaw/Core_capabilities01) says "the platform
+      supports commonly used features such as Web Search and plugin extensions".
+      The employee-side release notes say the Fast thinking mode keeps only basic
+      capabilities, including web search. (Paraphrase.)
+      NOT FOUND: an admin toggle specific to web search, the search index behind it, or
+      a residency-compliant search option. Admins can restrict public-network egress
+      with Layer-7 web access policies (admin release notes). We have not confirmed
+      whether those policies also apply to the web_search tool. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/ArkClaw/Billing_instructions
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  ai_service_tools:
+    product: BytePlus ArkClaw Enterprise
+    status: documented
+    value: [web search (Searchinfinity), image model (Seedream via Agent Plan), video model (Seedance via Agent Plan), file upload and analysis, semantic file search]
+    notes: >
+      NEW CELL (2026-11-23 gap pass). First-party AI services are built in and
+      admin-configured. They are not a catalogue of tools you wire up yourself.
+      Admins set dedicated image and video models: "An image model is used to process
+      static image data in ArkClaw. The image model defaults to the
+      doubao-seedream-5.0-lite model from AgentPlan."
+      "By default, the available video models are doubao-seedance-2.0,
+      doubao-seedance-2.0-fast, and doubao-seedance-1.5-pro from AgentPlan, with
+      doubao-seedance-2.0 set as the default model."
+      Skills can reach further models: "When using skills, Claw instances may also call
+      Coding Plan, Agent Plan, and other multimodal models listed in the Foundation
+      models."
+      Web search is a built-in tool billed through Searchinfinity (see web_search_tool).
+      The employee release notes (a different page,
+      https://docs.byteplus.com/en/docs/ArkClaw/Employee-side_new_feature_release_notes)
+      add semantic search over the cloud disk: "you can search for images, documents,
+      audio, and video files using a natural-language query to achieve precise file
+      matching". Uploaded files can be analysed in conversation. (Paraphrase.)
+      NOT FOUND: standalone OCR, speech-to-text, text-to-speech or translation tools on
+      the ArkClaw Enterprise pages reviewed. The Model management page names the image
+      and video models only as processing image or video data; it does not say they
+      generate media. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/ArkClaw/Model_management
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  feedback_service:
+    product: BytePlus ArkClaw Enterprise
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 gap pass). Built-in employee feedback that admins can review.
+      "Administrators can use the feedback list to promptly understand issues
+      encountered by employees during use. They can filter, search, and export
+      feedback data based on conditions to help continuously improve the product
+      experience."
+      Each record has the submitter, the Claw instance, the issue type, a description,
+      a timestamp, export status, and optional screenshots or screen recordings. The
+      issue types are inaccurate or incomplete response, failure to follow
+      instructions, tool or plugin invocation errors, slow or laggy response,
+      inappropriate tone or expression, legal issues such as security and compliance,
+      and others. The admin release notes date the feature to 2026-05-26. (Paraphrase.)
+      Per-answer rating is on the employee side (a different page,
+      https://docs.byteplus.com/en/docs/ArkClaw/Evaluating_and_providing_feedback_on_ArkClaw_responses_):
+      "You can like or dislike individual ArkClaw responses". A thumbs-down asks for an
+      issue category and details.
+      CAVEATS: the admin page does not say that thumbs-up or thumbs-down ratings reach
+      this list, or that a record is linked to a trace or session span. Trace analysis
+      is a separate admin page. Feedback also goes to BytePlus to improve ArkClaw (see
+      training_data_policy). (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/ArkClaw/Employee_feedback
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    product: BytePlus ArkClaw Enterprise
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 gap pass). NO PRODUCT-LEVEL STAGE FOUND for ArkClaw
+      Enterprise. Checked: the What is ArkClaw Enterprise, Core capabilities, Billing
+      instructions and Quick start docs pages, the www.byteplus.com product page, and
+      the admin and employee release notes. None labels the product GA, preview or
+      beta. It is sold with published seat prices (see seat_pricing). (Paraphrase.)
+      The admin console release notes (the source) begin in May 2026 (first entry
+      05-06) and were last updated in November 2026. They label individual features
+      beta and gated, with this boilerplate: "This feature is in beta. It is visible and
+      available only after being enabled. To request a trial, contact your account
+      manager." Beta-gated features include the personal-workspace switch, admin
+      agent-template publishing, and credential management. Instance-level purchase is
+      gated the same way: "This feature is in beta and is only available after being
+      enabled." The Quick start page says that running more than one space per region
+      is in beta. (Paraphrase.)
+      SIBLINGS: the individual ArkClaw release notes (a different page,
+      https://docs.byteplus.com/en/docs/ArkClaw/New_feature_release_notes) mark 04-14
+      (April 2026) with "Officially released." This is not worded as general
+      availability, and one feature there (Cloud Desktop) "is currently in invitational
+      preview". The agent platform BytePlus AgentKit is the only BytePlus agent product
+      with an explicit GA statement (2026-11-16, recorded in b-platform). The
+      www.byteplus.com sitemap, blog and insights sitemaps list no ArkClaw launch post.
+      (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/ArkClaw/Feature_release_notes_for_administrators
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  sovereign_cloud:
+    product: BytePlus ArkClaw Enterprise
+    status: unknown
+    notes: >
+      NEW CELL (2026-11-23 gap pass). No government or sovereign cloud offering found
+      for ArkClaw Enterprise or BytePlus generally. The bucket-B cell records the same
+      for ModelArk and AgentKit. (Paraphrase.)
+      CLOSEST EVIDENCE, isolation and private-deployment claims without a sovereign
+      label: "Standard mode achieves logical isolation through spaces and VPCs, which is
+      suitable for mainstream medium-sized enterprises. Dedicated mode provides the
+      highest level of isolation by using independent accounts. Dedicated mode meets
+      the strict compliance requirements of large customers."
+      The Core capabilities page (a different page,
+      https://docs.byteplus.com/en/docs/ArkClaw/Core_capabilities01) says "The platform
+      supports both private and VPC-based deployments, as well as integration with
+      third-party large model APIs." No page gives details, regions or availability for
+      that private deployment. The trust center's MTCS Level 3 (Singapore) certificate
+      is platform-level and not mapped to this product (see certifications).
+      (Paraphrase.)
+      Mainland China is served by the sibling brand Volcengine, not BytePlus.
+      Not `none`: no page says it is not offered. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/ArkClaw/What_is_ArkClaw_Enterprise
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  index_residency:
+    product: VikingDB Knowledge Engine
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 gap pass). PARTIAL. ArkClaw Enterprise docs state no region
+      for the space or the Knowledge Center. The Quick start and seat pages refer only
+      to a target region, and no region list was found. The index behind the Viking
+      knowledge-base option lives in the VikingDB Knowledge Engine service. Its release
+      note (the source) has a 2026.3.27 entry, update type Public Launch: "Support for
+      Johor region". The 2025.7.31 entry is the console public beta. No other region
+      and no in-region guarantee is listed on that page. (Paraphrase.)
+      The Viking import page (a different page,
+      https://docs.byteplus.com/en/docs/RAG_Cloud/Import_documents) has a stray note
+      that selecting a TOS path is "Currently only supported in North China region".
+      This looks like text carried over from the Volcengine (China) docs. (Paraphrase.)
+      The other sources appear to stay where they are. Databases are reached with a
+      host and account, and Feishu cloud documents go through the Viking Knowledge
+      Assistant app. ArkClaw's own stores (cloud disk on TOS, memory, OpenSearch/MySQL
+      per the overview's architecture list) have no stated region. For the model layer,
+      the ModelArk data-processing page says processing is in Malaysia, Indonesia
+      and/or the EU/EEA (see training_data_policy). (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/RAG_Cloud/a
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

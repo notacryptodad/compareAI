@@ -89,7 +89,8 @@ capabilities:
       The same harness powers the Managed Agents API on the platform tier (see
       gcp/b-platform.yaml managed_agent_loop).
       LEGACY CONTRAST: Gemini Code Assist agent mode (VS Code / IntelliJ) is still labelled
-      Preview on its own page (codeassist/agent-mode), which warns that "Agent mode in VS
+      Preview on its own page (https://docs.cloud.google.com/gemini/docs/codeassist/agent-mode),
+      which warns that "Agent mode in VS
       Code uses the Gemini CLI, which is not optimized for the latest Gemini models" — the
       GA above is for Antigravity, not legacy agent mode. (Paraphrase except quoted text.)
     source: https://antigravity.google/docs/overview
@@ -234,7 +235,8 @@ capabilities:
     verified_by: "@notacryptodad"
 
   launch_stage_investigation:
-    status: documented
+    product: Google Antigravity
+    status: ga
     notes: >
       LEGACY PRODUCT IS SUNSETTING: "Starting October 9, 2026, you can no longer purchase
       new Gemini Code Assist Standard or Enterprise subscriptions." "Existing Gemini Code
@@ -244,11 +246,14 @@ capabilities:
       March 31, 2027". "Going forward, agentic coding assistance will be available through"
       Antigravity, which the page says is included in Gemini Enterprise editions.
       "Support will be limited to the Gemini 3.x model family only."
-      SUCCESSOR STAGE (each from a different page): the Gemini Enterprise release notes say
+      SUCCESSOR STAGE (each from a different page): the Gemini Enterprise release notes
+      (https://docs.cloud.google.com/gemini/enterprise/docs/release-notes) say
       "AI developer tools is generally available (GA)" for Standard, Plus and
-      Pay-as-you-go (2026-08-18); the Antigravity pricing page labels its plans
+      Pay-as-you-go (2026-08-18); the Antigravity pricing page
+      (https://antigravity.google/pricing) labels its plans
       "Generally Available".
-      Row kept `documented` because it is an investigation row, not a single feature.
+      Status follows the launch-stage convention (taxonomy hint): the row carries the headline product's stated stage. `ga` rests on the Antigravity pricing page's "Generally Available" plan label and
+      the AI developer tools GA entry above.
     source: https://docs.cloud.google.com/gemini/docs/codeassist/sunset
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

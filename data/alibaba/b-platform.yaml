@@ -94,6 +94,24 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  memory_namespacing:
+    product: 百炼 Memory (记忆库)
+    status: documented
+    notes: >
+      Per-end-user namespacing is built in: the memory entity (记忆实体) is defined as
+      「记忆的隔离维度，通常用 user_id 标识」, and a memory store can be shared:
+      「记忆库提供开放的 API 接口，可接入任意应用，也支持多应用共享同一记忆库。」
+      Deletion and audit: the manage-memory page (a different page,
+      https://help.aliyun.com/zh/model-studio/memory/manage-memory) lists and searches by
+      user_id, supports edit, soft-disable and delete — 「确认删除后记忆无法恢复。」 — and
+      「在记忆审计中可查询删除记录及变更前的内容。」
+      GAPS vs the row hint: no TTL / automatic expiry setting and no bulk export were found
+      on these pages; deletion is shown per memory node, and a delete-everything-for-user
+      call was not verified. (Paraphrase except quotes.) No stage label.
+    source: https://help.aliyun.com/zh/model-studio/memory/concepts
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   first_party_models:
     status: documented
     value: [qwen4-max, qwen3.7-plus, qwen3.8-flash]
@@ -123,6 +141,81 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  byo_open_weights:
+    product: Model Studio 模型导入 + 专属部署 / DTU; AgentRun FunModel
+    status: documented
+    notes: >
+      Two paths, both narrower than full BYO-weights hosting. Model Studio imports YOUR
+      fine-tuned adapters: 「介绍百炼从阿里云 OSS 导入 LoRA 模型的全流程操作」, but
+      「当前版本支持导入 LoRA 模型，全参微调模型不可导入。」 Imported models are then deployed
+      as a dedicated service (「导入成功后的模型状态为创建成功，可在我的模型列表中部署服务」).
+      Open-weight hosting proper is in AgentRun (a different page,
+      https://help.aliyun.com/zh/agentrun/what-is-agentrun):
+      「支持通过 FunModel 将开源模型一键托管为 OpenAI 兼容 API」, covering
+      「开源托管模型（vLLM/SGLang/Ollama/LMDeploy 等框架）」.
+      Provisioned throughput: the EN product page (a different page,
+      https://www.alibabacloud.com/en/product/modelstudio) says "Two modes, dedicated
+      throughput and elastic reservation, deliver stable performance and efficient resource
+      use under high concurrency." and "DTU dedicated compute delivers deterministic
+      performance for high-concurrency critical paths, with capacity and cost predictable
+      month to month." PAI-EAS (the classic BYO-model serving product) was not read this
+      pass. No stage label.
+    source: https://help.aliyun.com/zh/model-studio/model-import
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tuning:
+    product: Model Studio 模型调优 + 上下文缓存
+    status: documented
+    notes: >
+      Fine-tuning: 「模型调优包含模型微调（SFT）、继续预训练（CPT）、模型偏好训练（DPO）和强化学习（RL）四种模型训练方式。」
+      REGION CAVEAT on the same page: 「本文档仅适用于华北2（北京）地域。」 Billing by training
+      tokens or prepaid / postpaid training units; API-created jobs are token-billed only.
+      (Paraphrase.) Distillation is not named as a separate method; the page pitches
+      replacing a larger model with a tuned lighter one
+      (「使用调优后的轻量级模型替代规模更大的模型」).
+      Prompt caching: the context-cache page (a different page,
+      https://help.aliyun.com/zh/model-studio/context-cache) offers explicit and implicit
+      modes — 「显式缓存：需要主动开启的缓存模式。」 and
+      「隐式缓存：此为自动模式，无需额外配置，且无法关闭」 — with explicit-cache creation at
+      125% of input price and hits at 10% (implicit hits 20%). (Paraphrase of the prices.)
+      No stage label.
+    source: https://help.aliyun.com/zh/model-studio/model-training-overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  model_routing:
+    product: Model Studio 智能路由 + AI 网关 + AgentRun 模型治理
+    status: documented
+    notes: >
+      Model Studio ships content-based routing: 「智能路由是一种通过动态分析用户请求内容，在模型备选集中自动匹配最合适模型进行处理」.
+      Cost-tiering is explicit — 「精准降低成本：简单任务自动路由至轻量模型，复杂任务匹配高阶模型」 —
+      with 效果优先 / 成本优先 strategies and at least two candidate models; the client calls
+      an auto-model-XXXXXXXX model code. Limits: Beijing + Singapore only, text input only,
+      OpenAI-compatible and Anthropic protocols (not DashScope native). (Paraphrase.)
+      Rule-based routing and FALLBACK live in AI Gateway (a different page,
+      https://help.aliyun.com/zh/api-gateway/ai-gateway/product-overview/what-is-an-ai-gateway):
+      「AI 网关支持多种模型路由策略，包括基于模型名称、请求比例或特定请求特征（如 Header）的路由规则。」
+      and 「提供负载均衡、Fallback 机制、限流策略和缓存能力」. AgentRun's model proxy (a
+      different page, https://help.aliyun.com/zh/agentrun/what-is-agentrun) likewise has
+      「内置多模型负载均衡、Fallback 降级、并发控制、超时控制」. No stage label.
+    source: https://help.aliyun.com/zh/model-studio/model-routing
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_calling:
+    status: documented
+    notes: >
+      「Function Calling 允许模型调用外部工具（API、数据库、自定义函数等），获取信息或执行操作，突破模型自身能力的限制。」
+      Parallel calls are the default: 「由于 parallel_tool_calls 默认为 true，发起 Function Calling 后，模型可在一次返回中包含多个工具调用信息。」
+      Setting parallel_tool_calls to false forces one call per turn, and tool_choice
+      (default auto) can force or disable a specific tool. Support varies by model — some
+      third-party models (e.g. kimi-k3, MiniMax-M3.1-Flash) ignore or reject these
+      parameters. (Paraphrase.) Page updated 2026-11-19. No stage label.
+    source: https://help.aliyun.com/zh/model-studio/qwen-function-calling
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   openai_compatible_endpoint:
     status: documented
     notes: >
@@ -135,8 +228,8 @@ capabilities:
       applies to all six regions including US (Virginia) (us-east-1) — the earlier
       dashscope-us exception no longer appears. "The DashScope domain (dashscope.aliyuncs.com)
       will no longer support new features after September 30, 2026."
-      The CN model-service overview (separate CN page,
-      help.aliyun.com/zh/model-studio/what-is-model-studio) headlines
+      The CN model-service overview (a different page,
+      https://help.aliyun.com/zh/model-studio/what-is-model-studio) headlines
       「OpenAI/Anthropic 兼容接口调用」 with Responses, Chat Completions and Messages examples
       (curl, Python, JavaScript/TypeScript, Java, Go, C#, Ruby) against a
       WorkspaceId.cn-beijing.maas.aliyuncs.com/compatible-mode/v1/responses base URL — i.e.
@@ -163,6 +256,85 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  tool_region_variance:
+    status: documented
+    notes: >
+      Strong per-feature variance, scattered across pages rather than one matrix (the
+      Regions page has a feature-by-region table, which did not render as text this pass).
+      Verified individually: 智能路由 runs in Beijing + Singapore only, text input only
+      (cited page); 百炼 Managed Agents API is cn-beijing only (managed_agent_runtime); the
+      Sandbox examples use cn-beijing endpoints (code_interpreter, browser_use); model
+      fine-tuning docs apply only to China (Beijing) (tuning); batch inference only in
+      Singapore and China (Beijing) (runtime_regions); the native DataInspection guardrail
+      header is Beijing-only (guardrails); new-user free quota is Singapore-only
+      (free_tier_commitments). On the international site, application development is
+      closed to new customers (launch_stage_investigation). (Paraphrase.)
+      Net: picking a region other than cn-beijing silently costs most of the agent stack.
+    source: https://help.aliyun.com/zh/model-studio/model-routing
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  service_limits:
+    status: documented
+    notes: >
+      No single limits page for the agent stack; per-surface limits found. Regions page
+      (cited; paraphrase of its table): request timeout 3600 s on the workspace-dedicated
+      domain vs 600 s on the DashScope and trial domains; the trial domain is capped at
+      RPM 1000. Rate limits (a different page,
+      https://help.aliyun.com/zh/model-studio/rate-limit) are pooled per main account:
+      「限流按主账号维度计算，RAM 子账号、业务空间和 API Key 调用量合并。」 with dynamic (soft)
+      TPM limits for mainstream models.
+      Agent-side caps: Responses API 「最多添加 10 个 MCP Server。」 (a different page,
+      https://help.aliyun.com/zh/model-studio/mcp); an agent app
+      「可同时添加最多 5 个 MCP 服务」 and a workflow MCP node uses one tool (a different page,
+      https://help.aliyun.com/zh/model-studio/official-and-third-party-mcp); custom skills
+      「整个 ZIP 包不超过 10 MB。」 (a different page,
+      https://help.aliyun.com/zh/model-studio/introduction-to-skill); app-session files
+      expire with the session, at most 7 days (call-single-agent-application). Agent
+      Identity publishes a quota table (identity providers, workload identities, OAuth /
+      API-key providers, API rates) whose numbers did not render as text this pass.
+      (Paraphrase except quotes.) Managed Agents session / tool-count limits were not found.
+    source: https://help.aliyun.com/zh/model-studio/regions
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  data_residency:
+    status: documented
+    notes: >
+      Explicit two-axis model — region (where data rests) vs service deployment scope
+      (where inference runs): 「地域决定接入点和数据存储位置，就近选择可降低延迟。」 and
+      「服务部署范围：决定推理执行位置，有数据合规需求选择特定地理边界的部署范围，无合规需求选择全球部署范围（推理资源池更大）；」
+      Cross-region behaviour is spelled out: 「接入地域将请求转发至服务部署范围内的推理节点完成计算（传输全程加密）」
+      then 「推理结果回到接入地域存储，再响应给应用（用户静态数据始终存于所选地域）。」 So a
+      Global scope may run inference outside the region while data at rest stays put.
+      Scopes per region: Frankfurt Global/EU, Tokyo Global/Japan, Hong Kong Global/Hong
+      Kong, Virginia Global/US, chosen per workspace. (Paraphrase.)
+      EN product page (a different page, https://www.alibabacloud.com/en/product/modelstudio):
+      "Region = API endpoint + static data location." It also lists Zero Data Retention as
+      coming soon (September), not yet confirmed as shipped. Most new agent features are
+      cn-beijing only (see tool_region_variance). No stage label.
+    source: https://help.aliyun.com/zh/model-studio/regions
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  sovereign_cloud:
+    product: Apsara Stack (飞天企业版) private / sovereign cloud — sibling product
+    status: documented
+    notes: >
+      No GovCloud-style public region; the government offer is a private-cloud product.
+      「飞天企业版是为政府和企业客户定制的私有化 Agent 云平台，帮助用户安全部署关键业务，打造核心 AI 创新。」
+      It lists a 「主权 AI 云」 solution and 「从算力管理到智能体研发，一站式 AI 工作流」.
+      The AgentCore SLA (a different page,
+      https://terms.alicdn.com/legal-agreement/terms/b_end_product_protocol/20260907141143820/20260907141143820.html)
+      excludes 「AgentCore 本地云版本」, which implies an on-premises AgentCore edition exists.
+      (Paraphrase.)
+      GAP: the Apsara Stack page body does not name Model Studio / 百炼 Managed Agents as
+      available on it, and no 政务云 region listing for the agent services was found.
+      No stage label.
+    source: https://www.alibabacloud.com/zh/product/apsarastack
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   managed_agent_runtime:
     status: documented
     product: 百炼 Managed Agents
@@ -176,6 +348,97 @@ capabilities:
       No GA/公测/beta label — `documented`. Shape is strikingly close to Anthropic-style
       managed agents (Agent / Environment / Session / Event resources). (Paraphrase.)
     source: https://help.aliyun.com/zh/model-studio/managed-agents-introduction
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  multi_tenancy:
+    product: AgentRun (Sandbox / AgentRuntime) + Alibaba Cloud AgentCore
+    status: documented
+    notes: >
+      Isolation is documented at several levels, but the tenant unit is the workspace /
+      session, not an end-user-tenant API construct. AgentRun:
+      「基于安全容器（MicroVM）多级隔离（请求级、实例级、会话级）」, with session affinity
+      (「会话亲和，保证同一个会话尽量落在同一实例，方便持续对话和状态管理」) and
+      「Agent 运行时与 Sandbox 运行时安全隔离」.
+      AgentCore's EN product page (a different page,
+      https://www.alibabacloud.com/en/product/agentcore): "Strict Session Isolation:
+      Sandboxes enforce rigorous data separation at the session level, preventing any
+      cross-session interference or leakage."
+      Model Studio itself isolates data per workspace (see agent_workload_identity) and its
+      Code Interpreter sandbox uses one sandbox per analysis in multi-tenant scenarios (see
+      code_interpreter). (Paraphrase.) No stage label.
+    source: https://help.aliyun.com/zh/agentrun/what-is-agentrun
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  framework_agnosticism:
+    product: AgentRun + Alibaba Cloud AgentCore (高代码 Agent)
+    status: documented
+    notes: >
+      YES — but via the sibling runtimes, not 百炼 Managed Agents (which runs only the
+      vendor loop). AgentRun: 「提供适配主流 Agent 框架的集成能力，可与 LangChain、AgentScope、CrewAI、Google ADK 等框架结合使用」
+      and the high-code mode lets you 「使用 Python / Node.js / Java 等语言和任意框架，实现复杂逻辑和工程化落地」;
+      deploy by 「上传代码包（本地/OSS）、在线编码、自定义容器镜像」.
+      AgentCore's EN product page (a different page,
+      https://www.alibabacloud.com/en/product/agentcore): "Deploy existing Pro-code Agents
+      directly to the AgentCore runtime without any modifications." AgentCore's managed
+      harness choice also includes third-party loops such as Codex and DeepSeek (see
+      managed_agent_harness). (Paraphrase except quotes.) No stage label.
+    source: https://help.aliyun.com/zh/agentrun/what-is-agentrun
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  managed_agent_harness:
+    product: Alibaba Cloud AgentCore — 托管 Harness (separate product from Model Studio)
+    status: documented
+    notes: >
+      NAMING TRAP: Alibaba Cloud ships its own product called AgentCore
+      (智能体构建和治理平台 AgentCore) — unrelated to AWS Bedrock AgentCore, but its 托管 Harness
+      is the closest Alibaba analogue to AgentCore Harness / the Copilot harness.
+      「使用 AgentCore 托管 Harness 创建和运行 Agent，无需自行编写 Agent Loop 或管理 Harness 进程。」
+      「Harness 是执行 Agent Loop 的引擎，负责调用模型、执行工具，并根据执行结果决定下一步操作。」
+      Unusually, it is a CHOICE of harnesses, several of them third-party coding/agent loops:
+      「AgentCore 提供 QwenPaw、Qoder、Codex、Pi、Hermes 和 DeepSeek Harness 六种托管 Harness；创建 Agent 时，可配置模型、角色、工具和 Skill。」
+      Invoked over AG-UI with SSE replies; per-instance Session limits and Session TTL are
+      configured at creation. (Paraphrase.) The Agent overview (a different page,
+      https://help.aliyun.com/zh/agentcore/agent-overview) states the configure-not-code
+      split: 「使用托管 Harness 时，主要工作是配置 Agent 的行为；使用高代码 Agent 时，需要自行实现这些行为，并将应用部署到 AgentCore。」
+      Regions per the AgentCore product overview: cn-hangzhou, cn-shanghai, cn-shenzhen,
+      cn-beijing, ap-southeast-1 (Singapore). (Paraphrase.) No GA/公测 label on the harness
+      pages — `documented`.
+      WHY NOT 百炼 Managed Agents HERE: Model Studio Managed Agents is also a pre-built loop
+      (its intro, https://help.aliyun.com/zh/model-studio/managed-agents-introduction, says
+      「专注于 Agent 逻辑，而非从零开始构建和维护代理循环、沙箱编排或工具执行基础设施。」), but it is
+      already scored under managed_agent_runtime and referenced from managed_agent_loop;
+      it offers one vendor loop, not a selectable harness. AgentCore 托管 Harness is the
+      product the vendor itself names a harness, so it is the evidence for this row and
+      nothing is double-counted. (Paraphrase.)
+    source: https://help.aliyun.com/zh/agentcore/agent-instructions-managed-harness
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  voice_agents:
+    product: 通义多模态交互开发套件 (multimodal-dialog applications)
+    status: documented
+    notes: >
+      A first-class voice/video AGENT APPLICATION TYPE in Model Studio, not just a speech
+      model: you create a 多模态交互应用 (App ID) and configure model, voice, prompt and
+      Agents/plugins in the console. Full-duplex and interruptible:
+      「端到端全流式系统，支持全双工对话，用户可随时打断，系统即时调整策略」.
+      No-code config: 「支持可视化无代码配置模型/提示词/知识库/Agent/插件/设备指令等」, and
+      extensible: 「支持自定义Agent/插件接入，兼容三方通信协议。」 Targeted at devices
+      (glasses, robots, learning machines, phone apps) with device SDKs for Android, iOS,
+      Linux and RTOS. (Paraphrase except quotes.)
+      Transport: the WebRTC guide (a different page,
+      https://help.aliyun.com/zh/model-studio/best-practice-webrtc-multimodal-dialog) says
+      「多模态交互套件面向 AI/AR 眼镜、学习机、智能机器人等硬件场景，提供可视化应用配置、预置 Agent/插件、音色管理等完整业务能力。」
+      and calls a workspace endpoint with model=multimodal-dialog (example region
+      cn-beijing). (Paraphrase.)
+      GAPS vs the row hint: no session-duration limit or region table was found on these
+      pages, and no stage label. Lower down the stack, qwen3.8-omni-flash-realtime and
+      qwen-audio realtime models are plain realtime speech APIs (ai_service_tools
+      territory), not this row.
+    source: https://help.aliyun.com/zh/model-studio/multimodal-products-overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -238,6 +501,198 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  mcp_registry:
+    product: 百炼 MCP 广场 (official + third-party MCP catalog)
+    status: documented
+    notes: >
+      A managed catalog of cloud-deployed MCP services that agents and workflows can use
+      directly: 「阿里云百炼的官方 MCP 服务开通后即可使用。」 Discovery is via the MCP 广场:
+      「进入 MCP 广场：前往阿里云百炼 MCP 页面，浏览并选择带有 One Key 标识的 MCP 服务。」
+      One Key services need no separate key —
+      「使用阿里云百炼 API Key（DASHSCOPE_API_KEY）即可完成鉴权，无需为该服务单独申请密钥。」 —
+      and 「对于敏感数据，云部署 MCP Server 会在创建时使用 KMS 进行加密管理。」 The same
+      services are callable from external clients. (Paraphrase.)
+      Org-private registration: custom MCP servers deploy into the workspace (see
+      mcp_server_hosting); for agent/MCP discovery across teams AI Gateway recommends Nacos
+      AI Registry (see a2a_protocol). (Paraphrase.) No stage label.
+    source: https://help.aliyun.com/zh/model-studio/official-and-third-party-mcp
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openapi_import:
+    product: AI 网关 (HTTP-to-MCP) + 百炼 custom MCP import
+    status: documented
+    notes: >
+      Existing HTTP APIs become agent tools through AI Gateway: the enterprise scenario
+      uses 「AI网关提供的HTTP to MCP转换能力，将现有API自动转换为MCP Server」, and
+      「对于存量HTTP服务，用户可在网关中动态更新工具描述信息。」 Virtual MCP servers can
+      recombine tool lists. Model Studio's custom-MCP page offers import from AI Gateway or
+      from Alibaba Cloud OpenAPI (see mcp_server_hosting). (Paraphrase.)
+      GAP: these pages describe converting existing HTTP APIs; uploading an OpenAPI/Swagger
+      spec file as the import format is not stated on them. No stage label.
+    source: https://help.aliyun.com/zh/api-gateway/ai-gateway/product-overview/what-is-an-ai-gateway
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  web_search_tool:
+    product: Model Studio 联网搜索 (web_search tool)
+    status: documented
+    notes: >
+      「启用联网搜索后，模型可从网络获取实时数据，准确回答股票价格、天气预报、最新新闻等时效性问题。」
+      On the Responses API it is a built-in tool: 「通过 tools 参数添加 web_search 工具即可启用联网搜索。」
+      — the same example also adds web_extractor and code_interpreter tools. Four call
+      styles are documented (Responses, Chat Completions, DashScope, Anthropic-compatible),
+      with turbo / max / agent search strategies that vary by model. (Paraphrase.)
+      Realtime omni models and AI Gateway's Model API also offer a web-search option.
+      (Paraphrase.) Page updated 2026-11-21. No stage label.
+    source: https://help.aliyun.com/zh/model-studio/web-search
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  ai_service_tools:
+    product: Model Studio built-in tools + official MCP services + ParseX
+    status: documented
+    notes: >
+      Several first-party AI services are exposed as agent tools rather than only as model
+      APIs. The Agent overview lists ParseX for document parsing
+      (「文档解析与字段抽取。」) alongside MCP (「接入官方或自定义工具服务。」).
+      Built-in Responses API tools web_search, web_extractor and code_interpreter are shown
+      together on the web-search page (a different page,
+      https://help.aliyun.com/zh/model-studio/web-search). Official MCP services include a
+      WebParser page-parsing toolkit and Amap Maps (on the MCP pages,
+      https://help.aliyun.com/zh/model-studio/mcp and
+      https://help.aliyun.com/zh/model-studio/official-and-third-party-mcp). (Paraphrase.)
+      GAP: speech, translation and OCR are offered as model APIs (Qwen-Audio,
+      LiveTranslate, Qwen-VL) — no page found that packages them as ready-made agent tools.
+      No stage label.
+    source: https://help.aliyun.com/zh/model-studio/agent-overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  text_to_sql:
+    product: Quick BI (智能小Q) — sibling product; AgentCore 智能问数 scenario
+    status: documented
+    notes: >
+      Natural-language analytics lives in Quick BI, not in Model Studio:
+      「Quick BI 是阿里云推出的大模型驱动数据分析产品，深度融合 BI 与 Agent 能力，帮助企业快速构建数据分析系统。」
+      It runs natural-language questions end-to-end over connected sources and
+      「支持多数据源连接、权限管控和多端共享」. (Paraphrase except quotes.)
+      On the agent side, AgentCore names 智能问数 as a scenario in which an Agent Team reaches
+      data sources through MCP tools (agentcore-product-overview, a different page,
+      https://help.aliyun.com/zh/agentcore/agentcore-product-overview:
+      「智能问数：通过自然语言提出业务问题，由 Agent Team 拆解任务，多个 Agent 经 MCP 工具接入数据源分别完成取数、建模与归因」).
+      GAPS: neither page says SQL is generated, and no Model Studio text-to-SQL tool or
+      warehouse connector API was verified; DataWorks Data Agent and AnalyticDB were not
+      read this pass. No stage label.
+    source: https://help.aliyun.com/zh/quick-bi/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  skills_registry:
+    product: Alibaba Cloud AgentCore — Skill 管理 + Skill 广场 (plus the Agent Catalog)
+    status: documented
+    notes: >
+      A governed, versioned skill catalog at workspace / main-account level. Skills are
+      created by ZIP upload, Nacos CLI or Markdown; there is a Skill 广场 to import
+      third-party skills from (「切换到Skill 广场。」). Publishing is gated:
+      「新建的Skill版本状态为草稿，未正式发布。在发布前需要进行内容审核。」 and
+      「只有安全检测通过的Skill草稿，才能够发布。」 Version management with tags, enable/disable,
+      and visibility levels 私有 / 公开读 / 公开写 — 公开读 means
+      「当前主账号下的其他用户可见，但不可编辑、删除或修改可见性。」 — i.e. org (main-account)
+      sharing. (Paraphrase except quotes.)
+      Separately, the vendor-curated Agent Catalog (a different page,
+      https://help.aliyun.com/zh/skillsportal/learn-about-the-alibaba-cloud-agent-skills-portal):
+      「云 Agent 服务目录（Agent Catalog）是阿里云官方的 Agent 资产分发平台，提供官方 Agents、Skills、Plugins 与 Tools。」
+      and 「云 Agent 服务目录本身免费，Skills 与 Plugins 均可免费获取。」 It holds official
+      Alibaba Cloud skills only (searchable, with quality badges and download counts) for
+      external clients such as Claude Code, Qoder, Cursor — a public catalog, not an org
+      registry. (Paraphrase.)
+      Model Studio itself has a Skill 管理 page with official skills plus custom ZIP skills
+      (auto-reviewed, versioned, account-scoped names) — that is agent_skills evidence
+      rather than a registry (https://help.aliyun.com/zh/model-studio/introduction-to-skill;
+      paraphrase). AgentScope's MCP & Skill Hub is bucket a and not counted here.
+      No stage label on any of these pages — `documented`.
+    source: https://help.aliyun.com/zh/agentcore/management-skill
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_skills:
+    product: 百炼 Skill (Skill 管理)
+    status: documented
+    notes: >
+      「Skill 是可添加到智能体应用的能力包，用于让智能体在对话中自动处理特定类型的任务。」 Two
+      kinds: 「官方 Skill：平台预置的通用 Skill，覆盖常见文件处理场景。」 and
+      「自定义 Skill：通过上传 ZIP 技能包创建。」 Packaging follows the SKILL.md convention:
+      「ZIP 包根目录下必须有 SKILL.md 文件，用于定义 Skill 元信息。」 and
+      「整个 ZIP 包不超过 10 MB。」 Names must be unique within the account.
+      Managed Agents also mount skills (a different page,
+      https://help.aliyun.com/zh/model-studio/managed-agents-introduction:
+      「Skill：挂载预置的工具组合，封装端到端任务流程」). Versioned, review-gated skill
+      governance sits in AgentCore Skill 管理 (see skills_registry). (Paraphrase except
+      quotes.) No stage label.
+    source: https://help.aliyun.com/zh/model-studio/introduction-to-skill
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_gateway:
+    product: AI 网关 (Cloud-native API Gateway — AI Gateway)
+    status: documented
+    notes: >
+      A managed gateway for all three agent traffic types — model, MCP tool and agent/A2A.
+      Positioned 「作为企业AI应用与模型服务、工具及其他Agent之间的核心连接组件，通过提供协议转换、安全防护、流量治理和统一观测等能力」.
+      WHAT IT ENFORCES: per-consumer identity and governance
+      (「推荐按消费者维度配置治理规则，如 Token 数量限制和并发数控制。」); MCP auth down to the
+      single tool (「除支持MCP Server级别的调用鉴权外，还支持对单个工具进行细粒度的访问权限配置，实现基于调用方身份的精细化授权管理」);
+      content guardrails (「深度集成 AI 安全护栏能力，实现对违规内容与风险输入的实时拦截」); plus
+      WAF / IP allow-deny lists, KMS-held backend keys, rate limiting, fallback and
+      end-to-end tracing. Agent side: 「提供 REST 到 A2A 协议的转换能力」, Nacos AI Registry
+      for A2A discovery, and proxying of 百炼 / Dify / custom agent workloads. It also
+      converts REST APIs to MCP servers and does tool-list routing. (Paraphrase except
+      quotes.)
+      Agent management (a different page,
+      https://help.aliyun.com/zh/api-gateway/ai-gateway/user-guide/agent-management-access-and-observation):
+      「Agent 是 AI 网关的一种管理资源，用于集中维护访问配置、汇总观测数据。」 with per-agent
+      FinOps (tokens, sessions) for Dify, Claude Code, Codex, DeepSeek Harness etc.; but
+      「Agent 管理仅支持新版 Serverless 网关的标准版和企业版，旧版 Serverless 网关和实例型网关暂不支持。」
+      Same product the guardrails row cites (EN AI Guardrails integration page). No stage
+      label — `documented`. Higress (the open-source base) was not re-verified this pass.
+    source: https://help.aliyun.com/zh/api-gateway/ai-gateway/product-overview/what-is-an-ai-gateway
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  a2a_protocol:
+    product: AI 网关 (+ Nacos AI Registry)
+    status: documented
+    notes: >
+      A2A is supported at the gateway layer. AI Gateway's third traffic type is agents
+      being called by users or other agents: 「此类场景下AI应用常通过A2A等协议实现应用间的通信与调用。」
+      It recommends A2A-based discovery — 「推荐基于A2A协议通过Nacos AI Registry实现服务的注册与发现。」 —
+      and converts existing services: 「提供 REST 到 A2A 协议的转换能力，实现存量 HTTP 应用向 A2A 协议的自动化升级。」
+      GAP: no A2A endpoint was found on the 百炼 Managed Agents / Flow Agent pages
+      themselves; AgentScope's A2A support is a bucket a (SDK) fact. (Paraphrase.) No stage
+      label.
+    source: https://help.aliyun.com/zh/api-gateway/ai-gateway/product-overview/what-is-an-ai-gateway
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  distribution_to_packaged_products:
+    product: Alibaba Cloud AgentCore — 账号集成 (DingTalk / WeChat / Feishu channels)
+    status: documented
+    notes: >
+      PARTIAL — channel publishing, not a bridge into a packaged assistant. AgentCore's
+      core-function table: 「配置钉钉、微信、飞书等平台的账号集成，将 Agent 接入企业日常沟通渠道，实现对话式调用。」
+      and its digital-employee scenario goes 「经 IM 渠道直连办公场景」. DingTalk is Alibaba
+      Group's own workplace suite (the closest Teams analogue); WeChat and Feishu are
+      third-party. (Paraphrase.)
+      NOT FOUND: any documented way to publish a custom agent INTO Alibaba's packaged
+      assistant (QwenWork / 千问办公). The QwenWork product page mentions admin controls for a
+      custom marketplace and connectors but not custom-agent import. Model Studio's
+      DingTalk / WeChat publishing appears only as docs-sidebar tutorial titles, which are
+      not counted. (Paraphrase.) No stage label.
+    source: https://help.aliyun.com/zh/agentcore/agentcore-product-overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   code_interpreter:
     product: 百炼 Sandbox — Code Interpreter Sandbox
     status: documented
@@ -277,12 +732,92 @@ capabilities:
       RAM (Resource Access Management) provides identity for Model Studio, re-verified on
       the EN FAQ: "You can use your Alibaba Cloud account to grant different workspace
       permissions to different RAM users. Data is isolated between workspaces." Activation
-      by a RAM identity requires the AliyunBailianFullAccess policy. API keys are
-      workspace-scoped and non-interchangeable across regions. (Paraphrase.)
-      NOT YET RESEARCHED: the docs nav now links a separate Agent Identity product
-      (help.aliyun.com/zh/agentidentity/); it may be the closer analogue to AgentCore
-      Identity and should be read in a future pass.
+      by a RAM identity requires the AliyunBailianFullAccess policy. API keys do not
+      work across regions: "Each region has its own endpoint, API Key, and model list. These
+      cannot be used across regions." (a different page,
+      https://www.alibabacloud.com/help/en/model-studio/regions).
+      Agent Identity (智能体身份), the separate agent-identity product and closer analogue
+      to AgentCore Identity, was researched 2026-11-23 — see delegated_user_auth,
+      tool_least_privilege and tool_audit_trail. (Paraphrase.)
     source: https://www.alibabacloud.com/help/en/model-studio/faq-about-alibaba-cloud-model-studio
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  delegated_user_auth:
+    product: Agent Identity (智能体身份)
+    status: documented
+    notes: >
+      A dedicated agent-identity service with on-behalf-of access and a token vault — the
+      closest Alibaba analogue to AgentCore Identity.
+      「阿里云 Agent Identity 提供委托授权访问（On-Behalf-Of）能力，以用户自有身份访问工具，而不是机器身份。」
+      3LO flow: 「在可信用户使用 Agent 且用户完成 OAuth 授权后，Agent 临时获得访问工具的权限，且以用户身份、用户权限访问工具、资源」;
+      scope is capped: 「权限降级：Agent 获得的权限，永远不会超过用户本身的权限」.
+      Vault: 「所有敏感凭证（Client Secrets, API Keys, Refresh Tokens）均使用 KMS 加密存储在凭证保险箱（TokenVault）中。」
+      Inbound auth integrates OIDC IdPs (RAM, IDaaS, Okta, Entra ID, Ping Identity);
+      outbound credential types are STS Token, OAuth access token and API key; OAuth
+      credential providers include DingTalk, Google, Entra ID and Okta. Workload identities
+      can be created automatically by hosting services such as 百炼. (Paraphrase except
+      quotes.) Page updated 2026-01-14. No stage label.
+    source: https://help.aliyun.com/zh/agentidentity/what-is-agent-identity
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_least_privilege:
+    product: AI 网关 (per-tool auth) + Agent Identity (RAM policies)
+    status: documented
+    notes: >
+      Per-tool policy is enforced at the gateway:
+      「除支持MCP Server级别的调用鉴权外，还支持对单个工具进行细粒度的访问权限配置，实现基于调用方身份的精细化授权管理」,
+      so that 「确保不同安全等级的工具可依据风险级别分配相应的访问权限」.
+      Credential scoping via Agent Identity (a different page,
+      https://help.aliyun.com/zh/agentidentity/what-is-agent-identity):
+      「可配置 RAM 策略，限制特定的工作负载身份只能访问特定的凭证提供商。」 and agents start
+      with no tool access (「Agent 默认不具备访问工具的能力」). End-user-level fine-grained
+      control is announced, not shipped: 「同时即将支持 Agent 用户级的细粒度控制。」
+      No stage label.
+    source: https://help.aliyun.com/zh/api-gateway/ai-gateway/product-overview/what-is-an-ai-gateway
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_audit_trail:
+    product: Alibaba Cloud AgentCore + Agent Identity / ActionTrail + AgentLoop
+    status: documented
+    notes: >
+      AgentCore (EN product page): "AgentCore records every credential operation along
+      with the associated Agent Identity and Operator information, ensuring complete
+      traceability and accountability." and "Its full audit logs support
+      multi-dimensional retrieval by time, user, and Agent, meeting strict enterprise
+      compliance requirements."
+      Agent Identity (a different page,
+      https://help.aliyun.com/zh/agentidentity/what-is-agent-identity) writes to
+      ActionTrail: 「所有身份管理操作和凭证获取操作都将被记录到阿里云操作审计 (ActionTrail) 中，提供完整的审计追溯能力。」
+      at end-user granularity: 「审计粒度达到 Agent 用户级：哪个 Agent 用户、使用什么 Agent、通过哪个 RAM 角色获取了什么凭证。」
+      Per-TOOL-CALL trail: AgentLoop (a different page,
+      https://help.aliyun.com/zh/agentloop/product-overview/what-is-agentloop):
+      「AgentLoop 为 Agent 每一步工具调用和决策分支构建不可篡改的执行轨迹证据链。」
+      CAVEAT: the ActionTrail records cover identity and credential operations; the
+      who/what/when of each tool invocation comes from AgentLoop traces. (Paraphrase.)
+      No stage label.
+    source: https://www.alibabacloud.com/en/product/agentcore
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  private_networking:
+    product: Model Studio PrivateLink + AgentRun / AgentCore
+    status: documented
+    notes: >
+      Model Studio apps can be called privately: 「在百炼控制台为您的VPC添加私网连接（PrivateLink），并将目标业务空间与该私网连接关联。」
+      The private endpoint follows a {WorkspaceId}-{VpcId}.cn-beijing.maas.aliyuncs.com
+      pattern. (Paraphrase.)
+      AgentRun (a different page, https://help.aliyun.com/zh/agentrun/what-is-agentrun):
+      「如需在 VPC 内网访问 AgentRun 服务，可通过 PrivateLink 配置内网访问端点」 and
+      「支持 VPC/IDC 网络打通，数据不出企业私域。」 The EN product page (a different page,
+      https://www.alibabacloud.com/en/product/modelstudio) lists "Encryption, sandbox
+      isolation, VPC/PrivateLink." AgentCore's product overview also lists PrivateLink as a
+      dependent product. (Paraphrase.)
+      GAP: no egress allowlist for 百炼 Managed Agents / Sandbox containers was found.
+      No stage label.
+    source: https://help.aliyun.com/zh/model-studio/call-single-agent-application
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -319,6 +854,79 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  apm_integration:
+    product: AgentRun observability (ARMS / Prometheus) + AgentCore (CloudMonitor 2.0) + AgentLoop
+    status: documented
+    notes: >
+      AgentRun ties into Alibaba's APM stack: 「基于 Prometheus / ARMS 构建监控大盘，分析模型性能、Token 成本、GPU 异动等」,
+      on top of 「基于 OpenTelemetry Trace，对用户请求 → 网关 → Agent → 模型 → 工具 → 外部依赖的全链路追踪」.
+      AgentCore's EN product page (a different page,
+      https://www.alibabacloud.com/en/product/agentcore): end-to-end tracing
+      "seamlessly integrated with Cloud Monitoring Service (CMS) 2.0". AgentLoop accepts
+      OpenTelemetry and Alibaba probes across frameworks (see tool_audit_trail). 百炼
+      Evolution's own traces land in SLS LogStore (see otel_traces). (Paraphrase.) No stage
+      label.
+    source: https://help.aliyun.com/zh/agentrun/what-is-agentrun
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  cost_attribution:
+    product: AgentRun + AI 网关 + AgentCore
+    status: documented
+    notes: >
+      AgentRun: 「Token 级别成本归因：精确到模型调用、向量检索、工具调用等环节」 and
+      「多维度分析：按用户、会话、Agent 类型统计成本和效果」.
+      AI Gateway (a different page,
+      https://help.aliyun.com/zh/api-gateway/ai-gateway/product-overview/what-is-an-ai-gateway):
+      「AI网关可支持以消费者为维度的计量计费功能」, with per-consumer and per-model token
+      statistics; its Agent management view adds per-agent token / session FinOps (see
+      agent_gateway). AgentCore (a different page,
+      https://help.aliyun.com/zh/agentcore/agentcore-product-overview) pitches coding-agent
+      fleets where 「Token 消耗可归因、可管控、可审计」. (Paraphrase except quotes.)
+      Model Studio's own per-workspace usage views were not re-verified. No stage label.
+    source: https://help.aliyun.com/zh/agentrun/what-is-agentrun
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  versioning_rollout:
+    product: AgentRun AgentRuntime + AI 网关 (canary) + AgentLoop assets
+    status: documented
+    notes: >
+      AgentRun's runtime lists 「版本管理、Endpoint 管理与灰度发布」.
+      Canary by weight or header at AI Gateway (a different page,
+      https://help.aliyun.com/zh/api-gateway/ai-gateway/product-overview/what-is-an-ai-gateway):
+      「多模型服务（按比例）：支持配置一个或多个大模型服务，为每个服务指定对应的模型名称及请求分配比例。适用于新模型灰度发布等场景。」
+      and 「Agent API 支持基于请求特征的灰度发布能力」.
+      Prompt / Skill versions: AgentLoop (a different page,
+      https://help.aliyun.com/zh/agentloop/product-overview/what-is-agentloop) manages them
+      like code — 「每次变更可回溯，效果可对比度量，上线节奏可控，支持灰度发布与多人协同编辑。」
+      GAP: an explicit rollback action and 百炼 Flow Agent app version aliases were not
+      verified this pass. (Paraphrase.) No stage label.
+    source: https://help.aliyun.com/zh/agentrun/what-is-agentrun
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  iac_coverage:
+    product: Terraform alicloud provider (AgentLoop, AI Gateway, PAI, FC) + 百炼 Managed Agents CLI
+    status: documented
+    notes: >
+      PARTIAL. The official aliyun/terraform-provider-alicloud docs include AgentLoop
+      resources: "Agent Space is the basic management unit of AgentLoop, which is used to
+      isolate resources such as agents, sessions and trajectory data between different
+      businesses or environments." (alicloud_agentloop_agent_space, available since
+      v2.1.0). The provider's resource docs (checked 2026-11-23 in the GitHub tree) also
+      cover AgentLoop datasets, evaluators, evaluation and optimize tasks, the APIG AI
+      model provider, PAI and Function Compute v3 — but NO Model Studio (百炼), AgentRun or
+      AgentCore resources were found. (Paraphrase.)
+      Model Studio's answer is a CLI: the Managed Agents introduction (a different page,
+      https://help.aliyun.com/zh/model-studio/managed-agents-introduction) links
+      「通过 CLI 管理 Agent 与会话：以基础设施即代码方式在终端管理 Agent 与会话」.
+      ROS (Resource Orchestration Service) resource types for these products were not
+      checked this pass. No stage label.
+    source: https://raw.githubusercontent.com/aliyun/terraform-provider-alicloud/master/website/docs/r/agentloop_agent_space.html.markdown
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   eval_service:
     product: 百炼 Evolution — 应用评测
     status: documented
@@ -332,6 +940,44 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  agent_optimization:
+    product: 百炼 Evolution — 应用优化 + AgentLoop
+    status: documented
+    notes: >
+      Model Studio: 「应用优化支持多版本效果对比、基于调试结果与反馈优化 Prompt，以及基于优质评测数据优化 Prompt。」
+      Version comparison runs a baseline against up to two variants
+      (「弹窗默认展示一组基准组和一组对照组，最多支持添加两组对照组。」), and an AI-generated
+      prompt is reviewed before adoption — 「采纳仅更新当前编辑中的 Prompt，不会自动发布应用。」
+      Scope is prompts; tool-description optimization and live traffic splitting are not
+      described here. (Paraphrase.)
+      AgentLoop (a different page,
+      https://help.aliyun.com/zh/agentloop/product-overview/what-is-agentloop) adds
+      pre-release experiments: 「AgentLoop 的实验能力支持团队在变更前基于历史数据集进行 A/B 对比实验」,
+      and its Terraform provider exposes an Optimize Task resource ("Optimize Task is used
+      to create an optimization task in the Agent Space to analyze and optimize the
+      agents." — a different page,
+      https://raw.githubusercontent.com/aliyun/terraform-provider-alicloud/master/website/docs/r/agentloop_optimize_task.html.markdown).
+      AgentLoop's Playground experiment feature was stated as due by 2026-06-30
+      (「此功能预计于2026年6月30日前正式上线」); its launch was not re-verified. No stage
+      label.
+    source: https://help.aliyun.com/zh/model-studio/agenteval-optimization
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  feedback_service:
+    status: unknown
+    notes: >
+      No managed END-USER feedback collection (thumbs up/down or comments captured from app
+      users and traced alongside telemetry) was found. Searched: 百炼 Evolution 应用优化
+      (cited) — its 反馈 is the developer's own 人工反馈 typed into the optimizer while
+      debugging, not end-user feedback; 百炼 Evolution 应用观测 / 评测 (see otel_traces,
+      eval_service); AgentLoop product overview, where human input is periodic labelling to
+      calibrate Agent-as-a-Judge evaluators; Flow Agent and Managed Agents pages. (Paraphrase.)
+      Absence of evidence, not a vendor denial — hence `unknown`.
+    source: https://help.aliyun.com/zh/model-studio/agenteval-optimization
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   pricing_axes:
     status: documented
     notes: >
@@ -339,52 +985,107 @@ capabilities:
       "Model Studio uses the pay-as-you-go billing mode by default". Axes:
       1. Pay-as-you-go per-token model billing (e.g. qwen4-max International ≤1M-token tier
          $1.5/M input, $4.5/M output; batch calls at 50% of real-time — on the
-         model-pricing page, a different page). Context caching is a further axis on the
+         model-pricing page, a different page,
+         https://www.alibabacloud.com/help/en/model-studio/model-pricing ). Context caching is a further axis on the
          same model-pricing page: "Explicit Cache creation is billed at 125% of the standard
          input unit price, and cache hits are billed at 10%"; Batch and cache discounts
          "cannot take effect at the same time".
       2. AI general-purpose savings plan: "savings of up to 47% off"; terms "3 months,
          6 months, 12 months, or 24 months"; monthly commitment "starting from 150 USD".
-         Third-party (Category C) models offset 1:1 with no discount.
+         Category C models (DeepSeek, Kimi, GLM, MiniMax and others) offset 1:1 with no
+         discount, and only their Alibaba Direct Supply versions; Third-party versions are
+         not offset. (Paraphrase.)
       3. Other model-specific savings plans.
       4. Token Plan (Personal / Team) subscriptions for AI coding and agent tools (Team:
          $20–$180/seat/month — see bucket C seat_pricing).
       5. Free quota for new users (Singapore only).
       "Deduction order: free quota > other model savings plans > AI general-purpose savings
       plan > pay-as-you-go."
-      New since August, priced separately: Managed Agents, Flow Agent, Sandbox, RAG,
-      Memory, ParseX and Security each have their own billing page (not read this pass).
+      The docs sidebar on the agent overview lists separate billing pages for Managed
+      Agents, Flow Agent, Sandbox, RAG, Memory, ParseX and Security (navigation titles
+      only; the pages were not read this pass).
     source: https://www.alibabacloud.com/help/en/model-studio/savings-plan-and-resource-package
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
-  runtime_sla:
+  separately_billed_primitives:
+    product: Alibaba Cloud AgentCore + 百炼 Agent services
+    status: documented
+    notes: >
+      Yes — the primitives meter separately. AgentCore:
+      「计费项包括算力 CU、网关 CU、存储 CU、可选的协作专享管控面和公网流量。」 Long-lived
+      connections are metered too — streaming, MCP long connections and long agent sessions
+      count as one gateway request per 30 seconds held
+      (「按连接保持时长每 30 秒折算为 1 次请求调用」) — and 「开通 AgentCore 时一并开通的其他阿里云产品按各自的计费规则独立计费」.
+      On the 百炼 side each agent service has its own meter, verified in page bodies:
+      knowledge base = spec fee + model-call fee (knowledge_base), Memory commercial billing
+      since 2026-08-20 (long_term_memory), Managed Agents sessions billed by running time
+      only (long_running_agents), plus per-token model charges. (Paraphrase.)
+    source: https://help.aliyun.com/zh/agentcore/agentcore-billing-instructions
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  free_tier_commitments:
+    status: documented
+    notes: >
+      Free tier: "New users get a free trial with 10 million tokens" (EN product page). The
+      free quota is region-bound — the model-pricing page (a different page,
+      https://www.alibabacloud.com/help/en/model-studio/model-pricing): "The following
+      models offer a free quota only in the Singapore region, and no free quota is available
+      in other regions." The CN product page (a different page,
+      https://www.aliyun.com/product/bailian) likewise offers
+      「开通阿里云百炼服务的新用户可享专属免费额度」.
+      Commitments: AI general-purpose savings plans (3–24 month terms, up to 47% off) and
+      Token Plan subscriptions — see pricing_axes. (Paraphrase.)
+      Marketplace procurement of Model Studio itself (buying through Alibaba Cloud
+      Marketplace against a commitment) was not found. No stage label.
+    source: https://www.alibabacloud.com/en/product/modelstudio
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_payments:
     status: unknown
     notes: >
-      NO AGENT-RUNTIME SLA FOUND for 百炼 Managed Agents. The cited page is the Model Studio
-      model-inference SLA; its exclusion clause (quoted below) scopes THAT SLA to paid model
-      inference — it does not state that other Model Studio services have no SLA, hence
-      `unknown`. (Paraphrase.) CAVEAT — the inference SLA itself:
-      "We shall use commercially reasonable endeavors to provide a Monthly Uptime
-      Percentage of no less than 99.9% each billing month in connection with your use of
-      the Service". Service Credit tiers: <99.9% → 10%, <99% → 25%, <95% → 50%. Claims
-      within 30 days of billing month end. Full exclusion: "This SLA
+      NO FIRST-PARTY AGENT-PAYMENTS PRODUCT FOUND on Alibaba Cloud. The Model Studio Agent
+      services overview (cited) lists Managed Agent, Flow Agent, Sandbox, RAG, Memory,
+      Connector, ParseX, MCP, Skill, Evolution and Security — no payments or wallet
+      capability. The AgentCore product overview
+      (https://help.aliyun.com/zh/agentcore/agentcore-product-overview) core-function table
+      and the AgentRun overview likewise list none. help.aliyun.com doc searches on
+      2026-11-23 for x402, 智能体 支付, AI 支付 Agent and 支付宝 智能体 returned no agent-payment
+      product. (Paraphrase.)
+      Alipay (Ant Group) agent-payment offerings, if any, are not Alibaba Cloud products
+      and no Alibaba Cloud page stating such an offering was found. Absence of evidence,
+      not a vendor denial — hence `unknown`, not `none`.
+    source: https://help.aliyun.com/zh/model-studio/agent-overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  runtime_sla:
+    product: Alibaba Cloud AgentCore (Agent 运行时) — separate product from Model Studio
+    status: documented
+    notes: >
+      STATUS CHANGE unknown → documented: an SLA that explicitly covers an AGENT RUNTIME
+      exists, on the sibling AgentCore product (effective 2026-09-18).
+      「Agent 运行时服务可用性不低于 99.9%。」 Scope is narrow and stated:
+      「本承诺仅针对 AgentCore 平台自身的 Agent 运行时服务。」 — third-party or self-built
+      agents that AgentCore merely manages are excluded, and so are previews and the
+      on-prem edition (「本协议不适用于 AgentCore 公测、邀测、免费的功能及版本」). Availability
+      is computed from 5-minute error rates per workspace; credits are 15% (99.0–99.9%),
+      30% (95.0–99.0%) and 100% (below 95.0%) of that workspace's monthly fee, paid as
+      vouchers. (Paraphrase of the tables.)
+      STILL NO SLA FOUND for 百炼 Managed Agents. The Model Studio model-inference SLA (a
+      different page,
+      https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-model-studio-model-inference-service-level-agreement)
+      offers "a Monthly Uptime Percentage of no less than 99.9% each billing month in
+      connection with your use of the Service" but excludes everything else: "This SLA
       shall not apply to any other products or services on Alibaba Cloud Model Studio,
       including but not limited to Model Unit or Dedicated Throughput Unint service,
       inference services offered by third parties (if any), model experience service, and
-      AI subscription services such as Coding Plan or Token Plan." (Vendor typo "Unint"
-      preserved.) Deprecated models are excluded. By that wording Managed Agents and the
-      knowledge base are not covered by this inference SLA. Page updated 2026-09-08.
-      The same page's Product SLA list (docs sidebar) also links separate SLAs titled
-      Alibaba CLoud International Website Agent Sandbox Service Level Agreement
-      (www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-agent-sandbox-service-level-agreement)
-      and Alibaba Cloud International Website AgentLoop Service Level Agreement
-      (www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-agentloop-service-level-agreement);
-      both pages were opened 2026-11-23 and are standalone SLAs for the Agent Sandbox and
-      AgentLoop products. Whether either covers 百炼 Sandbox / Managed Agents is
-      unverified. (Paraphrase; titles as shown on the pages, vendor capitalisation
-      CLoud preserved.)
-    source: https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-model-studio-model-inference-service-level-agreement
+      AI subscription services such as Coding Plan or Token Plan." (Vendor typo Unint
+      preserved.) That page's docs sidebar also links standalone Agent Sandbox and AgentLoop
+      SLAs (opened 2026-11-23); whether they cover 百炼 Sandbox is unverified. (Paraphrase.)
+    source: https://terms.alicdn.com/legal-agreement/terms/b_end_product_protocol/20260907141143820/20260907141143820.html
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -445,8 +1146,62 @@ capabilities:
       Lifecycle: 「归档 Session 会终止会话并保留历史，删除 Session 会不可逆地删除元数据和历史」.
       The live stream does not replay (「SSE 推送实时事件，不回放历史。」); history catch-up after a
       disconnect is a separate documented flow. The Managed Agents introduction (a different
-      page) adds that event history is persisted server-side and sessions support
+      page, https://help.aliyun.com/zh/model-studio/managed-agents-introduction) adds that event history is persisted server-side and sessions support
       interruption and resumption (「服务端维护会话状态，支持中断与续接」).
+    source: https://help.aliyun.com/zh/model-studio/managed-agents-quickstart
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  short_term_memory:
+    product: 百炼 Flow Agent apps (session_id) + Managed Agents sessions
+    status: documented
+    notes: >
+      Both managed and bring-your-own: the multi-turn section contrasts cloud storage
+      (云端存储) with self-managed history (自行管理). (Paraphrase.) Managed:
+      「通过传入 session_id，系统会自动从云端加载存储的对话历史，并结合新的指令生成上下文。」
+      BYO: pass messages yourself — 「优先级规则：若同时传入 session_id 和 messages，则优先使用 messages，忽略 session_id。」
+      Session-scoped files: 「文件仅在当前会话有效（最长7天），关闭会话后自动过期」. Managed
+      Agents sessions also keep context server-side across turns (see session_management).
+      Managed session history via session_id is valid for one hour with at most 50 rounds,
+      per the page's FAQ: 「有效期1小时，最大历史轮数50。」 No stage label.
+    source: https://help.aliyun.com/zh/model-studio/call-single-agent-application
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpoint_resume:
+    product: 百炼 Managed Agents (+ AgentCore Runtime)
+    status: documented
+    notes: >
+      Server-side session state with interrupt/resume, rather than user-visible checkpoints:
+      「服务端维护会话状态，支持中断与续接」, with 「事件历史在服务端持久化」. Sandbox state can
+      outlive a run: 「沙箱默认在会话空闲后回收；如需跨运行保留工作文件和环境修改，可在创建会话时开启沙箱持久化。」
+      After a client disconnect the quickstart (a different page,
+      https://help.aliyun.com/zh/model-studio/managed-agents-quickstart) says
+      「断线或读取超时本身不能判定任务结果，结果保持 UNKNOWN」 — query session status and event
+      history, and 「不自动重发任务」. AgentCore's release notes (a different page,
+      https://help.aliyun.com/zh/agentcore/agentcore-release-notes) list
+      「优化 Runtime 会话持久化、恢复和预热资源回收。」
+      GAP: no step-level checkpoint / replay-from-step API, and no statement on resuming a
+      session after a runtime crash, was found. (Paraphrase.) No stage label.
+    source: https://help.aliyun.com/zh/model-studio/managed-agents-introduction
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  human_in_the_loop:
+    product: 百炼 Managed Agents (tool approval) + Alibaba Cloud AgentCore
+    status: documented
+    notes: >
+      Tool-approval gates are a first-class session state: requires_action means
+      「等待工具审批，需要处理审批或中断本轮，不是执行成功。」, and the next steps point to
+      session operations (「审批、中断和终止操作见会话操作」). (Paraphrase except quotes.)
+      Mid-run intervention: the Managed Agents introduction (a different page,
+      https://help.aliyun.com/zh/model-studio/managed-agents-introduction):
+      「干预或中断：在执行过程中发送新事件引导方向，或中断当前任务。」
+      AgentCore's EN product page (a different page,
+      https://www.alibabacloud.com/en/product/agentcore) lists "Hybrid Orchestration:
+      Coordinate workflows across human users and AI agents." and long-running task
+      pause/resume. Which tools require approval (policy configuration) was not read this
+      pass. No stage label.
     source: https://help.aliyun.com/zh/model-studio/managed-agents-quickstart
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

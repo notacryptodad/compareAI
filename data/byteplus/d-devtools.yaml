@@ -27,7 +27,7 @@ notes: >
 capabilities:
   ide_integration:
     status: documented
-    value: [TRAE IDE (TraeCode), TraeCode Plugin (VS Code, JetBrains)]
+    value: [TRAE IDE (TraeCode), "TraeCode Plugin (VS Code, JetBrains)"]
     notes: >
       Two surfaces. The standalone IDE: "A fully featured, AI-native IDE — out of the box
       for your entire team."
@@ -46,24 +46,42 @@ capabilities:
     verified_by: "@notacryptodad"
 
   cli_agent:
-    status: unknown
+    product: Trae Agent (bytedance/trae-agent, open source)
+    status: oss
     notes: >
-      CHANGED FROM `none` (2026-11-23). The Enterprise page announces a CLI that is not yet
+      STATUS CHANGE 2026-11-23 (fact-check, provider-scope rule): unknown -> oss. The
+      first-party coding CLI that ships today is ByteDance's open-source Trae Agent (a
+      different page, https://github.com/bytedance/trae-agent): "Trae Agent is an LLM-based
+      agent for general purpose software engineering tasks. It provides a powerful CLI
+      interface that can understand natural language instructions and execute complex
+      software engineering workflows using various tools and LLM providers." Caveat: its
+      README positions it as research-friendly, and it is not the TRAE product's own CLI.
+      The product CLI (TraeCode CLI) is still coming soon, as below.
+      EARLIER (2026-11-23): changed from `none`. The Enterprise page (a different page,
+      https://www.trae.ai/enterprise) announces a CLI that is not yet
       shipped: integration methods are "IDE, plugin, or CLI (coming soon) — every developer
       can work the way they work best." The product card reads "TraeCode CLI" "(coming
       soon)" and describes it as "Tailored for large-scale refactoring, bulk generation,
       code migration, and test backfilling." It is meant to run from CI/CD.
       The coming-soon label announces a future CLI but is not a positive statement that no CLI is
-      offered, so this stays `unknown` rather than `none`. Revisit when the coming-soon
-      label is removed. The BytePlus TRAE Teams page (www.byteplus.com/en/product/trae)
+      offered, so the TRAE product CLI was scored `unknown` rather than `none` (history;
+      the cell now rests on Trae Agent). Revisit when the coming-soon label is removed. The BytePlus TRAE Teams page (www.byteplus.com/en/product/trae)
       carries the same "IDE, plugin, or CLI (coming soon)" wording (checked 2026-11-23).
       A refresh dated 2026-11-22 set this cell to `documented` from that wording; rejected,
       because a coming-soon label documents a roadmap item, not a shipped CLI.
       Separately, ByteDance publishes the open-source research project Trae Agent
       (github.com/bytedance/trae-agent), an LLM-based software-engineering agent with a
-      CLI; it is a research framework, not the TRAE product CLI. (Paraphrase, from a
-      different page: github.com/bytedance/trae-agent.)
-    source: https://www.trae.ai/enterprise
+      CLI; it is a research framework, not the TRAE product CLI. (Paraphrase.)
+      2026-11-23 GAP PASS (before the fact-check moved the cell to Trae Agent). Re-rendered www.trae.ai/enterprise; the
+      TraeCode CLI card still reads coming soon. Search trail with no shipped CLI found:
+      the docs.trae.ai navigation tree (about 650 titles across languages; the only
+      terminal entry is the IDE's Terminal mark-for-AI-use page), the www.trae.ai
+      changelog, and www.trae.ai/cli (no such page; it serves the homepage). npm has no
+      trae-cli, traecode or @trae-ai/cli package. Siblings were checked too. The
+      BytePlus ModelArk Coding Plan sells model access for third-party coding tools,
+      and BytePlus ArkClaw has a terminal for managing Claw instances. Neither is a
+      first-party coding CLI agent. (Paraphrase.)
+    source: https://github.com/bytedance/trae-agent
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 

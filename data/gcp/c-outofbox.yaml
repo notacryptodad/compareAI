@@ -61,7 +61,9 @@ capabilities:
       that also accepts custom MCP servers.
       Overview names "prebuilt connectors for commonly-used third-party applications like
       Confluence, Jira, Microsoft SharePoint, and ServiceNow".
-      Navigation on a different page (the connectors overview) shows a much wider catalog:
+      Navigation on a different page (the connectors overview,
+      https://docs.cloud.google.com/gemini/enterprise/docs/connectors/introduction-to-connectors-and-data-stores)
+      shows a much wider catalog:
       Google sources (Drive, Gmail, Chat, Calendar, Sites, BigQuery, Cloud SQL, Spanner,
       AlloyDB) and well over a hundred third-party entries (Box, Dropbox, Salesforce, Slack,
       Notion, Zendesk, GitHub/GitLab, Microsoft OneDrive/Outlook/Teams/SharePoint, Zoho,
@@ -72,6 +74,44 @@ capabilities:
       overview prose. Do not publish a connector total from this evidence.
       Notable that it indexes Microsoft 365 sources.
     source: https://docs.cloud.google.com/gemini/enterprise/docs
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  web_search_tool:
+    status: documented
+    notes: >
+      Built in, admin-controlled, with a residency-compliant option. In the Enable web
+      grounding section admins pick "Google search (not Data Residency compliant) to use
+      the standard Google Search index for grounding." or "Enterprise web search (Data
+      Residency compliant) to use the enterprise-grade and compliant web index." A
+      default web search state toggle sets whether new queries use web search by default;
+      "Users can always change this setting manually for each search."
+      The Compare editions page (a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/editions) ticks Ground with
+      Google Search and Web Grounding for every edition. COMPLIANCE CAVEAT: the compliance
+      page (https://docs.cloud.google.com/gemini/enterprise/docs/compliance-security-controls,
+      a different page) footnotes that data residency, CMEK, VPC-SC and Access
+      Transparency "Doesn't apply when Grounding with Google Search is enabled."
+      (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/configure-assistant
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  ai_service_tools:
+    status: documented
+    notes: >
+      First-party generative services are exposed as admin-toggled web-app features
+      rather than as a tool API: "When enabled, users can generate images in the web
+      app." (choice of image model; Gemini 3 Pro image and Gemini 3.1 Flash image are
+      each stated as "generally available (GA) and is turned off by default"), "When
+      enabled, users can generate videos in the web app.", and speech-to-text dictation
+      ("users can dictate their prompts into the web app, using the mic icon in the chat
+      box"). Also canvas / app builder and Gemini Notebook for business.
+      Made-by-Google agents on the Compare editions page (a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/editions): Deep Research (all
+      editions) and Data Insights. No OCR or translation tool is named on these pages.
+      (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/manage-web-app-features
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -104,7 +144,7 @@ capabilities:
       "Looking for advanced features and enterprise-grade compliance? Contact sales about
       Gemini Enterprise Standard or Plus editions."
       Standard/Plus price is NOT on this page any more; the Antigravity pricing page (a
-      different page) states "Standard/Plus plans starting at $30 USD per seat per month"
+      different page, https://antigravity.google/pricing) states "Standard/Plus plans starting at $30 USD per seat per month"
       for eligible Gemini Enterprise customers, plus a pay-as-you-go plan with a $0 seat fee.
       Notable: a SEPARATE product from Google Workspace Gemini features.
       REMOVED 2026-11-23: the August note's press-report claim about Business-edition
@@ -118,17 +158,20 @@ capabilities:
     notes: >
       Editions: Business, and "Standard, Plus, Pay-as-you-go, and Frontline Editions".
       BUNDLE CHANGE since August (from the Gemini Enterprise and Gemini Code Assist release
-      notes, a different page): "AI developer tools is generally available (GA) for Gemini
+      notes, a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/release-notes): "AI developer tools is generally available (GA) for Gemini
       Enterprise Standard, Plus, and Pay-as-you-go editions with an invoiced Cloud Billing
       account." (2026-08-18) — i.e. Antigravity coding tools are now bundled into Gemini
       Enterprise seats, while new Standard/Plus subscriptions no longer include a Gemini
       Code Assist entitlement (from 2026-10-09). Licenses are assigned in the Google Cloud
       console ("Get subscriptions and assign licenses" is in the admin navigation on the
-      connectors overview page).
+      connectors overview page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/connectors/introduction-to-connectors-and-data-stores).
       CORRECTED 2026-11-23: the August note said Gemini Enterprise is available as part of
       Google Workspace editions; the overview page does not say that, and the Antigravity
       FAQ says Workspace plans don't include Antigravity plans. Removed.
-      DELIVERY MODEL BY EDITION (Compare editions page, a different page): "Gemini
+      DELIVERY MODEL BY EDITION (Compare editions page, a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/editions): "Gemini
       Enterprise Business edition is a software as a service (SaaS) application accessible
       through the web at business.gemini.google." with "no project numbers or project-level
       IAM roles to manage"; Business is 1-500 users, while Standard, Plus, Pay-as-you-go
@@ -139,19 +182,43 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  addon_surcharges:
+    status: documented
+    notes: >
+      POOLED QUOTAS + OPTIONAL OVERAGE, not per-connector fees. License editions include
+      a pooled quota per feature; with pay-as-you-go usage above quota turned on, "Usage
+      above your pooled quotas is charged at pay-as-you-go rates." Without it, usage of a
+      feature stops at quota until reset. The Pay-as-you-go edition is "An edition with no
+      license fee and no pooled quota."
+      Compare editions page (a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/editions): pooled storage and
+      indexing of 25 / 30 / 75 GiB per user (Business / Standard / Plus), connector
+      breadth gated by edition rather than priced per connector, and partner (Anthropic) model use in AI
+      developer tools "is billed as pay-as-you-go usage".
+      INCLUDED: "Model Armor is supported on all Gemini Enterprise editions at no
+      additional cost." (a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/enable-model-armor).
+      No per-connector or per-index surcharge is stated on these pages. (Paraphrase
+      except quoted text.)
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/manage-costs-overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   authoring_mode:
     status: documented
     value: both
     notes: >
       Agent Gallery provides out-of-the-box agents ("Use out-of-the-box agents") while
       custom agents can be built and registered (code path). No-code path is now Workflow
-      Builder — per the release notes (a different page), "Workflow Builder (formerly known
+      Builder — per the release notes (a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/release-notes), "Workflow Builder (formerly known
       as Agent Designer) is generally available (GA) in Gemini Enterprise." (2026-09-03).
       Both routes documented.
-      Agent Gallery page (a different page, .../gemini/enterprise/docs/agent-gallery):
-      filter categories are Made by Google, From your organization, Your agents and
-      Marketplace; "+ New agent" opens Workflow Builder, which builds "Chat agents" and
-      "Workflows: Multi-step automated workflows configured with triggers and connector
+      Agent Gallery page (a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/agent-gallery): filter
+      categories are Made by Google, From your organization, Your agents and Marketplace;
+      the + New agent button opens Workflow Builder, which builds chat agents and
+      workflows — "multi-step automated workflows configured with triggers and connector
       actions." (Paraphrase except quoted text.)
     source: https://docs.cloud.google.com/gemini/enterprise/docs
     verified_on: 2026-11-23
@@ -168,7 +235,8 @@ capabilities:
       administrators must turn on the Claude Opus 5.5 toggle in the Enable third-party
       models section." Gemini models have per-model toggles (e.g. "Administrators can turn
       on or turn off the Gemini 3.8 Flash toggle in the Gemini Enterprise app.").
-      Per the release notes (a different page, 2026-10-15), once enabled "users can select
+      Per the release notes (a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/release-notes, 2026-10-15), once enabled "users can select
       the model in the model selector" — so this is admin-curated END-USER choice, broader
       than in August (Gemini-only, admin toggles).
     source: https://docs.cloud.google.com/gemini/enterprise/docs/locations
@@ -192,6 +260,26 @@ capabilities:
       SOURCE CHANGE 2026-11-23: the Agentspace-era URL 404s; content moved here (wording
       now says "Gemini Enterprise index" instead of Vertex AI Search index).
     source: https://docs.cloud.google.com/gemini/enterprise/docs/connectors/introduction-to-connectors-and-data-stores
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  conversation_history:
+    status: documented
+    notes: >
+      ADMIN-SET RETENTION: in the Chat history retention period section admins "can
+      select 1, 30, 60, 90, 120, or 180 days (the default is 60 days)." "Chat sessions
+      older than the selected retention period are automatically deleted." — age is
+      counted from chat creation, so recently-used chats can vanish without warning.
+      The release notes (a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/release-notes, 2026-03-11)
+      label this control "generally available (GA)".
+      PERSONALIZATION (feature management page, a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/manage-web-app-features): with
+      memory and customization on, "Gemini Enterprise uses past conversations and saved
+      memory settings to generate personalized and relevant responses."; session sharing
+      lets users share conversations. No stage stated for memory — hence `documented`
+      for the row. (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/configure-assistant
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -234,6 +322,20 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  feedback_service:
+    status: documented
+    notes: >
+      Built-in thumbs feedback on the search widget: "When the feedback feature is turned
+      on, the widget rendered on your web page displays Thumbs up and Thumbs down
+      buttons." A thumbs-down prompts for a reason and comments. Feedback surfaces on the
+      app's Analytics page (not as telemetry spans). Residency caveat: "If your app is
+      located in the global region, then the widget feedback is visible to your Google
+      Cloud administrator and Google." In a multi-region only the admin sees it.
+      (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/configure-feedback
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   dlp_tenant_isolation:
     status: documented
     notes: >
@@ -249,9 +351,11 @@ capabilities:
       responses that trigger Sensitive Data Protection detectors, and the release notes
       (2026-08-31) add Sensitive Data Protection content policies for connectors, apps and
       notebooks. (Paraphrase for the cross-page items.)
-      EDITIONS SUMMARY (Compare editions page, a different page): Gemini Enterprise
-      "Supports VPC Service Controls, Customer-Managed Encryption Keys (CMEK), Data
-      residency (us, eu, global), Access Transparency, and Cloud Audit Logs."
+      EDITIONS SUMMARY (Compare editions page, a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/editions): Gemini Enterprise
+      supports VPC Service Controls, CMEK, data residency (us, eu, global), Access
+      Transparency and Cloud Audit Logs. (Paraphrase — the page's link markup breaks
+      verbatim matching.)
     source: https://docs.cloud.google.com/gemini/enterprise/docs/use-vpc-service-controls
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -276,6 +380,27 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  tool_audit_trail:
+    status: documented
+    notes: >
+      Two layers. (1) Usage audit logs in Cloud Logging — they "provide detailed
+      information about who performed what action, when, and from where." Logged service
+      paths include SearchService.Search and AssistantService.Assist / StreamAssist, with
+      agent identity fields (agent, agent_kind, spiffe_id) and the answer's steps.actions.
+      Prompt/response content is logged only when "Enable logging of prompt inputs and
+      response outputs" is turned on; otherwise sensitive text is elided.
+      (2) Traces (a different page,
+      https://docs.cloud.google.com/gemini/enterprise/docs/access-traces-and-spans): each
+      user turn is a root span with child execute_tool and invoke_connector spans —
+      i.e. per-tool-call records — once the OpenTelemetry instrumentation observability
+      setting is on (traces/metrics are Public Preview per the release notes).
+      Admin and data-access operations also go to Cloud Audit Logs under
+      discoveryengine.googleapis.com (https://docs.cloud.google.com/gemini/enterprise/docs/audit-logging).
+      (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/set-up-usage-audit-logs
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   training_data_policy:
     status: documented
     notes: >
@@ -285,7 +410,8 @@ capabilities:
       count as AI/ML Services is published at cloud.google.com/terms/services (not re-read
       here), and Gemini Enterprise has its own section in these terms. The Gemini
       Enterprise Business marketing page also says "You control your data; we don’t train
-      on it" (a different page). Consistent with the platform tier (bucket B) and with
+      on it" (a different page, https://cloud.google.com/gemini-enterprise/business).
+      Consistent with the platform tier (bucket B) and with
       Azure/AWS Q Business.
       SOURCE CHANGE 2026-11-23: previously cited the Cloud Data Processing Addendum, which
       does not itself contain a training restriction.
@@ -294,5 +420,70 @@ capabilities:
       responses, and enterprise data are not used to train foundation models. Governed by
       Google Cloud enterprise privacy terms."
     source: https://cloud.google.com/terms/service-terms
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  certifications:
+    status: documented
+    value: [HIPAA, FedRAMP, ISO 27001, ISO 27017, ISO 27018, ISO 27701, SOC 1, SOC 2, SOC 3, PCI DSS, BSI C5:2020]
+    notes: >
+      The compliance page says the agentic AI service formerly known as Agentspace (part
+      of Standard and Plus) and Gemini Notebook Enterprise "have many of the following
+      certifications": HIPAA, FedRAMP, ISO 27001, ISO 27017, ISO 27018, ISO 27701, SOC 1,
+      SOC 2, SOC 3, PCI DSS and BSI C5:2020 — and points to the per-standard Google Cloud
+      pages to confirm. Confirmed on those pages (each a different page): ISO 27001
+      (https://cloud.google.com/security/compliance/iso-27001) and SOC 2
+      (https://cloud.google.com/security/compliance/soc-2) in-scope lists include
+      "Gemini Enterprise (including Agentspace)"; ISO 42001
+      (https://cloud.google.com/security/compliance/iso-42001) lists Gemini Enterprise.
+      EXCLUSIONS: Antigravity in Gemini Enterprise doesn't support FedRAMP, IL4/IL5, ITAR,
+      ISO (incl. 27001 and 42001) or SOC 1/2/3; AlphaEvolve doesn't support ITAR, FedRAMP
+      or IL4/IL5. Business edition is not named on the page. (Paraphrase except quoted
+      text.)
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/compliance-security-controls
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  sovereign_cloud:
+    status: documented
+    product: Assured Workloads
+    notes: >
+      VIA ASSURED WORKLOADS DATA BOUNDARIES (public cloud), not a separate sovereign
+      region. The supported-products page lists Gemini Enterprise
+      (discoveryengine.googleapis.com) under the Data Boundary for CJIS, FedRAMP Moderate,
+      FedRAMP High, IL2, IL4 and IRS 1075, and under regional boundaries including EU, UK,
+      Japan, Canada, Australia, India, Singapore, Switzerland, Brazil and US. NOT listed
+      under IL5, ITAR, Healthcare and Life Sciences, Canada Protected B, EU or KSA with
+      Access Justifications, or Switzerland with EU Support. Footnote: "Gemini Enterprise
+      includes support for the Web Grounding for Enterprise feature." The release notes
+      (a different page, https://docs.cloud.google.com/gemini/enterprise/docs/release-notes,
+      2026-08-31) add federated data stores inside Assured Workloads folders "to meet
+      FedRAMP High standards", stated "generally available (GA)".
+      Google's sovereign cloud page (https://cloud.google.com/sovereign-cloud, a different
+      page) also offers enterprise search on air-gapped Google Distributed Cloud, but does
+      not name Gemini Enterprise as available there. (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/assured-workloads/docs/supported-products
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    product: Gemini Enterprise
+    status: ga
+    notes: >
+      HEADLINE STAGE (July 31, 2025 entry, "Gemini Enterprise: General Availability"):
+      "Gemini Enterprise is generally available (GA)." Status follows the launch-stage convention (taxonomy hint): the row carries the headline product's stated stage.
+      Stages live in the release notes, not product pages (overview carries none).
+      Found there: "Workflow Builder (formerly known as Agent Designer) is generally
+      available (GA) in Gemini Enterprise." (2026-09-03); AI developer tools GA for
+      Standard, Plus and Pay-as-you-go with invoiced billing (2026-08-18); chat-history
+      retention control GA (2026-03-11); Assured Workloads federated data stores GA
+      (2026-08-31); OpenTelemetry metrics and traces "This feature is in Public Preview."
+      Elsewhere (each a different page): the Compare editions page
+      (https://docs.cloud.google.com/gemini/enterprise/docs/editions) still marks the
+      no-code agent tools as preview; the locations page
+      (https://docs.cloud.google.com/gemini/enterprise/docs/locations) says in-country
+      regions are "in GA with allowlist"; view-analytics splits search analytics into GA
+      (global) vs Public preview (US/EU). (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini/enterprise/docs/release-notes
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

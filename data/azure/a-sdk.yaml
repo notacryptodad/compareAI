@@ -18,8 +18,14 @@ notes: >
   Packages keep shipping (PyPI agent-framework 1.26.0 on 2026-11-12; NuGet
   Microsoft.Agents.AI 1.28.0 on 2026-11-06). Cells that could be re-sourced were moved to
   Microsoft Learn (learn.microsoft.com/en-us/agent-framework) or the PyPI project page
-  (which mirrors the Python README); repo-only facts (stars, governance, AF Labs) are left
-  at their 2026-08 verification.
+  (which mirrors the Python README). Governance and community cells were re-sourced to the
+  PyPI and NuGet package pages plus the Go repo, since the main repo's own stars,
+  contributors and governance files cannot be read.
+  REPO FIELD KEPT on purpose: the canonical URL above is still what every first-party page
+  links to, so it remains the right identifier. check_links.py will flag it (HTTP 404) on
+  every run; that flag is accurate and is the cue to restore the repo-sourced cells once
+  the URL resolves again. Pointing `repo:` at the Go repo would misidentify the product:
+  the Go repo is a narrower, preview-stage port, not the main .NET/Python codebase.
   A separate Go implementation now exists at github.com/microsoft/agent-framework-go
   ("Microsoft Agent Framework for Go is in public preview").
 
@@ -82,6 +88,70 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  long_running_agents:
+    status: documented
+    value: [background responses (continuation tokens), background agents (experimental), Durable Extension]
+    notes: >
+      Three separate mechanisms in the SDK itself, not only via a runtime.
+      (1) Background responses: "The Microsoft Agent Framework supports background
+      responses for handling long-running operations that may take time to complete." A
+      run returns a continuation token used to poll or resume an interrupted stream. Narrow
+      today: "Currently, only agents that use the OpenAI Responses API support background
+      responses".
+      (2) Background agents, on a different page
+      (https://learn.microsoft.com/en-us/agent-framework/agents/background-agents): a parent
+      agent delegates tasks to child agents that run concurrently. "Background agents are
+      experimental." Tasks become lost after a process restart (Paraphrase.), so this is
+      in-process concurrency, not durable execution.
+      (3) Durable Extension, on a different page
+      (https://learn.microsoft.com/en-us/agent-framework/hosting/durable-extension): it
+      "brings durable execution to agents, multi-agent orchestrations, and Microsoft Agent
+      Framework workflows", hosted on Azure Functions or your own compute, and can "Pause
+      for human input or external events without consuming compute or model tokens while
+      waiting". Its packages install with --prerelease / --pre.
+      No maximum session duration is stated for any of the three.
+    source: https://learn.microsoft.com/en-us/agent-framework/agents/background-responses
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  multi_tenancy:
+    status: documented
+    value: app-enforced (guidance and hooks only, no built-in tenant model)
+    notes: >
+      The SDK does NOT provide multi-tenant serving; the docs put tenant isolation on the
+      host. A2A hosting: "a production host must authenticate the caller before it reaches
+      the A2A request handler", and "For a multi-tenant service, use an owner_resolver that
+      derives ownership from the same trusted tenant and subject, and use durable task and
+      session stores when replicas can restart or scale out."
+      Sessions, on a different page
+      (https://learn.microsoft.com/en-us/agent-framework/concepts/agents/conversations/storage):
+      "In hosted or multi-tenant apps, bind each stored session to the authenticated user or
+      tenant before allowing it to resume."
+      Contrast with AgentScope, which advertises multi-tenant serving as a built-in. MAF is
+      `documented` here only because it documents the pattern and its hooks.
+    source: https://learn.microsoft.com/en-us/agent-framework/hosting/self-hosting/a2a/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  a2a_protocol:
+    status: documented
+    value: [client (A2AAgent), "server (A2A hosting for .NET, Python, Go)"]
+    notes: >
+      Both directions. Client: "The A2AAgent enables your application to connect to remote
+      agents that are exposed via the Agent-to-Agent (A2A) protocol". It "wraps any
+      A2A-compliant endpoint as a standard AIAgent", and supports the well-known Agent Card
+      URI, catalog-based and direct-configuration discovery (Paraphrase.). The .NET package
+      installs with --prerelease.
+      Server, on a different page
+      (https://learn.microsoft.com/en-us/agent-framework/hosting/self-hosting/a2a/): .NET via
+      ASP.NET Core hosting packages, Go via its a2aprovider package, and Python via
+      agent-framework-a2a ("An opinionated A2AExecutor that converts requests, runs an agent,
+      and publishes A2A task events and artifacts") or agent-framework-hosting-a2a.
+      The Learn TOC also carries an "A2A SDK v1" migration guide.
+    source: https://learn.microsoft.com/en-us/agent-framework/integrations/by-component/agent-services/a2a
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   human_in_the_loop:
     status: documented
     notes: >
@@ -93,6 +163,27 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  policy_hooks:
+    status: documented
+    value: [agent run middleware, function-calling middleware, chat-client middleware, "Agent Hooks (Python, experimental)"]
+    notes: >
+      "Middleware in Agent Framework provides a powerful way to intercept, modify, and
+      enhance agent interactions at various stages of execution." Three types: "Agent Run
+      middleware", "Function calling middleware" ("Allows interception of all function calls
+      executed by the agent, so that input and output can be inspected and modified as
+      needed") and "IChatClient middleware". Instances chain, each calling the next.
+      The TOC also has pages for termination and guardrails, result overrides and exception
+      handling, plus a Microsoft Purview middleware integration.
+      A separate, newer control plane is on a different page
+      (https://learn.microsoft.com/en-us/agent-framework/agents/agent-hooks): "Agent Hooks is
+      a first-class Agent Framework capability for applying governance and runtime controls
+      at well-defined points in an agent's execution." It implements the AGENT-HOOKS-0.1
+      contract with enforce and evaluate_only modes (Paraphrase.). "Agent Hooks is
+      experimental in Python." and "Agent Hooks isn't yet available for .NET."
+    source: https://learn.microsoft.com/en-us/agent-framework/concepts/agents/middleware/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   checkpoint_resume:
     status: documented
     notes: >
@@ -101,6 +192,43 @@ capabilities:
       each superstep. Since Python 1.13.0, entry checkpoints "make the complete workflow run
       replayable".
     source: https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpointer_backends:
+    status: documented
+    value: [InMemory, File, Azure Cosmos DB (workflow checkpoints); Redis, Cosmos DB, Valkey (chat history)]
+    notes: >
+      Workflow checkpoints: "Agent Framework ships three built-in implementations" —
+      InMemoryCheckpointStorage, FileCheckpointStorage and CosmosCheckpointStorage (package
+      agent-framework-azure-cosmos). "All three implement the same CheckpointStorage
+      protocol, so you can swap providers without changing workflow or executor code."
+      Conversation-history persistence is a separate pluggable layer. The context-providers
+      table on a different page
+      (https://learn.microsoft.com/en-us/agent-framework/integrations/by-component/context-providers/)
+      lists conversation storage for Azure Cosmos DB, Redis (Python RedisHistoryProvider) and
+      Valkey (C#), with per-language gaps (Paraphrase.).
+      No first-party Postgres or DynamoDB checkpointer was found. The only distributed
+      workflow backend shipped is Azure-native (Cosmos DB); Redis and Valkey cover chat
+      history, not workflow checkpoints. The Durable Extension (Durable Task Scheduler)
+      is a third, Azure-hosted option.
+    source: https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  short_term_memory:
+    status: documented
+    value: bring-your-own or service-managed (AgentSession)
+    notes: >
+      "Storage controls where conversation history lives, how much history is loaded, and
+      how reliably sessions can be resumed." Two modes: local session state (full history in
+      the AgentSession, for example via InMemoryHistoryProvider) or service-managed storage
+      where the session holds a service-side ID (Paraphrase of the storage-modes table).
+      History can be trimmed with a reducer when it outgrows model limits, and compaction has
+      its own TOC page. Local history is what makes model routing across providers possible;
+      service-managed history pins the conversation to one service (Paraphrase of
+      concepts/agents/runtime-model-routing).
+    source: https://learn.microsoft.com/en-us/agent-framework/concepts/agents/conversations/storage
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -117,6 +245,45 @@ capabilities:
       The August conclusion (no rival-cloud provider named) no longer holds — MAF now
       documents AWS and GCP adapters.
     source: https://learn.microsoft.com/en-us/agent-framework/integrations/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  model_routing:
+    status: preview
+    value: .NET only, experimental (RoutePersistingRoutingChatClient)
+    notes: >
+      "Applications can use models from different inference services for different turns
+      of a conversation." The .NET SDK ships "the experimental
+      RoutePersistingRoutingChatClient", whose active route per session is set with
+      SetActiveRoute. "More routing clients exist in Microsoft.Extensions.AI that allow
+      further routing strategies."
+      Constraints: "Every chat client registered as a route must use caller-managed history
+      supplied by a chat history provider." "Python support is not currently available. Go
+      support is not currently available."
+      This is application-selected routing (by user choice, capability, availability or
+      cost). No automatic fallback on error or cost-tiering policy is described.
+      STATUS 2026-11-23 (fact-check, symmetry with GCP ADK): `preview`, because the only
+      first-party routing client is labelled experimental.
+    source: https://learn.microsoft.com/en-us/agent-framework/concepts/agents/runtime-model-routing
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openai_compatible_endpoint:
+    status: documented
+    value: [consume any OpenAI-compatible endpoint, expose agents as Chat Completions / Responses]
+    notes: >
+      Both directions: "The Agent Framework supports OpenAI-compatible protocols for both
+      hosting agents behind standard APIs and connecting to any OpenAI-compatible endpoint."
+      .NET: "The Microsoft.Agents.AI.Hosting.OpenAI library enables you to expose AI agents
+      through OpenAI-compatible HTTP endpoints, supporting both the Chat Completions and
+      Responses APIs." (installed with --prerelease).
+      Python Responses hosting is on a different page
+      (https://learn.microsoft.com/en-us/agent-framework/hosting/self-hosting/responses):
+      "Use agent-framework-hosting-responses to convert OpenAI Responses-shaped requests and
+      responses at an endpoint your application owns." That page also says "Self-hosting
+      helpers for OpenAI Responses endpoints in .NET are coming soon." and that they "are not
+      currently available for Go".
+    source: https://learn.microsoft.com/en-us/agent-framework/hosting/self-hosting/openai-endpoints
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -141,6 +308,112 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  tool_calling:
+    status: documented
+    value: function tools; parallel (Python concurrent by default, .NET opt-in)
+    notes: >
+      Function tools turn your own methods into tools (C# AIFunctionFactory.Create, Python
+      functions, Go functool). Caveat: "Not all agent types support function tools."
+      Parallel execution differs by language. Python: "Function calls returned in one
+      assistant message run concurrently by default." with allow_concurrent_invocation to
+      turn it off. .NET: "Set ToolAutoCall.AllowConcurrentInvocations to true to run function
+      calls from the same provider response concurrently. The default is serial execution."
+      Loop limits are configurable (max_iterations, max_function_calls,
+      max_duration_seconds), and tool approval gates calls through human-in-the-loop
+      (Paraphrase.).
+    source: https://learn.microsoft.com/en-us/agent-framework/agents/tools/function-tools
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  bundled_tools:
+    status: documented
+    value: [code interpreter, file search, web search, hosted MCP, local MCP, Foundry Toolbox, shell, image generation, computer use, Bing grounding, SharePoint, Fabric, browser automation, A2A tool]
+    notes: >
+      "Agent Framework supports many different types of tools that extend agent
+      capabilities." The tool-types table lists function tools, Code Interpreter ("Execute
+      code in a sandboxed environment"), File Search, Web Search, hosted and local MCP tools,
+      Microsoft Foundry Toolbox, shell tools, image generation and native computer use, plus
+      Foundry-backed tools (Bing Grounding, Bing Custom Search, Foundry IQ, SharePoint,
+      Microsoft Fabric, Memory Search, Browser Automation, an A2A tool), several of them
+      marked experimental or preview (Paraphrase.).
+      MOST ARE HOSTED, NOT IN-PROCESS: availability depends on the backing provider. The
+      .NET provider support matrix shows code interpreter and file search on Responses and
+      Foundry only, and web search on the OpenAI / Azure OpenAI clients only. In the Python
+      matrix, Anthropic also supports code interpreter, and Foundry and Anthropic also
+      support web search (Paraphrase.). "Tools
+      marked experimental or preview are documented on the relevant provider page and emit an
+      ExperimentalWarning the first time they are used in a process."
+    source: https://learn.microsoft.com/en-us/agent-framework/agents/tools/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_skills:
+    status: documented
+    value: SKILL.md directories (file, code, class and MCP sources)
+    notes: >
+      "Agent Skills are portable packages of instructions, scripts, and resources that give
+      agents specialized capabilities and domain expertise. Skills follow an open
+      specification and implement a progressive disclosure pattern so agents load only the
+      context they need, when they need it."
+      A skill is a directory with a SKILL.md file (YAML frontmatter plus instructions) and
+      optional scripts/, references/ and assets/ folders. A context provider
+      (AgentSkillsProvider in C#, SkillsProvider in Python) exposes skills to the agent
+      (Paraphrase.).
+      Partly experimental: the allowed-tools field is marked "Experimental - support may vary
+      between agent implementations." and "The MCP skills API is experimental and may change
+      in future releases."
+      This is runtime skill loading by your own agent. There is no managed skill registry in
+      the SDK.
+    source: https://learn.microsoft.com/en-us/agent-framework/agents/skills
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openapi_import:
+    product: Foundry OpenAPI tool (via Foundry Toolbox in Agent Framework)
+    status: documented
+    notes: >
+      NO NATIVE IMPORTER IN THE FRAMEWORK: the Agent Framework Learn TOC (tools, integrations,
+      hosting) has no OpenAPI tool page, and the framework's tool-types table lists none.
+      OpenAPI import lives in the sibling Foundry Agent Service, server-side: "Connect your
+      Microsoft Foundry agents to external APIs using OpenAPI 3.0 and 3.1 specifications."
+      Auth: "Use anonymous, API key, or project managed identity authentication."
+      From Agent Framework code the page's Hosted Agents sample "uses FoundryChatClient from
+      the Microsoft Agent Framework and connects to the toolbox MCP endpoint by using
+      FoundryToolbox". So the OpenAPI spec becomes a Foundry toolbox, and MAF calls it as MCP.
+      The toolbox REST calls carry a "Toolboxes=V1Preview" feature header, and "The .NET SDK
+      is currently in preview."
+      STATUS 2026-11-23 (fact-check round 2): `documented`. Same rule as aws/a-sdk and
+      alibaba/a-sdk: no SDK-native importer, so the cell scores the provider's first-party
+      route consumed over MCP. The V1Preview feature header appears only in the REST and
+      JavaScript samples, not the Agent Framework sample, and neither the toolbox pages
+      nor azure/b-platform state a stage for Toolbox or the OpenAPI tool.
+      Predecessor note: Semantic Kernel had in-process OpenAPI plugin import. No equivalent
+      was found in the Agent Framework docs (Paraphrase.).
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/openapi
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  code_interpreter:
+    status: documented
+    value: [provider-hosted Code Interpreter (OpenAI Responses / Foundry), "CodeAct backends (Hyperlight, Monty, Local .NET)"]
+    notes: >
+      Two designs. (1) Hosted tool: "Code Interpreter allows agents to write and execute code
+      in a sandboxed environment." "Code Interpreter availability depends on the underlying
+      agent provider." The sandbox is the provider's (OpenAI Responses or Foundry), not the
+      SDK's.
+      (2) CodeAct, on a different page
+      (https://learn.microsoft.com/en-us/agent-framework/agents/code-act): "CodeAct lets an
+      agent solve a task by writing code and executing it through an execute_code tool." and
+      "In Agent Framework, CodeAct is exposed through backend-specific packages rather than a
+      single built-in core type." The context-providers table lists Hyperlight (C#, Python),
+      Monty (Python) and Local (.NET) as CodeAct backends (Paraphrase.). The overview says
+      CodeAct isn't implemented in Go.
+      A middle path between AWS/GCP (one managed interpreter) and AgentScope (many
+      third-party sandboxes).
+    source: https://learn.microsoft.com/en-us/agent-framework/agents/tools/code-interpreter
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   oss_license:
     status: documented
     value: MIT
@@ -157,10 +430,24 @@ capabilities:
     status: documented
     value: single-vendor
     notes: >
-      Microsoft-owned org. No foundation governance stated.
-      NOT RE-VERIFIED 2026-11-23: source repo returns HTTP 404.
-    source: https://github.com/microsoft/agent-framework
-    verified_on: 2026-08-04
+      Single-vendor (Microsoft); no foundation governance is stated on any live page.
+      RE-SOURCED 2026-11-23 because the main repo github.com/microsoft/agent-framework
+      returns HTTP 404. This PyPI page for the agent-framework package lists "Author:
+      Microsoft", the classifier "OSI Approved :: MIT License", and two maintainers, the
+      accounts microsoft and vibiret (Paraphrase.) The NuGet package Microsoft.Agents.AI
+      shows owners Microsoft and MicrosoftAgentFramework and an MIT license
+      (https://www.nuget.org/packages/Microsoft.Agents.AI, read 2026-11-23; Paraphrase.).
+      CLA and code of conduct: evidence on a different page, the GO REPO (not the main
+      repo), whose CONTRIBUTING.md
+      (https://raw.githubusercontent.com/microsoft/agent-framework-go/main/CONTRIBUTING.md)
+      says "Contributions to Microsoft projects are subject to the Microsoft Contributor
+      License Agreement (CLA)" and that "Project maintainers will merge accepted code
+      changes from contributors". Its CODE_OF_CONDUCT.md adopts the Microsoft Open Source
+      Code of Conduct, and its LICENSE is MIT (Paraphrase.). The main repo used the same
+      Microsoft open-source template when last read on 2026-08-04, but that cannot be
+      re-checked while it 404s.
+    source: https://pypi.org/project/agent-framework/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_release_cadence:
@@ -197,19 +484,28 @@ capabilities:
   oss_community:
     status: documented
     value:
-      stars: 12600
-      forks: 2100
-      commits: 2719
-      open_issues: 525
+      nuget_total_downloads: 13800000
     notes: >
-      Snapshot 2026-08-04. Higher than Strands (6.8k), but NOT the highest in this set —
-      a repo page cannot support a cross-repo superlative, and spot checks show
-      agentscope ~28.5k and adk-python ~21k both above MAF. Fill those cells before making
-      any comparative claim.
-      NOT RE-VERIFIED 2026-11-23: source repo returns HTTP 404, so no fresh snapshot is
-      possible (the separate agent-framework-go repo has ~695 stars).
-    source: https://github.com/microsoft/agent-framework
-    verified_on: 2026-08-04
+      MAIN-REPO NUMBERS UNAVAILABLE: github.com/microsoft/agent-framework returns HTTP 404
+      (web and API, re-checked 2026-11-23), so there are no current star, fork, contributor
+      or issue-response figures for the main .NET/Python repo. Its last snapshot was
+      2026-08-04 (about 12.6k stars, 2.1k forks, 2,719 commits, 525 open issues). That
+      snapshot is history only and is not re-verified here.
+      What IS measurable on 2026-11-23 (Paraphrase.):
+      - NuGet Microsoft.Agents.AI (this cell's source): 13.8M total downloads, 238.0K for
+        the current version 1.28.0, a per-day average of 83.7K, last updated 2026-11-06.
+        This is the strongest live adoption signal.
+      - PyPI agent-framework: the project page shows no download counts. It lists release
+        1.26.0 (Nov 12, 2026) and 2 maintainers.
+      - The GO REPO, a separate and narrower port in public preview, not the main repo
+        (https://github.com/microsoft/agent-framework-go, GitHub API): 695 stars, 75 forks,
+        36 open issues plus PRs, 16 contributors, last push 2026-11-23. Do not read these as
+        MAF's community size.
+      Production adopters: none are named on these pages.
+      Do not compare these figures with other providers' star counts. Downloads and stars
+      measure different things.
+    source: https://www.nuget.org/packages/Microsoft.Agents.AI
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   in_repo_eval:
@@ -254,6 +550,21 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  sdk_instrumentation_portability:
+    status: documented
+    value: any OTel backend (OTLP, Azure Monitor, console, Aspire Dashboard)
+    notes: >
+      Not vendor-locked. Instrumentation is plain OpenTelemetry, and "you can configure the
+      OpenTelemetry exporters to send the telemetry data to your desired backend." Python:
+      "We do not install exporters by default to prevent unnecessary dependencies and
+      potential issues with auto instrumentation." configure_otel_providers() "Reads
+      OTEL_EXPORTER_OTLP_* environment variables automatically". The .NET samples include an
+      OTLP exporter and suggest the Aspire Dashboard for local development (Paraphrase.).
+      Azure Monitor is shown as one example exporter, not a requirement.
+    source: https://learn.microsoft.com/en-us/agent-framework/agents/observability
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   sdk_telemetry_phone_home:
     status: documented
     notes: >
@@ -271,5 +582,31 @@ capabilities:
       user-configured exporters ("We do not install exporters by default").
       "ENABLE_INSTRUMENTATION - Default is true"; "ENABLE_SENSITIVE_DATA - Default is false".
     source: https://learn.microsoft.com/en-us/agent-framework/agents/observability
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    status: documented
+    value: 1.0 (.NET and Python) since 2026-04-03; Go in public preview
+    notes: >
+      The 1.0 announcement says "Microsoft Agent Framework has reached version 1.0 for both
+      .NET and Python" and "Agent Framework 1.0 is ready for production." It never uses the
+      words generally available, so the status stays `documented`. The same post says that
+      after "Release Candidate in February, we locked the feature surface", and that 1.0 also
+      ships "preview features that are functional and available for early adoption"
+      (DevUI, the agent harness and others).
+      Stage evidence found elsewhere (Paraphrase.): PyPI classifies agent-framework as
+      Development Status 5 - Production/Stable; the Learn overview says Go is in public
+      preview; many integration packages (A2A, OpenAI hosting, Durable Extension, Foundry
+      hosting) still install with --prerelease / --pre; individual APIs (background agents,
+      Agent Hooks, model routing, MCP skills) are labelled experimental on their pages.
+      Checked without finding a GA statement: the Learn overview and support pages, and the
+      devblogs.microsoft.com/agent-framework search for generally available (which
+      only returns Semantic Kernel GA posts and the Foundry hosted-agents GA). Semantic
+      Kernel's GA (2025-04-04) does not count here: it is the predecessor product, not a
+      sibling of the same family such as another language SDK (taxonomy hint), so the row
+      stays `documented`.
+      The main GitHub repo, which would hold release notes, returns HTTP 404 (see header).
+    source: https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

@@ -60,6 +60,47 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  web_search_tool:
+    status: documented
+    value: Quark Search official plugin (quark_search); model built-in web search in workflows
+    notes: >
+      Flow Agent apps get web search through an official plugin. The plugins page lists
+      夸克搜索 (tool ID quark_search): 「使大模型可以搜索实时信息，查找公开的网络知识和信息」.
+      Limits: 「夸克搜索插件目前支持检索出网页标题、关键词和摘要，但不支持直接访问网页详情。」
+      Billing: 「限时免费，需申请开通」. An agent app can attach up to 10 tools.
+      Workflow apps can also use the models' built-in web search (enable_search). The Flow
+      Agent billing page (a different page, help.aliyun.com/zh/model-studio/flow-agent-billing)
+      prices it as 「产生模型调用费用和搜索策略费用」. Agent 2.0 also has a cited-sources
+      option that 「推荐与知识库和联网搜索 MCP 组合使用」 (the Agent 2.0 page, a different
+      page, help.aliyun.com/zh/model-studio/new-single-agent-application). (Paraphrase
+      except the quotes.)
+      Sibling QwenWork (Alibaba Cloud's packaged work assistant) runs web and image search
+      as a platform service. Its BYOK guide lets a customer replace that service with their
+      own endpoint. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/plugins
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  ai_service_tools:
+    status: documented
+    value: [Python code interpreter, calculator, image generation, Quark search, QR code, GitHub search, "official MCP (text-to-image, text-to-video, speech synthesis)", document/image/audio/video parsing nodes]
+    notes: >
+      Official plugins (「组件广场中预置了阿里云百炼的官方插件，您无需配置其输入和输出参数，即可直接调用。」):
+      Python 代码解释器, 计算器, 图片生成 (text_to_image), 夸克搜索, 生成二维码 and GitHub
+      搜索. Image generation and Quark search are 「限时免费，需申请开通」; the rest are free.
+      Third-party plugins 「涵盖了商业服务、图像视频、学习教育等多个领域」 and are bought per
+      plugin. (Paraphrase except the quotes.)
+      Media and speech tools come as official MCP services. The Flow Agent billing page (a
+      different page, help.aliyun.com/zh/model-studio/flow-agent-billing) says
+      「部分官方 MCP 按模型调用计费，如文生图、文生视频、语音合成等。」 Workflow parsing nodes
+      for documents, audio and video 「使用内置大模型解析，暂不计费」. Agent 2.0 can
+      pre-parse uploaded documents, images, video and audio. (Paraphrase except the quotes.)
+      No standalone OCR or translation tool is listed as a plugin. In workflows, image
+      parsing can instead call Qwen-VL models, billed as model calls. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/plugins
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   index_freshness:
     status: documented
     notes: >
@@ -99,13 +140,23 @@ capabilities:
       The docs don't state whether per-document ACL filtering based on the end user's
       identity exists — this is absence of documentation, not a positive not-offered
       statement, hence `unknown`. What is documented is workspace-scoped isolation.
-      (Paraphrase.) Contrast Amazon Q Business which filters responses "based on the
-      content that your end user has permissions to access." (a different page:
-      docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html)
+      (Paraphrase.) By comparison, Amazon Q Business documents filtering answers to content
+      the end user has permission to access (docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html).
+      (Paraphrase.)
       The Connector (Beta) overview (help.aliyun.com/zh/model-studio/connector/overview/,
       checked 2026-11-23) covers one-time authorization and shared credentials per App but
       does not state whether source-system permissions are enforced per end user.
       (Paraphrase.)
+      SIBLING QWENWORK (checked 2026-11-23, docs.qwenwork.ai/features/connectors and
+      /enterprise-ultimate/ai-assets/connectors) uses per-user delegated authorization.
+      Each user signs in to the external service, and the Agent can reach only the data and
+      actions in that authorization. The admin page warns that connector visibility does
+      not grant external-system data permissions. This is federated access under the user's
+      own grant, not ACL trimming of a shared index. Team knowledge bases have admin-set
+      access rules that are not described further. Not enough to move the row off
+      `unknown`. (Paraphrase.)
+      The two quoted Retrieve API strings were re-checked verbatim on the rendered page with
+      headless Chromium on 2026-11-23. The page is JS-rendered for plain HTTP fetches.
     source: https://www.alibabacloud.com/help/en/model-studio/api-bailian-2023-12-29-retrieve
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -124,6 +175,26 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  conversation_history:
+    status: documented
+    notes: >
+      FLOW AGENT (Agent 2.0): short-term memory only, with a fixed window.
+      「短期记忆：新版智能体支持短期记忆功能，即在多轮会话中为智能体提供上下文信息。」
+      「可以设置 0 到 30 轮的上下文（0 代表不传递多轮对话记录）」. Long-term memory is not
+      shipped: 「长期记忆：该功能计划在未来的迭代中支持。」 Platform retention: the privacy
+      notice (a different page, help.aliyun.com/zh/model-studio/privacy-notice) says
+      「阿里云百炼将存储模型与应用调用时产生的数据」. No end-user history view, retention
+      period or deletion control is documented for published Flow Agent apps.
+      (Paraphrase except the quotes.)
+      SIBLING QWENWORK (the packaged assistant) covers the personalization half. It keeps
+      per-session history. Desktop Global Memory holds a persona, custom instructions, a
+      user profile and long-term memory, and the user can switch it off, back it up and
+      restore it. Its privacy page says user-deleted content leaves the visible workspace
+      and some data may be retained for compliance or audit. (Paraphrase.)
+    source: https://help.aliyun.com/zh/model-studio/new-single-agent-application
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   seat_pricing:
     status: documented
     value:
@@ -139,8 +210,8 @@ capabilities:
       usage quota for one team member." Each seat is bound to one member and one API Key.
       "Token Plan Team Edition currently supports only the Singapore region."
       Tools: "supporting Qwen Code, Claude Code, Qoder, OpenClaw, and more."
-      CN-SITE PARALLEL OFFERING (separate CN page,
-      help.aliyun.com/zh/model-studio/token-plan-team-overview, updated 2026-11-17): the
+      CN-SITE PARALLEL OFFERING (a different page,
+      https://help.aliyun.com/zh/model-studio/token-plan-team-overview, updated 2026-11-17): the
       China-site Team Edition is priced in CNY and the page states it currently supports only
       the China (Beijing) region. Seats: 标准坐席 「¥150/坐席/月」, 高级坐席
       「¥550/坐席/月」, 尊享坐席 「¥1,298/坐席/月」 (same 25,000 / 100,000 / 250,000 Credits);
@@ -176,6 +247,24 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  addon_surcharges:
+    status: documented
+    notes: >
+      No platform fee, everything metered: 「Flow Agent 的编排能力本身不单独收费，费用来自应用实际调用的模型和组件。」
+      Agent apps are billed for 「模型调用、知识库、MCP 调用」. The knowledge base is pay-as-you-go
+      and its retrieved chunks add model input tokens. Some official MCP tools bill as model
+      calls, and some third-party MCP fees are charged by the third party, not by Model
+      Studio. In workflows, model built-in web search incurs 「产生模型调用费用和搜索策略费用」.
+      Free: file upload, Prompt auto-optimization, and document/audio/video parsing
+      (「暂不计费」 for now). (Paraphrase except the quotes.)
+      So surcharges are per component (knowledge-base spec plus calls, per-plugin purchases
+      for third-party plugins), not per connector seat. Sibling QwenWork includes
+      enterprise-grade skills and connectors in the seat price and sells extra credit packs
+      as its add-on. (Paraphrase; see seat_pricing for Token Plan.)
+    source: https://help.aliyun.com/zh/model-studio/flow-agent-billing
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   admin_analytics:
     status: documented
     notes: >
@@ -200,6 +289,48 @@ capabilities:
       No DLP/PII-masking feature specific to the application builder documented — content
       moderation is via the separate AI Guardrails product.
     source: https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_audit_trail:
+    status: documented
+    product: QwenWork (Enterprise Premium admin console)
+    notes: >
+      Strongest evidence is in the sibling packaged assistant. "AI activity shows processing
+      results and resource calls by conversation turn. Each row is one turn, not one tool
+      call; a turn may contain several resource calls." Admins search "by user, email,
+      conversation title, Turn ID, or Session ID", filter by department and result, and
+      export CSV. Retention, from the audit overview (a different page,
+      https://docs.qwenwork.ai/enterprise-ultimate/audit-logs): AI activity is "Retained for
+      90 days. Each query covers at most 7 calendar days". Admin and user activity logs sit
+      alongside. (Paraphrase except the quotes.)
+      Gap vs the hint (who, what, when, on whose behalf): records are per turn with the
+      resources used (skills, connectors, expert suites). The page does not say whether
+      each tool call's arguments and results are kept. (Paraphrase.)
+      FLOW AGENT itself: the Agent 2.0 debug view shows each tool call's inputs and results
+      in the run trace, and the Task Center lists async tasks with input/output JSON. Neither
+      is described as an audit log. Model Studio's Evolution observability is the bucket-B
+      trace story. (Paraphrase.)
+    source: https://docs.qwenwork.ai/enterprise-ultimate/audit-logs/ai-logs
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  feedback_service:
+    status: documented
+    product: QwenWork
+    notes: >
+      End-user feedback in the sibling packaged assistant, reviewed by admins. "User
+      feedback is actively submitted by members and is viewed separately from automatically
+      generated logs." Admins open Audit, then User feedback, and can forward a report to
+      official support. "A report may contain the description, screenshots, user
+      identifiers, task and client environment, execution steps, and request or response
+      data." There is also an admin API, GET /api/openapi/v1/client-feedback. (Paraphrase
+      except the quotes.)
+      CAVEAT: this is issue and product feedback tied to a session, not per-answer thumbs
+      rating feeding a quality loop.
+      FLOW AGENT: the overview lists Prompt templates with 反馈优化 (feedback-based
+      optimization). No end-user rating API for published apps was found. (Paraphrase.)
+    source: https://docs.qwenwork.ai/enterprise-ultimate/audit-logs
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -233,5 +364,66 @@ capabilities:
       (Paraphrase.) Note the new CN agent services (Managed Agents, Memory, Sandbox) show
       cn-beijing endpoints only.
     source: https://www.alibabacloud.com/help/en/model-studio/regions
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  certifications:
+    status: documented
+    product: Alibaba Cloud Model Studio
+    value: [SOC 2]
+    notes: >
+      Product-specific: "Alibaba Cloud Model Studio has achieved SOC 2 compliance with an
+      unqualified opinion, validating our rigorous controls for Security, Availability, and
+      Confidentiality." Flow Agent is part of Model Studio, so this is the closest
+      product-scoped statement. The page links the compliance repository for the reports.
+      Platform-wide, the Alibaba Cloud Trust Center compliance page
+      (www.alibabacloud.com/trust-center/compliance) lists CSA STAR, ISO 27001 / 27017 /
+      27018 / 27701, SOC 1 / 2 / 3, PCI DSS and regional schemes including MLPS 2.0 (China),
+      C5 and AIC4 (Germany) and MTCS (Singapore). It does not map them to Model Studio, Flow
+      Agent or QwenWork, so they are not added to the value. (Paraphrase of the list.)
+      No ISO 42001 or HIPAA statement for this product was found.
+    source: https://www.alibabacloud.com/help/en/model-studio/privacy-notice
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  sovereign_cloud:
+    status: unknown
+    product: Alibaba Cloud Model Studio Flow Agent
+    notes: >
+      STATUS CHANGE 2026-11-23 (fact-check, symmetry with byteplus/c-outofbox): documented
+      -> unknown. The on-prem appliance below is not tied to Flow Agent or QwenWork, and no
+      government region was found; it is kept as a caveat.
+      No government region of the public Model Studio was found. The regions are Singapore,
+      US (Virginia), China (Beijing), China (Hong Kong), Japan (Tokyo) and Germany
+      (Frankfurt) (see index_residency). A search of the aliyun.com help docs for 百炼 together
+      with 政务云 found no statement that Model Studio runs on Alibaba Gov Cloud.
+      (Paraphrase.)
+      The sovereign option is private deployment. 阿里云百炼专属版 AI Stack is a
+      hardware-software appliance aimed at 「需要大模型推理及应用的政企客户」:
+      「AI Stack 一体机支持本地化私有部署，确保敏感数据（如政务、金融信息）无需上传云端即可完成处理，满足行业数据主权和隐私监管要求」.
+      It ships a toolchain that includes agent building (智能体搭建) and app templates. The
+      page does not say this is Flow Agent itself. (Paraphrase except the quotes.)
+      Sibling QwenWork Enterprise Premium lists Dedicated VPC deployment. QwenWork
+      International stores user content in Singapore. (Paraphrase.)
+    source: https://www.aliyun.com/solution/tech-solution/bailian-aistack
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    status: documented
+    notes: >
+      FLOW AGENT: no 公测 / Beta / GA label on the overview, the Agent 2.0 page, the billing
+      page or the Task Center page (all updated 2026-10/11). Agent 2.0 is labelled only as
+      recommended over Agent 1.0. Feature-level: Connector is Beta (see prebuilt_connectors)
+      and Agent 2.0 long-term memory is 「计划在未来的迭代中支持」. The plugins page (a different
+      page, help.aliyun.com/zh/model-studio/plugins) marks two official plugins (image
+      generation, Quark search) as 「限时免费，需申请开通」. That is gated access, not a stated
+      stage. (Paraphrase except the quotes.)
+      SIBLING QWENWORK: sold commercially through Alibaba Cloud with Enterprise Standard and
+      Premium seats. Desktop release notes show V1.0.1 on 2026-08-26 and V2.0 on 2026-11-18.
+      No GA or beta wording was found on the product page, the docs FAQ or the release
+      notes. The desktop app has an Experimental Features area for previews. (Paraphrase.)
+      `documented` because the headline product (Flow Agent) states no stage.
+    source: https://help.aliyun.com/zh/model-studio/new-single-agent-application
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

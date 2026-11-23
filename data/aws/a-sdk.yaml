@@ -55,6 +55,85 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  workflow_engine:
+    status: documented
+    value: [graph (DAG + cyclic), swarm, workflow-in-code]
+    notes: >
+      An in-process Graph orchestrator, not a separate durable-execution service. "Graphs
+      support both acyclic (DAG) and cyclic topologies, so you can build feedback loops and
+      iterative refinement workflows." The page lists conditional edge traversal, nested
+      graphs, custom (deterministic) nodes and remote A2A nodes. (Paraphrase of the list.)
+      Persistence: the session-management page (a different page,
+      https://strandsagents.com/docs/user-guide/sdk/agents/session-management/) says
+      "Multi-agent systems (Graph/Swarm) can also use session management to persist their
+      state." The Python Graph source
+      (https://raw.githubusercontent.com/strands-agents/harness-sdk/main/strands-py/src/strands/multiagent/graph.py)
+      says that for an interrupted run it "restores the persisted state and prepares to
+      resume execution from the next ready nodes."
+      CAVEAT: durability is only as strong as the session store you configure. The built-in
+      managers are single-writer with no distributed lock (see checkpoint_resume). There is
+      no hosted scheduler or retry service.
+    source: https://strandsagents.com/docs/user-guide/sdk/multi-agent/graph/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  a2a_protocol:
+    status: documented
+    notes: >
+      Both directions. "Strands supports A2A on both sides: consuming a remote agent as a
+      client, and serving one of your own agents over the protocol." Python installs it as
+      the strands-agents[a2a] extra; TypeScript needs @a2a-js/sdk and express as optional
+      peer dependencies. A remote A2AAgent can also be a Graph node, and there is a vended
+      A2A client tool. (Paraphrase.)
+      CAVEAT: the versioning page (a different page,
+      https://strandsagents.com/docs/user-guide/sdk/versioning-and-support/) lists
+      "Agent-to-Agent (A2A) protocols" among the still-changing standards that are an
+      exception to strict semver, and advises pinning a minor version.
+    source: https://strandsagents.com/docs/user-guide/sdk/multi-agent/agent-to-agent/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  long_running_agents:
+    status: documented
+    product: Strands harness (background tasks)
+    notes: >
+      Background tool execution is built in. "Background tasks let a tool run while the
+      agent keeps working, instead of blocking the loop until it finishes." "This is a
+      Strands Harness SDK capability", exposed by the harness. The built-in generalist
+      subagent always runs in the background, and by default the model may run any
+      compatible tool there. A policy can limit tools, concurrency and timeouts.
+      (Paraphrase.)
+      There is NO maximum session duration in the SDK, because the agent runs in your
+      process. Bounds are opt-in: the lifecycle-controls page (a different page,
+      https://strandsagents.com/docs/user-guide/sdk/agents/lifecycle-controls/) says "You
+      can cap the number of turns (loop iterations), the output tokens, the total tokens",
+      and a call can be cancelled. Hosted long-running execution belongs to AgentCore
+      Runtime (see aws/b-platform).
+    source: https://strandsagents.com/docs/user-guide/harness/configure/background-tasks/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  multi_tenancy:
+    status: documented
+    value: tenant-scoping primitives; serving isolation delegated to AgentCore Runtime
+    notes: >
+      The SDK does NOT claim a multi-tenant serving layer (unlike AgentScope). It gives
+      primitives for an app that serves tenants. Model routing: "When one agent serves
+      several tenants (the customers of your application), each tenant may approve only
+      some models." The page shows a tenant policy that filters routing candidates per
+      tenant. Memory: the harness checkpoints page (a different page,
+      https://strandsagents.com/docs/user-guide/harness/configure/checkpoints-and-memory/)
+      says "long-term memory supports a scoped store per tenant rather than one shared
+      store". Sessions are namespaced by session id and agent id. (Paraphrase.)
+      Isolation between users is left to the host. The AgentCore Runtime deploy page (a
+      different page,
+      https://strandsagents.com/docs/user-guide/sdk/deploy/deploy_to_bedrock_agentcore/)
+      says "Each user session gets its own dedicated microVM, so state and privileged
+      operations stay isolated between users."
+    source: https://strandsagents.com/docs/user-guide/sdk/model-providers/model-routing/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   local_dev_loop:
     status: documented
     product: strands CLI
@@ -98,6 +177,84 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  tool_calling:
+    status: documented
+    value: parallel by default
+    notes: >
+      "Tool executors control whether tools from a single assistant turn run concurrently
+      or sequentially. Both SDKs default to concurrent execution." "Concurrent execution
+      runs all tool calls from a single turn in parallel." A sequential executor is
+      available when order matters. Tools can be decorated functions, vended tools, or MCP
+      server tools. (Paraphrase for the last sentence.)
+    source: https://strandsagents.com/docs/user-guide/sdk/tools/executors/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_skills:
+    status: documented
+    product: AgentSkills plugin
+    notes: >
+      "Skills give your agent on-demand access to specialized instructions without
+      bloating the system prompt." The plugin follows the agentskills.io Agent Skills
+      specification (SKILL.md folders). Only name and description go into the system
+      prompt; the agent loads full instructions through a skills tool when it needs them.
+      Sources can be filesystem paths, parent directories, HTTPS URLs, or Skill objects
+      built in code. Resource files live in scripts/, references/ and assets/
+      subdirectories. (Paraphrase.)
+      This is a client-side loader, not a hosted skill registry with an upload API (contrast
+      BytePlus CreateSkill). Versioning is whatever your file store or URL gives you. The
+      harness loads ./.agent/skills automatically.
+    source: https://strandsagents.com/docs/user-guide/sdk/plugins/skills/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openapi_import:
+    status: documented
+    product: AgentCore Gateway OpenAPI targets (consumed via Strands' MCP client)
+    notes: >
+      STATUS CHANGE 2026-11-23 (fact-check, same rule as azure/a-sdk and alibaba/a-sdk):
+      partner -> documented. With no SDK-native importer, the cell scores the provider's
+      first-party route consumed over MCP. AgentCore Gateway (the source below):
+      "Gateway supports OpenAPI 3.0 specifications for defining API targets." and "The
+      Gateway translates incoming MCP requests into HTTP requests to these APIs and handles
+      the response formatting."
+      No first-party OpenAPI-to-tool importer in the SDK. A search of the harness-sdk
+      monorepo (strands-py, strands-ts, harness packages) and the docs index
+      (strandsagents.com/llms.txt) found OpenAPI only in tool-spec generation, not
+      in spec import. (Paraphrase.)
+      Within the Strands docs, the only OpenAPI route is a COMMUNITY plugin. The UTCP
+      integration page (a different page,
+      https://strandsagents.com/docs/integrations/tools/utcp/) says "This
+      community plugin integrates UTCP with Strands Agents SDK" and lists "Automatic tool
+      discovery from API specifications" under OpenAPI/Swagger support. It is Python only.
+      The UTCP plugin remains a community, in-process alternative.
+    source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-schema-openapi.html
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  code_interpreter:
+    status: documented
+    value: [Docker, SSH, custom Sandbox]
+    notes: >
+      Pluggable sandbox, not a managed interpreter. "The sandbox is a pluggable backend
+      that receives only execution operations via a standard interface." The agent process
+      stays on your host. Two backends ship: DockerSandbox (an already-running container)
+      and SshSandbox (a remote host). Custom backends implement the Sandbox interface.
+      (Paraphrase, from the available-sandboxes page.) The vended python_repl tool runs
+      code through the sandbox; its page (a different page,
+      https://strandsagents.com/docs/user-guide/sdk/tools/vended-tools/python-repl/) says
+      "Each call runs in a fresh interpreter, so variables, imports, and definitions do not
+      persist across calls."
+      CAVEAT: with no sandbox configured, command and file tools run with the host
+      process's permissions (FAQ, paraphrase). Related AWS options sit outside the SDK: the
+      managed AgentCore Code Interpreter (aws/b-platform) and Strands Box, a
+      policy-enforced sandbox that a blog post (a different page,
+      https://strandsagents.com/blog/strands-box-the-big-picture/) calls "now in developer
+      preview".
+    source: https://strandsagents.com/docs/user-guide/sdk/sandbox/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   cross_cloud_model_adapters:
     status: documented
     notes: >
@@ -111,6 +268,41 @@ capabilities:
       OpenAI, OpenAI Responses API, SageMaker and Writer, plus custom providers.
       (Paraphrase.)
     source: https://github.com/strands-agents/harness-sdk
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  model_routing:
+    status: documented
+    product: ModelRouter
+    value: [ordered fallback, classifier routing, custom strategy]
+    notes: >
+      First-party router in the SDK. "Use model routing to choose a model for each agent
+      invocation from a fixed set of candidates." The default FallbackStrategy tries
+      candidates in order and then favors healthier ones. ClassifierStrategy picks the
+      opening candidate from the request, using a model or a small decision model.
+      Custom RoutingStrategy implementations are supported. (Paraphrase.)
+      Cost-tiering is explicit: "By default, it selects the least capable candidate that
+      can still deliver a complete and accurate result, reserving more capable candidates
+      for work that needs them." Candidates can come from any supported provider but must
+      be stateless.
+      CAVEAT from the page: ClassifierStrategy does not fail over after the serving model
+      fails, and switching models loses the prompt-cache discount. (Paraphrase.)
+    source: https://strandsagents.com/docs/user-guide/sdk/model-providers/model-routing/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openai_compatible_endpoint:
+    status: documented
+    value: client only (consumes OpenAI-compatible endpoints)
+    notes: >
+      As a CLIENT: "The Strands Agents SDK implements an OpenAI provider, letting you run
+      agents against any OpenAI or OpenAI-compatible model." A custom base URL points it at
+      a self-hosted server, for example http://localhost:8000/v1. OpenRouter and Fireworks
+      AI have their own integration guides. (Paraphrase.)
+      The SDK does not SERVE an OpenAI-compatible API. Agents are exposed in-process, over
+      A2A, or through your own web server. No search of the docs index or the repo found an
+      OpenAI-format server for Strands agents. (Paraphrase.)
+    source: https://strandsagents.com/docs/user-guide/sdk/model-providers/openai/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -131,13 +323,69 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  short_term_memory:
+    status: documented
+    value: bring-your-own storage (managed option via AgentCore Memory)
+    notes: >
+      In-context thread memory is handled by conversation managers, "trimming or
+      summarizing older messages while preserving the ones that still matter". Three ship
+      with the SDK: NullConversationManager (keeps everything), SlidingWindowConversationManager
+      (the default) and SummarizingConversationManager. (Paraphrase.)
+      Persisting the thread across requests is session management. The session page (a
+      different page, https://strandsagents.com/docs/user-guide/sdk/agents/session-management/)
+      lists AgentCoreMemorySessionManager as a third-party manager that "Supports both
+      short-term memory (STM) and long-term memory (LTM)". Without it, storage is yours to
+      choose (local file, S3, in-memory or custom). See checkpointer_backends.
+    source: https://strandsagents.com/docs/user-guide/sdk/agents/conversation-management/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpointer_backends:
+    status: documented
+    value: [LocalFileStorage, S3Storage, InMemoryStorage, custom Storage; community Valkey; AgentCore Memory]
+    notes: >
+      One Storage interface backs sessions, snapshots and memory. Three backends ship
+      first-party: LocalFileStorage (the default, with atomic writes), S3Storage (for
+      production and multi-instance) and InMemoryStorage (for tests). A custom backend
+      implements four async methods: write, read, delete and list. (Paraphrase.)
+      The page says plainly what is missing. SQLite and PostgreSQL have "no first-party
+      session manager or storage backend". Redis/Valkey is only available through the
+      community strands-valkey-session-manager (Python). AgentCore Memory comes through
+      AgentCoreMemorySessionManager. (Paraphrase for the last two sentences.) The older
+      FileSessionManager and S3SessionManager remain the Python path for Graph and Swarm
+      sessions.
+    source: https://strandsagents.com/docs/user-guide/harness/configure/checkpoints-and-memory/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  checkpoint_resume:
+    status: documented
+    notes: >
+      Resume after restart is documented: a session persists what the agent knows "so it
+      can pick up where it left off even when your application restarts or runs across
+      several machines." Snapshots add immutable point-in-time checkpoints and manual
+      restore. Graphs resume an interrupted run from the next ready nodes (see
+      workflow_engine). (Paraphrase for the last two sentences.)
+      Finer-grained durability is EXPERIMENTAL. The module docstring (a different page,
+      https://raw.githubusercontent.com/strands-agents/harness-sdk/main/strands-py/src/strands/experimental/checkpoint/checkpoint.py)
+      reads "Checkpoint system for durable agent execution." It pauses at the after_model
+      and after_tools cycle boundaries, and it does not capture conversation state on its
+      own. (Paraphrase.)
+      CAVEATS on the session page: "changes to agent state or messages are only persisted
+      during specific lifecycle events", and "The built-in session managers take no
+      distributed lock", so two writers on one session overwrite each other.
+    source: https://strandsagents.com/docs/user-guide/sdk/agents/session-management/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   policy_hooks:
     status: documented
     notes: >
-      The harness-sdk README (a different page from the org page cited here) describes
-      hooks as programmatic interception — "log it, validate it, or redirect it" — plus
-      guardrails and steering handlers. On THIS org page, the extension-template
-      description lists extension types including "interventions".
+      The harness-sdk README (the page cited here) describes hooks as programmatic
+      interception — "log it, validate it, or redirect it" — plus guardrails and steering
+      handlers. The GitHub org page (a different page, https://github.com/strands-agents)
+      has an extension-template description that lists extension types including
+      "interventions".
       NOTE for human_in_the_loop: "Steering handlers let agents correct themselves
       instead of failing silently" is AGENT self-correction, not human intervention.
       Docs now also list Cedar and Dogwood authorization interventions (seen in the docs
@@ -157,6 +405,23 @@ capabilities:
       OTEL_SEMCONV_STABILITY_OPT_IN opts into the latest (experimental) gen_ai conventions.
       (Correction: an earlier note called that variable an attribute-redaction switch; the
       page does not say so.)
+    source: https://strandsagents.com/docs/user-guide/sdk/observability-evaluation/traces/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  sdk_instrumentation_portability:
+    status: documented
+    value: any OTLP backend
+    notes: >
+      Portable. The SDK emits standard OpenTelemetry. Export options are "Console output
+      for development, OTLP endpoint for production", configured with the standard
+      OTEL_EXPORTER_OTLP_ENDPOINT and OTEL_EXPORTER_OTLP_HEADERS variables. "Traces can be
+      visualized and analyzed using any OpenTelemetry-compatible tool". The page names
+      Jaeger, Grafana Tempo, AWS X-Ray, Datadog, Langfuse and Opik. You can also attach
+      Strands exporters to your own tracer provider. (Paraphrase beyond quotes.) AWS is not
+      a required destination.
+      Separate from tracing: the Bedrock client adds a strands-agents User-Agent token (see
+      sdk_telemetry_phone_home).
     source: https://strandsagents.com/docs/user-guide/sdk/observability-evaluation/traces/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -184,7 +449,8 @@ capabilities:
       Single-vendor in practice: the org profile repo is "Forked from amzn/.github"
       (verbatim, org page). The org page does NOT itself assert AWS operation, and the
       "Generated from amazon-archives/__template_Apache-2.0" provenance string is on the
-      harness-sdk repo page, not here. No foundation governance stated anywhere.
+      harness-sdk repo page (a different page, https://github.com/strands-agents/harness-sdk),
+      not here. No foundation governance stated anywhere.
     source: https://github.com/strands-agents
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -242,5 +508,29 @@ capabilities:
       opt-in, going to an exporter you choose (traces docs page). Same treatment as
       Azure's MAF User-Agent token.
     source: https://raw.githubusercontent.com/strands-agents/harness-sdk/main/strands-py/src/strands/models/bedrock.py
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  launch_stage_investigation:
+    status: documented
+    notes: >
+      No current GA statement for the SDK (the phrase generally available does not appear).
+      Searched: the harness-sdk
+      README and package READMEs, the docs versioning page, the strandsagents.com docs
+      index (llms.txt), and the 1.0 launch post. What the vendor does say:
+      SDK: the versioning page says the Strands Harness SDK follows Semantic Versioning
+      2.0.0, and that experimental features in the strands.experimental module are "not
+      covered by semantic versioning guarantees". The 1.0 post (a different page,
+      https://aws.amazon.com/blogs/opensource/introducing-strands-agents-1-0-production-ready-multi-agent-orchestration-made-simple/)
+      is titled "Production-Ready" and says "Since launching as a preview in May 2025",
+      but it never says GA.
+      Harness and CLI: the harness versioning page says Strands harness is a 0.x product,
+      versioned separately from the SDK, with breaking changes allowed in minor releases.
+      (Paraphrase; https://strandsagents.com/docs/user-guide/harness/versioning/.)
+      Feature-level stages seen: experimental config_to_agent, the experimental checkpoint
+      module, the experimental stop tool in TypeScript, and Strands Box in developer
+      preview. (Paraphrase.)
+      Scored `documented`: no stage claim for the SDK as a whole.
+    source: https://strandsagents.com/docs/user-guide/sdk/versioning-and-support/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"

@@ -81,9 +81,9 @@ capabilities:
   model_choosable:
     status: documented
     notes: >
-      Yes — extensive model choice. Users can switch between auto and any specific model.
-      "Stay in control: Switch between auto and any specific model at any time." Auto
-      "Respects your policies: Auto honors all administrator model settings."
+      Yes — model choice. Users can switch between auto and any specific model.
+      "Switch between auto and any specific model at any time." Auto
+      "Auto honors all administrator model settings."
     source: https://github.blog/changelog/2026-03-12-copilot-auto-model-selection-is-generally-available-in-jetbrains-ides/
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -182,9 +182,13 @@ capabilities:
     verified_by: "@notacryptodad"
 
   launch_stage_investigation:
-    status: documented
+    product: GitHub Copilot
+    status: ga
     notes: >
-      No single GA statement for the overall product — it has been shipping for years.
+      HEADLINE STAGE: "GitHub Copilot is generally available to all developers" — 2022-06-21
+      (a different page,
+      https://github.blog/news-insights/product-news/github-copilot-is-generally-available-to-all-developers/).
+      Status follows the launch-stage convention (taxonomy hint).
       Individual features have their own stages; the matrix key distinguishes "✓ =
       supported" from "P = under preview" (plus "C = closing down"). Agent mode, MCP, code review and workspace
       indexing are ✓ in the main IDEs; BYOK is P in VS Code, JetBrains, Eclipse and Xcode

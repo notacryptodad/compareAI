@@ -40,7 +40,15 @@ with double-quoted excerpts claimed verbatim from the source), optional `product
 
 5. SYMMETRY. If a scoring rule is applied to one provider but not another on identical
    evidence, report it. (This project previously marked AWS/Azure `ga` from silence while
-   marking GCP `unknown` on the same evidence — do not let that recur.)
+   marking GCP `unknown` on the same evidence — do not let that recur.) Also report a
+   provider left `unknown`/missing on a row its peers fill, when the capability exists in
+   that provider's sibling product family (e.g. models in Bedrock / Foundry Models /
+   Vertex AI rather than the agent platform the bucket file is named after).
+
+## Environment rules (hard)
+
+Run Python only via `uv run` (never `python3`, `python`, `pip`). Never `rm` — move
+unwanted files to ~/Documents/trashllm. No state-changing git. Do not edit any file.
 
 ## Fetching — network & rendering rules (IMPORTANT)
 

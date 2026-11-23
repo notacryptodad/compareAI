@@ -19,12 +19,31 @@ notes: >
   (VeADK, LangChain, LangGraph, ADK, Strands and AgentCore migration), while ModelArk
   Managed Agents is a prebuilt hosted agent loop. It is the BytePlus counterpart of
   Volcengine AgentKit. (Paraphrase, from the AgentKit docs.)
-  PRODUCT-NAME DECISION: this file stays centred on BytePlus ModelArk (Managed Agents),
-  because nearly every cell documents ModelArk APIs. AgentKit is NOT listed as an alias,
-  because it is a different product. Cells where AgentKit supplies the evidence carry
-  `product: BytePlus AgentKit`. AgentKit was NOT researched cell by cell (runtime,
-  regions, private networking and so on); a future pass should decide whether it earns
-  its own treatment.
+  PRODUCT-NAME DECISION: the file-level product stays BytePlus ModelArk (Managed Agents).
+  AgentKit is NOT listed as an alias, because it is a different product.
+  PER-CELL PRODUCT CONVENTION (AgentKit cell-by-cell pass, 2026-11-23): this project
+  scores the PROVIDER, so each cell records BytePlus's strongest documented offering for
+  that row, the same way AWS cells name AgentCore Runtime / Gateway / Memory separately.
+  Rule applied: if ModelArk's evidence supports the row at least as strongly, the ModelArk
+  cell stays and AgentKit gets a one-line note. If AgentKit documents the capability where
+  ModelArk is unknown or weaker, the cell switches to `product: BytePlus AgentKit` (or an
+  AgentKit component name such as BytePlus AgentKit Gateway), cites the AgentKit page,
+  and keeps the ModelArk facts in the note. A cell with no `product:` override is
+  ModelArk. A few cells name a third BytePlus product (Knowledge Engine, RTC
+  Conversational AI).
+  STAGE RULE FOR AGENTKIT CELLS: the release notes say "AgentKit is generally available
+  for commercial use." (2026-11-16, Asia Pacific (Johor)). That GA applies to AgentKit as
+  a product, so `ga` is used only where it clearly covers the capability (the headline
+  agent runtime and the launch-stage row). Every other AgentKit cell is `documented`. The
+  "Identity and Permission" feature still carries a beta banner on every identity page
+  (pages updated as late as 2026-11-18, after the GA entry), so identity cells sourced to
+  AgentKit are `preview`.
+  MACHINE VERIFICATION: AgentKit has NO llms.txt or .md mirror (checked 2026-11-23:
+  docs.byteplus.com/en/docs/agentkit/llms.txt and <page>.md both return the JS app shell;
+  www.byteplus.com/llms.txt and ai.byteplus.com/llms.txt do not index AgentKit). All
+  AgentKit quotes were verified against bodies rendered in headless Chromium (Playwright)
+  on 2026-11-23 and stay UNVERIFIABLE to check_quotes.py. New ModelArk cells cite the
+  ai.byteplus.com .md mirror where possible, which CI can verify.
   TOOLING WALL DIAGNOSED, THEN BROKEN. docs.byteplus.com renders article bodies
   client-side: plain HTTP fetches return ~280-300 KB of HTML per page that strips to ~3.3 KB
   of pure navigation chrome, which is why three earlier research passes recorded only
@@ -46,7 +65,9 @@ notes: >
   second multi-agent mode allowing up to 3 levels of sub-agents.
   METHOD NOTE for the next refresh: ai.byteplus.com/ark publishes an llms.txt index and a
   Markdown mirror of every ModelArk doc (append .md to the URL), both served over plain
-  HTTP. Citing those could make BytePlus quotes machine-verifiable. Not adopted here.
+  HTTP. Citing those makes BytePlus quotes machine-verifiable. Adopted only for cells
+  added in the 2026-11-23 AgentKit pass (managed_agent_harness); older ModelArk cells
+  still cite the docs.byteplus.com slug URLs.
   METHOD NOTE worth keeping: the earlier `unknown` statuses were correct at the time — the
   evidence genuinely was nav-titles-only — but "unreachable" was a property of the toolchain,
   not the vendor. Any provider whose docs are a JS app will look under-documented to an
@@ -55,35 +76,38 @@ notes: >
 
 capabilities:
   launch_stage_investigation:
-    status: documented
+    product: BytePlus AgentKit
+    status: ga
     notes: >
-      NO EXPLICIT STAGE FOUND for ModelArk Managed Agents (re-checked 2026-11-23 on the
-      rendered overview page and the ai.byteplus.com/ark/llms.txt doc index). Neither
-      carries GA, preview, beta, or invitation wording for Managed Agents. The beta labels
-      that do exist in ModelArk docs belong to other features, such as Structured output
-      (beta), Responses API context editing (beta), and an ark-beta-mcp header used for
-      Responses API MCP calls. Do NOT attribute them to Managed Agents.
-      The service has published per-hour runtime pricing (see pricing_axes), so it is
-      commercially offered, but that is not a stated stage. Hence `documented`.
+      SWITCHED TO AGENTKIT AND CHANGED documented -> ga (2026-11-23 AgentKit pass). This row
+      records the provider's launch-stage evidence trail, and BytePlus's agent platform with
+      a stated stage is AgentKit. The release notes (the source below) have a November 16,
+      2026 entry: "AgentKit is generally available for commercial use." The release region
+      is Asia Pacific (Johor). The February 10, 2026 entry ("AgentKit was released online
+      for the first time.") carries Stage Beta. GA covers AgentKit as a product, but NOT
+      every component: the "Identity and Permission" feature is still labelled beta on its
+      own pages (see agent_workload_identity). The AgentKit Agent Gallery terms also say
+      its services are a Beta edition. (Paraphrase of the last two points.)
+      CONFLICT TO NOTE: the AgentKit product page (www.byteplus.com/en/product/agentkit)
+      still shows "Apply for beta test" buttons. The newer, specific release-notes entry
+      wins over a stale button. (Paraphrase.)
+      MODELARK MANAGED AGENTS, the other agent platform, still has NO stated stage
+      (re-checked 2026-11-23 on the rendered overview page and the ai.byteplus.com/ark/llms.txt
+      doc index, each a different page from the source). Neither carries GA, preview,
+      beta, or invitation wording for Managed Agents. The beta labels that do exist in
+      ModelArk docs belong to other features, such as Structured output (beta), Responses
+      API context editing (beta), and an ark-beta-mcp header used for Responses API MCP
+      calls. Do NOT attribute them to Managed Agents. Managed Agents has published per-hour
+      runtime pricing (see pricing_axes), so it is commercially offered, but that is not a
+      stated stage. (Paraphrase.)
       CROSS-PROVIDER OBSERVATION (recorded 2026-08-04, not re-checked): docs.volcengine.com
       (Volcengine 方舟/Ark, the CN-market sibling) served the SAME doc IDs, so BytePlus and
       Volcengine share a documentation platform and almost certainly the same product.
-      SIBLING PRODUCT AGENTKIT HAS A STATED STAGE (added 2026-11-23; this status still
-      describes ModelArk Managed Agents only). The AgentKit release notes, a different page
-      (docs.byteplus.com/en/docs/agentkit/New_feature_release_notes), have a November 16,
-      2026 entry: "AgentKit is generally available for commercial use." The release region
-      is Asia Pacific (Johor). The February 10, 2026 entry ("AgentKit was released online
-      for the first time.") carries Stage Beta. Billing started August 24, 2026 per the
-      AgentKit Billing Announcement. CONFLICT TO NOTE: the AgentKit product page
-      (www.byteplus.com/en/product/agentkit) still shows "Apply for beta test" buttons,
-      which link to a public-beta-invite form. The newer release-notes entry is the
-      specific stage statement, so it wins over the button. It applies to AgentKit only.
-      Inside AgentKit, the "Identity and Permission" feature is still described as in beta
-      and enabled on request through an account manager. (Paraphrase, from a different
-      page: docs.byteplus.com/en/docs/agentkit/simulating-evaluation.)
-      A refresh dated 2026-11-22 recorded `preview` from the beta-test button. That was
-      rejected: the button is stale against the GA entry, and it is not about ModelArk.
-    source: https://docs.byteplus.com/en/docs/modelark/overview
+      HISTORY: a refresh dated 2026-11-22 recorded `preview` from the beta-test button; that
+      was rejected as stale against the GA entry. The earlier 2026-11-23 pass kept
+      `documented` because it scored ModelArk only. AgentKit billing started August 24,
+      2026 per the AgentKit Billing Announcement. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/New_feature_release_notes
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -98,33 +122,138 @@ capabilities:
       Since August the docs also cover background tool tasks (long Bash commands move to
       the background after 60 seconds by default) and scheduled agent runs. (Paraphrase,
       from separate pages: modelark/background-tool-tasks and modelark/schedule-agent-runs.)
+      AGENTKIT (2026-11-23 pass; kept ModelArk): AgentKit runtimes cap a single
+      synchronous request at 30 minutes (configurable execution timeout added
+      2026-11-03), and sandbox instances live up to 24 hours. Async or background
+      agent runs are not documented as a runtime feature, so ModelArk's minutes-to-
+      hours sessions remain the stronger evidence. (Paraphrase, from different
+      pages: https://docs.byteplus.com/en/docs/agentkit/Limits and
+      https://docs.byteplus.com/en/docs/agentkit/update-execution-timeout.)
     source: https://docs.byteplus.com/en/docs/modelark/overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  authoring_mode:
+    status: documented
+    value: [code-first (VeADK / AgentKit SDK / CLI), low-code (AgentKit Studio), config-first (ModelArk Managed Agents console and API)]
+    product: BytePlus AgentKit Studio + AgentKit CLI; ModelArk Managed Agents
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). Three authoring paths.
+      LOW-CODE: "AgentKit Studio is a visual workspace provided by VeADK. It supports
+      creating, testing, deploying, and managing agents in a single interface."
+      Develop: "Covers configuration of models, prompts, tools, memory, knowledge bases,
+      and skills. Also provides multi-agent topology orchestration."
+      Studio also has an Intelligent mode that creates agents from a natural-language
+      description, and a Fast mode that creates sub-agents at runtime. (Paraphrase, from
+      the release notes, a different page.)
+      CODE-FIRST: VeADK, or any Python framework through the AgentKit SDK decorators,
+      deployed with the AgentKit CLI (see framework_agnosticism, iac_coverage).
+      (Paraphrase.)
+      CONFIG-FIRST: ModelArk Managed Agents agents are defined in its console or API, with
+      no agent code (see managed_agent_harness). (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/agentkit-studio-overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   managed_agent_runtime:
+    product: BytePlus AgentKit Runtime
+    status: ga
+    notes: >
+      SWITCHED FROM ModelArk Managed Agents TO AGENTKIT, AND documented -> ga (2026-11-23
+      AgentKit pass). The row hint is the hosting service for YOUR agent code, and that is
+      AgentKit's runtime, not ModelArk's prebuilt loop (now recorded under
+      managed_agent_harness).
+      "An agent runtime (hereinafter referred to as the "runtime") is a hosted runtime
+      environment provided by AgentKit for agents." It "provides security isolation and is
+      framework- and model-agnostic, supports automatic scaling of associated instances
+      based on business traffic, and supports built-in IAM roles to control the permissions
+      for the agent runtime to access cloud resources."
+      Serverless: "No manual maintenance of compute, networking, storage, or security
+      policies is required." Scaling: "You can configure a minimum number of resident
+      instances to eliminate cold starts. Idle instances are automatically destroyed when
+      there are no requests, reducing costs."
+      Build from code or images; hosts HTTP, A2A and MCP protocol agents. Limits page: 20
+      runtimes per account per region, 20 instances per runtime, 30 min synchronous
+      execution timeout, 16 MB max payload. (Paraphrase, from a different page:
+      https://docs.byteplus.com/en/docs/agentkit/Limits.)
+      STAGE: the release notes (a different page,
+      https://docs.byteplus.com/en/docs/agentkit/New_feature_release_notes) say "AgentKit is
+      generally available for commercial use." (2026-11-16, Asia Pacific (Johor)). The
+      runtime is AgentKit's headline component and carries no beta label, so the GA entry
+      is read as covering it. This is the one inference in the cell; the runtime page itself
+      states no stage. (Paraphrase.)
+      MODELARK SIDE (kept from the earlier cell; different page:
+      https://docs.byteplus.com/en/docs/modelark/overview): Managed Agents is a prebuilt,
+      configurable agent framework on ModelArk-managed infrastructure, with no stated stage.
+      Per another different page
+      (https://docs.byteplus.com/en/docs/modelark/self-hosted-environment-overview), it
+      also offers self-hosted environments, where your own workers run the bash and file
+      tools while ModelArk hosts inference, orchestration and sessions. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Agent_runtime_overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  managed_agent_harness:
     product: ModelArk Managed Agents
     status: documented
     notes: >
-      VERIFIED FROM THE RENDERED BODY:
-      "ModelArk Managed Agents is a prebuilt, configurable agent framework provided by
-      ModelArk. It runs on ModelArk-managed infrastructure and is best suited for
+      NEW ROW (2026-11-23). ModelArk Managed Agents is BytePlus's configure-not-code
+      harness: "ModelArk Managed Agents is a prebuilt, configurable agent framework provided
+      by ModelArk. It runs on ModelArk-managed infrastructure and is best suited for
       long-running, stateful asynchronous tasks with multi-turn tool calls."
-      Positioned explicitly against DIY: "To build a usable agent based on the model API,
-      you need to implement common components yourself, such as AgentLoop, tool calls,
-      context management, sandbox scheduling, checkpoint resume, and permission isolation."
-      TWO-PATH CHOICE, stated plainly — closest analogue to AWS Runtime-vs-Harness:
-      "ModelArk currently provides two ways to build agents based on Dola models: use the
-      model API when you need fine-grained control over the agent loop; use Managed Agents
-      when you want ModelArk to host the agent".
-      Quickstart is four steps: "create an agent, create an environment, start a session,
-      send a message and receive a streaming response."
-      NEW SINCE AUGUST: a self-hosted environment option, where ModelArk keeps hosting
-      inference, orchestration and sessions while your own workers run the agent's
-      bash and file tools on your infrastructure. (Paraphrase, from a different page:
-      modelark/self-hosted-environment-overview.)
-      No launch stage stated on the page — hence `documented`, not `ga`.
-    source: https://docs.byteplus.com/en/docs/modelark/overview
+      What it pre-assembles: "To build a usable agent based on the model API, you need to
+      implement common components yourself, such as AgentLoop, tool calls, context
+      management, sandbox scheduling, checkpoint resume, and permission isolation."
+      "ModelArk Managed Agents provides complete infrastructure at the agent layer."
+      "The platform has a built-in AgentLoop that automatically drives the entire loop."
+      Opt-in, beside the raw model API: "use the model API when you need fine-grained
+      control over the agent loop; use Managed Agents when you want ModelArk to host the
+      agent and you want to focus on business logic."
+      You configure the agent (model, system prompt, skills, tools, MCPs) and get a
+      reusable agent_id. The harness ships a versioned built-in toolset (bash, read, write,
+      edit, glob, grep, web_fetch, web_search), memory stores, vaults and cloud sandboxes;
+      see tool_calling and long_term_memory. (Paraphrase.)
+      There is no code-export escape hatch like AgentCore Harness's export to Strands. No
+      launch stage is stated, hence `documented`. (Paraphrase.)
+      AGENTKIT ALSO HAS A HARNESS MODE. Its product page (www.byteplus.com/en/product/agentkit)
+      advertises dynamic harness orchestration that deploys from a harness config with no
+      agent code. The AgentKit CLI generates a harness configuration file and lists
+      runtimes deployed in harness mode (docs.byteplus.com/en/docs/agentkit/CLI_overview).
+      No harness user guide turned up in the AgentKit docs, so ModelArk's documented
+      harness is the stronger evidence. (Paraphrase of both AgentKit pages.)
+      Source is the ModelArk Markdown mirror, which plain HTTP can verify.
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/overview.md
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  voice_agents:
+    product: BytePlus RTC Conversational AI
+    status: documented
+    notes: >
+      NEW ROW (2026-11-23). BytePlus's real-time voice agent is not part of ModelArk or
+      AgentKit. It is the Conversational AI solution of BytePlus RTC: "This document
+      describes how to integrate a basic conversational AI solution with BytePlus RTC and
+      enable real-time interaction between a user and an AI agent."
+      Mechanism: the user joins an RTC room, then "After the human user has joined the room
+      and published audio, call StartVoiceChat from your application server." The AI agent
+      joins as a separate RTC user, and the call config wires ASR, LLM and TTS providers
+      (the example uses BytePlus ASR, BytePlus ModelArk and BytePlus TTS, or self-hosted
+      models). "Only one target user is supported." (Paraphrase except quoted text.)
+      The preparation page (a different page:
+      https://docs.byteplus.com/en/docs/byteplus-rtc/docs-1315561) says "RTC offers two
+      integration solutions: a one-stop integration of ASR, LLM, and TTS services, and
+      direct integration via OpenAI RealtimeAPI." It also lists third-party ASR, TTS and LLM
+      vendors (Amazon, Google, OpenAI, ElevenLabs, MiniMax).
+      The RTC product page (www.byteplus.com/en/product/rtc) claims sub-1s conversational AI
+      latency with real-time interruption. (Paraphrase.)
+      The BytePlus legal SLA list includes an "SLA for BytePlus RTC Service" (a different
+      page: https://docs.byteplus.com/en/docs/legal/docs-service-level-agreements-097b8473).
+      Whether it covers Conversational AI was not checked. (Paraphrase.)
+      CAVEAT: session limits and a region table for voice agents were not read this pass.
+      No stage is stated on the integration page, hence `documented`. AgentKit itself
+      documents no voice agent type; VeADK lists voice only as an interaction mode.
+      (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/byteplus-rtc/docs-1310560
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -145,6 +274,11 @@ capabilities:
       (2026-11-23: the vendor reworded the August sentence, which said Managed Agents
       delivers the full infrastructure stack; quote updated.)
       No launch stage stated — hence `documented`, not `ga`.
+      AGENTKIT (2026-11-23 pass; kept ModelArk): AgentKit Studio can configure LLM,
+      sequential, parallel and loop agents without code, and the product page
+      advertises deploying from a harness config, but those deploy into a runtime
+      rather than a one-call invoke API. ModelArk remains the evidence for this row
+      (see managed_agent_harness). (Paraphrase.)
     source: https://docs.byteplus.com/en/docs/modelark/overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -164,6 +298,12 @@ capabilities:
       can start multiple parallel sessions."
       Per-session isolation plus parallel sessions per agent is a genuine multi-tenancy
       primitive, comparable to AgentCore's session isolation.
+      AGENTKIT (2026-11-23 pass; kept ModelArk): AgentKit runtime sessions are
+      identified by a SessionID that your code uses against a Sessions database (see
+      short_term_memory). Sandbox instances are created per sessionId and reused for
+      the session. AgentKit documents no session lifecycle or event-stream API
+      comparable to ModelArk's. (Paraphrase, from a different page:
+      https://docs.byteplus.com/en/docs/agentkit/Agent_runtime_overview.)
     source: https://docs.byteplus.com/en/docs/modelark/overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -189,32 +329,213 @@ capabilities:
       the session's environment, sandbox, file system and vault credentials but not
       conversation history. Migration is one-way: an agent switched to
       multiagent_20261001 cannot switch back to coordinator.
+      AGENTKIT (2026-11-23 pass; kept ModelArk): AgentKit adds cross-agent calls
+      over the A2A protocol through the A2A Center (see a2a_protocol). AgentKit
+      Studio offers sequential, parallel and loop workflow agents, plus a Fast mode
+      whose CreateAgentToolset creates sub-agents dynamically at runtime (release
+      notes, 2026-09-04). Identity access rules can authorize middle-tier agents in
+      chained calls. (Paraphrase, from different pages under
+      docs.byteplus.com/en/docs/agentkit/.)
     source: https://docs.byteplus.com/en/docs/modelark/multi-agent
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
-  mcp_server_hosting:
+  workflow_engine:
+    product: BytePlus AgentKit Studio (VeADK workflow agents)
     status: documented
     notes: >
-      VENDOR-HOSTED MCP via a marketplace, for the Responses API: "You can visit the MCP
-      marketplace to obtain the URL of cloud-deployed MCP or remote MCP you want to use."
-      "Compared to function calling, the MCP tools run entirely in the cloud: the large
-      model connects to a remote server to complete calls, so local MCP calls are not
-      supported."
-      Constraint: "Currently, cloud-deployed MCP / remote MCP can be called only through
-      the Responses API, and only MCP connected through streamable HTTP links is
-      supported." The quickstart also says to add an ark-beta-mcp header during testing.
-      In Managed Agents, MCP servers are declared on the agent by URL, and credentials
-      are injected per session through vaults. (Paraphrase, from a different page:
-      modelark/mcp.)
-      CAUTION: this is BytePlus hosting its own catalog MCP servers. ModelArk does not
-      document hosting YOUR tools as an MCP endpoint.
-      THE SIBLING PRODUCT AGENTKIT DOES (added 2026-11-23). Its Gateway is the AgentCore
-      Gateway equivalent. It can connect existing MCP servers, convert REST/OpenAPI
-      services into MCP tools, or deploy your MCP service on vCPU/memory billed instances.
-      (Paraphrase, from different pages: docs.byteplus.com/en/docs/agentkit/What_is_AgentKit
-      and agentkit/Billing_items.) That is product BytePlus AgentKit, not ModelArk.
-    source: https://docs.byteplus.com/en/docs/modelark/mcp-remote-mcp
+      NEW CELL (2026-11-23 gap pass). AgentKit Studio offers three orchestration-type
+      primary agents next to the LLM agent: "sequential, parallel, and loop agents are
+      orchestration-type primary agents that contain no model-related configuration and
+      schedule sub-agents according to rules."
+      Sequential: "It schedules sub-agents one by one in series to complete tasks, like a
+      pipeline that only runs from front to back."
+      Parallel: "It runs multiple sub-agent tasks concurrently and aggregates the results."
+      Loop: "It loops through a multi-step workflow of sub-agents within an iteration
+      limit, stopping when a condition is met or the maximum number of iterations is
+      reached."
+      CAVEATS: these are fixed sequential / parallel / loop compositions (the VeADK, ADK-
+      style workflow agents), not a general graph or DAG with conditional edges. The page
+      states no durable or resumable execution for them. (Paraphrase.)
+      MODELARK SIDE: Managed Agents has no workflow engine. It is a model-driven agent
+      loop with sub-agents (see multi_agent_patterns), checkpoint resume inside a
+      session, and scheduled runs through deployments. (Paraphrase, from pages under
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/.)
+      Rendered in headless Chromium on 2026-11-23; check_quotes.py reports this page as
+      UNVERIFIABLE.
+    source: https://docs.byteplus.com/en/docs/agentkit/Building_and_deploying_agents_using_AgentKit_Studio
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  a2a_protocol:
+    product: BytePlus AgentKit A2A Center
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). "A2A Center offers unified A2A-protocol-based
+      agent access and management. With standard protocol communication powered by the
+      underlying gateway, it helps you register, organize, discover, call, and govern agent
+      versions."
+      "The A2A Center is a capability center in AgentKit for accessing, managing, and
+      discovering A2A agents".
+      AgentKit runtimes can serve the A2A protocol (alongside HTTP and MCP), and a runtime
+      must be registered in an A2A space for cross-agent invocation, one space per runtime.
+      The release notes (2026-03-06) describe synchronous and asynchronous communication
+      compliant with the standard A2A protocol. (Paraphrase, from different pages:
+      https://docs.byteplus.com/en/docs/agentkit/Agent_runtime_overview and the release notes.)
+      MODELARK SIDE: Managed Agents documents sub-agents inside one session (see
+      multi_agent_patterns) but no A2A protocol support. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/A2A_Center_overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  distribution_to_packaged_products:
+    product: BytePlus AgentKit -> ArkClaw Enterprise Application Center
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 gap pass). YES, through the ArkClaw Enterprise Application
+      Center. "Enterprise administrators can register A2A-compliant agents in the
+      Application Center of ArkClaw Enterprise. This enables these agents to be
+      discovered and invoked by Claw instances of employees within the space."
+      "Applications sourced from AgentKit: Runtimes and MCPs support registration via API
+      key and OAuth JWT authentication."
+      Conditions for an AgentKit runtime: within the current BytePlus account's
+      permissions, status Available, API key or OAuth inbound authentication, and A2A
+      protocol support. Sources are AgentKit, Shared Claw and Custom, so any reachable
+      A2A endpoint can also be registered. AgentKit MCP services can be registered the
+      same way. Each application gets an access scope (Allow all, Controlled access, Deny
+      all). (Paraphrase.)
+      LIMITS: registration is an administrator action inside one ArkClaw Enterprise space,
+      not a public marketplace. ModelArk Managed Agents agents are not a named source;
+      they would need to be fronted by an A2A endpoint (Custom source). The page does not
+      state a launch stage. (Paraphrase.)
+      Rendered in headless Chromium on 2026-11-23; check_quotes.py reports this page as
+      UNVERIFIABLE. See also c-outofbox invoke_custom_agents.
+    source: https://docs.byteplus.com/en/docs/ArkClaw/Application_management
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  mcp_server_hosting:
+    product: BytePlus AgentKit Gateway (MCP services)
+    status: documented
+    notes: >
+      SWITCHED FROM ModelArk TO AGENTKIT (2026-11-23 AgentKit pass); status unchanged.
+      ModelArk only exposes BytePlus-hosted catalog MCP servers. AgentKit hosts YOUR MCP
+      server.
+      "AgentKit supports three creation methods: Deploy MCP service, Import MCP service, and
+      HTTP to MCP, which apply to three scenarios respectively: deploying from scratch,
+      connecting existing services, and transforming existing APIs."
+      "If no platform-based service is available for direct integration and you want
+      AgentKit to manage deployment and access, choose "Deploy MCP service"."
+      Deployed services are billed per vCPU, memory and traffic (a different page,
+      https://docs.byteplus.com/en/docs/agentkit/Billing_items), with configurable minimum
+      and maximum instance counts (release notes, 2026-10-29 and 2026-11-16). Supported MCP
+      protocol versions are 2026-07-28, 2025-11-25, 2025-06-18 and 2025-03-26 over
+      Streamable HTTP; SSE and STDIO are not supported per the Gateway FAQ. Inbound auth is
+      API Key or OAuth JWT, and OAuth 3LO outbound credentials are supported. (Paraphrase.)
+      "The MCP service is a paid feature. Charges apply regardless of the creation method."
+      MODELARK SIDE (a different page: https://docs.byteplus.com/en/docs/modelark/mcp-remote-mcp):
+      the Responses API can call cloud-deployed or remote MCP from an MCP marketplace, over
+      streamable HTTP only. Managed Agents declares MCP servers on the agent by URL, with
+      credentials from vaults. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/MCP_services
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  mcp_registry:
+    product: BytePlus AgentKit Gateway (MCP toolsets) and A2A Center
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). AgentKit Gateway is a governed catalog of MCP
+      services, and MCP toolsets curate tools from many services: "An MCP toolset is an
+      aggregated entry point for tools exposed to IDEs, CLIs, and agents within the
+      AgentKit gateway."
+      "Create an MCP toolset when you need an agent to use multiple MCP services
+      simultaneously or to control the scope of visible tools by business domain."
+      Toolsets support semantic and tag-based tool search, billed per tool index (Features
+      page and Billing page). The A2A Center is a separate registry for agents rather than
+      MCP servers; see a2a_protocol. (Paraphrase.)
+      CAVEAT: these are per-account catalogs of services you register. A
+      vendor-curated public MCP catalog is not described on this page.
+      MODELARK SIDE (a different page: https://docs.byteplus.com/en/docs/modelark/mcp-remote-mcp):
+      ModelArk points Responses API users to an "MCP marketplace" of cloud-deployed MCP
+      servers. Its contents are not enumerated there. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/MCP_Overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  skills_registry:
+    product: BytePlus AgentKit Skill (formerly Skills Center)
+    status: documented
+    notes: >
+      NEW ROW (2026-11-23). AgentKit runs an org-level skill catalog. The vendor renamed
+      Skill Center to Skill on 2026-09-24, changing display names only (release notes).
+      "By adding a skill to a skills space and integrating the skill into the target agent,
+      you can quickly extend the agent's task-handling scope."
+      Governance and distribution: "Through skills spaces, skill collections can be
+      organized by team, business domain, or runtime environment, and the distribution
+      scope of a skill can be controlled."
+      "Skills support versioned publishing."
+      From different pages: a skills space is a logically isolated space, and agents can
+      use only the skills in their associated space
+      (https://docs.byteplus.com/en/docs/agentkit/Skills_space). The catalog includes
+      platform-preset skills, "independently developed by the platform or officially
+      authenticated by mainstream model vendors" (Skills_space page). Skills are
+      automatically security-scanned
+      for hardcoded secrets and similar risks, and quality-checked before publish. Limits
+      are 200 skills and 200 skills spaces per account per region, and 20 skills per space.
+      (Paraphrase except quoted text.)
+      MODELARK SIDE: Managed Agents lets you upload skills (CreateSkill, up to 50 per
+      agent; see agent_skills), but documents no cross-org catalog. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Skill_Overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_gateway:
+    product: BytePlus AgentKit Gateway
+    status: documented
+    notes: >
+      NEW ROW (2026-11-23). "AgentKit Gateway provides a unified entry point for agents to
+      access external capabilities. It provides features such as authentication, routing,
+      protocol conversion, and access governance."
+      It covers MCP, model and agent-runtime traffic: "Dedicated gateways are further
+      classified into MCP gateways, model gateways, and agent runtime gateways based on the
+      type of associated resources."
+      "the gateway handling authentication, routing, protocol conversion, and credential
+      injection."
+      WHAT IT ENFORCES. From different pages: the runtime overview says the gateway is "The
+      only egress point for a runtime to call external MCP tools" and that direct runtime
+      connections to business backends are not allowed
+      (https://docs.byteplus.com/en/docs/agentkit/Agent_runtime_overview). Plugins on
+      dedicated gateways do credential transformation, run a custom veFaaS extension for
+      auditing, risk control and blocking, and do Identity authentication against
+      Cedar-based permission spaces
+      (https://docs.byteplus.com/en/docs/agentkit/Dedicated_gateway_plugin_configuration_description).
+      The model gateway adds proxy API keys, token and credit quotas, and weighted model
+      groups with fallback (see model_routing). Gateways are metered with QPS and bandwidth
+      metrics and access logs. (Paraphrase.)
+      CAVEAT: the Identity authentication plugin relies on the beta Identity and Permission
+      feature. The runtime overview describes agents calling the ModelArk model API
+      directly, so routing LLM traffic through the model gateway is not described as
+      mandatory. (Paraphrase.)
+      ModelArk has no gateway product. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/MCP_Overview
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openapi_import:
+    product: BytePlus AgentKit Gateway (HTTP to MCP)
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). "Gateway-side conversion: AgentKit Gateway reads
+      the OpenAPI description file and automatically maps each HTTP interface to an MCP
+      tool. This solution enables zero backend modification."
+      "Gateway reads the OpenAPI file and automatically generates an MCP tool for each
+      combination of path and method (for example, POST /v1/estimate-calories becomes
+      estimate_calories)."
+      Outbound credentials for the backend are configured on the MCP service, and the
+      resulting tools can be grouped into an MCP toolset. (Paraphrase.)
+      ModelArk documents no OpenAPI import. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Integrating_existing_REST_API_OpenAPI_as_MCP_tools
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -237,6 +558,12 @@ capabilities:
       (Paraphrase of the page's default matrix. This corrects the August note, which said
       MCP tools simply default to manual confirmation.)
       Policies apply only to server-side tools (built-in and MCP toolsets).
+      AGENTKIT (2026-11-23 pass; kept ModelArk): AgentKit Identity access rules gate
+      each MCP tool call ("Call permission") and each agent invocation through Cedar
+      policies, with a simulated-evaluation tool. That feature is beta, so the
+      documented ModelArk per-tool policy stays the evidence. (Paraphrase, from a
+      different page:
+      https://docs.byteplus.com/en/docs/agentkit/creating-access-rules.)
     source: https://docs.byteplus.com/en/docs/modelark/tool-permission-policy
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -255,45 +582,90 @@ capabilities:
       and modelark/model-pricing.)
       Code execution + filesystem + shell, session-scoped — functionally equivalent to
       AgentCore Code Interpreter and Vertex Code Execution.
+      AGENTKIT (2026-11-23 pass; kept ModelArk, equivalent strength): AgentKit
+      offers microVM-isolated sandbox templates, including a Code Sandbox with a
+      built-in Codex CLI and an AIO Sandbox. They are billed per vCPU-second and GB-
+      second, with snapshots and a 24-hour max lifetime. (Paraphrase, from a
+      different page: https://docs.byteplus.com/en/docs/agentkit/Tool_type.)
     source: https://docs.byteplus.com/en/docs/modelark/cloud-sandbox-reference
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   browser_use:
+    product: BytePlus AgentKit (AIO Sandbox template)
     status: documented
     notes: >
-      CHANGED FROM `none` (2026-08-09). A browser sandbox template is now documented:
-      "Access web pages, parse pages, inspect frontend pages, or run browser automation
-      tasks."
-      The browser template is "Browser task template with Chromium, Playwright,
-      playwright-cli, browser system dependencies, and common Chinese fonts preinstalled in
-      addition to the basic capabilities."
-      SCOPE CAVEAT: this is a headless browser stack inside the agent's sandbox, which the
-      agent drives through its shell/code tools. No live view, session recording, or
-      dedicated browser tool API is documented, so it is lighter than AgentCore Browser
-      or GCP's Computer Use. The built-in web_fetch and web_search tools remain API-level
-      tools, not a browser.
-    source: https://docs.byteplus.com/en/docs/modelark/cloud-sandbox-reference
+      SWITCHED FROM ModelArk TO AGENTKIT (2026-11-23 AgentKit pass); status unchanged.
+      AgentKit ships a browser as a managed sandbox template rather than a headless stack
+      the agent must drive through its shell: "AIO Sandbox: An all-in-one runtime
+      environment for AI agents. Includes Browser, Terminal, and Code runtime environments."
+      Its preset table describes it as "Browser + Terminal + Code in one environment, with
+      automatic switching based on the task".
+      Sandbox templates are microVM-isolated, created per sessionId, with a 30-minute idle
+      timeout by default and a 24-hour maximum lifetime (paraphrase, from a different page:
+      https://docs.byteplus.com/en/docs/agentkit/Agent_runtime_overview). The browser
+      example connects a VeADK agent to the sandbox through an MCP router tool
+      (https://docs.byteplus.com/en/docs/agentkit/Browser_sandbox_tool_example). Sandbox
+      templates can also be exposed as an MCP service and use snapshots (release notes).
+      (Paraphrase.)
+      SCOPE CAVEAT: no live view, session recording or computer-use (screen) API is
+      documented on the pages read, so it is still lighter than AgentCore Browser.
+      MODELARK SIDE (different page: https://docs.byteplus.com/en/docs/modelark/cloud-sandbox-reference):
+      Managed Agents has a browser sandbox template with Chromium, Playwright and
+      playwright-cli preinstalled, which the agent drives through its own shell and code
+      tools. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Tool_type
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  short_term_memory:
+    product: BytePlus AgentKit Sessions
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). "The Sessions feature is the short-term memory
+      management capability provided by AgentKit to store and retrieve session context in
+      multi-turn conversations."
+      Storage is your own database: "The AgentKit Sessions feature supports connecting to
+      BytePlus relational database resources, including RDS PostgreSQL, and RDS MySQL."
+      "Use SessionID to distinguish different users or different conversations, avoiding
+      context mixing." The platform injects the database connection into the runtime as
+      environment variables, and the agent code reads and writes the context. Serverless
+      PostgreSQL was added 2026-07-31. (Paraphrase.)
+      MODELARK SIDE (a different page: https://docs.byteplus.com/en/docs/modelark/overview):
+      Managed Agents keeps session context server-side automatically. Each session has
+      isolated context, files and state, plus a persisted event history (see
+      session_management). That is fully managed, with no database for you to run, while
+      AgentKit's is bring-your-own-database. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Sessions_overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   long_term_memory:
     status: documented
-    product: Persistent memory
+    product: BytePlus AgentKit Memory
     notes: >
-      NOW CONFIRMED CROSS-SESSION from the dedicated page: memory stores "provide agents
-      with long-term memory that can be retained across sessions."
-      Model: a memory store holds path-addressed memories, mounted into a session at
-      creation. "After it is mounted, the content in the memory store appears as a
-      read-only directory at /mnt/memory/{memory_store_id}/."
-      IMPORTANT LIMIT: the agent cannot write memory itself during a run — "The agent can
-      read the memories in it, but cannot create, update, delete, or move memories while
-      the session is running." Memory is written by your application through the memory
-      APIs. That is unlike Vertex Memory Bank or AgentCore Memory, which extract memories
-      automatically.
-      Limits: "The content limit for a single memory is 100 KiB (102400 bytes),
-      approximately 25K tokens." Up to 2,000 memories per store and 10 stores per session.
-    source: https://docs.byteplus.com/en/docs/modelark/persistent-memory
+      SWITCHED FROM ModelArk Persistent memory TO AGENTKIT MEMORY (2026-11-23 AgentKit
+      pass); status unchanged. AgentKit's memory extracts memories automatically, which
+      ModelArk's memory stores do not.
+      "AgentKit Memory is an enterprise-grade long-term memory management component
+      provided by BytePlus for AI agents."
+      "Unified memory interface: AgentKit Memory supports integration with backends such as
+      mem0 and Viking, reducing replacement and upgrade costs."
+      Strategies: "Preset policies: Session summary, user preferences, semantic
+      summarization, and support for custom prompt policies."
+      Writing: "Automatic and manual triggering; asynchronous extraction that does not
+      block conversations; structured storage after LLM compression."
+      Retrieval: "Session preloading/on-demand loading; scalar filtering combined with
+      hybrid vector retrieval; re-ranking, time decay, and conflict resolution."
+      This is the closest BytePlus analogue to AgentCore Memory strategies or Vertex Memory
+      Bank. The memory backend (for example Viking) is a separate BytePlus product that
+      AgentKit imports. (Paraphrase.)
+      MODELARK SIDE (different page: https://docs.byteplus.com/en/docs/modelark/persistent-memory):
+      Managed Agents memory stores persist across sessions and mount read-only at
+      /mnt/memory/{memory_store_id}/. The agent cannot write them during a run; your
+      application writes them through the memory APIs. Limits are 100 KiB per memory,
+      2,000 memories per store and 10 stores per session. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Memory_overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -309,7 +681,54 @@ capabilities:
       now documented on the ModelArk docs site under Platform functionalities, with the
       console entry under VikingDB and detailed docs under the RAG_Cloud doc set.
       Chunking and embedding-model options are not described on this page.
+      AGENTKIT (2026-11-23 pass; kept Knowledge Engine): AgentKit Knowledge is a
+      unified retrieval gateway in front of knowledge backends, with native support
+      for Viking Knowledge Base. It adds no RAG engine of its own, so the BytePlus
+      Knowledge base product stays the evidence. (Paraphrase, from a different page:
+      https://docs.byteplus.com/en/docs/agentkit/Knowledge_base_overview.)
     source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/knowledge-base-index
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  text_to_sql:
+    status: unknown
+    notes: >
+      NEW CELL (2026-11-23 gap pass). No managed text-to-SQL or structured-data agent
+      found. The Knowledge Engine page says it can "parse structured and unstructured
+      documents", which is document RAG, not SQL over a warehouse. (Paraphrase except the
+      quote.)
+      SEARCH TRAIL: grep of the full ModelArk Markdown corpus
+      (https://ai.byteplus.com/ark/llms-full.txt) for text-to-SQL, Text2SQL, NL2SQL and
+      SQL found only SQL code samples. The AgentKit Studio page mentions SQL read-only
+      protection for MCP calls in an O&M scenario, which is a guardrail, not a
+      text-to-SQL service. The ByteHouse product page (www.byteplus.com/en/product/bytehouse)
+      describes analytics only, with no natural-language query feature. AgentKit preset
+      skills list no SQL skill. (Paraphrase.)
+      Not `none`: no page says it is not offered.
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/knowledge-base-index.md
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  ai_service_tools:
+    product: ModelArk Managed Agents built-in tools + BytePlus Info Quest MCP
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 gap pass). WEB ONLY, plus unspecified multimodal tools. The
+      built-in toolset's AI-service tools are Web Fetch ("Fetch content from a specified
+      URL.") and Web Search ("Start a web search."). The self-hosted executor table adds a
+      Multimodal tools class: "ModelArk writes images, videos, or other tool results to the
+      session event stream." No page read names or documents those multimodal tools.
+      (Paraphrase except quotes.)
+      SEARCH AS MCP (a different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/InfoQuest.md): "If you need to
+      equip your AI model with real-time internet search capabilities, integrating the Info
+      Quest MCP service is an efficient solution."
+      NOT FOUND AS TOOLS: OCR, speech-to-text, TTS and translation. Audio understanding and
+      document understanding are model capabilities called through the model APIs, not
+      tools an agent calls. Voice lives in BytePlus RTC
+      Conversational AI (see voice_agents). AgentKit sandbox templates (AIO: browser,
+      terminal, code) are covered by code_interpreter and browser_use. (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/tools.md
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -333,6 +752,127 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  third_party_catalog:
+    status: documented
+    value: [DeepSeek, Z.ai (GLM), Deemos (Hyper3D), Hitem3D]
+    notes: >
+      NEW CELL (2026-11-23 gap pass). "ModelArk provides models for text and code, video,
+      image, 3D, and embedding workloads." The text-and-code table lists providers
+      ByteDance, DeepSeek (deepseek-v4-1-flash, deepseek-v4-1-flash-economy,
+      deepseek-v4-pro and deepseek-v4-flash snapshots) and Z.ai (glm-5-3-flash-260828,
+      glm-5-2-260617). The 3D table lists Deemos (hyper3d-gen2-260112) and Hitem3D
+      (hitem3d-2-0-251223). Video, image and embedding models are ByteDance (Seedance,
+      Seedream). (Paraphrase.)
+      SMALL CATALOG: no Anthropic, OpenAI, Meta, Mistral, Qwen or Kimi models on the
+      list, so the third-party set is two LLM vendors plus two 3D vendors. All listed
+      models are in ap-southeast-1; EU is limited to a few Seed models (see
+      tool_region_variance). (Paraphrase.)
+      AGENTKIT (kept ModelArk): the AgentKit Gateway model service can proxy custom model
+      providers, and its release notes added Kuaishou Kling, but that is a proxy to models
+      you bring, not a hosted catalog (see model_routing). (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-list.md
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  byo_open_weights:
+    product: BytePlus ModelArk Model Unit + custom model upload
+    status: limited
+    notes: >
+      STATUS 2026-11-23 (fact-check): `limited`. The Model Unit page (named below) says
+      "This is an invitation-only testing capability."
+      NEW CELL (2026-11-23 gap pass). PROVISIONED THROUGHPUT YES; ARBITRARY OPEN WEIGHTS
+      NOT DOCUMENTED. Model Unit is the dedicated-capacity option: "Uses dedicated
+      computing resources to provide resource-guaranteed online inference for fine-tuned
+      models." Its supported-models cell includes "Uploaded custom models" alongside
+      platform foundation models and fully or LoRA fine-tuned models. Billing is by Model
+      Units purchased, monthly prepaid or postpaid by duration. (Paraphrase except quotes.)
+      Model Unit page (a different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-unit-overview.md):
+      "Model units are mainly used for large-scale inference of fine-tuned models."
+      UPLOAD PATH (a different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/models-and-plans.md): "Import
+      a custom model from a TOS artifact into the repository (requires base model,
+      quantization mode, and name)". The base-model flag must be the full foundation model
+      ID matching the artifact, picked from the model list. So upload is tied to a
+      ModelArk base model (for example a fine-tune exported elsewhere). Importing an
+      arbitrary Hugging Face model that is not on the ModelArk list is not documented.
+      (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/deployment-overview.md
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tuning:
+    product: BytePlus ModelArk model fine-tuning + context cache
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 gap pass). FINE-TUNING: the Ark CLI's train domain will
+      "Create and manage fine-tuning jobs for SFT, LoRA, DPO, and RL workflows; validate
+      datasets; preview hyperparameters and costs; and export and deploy model artifacts."
+      Dataset schema types include LLMSft, LLMPretrain, LLMDPO, LLMRL, EmbeddingSft,
+      ImageGenSft and VideoGenSft, and the fine-tuning type flag lists sft, lora, dpo,
+      grpo and pt. Fine-tuned models deploy to Model Unit or LoRA-capable online
+      inference (see byo_open_weights). Fine-tuning is billed by computing power, hourly.
+      (Paraphrase.)
+      DATASETS (a different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/fine-tuning-dataset-format.md):
+      "Currently, model fine-tuning supports uploading or importing JSON format dataset
+      files." That page documents SFT and DPO formats for text, vision and embedding models.
+      PROMPT CACHING (a different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/context-cache.md): "context
+      caching reuses computation results to avoid repeated processing of the same content
+      by the model." Implicit cache is automatic and cannot be disabled; explicit cache is
+      created manually for deterministic hits. Cache storage is a priced axis (see
+      pricing_axes). (Paraphrase except quotes.)
+      DISTILLATION: no distillation service found in the ModelArk docs. (Paraphrase.)
+      REGION: Tuning and Dataset is AP-only per the region page (see
+      tool_region_variance). (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/ark-cli.md
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  model_routing:
+    product: BytePlus AgentKit Gateway (model service / model groups)
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). "A model group combines multiple integrated
+      upstream models into a stable call entry point." "The model gateway selects an
+      upstream model within the group based on the configured weights. If retries within
+      the group fail, the gateway can call the fallback model."
+      "When in-group retries fail after retries, the gateway calls the fallback model at
+      most once."
+      Providers can include ModelArk and custom providers; the 2026-11-10 release notes
+      added Kuaishou Kling. Usage can be capped by token or credit quotas per Proxy API Key
+      and per model. AgentKit Studio LLM agents also take an ordered fallback model list
+      (release notes, 2026-10-08). (Paraphrase.)
+      CAVEAT: routing is weight-based with fallback. Cost- or quality-aware automatic
+      routing is not described. ModelArk itself documents no router on the pages read.
+      (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/create-and-manage-model-group
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  openai_compatible_endpoint:
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 gap pass). "ModelArk model APIs are largely compatible with the
+      OpenAI SDK. With minimal code changes, you can integrate ModelArk model services into
+      your existing code." The example points the OpenAI Python SDK (version 1.0 or later)
+      at base_url https://ark.ap-southeast.bytepluses.com/api/v3 with an ARK_API_KEY, and
+      calls chat.completions. Non-OpenAI fields such as thinking go through extra_body.
+      LangChain's ChatOpenAI works the same way. (Paraphrase.)
+      Caveat on the page: "Community third-party SDKs are not maintained by the BytePlus
+      team; this document is for reference only."
+      ModelArk also exposes a Responses API, and an Anthropic-style Messages API at a
+      separate compatible path (a different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/messages-api.md): "POST
+      https://ark.ap-southeast.bytepluses.com/api/compatible/v1/messages". (Paraphrase
+      except the quote.)
+      In EU (eu-west-1) only the Chat API and Image generation API are offered (see
+      runtime_regions). (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/compatible-with-openai-sdk.md
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   delegated_user_auth:
     status: documented
     notes: >
@@ -349,6 +889,13 @@ capabilities:
       are not isolated separately by API key."
       Closest analogue: AgentCore Identity's token vault / GCP 3LO. This is on-behalf-of-user
       OAuth for tools, not end-user identity propagation into the model call.
+      AGENTKIT (2026-11-23 pass; kept ModelArk): AgentKit hosts OAuth Client
+      credentials for obtaining short-term tokens on behalf of a user or agent. MCP
+      services support OAuth 2.0 three-legged (USER_FEDERATION) outbound
+      credentials, added 2026-02-28. All of this sits in the beta Identity and
+      Permission feature, so ModelArk's documented vaults stay the evidence.
+      (Paraphrase, from a different page:
+      https://docs.byteplus.com/en/docs/agentkit/credential-overview.)
     source: https://docs.byteplus.com/en/docs/modelark/use-vaults-authentication
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -367,6 +914,9 @@ capabilities:
       contain the same tools and old values are kept for compatibility.)
       TRAP: "When the main agent does not find a basic toolset configuration, it falls back
       to enabling all basic tools and uses always_allow."
+      AGENTKIT (2026-11-23 pass): AgentKit agents call tools through the Gateway
+      over MCP. MCP toolsets offer semantic tool search so an agent can discover
+      tools (see agent_gateway, mcp_registry). (Paraphrase.)
     source: https://docs.byteplus.com/en/docs/modelark/tools
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -419,7 +969,67 @@ capabilities:
       URL, and "Platform-level resources, such as API keys and model activation status, are
       isolated by region." Same trap as Alibaba Model Studio's non-interchangeable keys.
       Requests can still spill over across regions; see data_residency.
+      AGENTKIT (2026-11-23 pass; kept ModelArk): AgentKit is available in ONE region
+      only, Asia Pacific (Johor), ap-southeast-1, and the page says other regions
+      will come in the future. So BytePlus's code-hosting runtime is single-region,
+      and ModelArk's two regions stay the broader answer. (Paraphrase, from a
+      different page: https://docs.byteplus.com/en/docs/agentkit/Available_regions.)
     source: https://docs.byteplus.com/en/docs/modelark/region-availability
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  tool_region_variance:
+    status: documented
+    value:
+      online_inference: 2
+      chat_and_image_generation_api: 2
+      responses_and_messages_api: 1
+      managed_agents: 1
+      batch_inference: 1
+      tuning_and_dataset: 1
+      agentkit: 1
+    notes: >
+      NEW CELL (2026-11-23 gap pass). NO, and BytePlus discloses it. The region page lists
+      what EU (eu-west-1) supports: the models are only seed-2-0-lite, and the APIs are
+      only Chat API and Image generation API. Its platform table marks Online inference,
+      Foundation models, Model activation management, API keys, Usage management and
+      Project configuration in both regions, while Batch inference, Tuning and Dataset,
+      Playground, PromptPilot, Network configuration and Tokenizer tool are AP only.
+      (Paraphrase of the table.)
+      "This section lists models and APIs supported in the EU region."
+      INFERENCE: Managed Agents (and so its web_search / web_fetch tools, skills, memory
+      and sandboxes), the Responses API with its MCP tool and the Messages API are not
+      in the EU API list, so they are AP-only. AgentKit (gateway, sandboxes, tools) is
+      only in Asia Pacific (Johor) (a different page:
+      https://docs.byteplus.com/en/docs/agentkit/Available_regions). So every agent tool is
+      in one region. (Paraphrase.)
+      DISCREPANCY: the model list (a different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-list.md) says the
+      seed-2-0 and seedream-5-0-lite models are also in eu-west-1, which is broader than
+      the region page's single EU model. (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/region-availability.md
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  service_limits:
+    product: BytePlus AgentKit
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). AgentKit publishes a limits table. Agent runtime:
+      20 runtimes per account per region (raisable), 20 instances per runtime, 10 GB max
+      image, 30 min synchronous request timeout, 16 MB max payload. Sandbox templates: 20 per
+      account per region, 100 concurrent instances per template (raisable), 24-hour max
+      instance lifetime. Gateway: 3 dedicated gateway instances per account per region, 1
+      of each type. 10 MCP services (raisable), 5 API-key inbound auth entries per MCP
+      service or toolset. Skills: 200 skills and 200 skills spaces per account per region, 20
+      skills per space. (Paraphrase of the table.)
+      Page intro: "This topic introduces certain limits that you may encounter when using
+      the AgentKit service."
+      MODELARK SIDE (from different pages under docs.byteplus.com/en/docs/modelark/):
+      Managed Agents limits include 50 skills per agent, 10 memory stores per session,
+      2,000 memories per store, 100 KiB per memory, 20 multi-agent members and 3 sub-agent
+      levels. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Limits
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -436,6 +1046,10 @@ capabilities:
       The ModelArk data processing document says Customer Data processing is located in
       Malaysia, Indonesia, and/or the EU/EEA. (Paraphrase, from a different page:
       ai.byteplus.com BytePlus_ModelArk_Data_Processing.)
+      AGENTKIT (2026-11-23 pass): AgentKit runs only in Johor (ap-southeast-1). Its
+      docs state no cross-region routing or data-processing location of their own. A
+      runtime that calls ModelArk models inherits ModelArk's spillover behaviour
+      above. (Paraphrase.)
     source: https://docs.byteplus.com/en/docs/modelark/region-availability
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -454,9 +1068,19 @@ capabilities:
       rescheduling, or terminated."
       "Runtime is accurate to the second, and bills are generated hourly."
       Compare AWS AgentCore, which also excludes idle but only where "no other background
-      process is running" (a different page — the AWS pricing page).
+      process is running" (a different page — the AWS pricing page,
+      https://aws.amazon.com/bedrock/agentcore/pricing/).
       Model pricing is per-million-tokens with separate non-audio and audio input rates,
       plus a cache-storage axis: "Cache-storage prices are USD per million tokens per hour."
+      AGENTKIT (2026-11-23 pass; kept ModelArk): AgentKit has a different model.
+      "AgentKit fees are the sum of resource usage fees and gateway instance fees."
+      Runtime is $0.000019/vCPU-second plus $0.000003/GB-second, sandbox is
+      $0.00000975/vCPU-second, and traffic is $0.081/GB. Shared or dedicated gateway
+      instance fees are separate. (Paraphrase except quoted text, from a different
+      page: https://docs.byteplus.com/en/docs/agentkit/Billing_items.) Unlike ModelArk's
+      running-only rule, resident minimum instances are billed while idle (another
+      different page, https://docs.byteplus.com/en/docs/agentkit/Agent_runtime_overview).
+      (Paraphrase.)
     source: https://docs.byteplus.com/en/docs/modelark/model-pricing
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -473,63 +1097,134 @@ capabilities:
       `unknown` (same treatment as Azure's equivalent case). "SLA for BytePlus Cloud
       Products" may technically cover ModelArk as a cloud product, but it is not
       explicitly named.
+      AGENTKIT (2026-11-23 pass): AgentKit is not on the legal SLA list either (re-
+      rendered 2026-11-23), and its docs have no SLA page. Its only agreement page
+      is the Agent Gallery terms, which call the Gallery a Beta edition. `unknown`
+      holds for both platforms. (Paraphrase.)
     source: https://docs.byteplus.com/en/docs/legal/docs-service-level-agreements-097b8473
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   otel_traces:
-    status: unknown
+    status: documented
+    product: BytePlus AgentKit Observability (APMPlus)
     notes: >
-      CHANGED FROM `none` (2026-11-23). OpenTelemetry or tracing for Managed Agents is not
-      documented. Re-checked 2026-11-23 on the overview page and the full
-      ai.byteplus.com/ark/llms.txt doc index. Neither mentions OTel, tracing, distributed
-      tracing, or trace export for agents; that is silence, not a stated non-offering,
-      hence `unknown`. The index does list monitoring for online inference (delivery to a
-      VMP workspace), which is metrics, not agent traces.
-      The platform does persist events ("Persisted on the server in an append-only way,
-      supporting real-time subscription and later replay.") and offers webhooks, which
-      serve as an audit trail but are not documented as OTel-compatible trace export.
-      The sibling product BytePlus AgentKit does document traces: application
-      observability with call chains (agentkit/Observability_overview); APMPlus is listed
-      as a related product on agentkit/Related_cloud_products. The observability overview
-      does not mention OpenTelemetry either, so `unknown` holds for both. (Paraphrase,
-      from different pages under docs.byteplus.com/en/docs/agentkit/.)
-    source: https://docs.byteplus.com/en/docs/modelark/overview
+      CHANGED unknown -> documented AND SWITCHED TO AGENTKIT (2026-11-23 AgentKit pass).
+      AgentKit states that its tracing is built on OpenTelemetry: "OpenTelemetry
+      instrumentation is built into the AgentKit SDK to enable comprehensive observability
+      of the call processes of the" agent (the sentence is truncated on the vendor page).
+      "The overall solution covers two core modules: distributed tracing (Tracing) and
+      metric monitoring (Metrics)." VeADK: "OpenTelemetry instrumentation is built into the
+      VeADK SDK, enabling full observability of the processes where VeADK calls agents, runs
+      agents, calls models, and calls tools."
+      Span-level coverage, from a different page
+      (https://docs.byteplus.com/en/docs/agentkit/Creating_agent_runtimes_in_console):
+      AgentKit and the VeADK SDK collect traces and metrics for model calls, tool
+      execution, memory retrieval and knowledge base retrieval, based on OpenTelemetry. Per
+      another different page
+      (https://docs.byteplus.com/en/docs/agentkit/How_existing_agent_migration_works), the
+      migration tool attaches request spans and framework bridge spans to the same trace
+      through the runtime's OTel/APMPlus pipeline. (Paraphrase.)
+      CAVEATS: traces are delivered to BytePlus APMPlus (see apm_integration). Export to a
+      third-party OTel collector and GenAI semantic-convention conformance are not stated on
+      the pages read. (Paraphrase.)
+      MODELARK SIDE (different pages: modelark/overview and ai.byteplus.com/ark/llms.txt):
+      Managed Agents documents no OTel or trace export. It persists an append-only event
+      stream with replay, plus webhooks. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Tracking_fields_and_metrics_description
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  apm_integration:
+    product: BytePlus AgentKit Observability (APMPlus, TLS)
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). "The runtime instrumentation module
+      automatically reports logs, metrics, and traces to APMPlus and TLS, with no
+      instrumentation required in business code."
+      "When the observability service is disabled, business execution continues normally.
+      Only troubleshooting and online evaluation capabilities become unavailable."
+      APMPlus (Application Performance Management Plus) and TLS are BytePlus's first-party
+      APM and log services. The Related cloud products page also lists CozeLoop for trace
+      tracking and evaluation. (Paraphrase.)
+      CAVEAT: integrations with third-party APM vendors are not described. ModelArk
+      documents online-inference monitoring delivered to a VMP workspace, which is metrics
+      only. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Agent_runtime_overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   eval_service:
     status: documented
-    product: BytePlus AgentKit
+    product: BytePlus AgentKit Evaluation
     notes: >
-      CHANGED FROM `unknown` (2026-11-23), on the strength of the sibling product
-      BytePlus AgentKit. ModelArk Managed Agents itself still documents no agent eval.
-      The AgentKit product page lists Agent Evaluation: "Built-in best-practice evaluators
-      for online/offline assessment and continuous improvement."
-      Section heading on the same page: "Agent evaluation and end-to-end observability".
-      AgentKit's own overview page lists Evaluation as a feature supporting pre-launch
-      validation, post-launch continuous optimization and release gate management. Its
-      observability docs describe exporting production traces into evaluation sets and
-      launching evaluation experiments from them (data backflow, up to 100,000 records
-      per export task). (Paraphrase; see docs.byteplus.com/en/docs/agentkit/What_is_AgentKit
-      and agentkit/Data_backflow.)
-      SCOPE CAVEAT: no dedicated evaluation user guide was found in the AgentKit doc
-      navigation. LLM-as-judge, trajectory metrics and CI gating are not described in
-      detail. Read this as a documented feature claim, lighter than GCP's Evaluation
-      Service.
-      MODELARK SIDE, from a different page (ai.byteplus.com/ark/llms.txt, the complete
-      ModelArk doc index, re-checked 2026-11-23): it has no entry for agent trajectory
-      eval, LLM-as-judge, eval datasets, or eval of Managed Agents. Its header calls
-      ModelArk a platform "covering model inference, fine-tuning and evaluation". The
-      only evaluation surface it lists is the Playground, described as letting you
-      "evaluate model performance" interactively. That is model trial, not an agent eval
-      service.
-      PromptPilot is listed in the region capability table as available in AP (not EU);
-      that table does not describe what it does. (Paraphrase, from a different page:
-      modelark/region-availability.)
-      A refresh dated 2026-11-22 also recorded `documented` from the AgentKit page; that
-      is confirmed here.
-    source: https://www.byteplus.com/en/product/agentkit
+      AgentKit, as before; source moved (2026-11-23 AgentKit pass) from the marketing page
+      to a doc page that describes the mechanism.
+      "AgentKit provides an online evaluation mechanism with three core modules: evaluation
+      sets, evaluators, and experiments, covering the full evaluation pipeline from data
+      preparation to result analysis."
+      "Evaluators score results based on predefined rules using either an LLM or code."
+      So LLM-as-judge is documented. "Experiments are responsible for combined execution and
+      aggregating result metrics, while also supporting comparative analysis across
+      multiple experiments."
+      Studio auto-evaluation: "AgentKit Studio automatically assesses the quality of each
+      conversation turn, categorizes it into the corresponding evaluation set, and
+      generates optimization suggestions based on the accumulated evaluation cases."
+      Production traces can be exported into evaluation sets (data backflow, up to 100,000
+      records per export task), and the AgentKit CLI manages evaluations. (Paraphrase, from
+      different pages: https://docs.byteplus.com/en/docs/agentkit/Data_backflow and
+      https://docs.byteplus.com/en/docs/agentkit/CLI_overview.) The product page
+      (www.byteplus.com/en/product/agentkit) advertises built-in best-practice evaluators
+      for online and offline assessment. (Paraphrase.)
+      SCOPE CAVEAT: no dedicated evaluation user guide or evaluator catalog was found in
+      the AgentKit doc navigation. Trajectory metrics and CI gating are not described.
+      MODELARK SIDE (different page: ai.byteplus.com/ark/llms.txt): no agent eval; the
+      Playground's "evaluate model performance" is interactive model trial. PromptPilot is
+      listed in the region table for AP. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Building_and_deploying_agents_using_AgentKit_Studio
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_optimization:
+    product: BytePlus AgentKit Studio (auto-evaluation, Harness Sidecar)
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). "AgentKit Studio provides the capability to
+      automatically consolidate evaluation data and generate optimization suggestions after
+      an agent is deployed to AgentKit, helping developers quickly identify and fix issues
+      during the conversation validation phase."
+      Harness Sidecar: "Through Harness Sidecar, AgentKit Studio provides enhancement
+      services for an agent. These services improve the stability and task success rate of
+      the agent without modifying the main code of the agent."
+      "Harness Sidecar is an auxiliary service that runs in the same Pod as the main
+      container." The page adds that it can proxy and govern model context requests and
+      MCP tool calls, with retries transparent to the agent code. (Paraphrase.)
+      CAVEATS: the suggestions are generated, not auto-applied. The page also says
+      "BytePlus agents do not currently support this optimization feature." That reads as
+      if Harness Sidecar targets agents migrated from other frameworks, which is not
+      confirmed. No automated prompt or tool-description optimizer comparable to AgentCore
+      Optimization is described. (Paraphrase except quoted text.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Building_and_deploying_agents_using_AgentKit_Studio
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  feedback_service:
+    status: unknown
+    notes: >
+      NEW CELL (2026-11-23 gap pass). No managed END-USER feedback collection found. The
+      closest thing is developer-facing: AgentKit Studio lists "Conversation call trace and
+      issue feedback: Use the call trace view and issue feedback entry on the conversation
+      page to diagnose single-turn execution issues." That is the builder's own test
+      conversation in Studio, not an API for collecting ratings from production users.
+      Studio also keeps Good/Bad case evaluation sets. (Paraphrase except the quote.)
+      SEARCH TRAIL: AgentKit Observability overview and Data backflow pages (trace export
+      to evaluation sets, no user-rating field), the ModelArk Markdown corpus
+      (https://ai.byteplus.com/ark/llms-full.txt; feedback hits are only a Seedance
+      bad-case quality-diagnostics API and doc boilerplate), and the Managed Agents session
+      event reference. (Paraphrase.)
+      Rendered in headless Chromium on 2026-11-23; check_quotes.py reports the source as
+      UNVERIFIABLE.
+    source: https://docs.byteplus.com/en/docs/agentkit/agentkit-studio-overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -552,6 +1247,16 @@ capabilities:
       detect and block risky user input and model output and support custom policies.
       Detector coverage is not described there. (Paraphrase; source for this sentence is
       the AgentKit product page, www.byteplus.com/en/product/agentkit.)
+      AGENTKIT ADDENDUM (2026-11-23 pass; kept ModelArk): AgentKit integrates a
+      Guardrails service backed by BytePlus LLM Application Firewall (IAM policy
+      LLMShieldFullAccess). Protection takes effect only once it is integrated into
+      the agent code, and it provides a security overview and attack logs (a
+      different page:
+      https://docs.byteplus.com/en/docs/agentkit/Runtime_security_best_practices).
+      The firewall's product page (www.byteplus.com/en/product/LLM-FW) claims
+      prompt-injection defense aligned to OWASP LLM Top 10, but it still shows an
+      "Apply for beta test" button and its docs were not read. Not enough to switch
+      the cell. (Paraphrase.)
     source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/Content_Pre-filter
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -580,6 +1285,10 @@ capabilities:
       automatic snapshot generation and on-demand startup."
       The mechanism is platform-managed. No user-facing checkpoint API is described on this
       page.
+      AGENTKIT (2026-11-23 pass): AgentKit sandbox templates can snapshot an
+      instance automatically before it expires, or manually, and restore from the
+      snapshot. That covers sandbox state, not agent-run resumption. (Paraphrase,
+      from the release notes, a different page.)
     source: https://docs.byteplus.com/en/docs/modelark/overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -598,40 +1307,75 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
-  agent_workload_identity:
-    status: documented
+  agent_payments:
+    status: unknown
     notes: >
-      "Based on BytePlus IAM + zero-trust credential isolation, keys do not enter sandbox
-      processes." This is the platform's workload identity model — agents operate under
-      IAM-managed credentials that are injected at runtime without being exposed to the
-      sandbox execution environment. API keys are region-scoped and isolated.
-      Whether each agent gets its OWN principal (vs. the account's API key) is not stated.
-      The sibling product BytePlus AgentKit advertises unified user and agent identities
-      and secretless least-privilege IAM, and documents user pools. Its
-      Identity and Permission feature is described as in beta. (Paraphrase, from different
-      pages: www.byteplus.com/en/product/agentkit and agentkit/simulating-evaluation.)
-    source: https://docs.byteplus.com/en/docs/modelark/overview
+      NEW ROW (2026-11-23). No agent-payments capability (wallets, x402, spending limits,
+      payment execution) was found in either BytePlus agent platform. Checked: the AgentKit
+      release notes through 2026-11-20 (the source), the AgentKit Features, Billing and
+      Billing FAQ pages, the AgentKit product page, and the full ModelArk doc index
+      (ai.byteplus.com/ark/llms.txt, a different page). The only payment wording found
+      concerns paying BytePlus bills. BytePlus does not positively say the capability is
+      unavailable, so the cell is `unknown`, not `none`. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/New_feature_release_notes
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  agent_workload_identity:
+    product: BytePlus AgentKit Identity (agent identity / WorkloadIdentity)
+    status: preview
+    notes: >
+      SWITCHED FROM ModelArk TO AGENTKIT AND CHANGED documented -> preview (2026-11-23
+      AgentKit pass). ModelArk never stated whether an agent gets its own principal.
+      AgentKit does, but the feature is labelled beta.
+      "the AgentKit agent identity management module uses the workload identity
+      (WorkloadIdentity) model. In this model, each agent has a stable identity in an
+      identity pool, and the identity pool issues a short-term token at runtime."
+      "Access policies control permissions, and no long-term keys are generated or used at
+      any point." The agent identity is "the Principal in Cedar policies".
+      Per a different page (https://docs.byteplus.com/en/docs/agentkit/create-agent-identity),
+      each agent created in AgentKit is automatically registered with an identity in the
+      default pool and deleted with the agent. (Paraphrase.)
+      STAGE, on this page: "The "Identity and Permission" feature of AgentKit is in beta. It
+      is visible and available only after being enabled. To apply for a trial, contact
+      your account manager." That banner postdates the 2026-11-16 GA entry, hence `preview`.
+      NOT IN BETA: every AgentKit runtime can be bound to an IAM role whose temporary
+      credentials are injected into the sandbox. (Paraphrase, from a different page:
+      https://docs.byteplus.com/en/docs/agentkit/Agent_runtime_overview.)
+      MODELARK SIDE (a different page: https://docs.byteplus.com/en/docs/modelark/overview):
+      Managed Agents uses BytePlus IAM with zero-trust credential isolation, so keys do not
+      enter sandbox processes. A per-agent principal is not stated. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/agent-identity-management-workload-pool
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   private_networking:
+    product: BytePlus AgentKit Runtime
     status: documented
     notes: >
-      SUBSTANTIALLY EXPANDED SINCE AUGUST. Self-hosted environments put tool execution on
-      your network: "A self-hosted environment runs an agent's tool execution, file system,
-      and network on your enterprise's own infrastructure, while ModelArk continues to host
-      model inference, agent orchestration, session management, and event streams."
-      Named use case: "The agent needs to access enterprise intranet APIs, databases, or
-      code repositories". Workers poll outbound, so no inbound ports are needed.
-      Only the main agent's bash, read, write, edit, glob and grep move to your workers.
-      Web, MCP, multimodal tools and inference still run on ModelArk.
-      Cloud sandboxes support an egress allowlist (a limited network policy with up to 64
-      allowed_hosts, fail-closed). The region page lists Network configuration as AP-only.
-      (Paraphrase, from separate pages: modelark/configure-cloud-environment and
-      modelark/region-availability.)
-      A PrivateLink-style private endpoint for the inference API is not described on the
-      pages read.
-    source: https://docs.byteplus.com/en/docs/modelark/self-hosted-environment-overview
+      SWITCHED FROM ModelArk TO AGENTKIT (2026-11-23 AgentKit pass); status unchanged.
+      AgentKit puts the agent runtime itself into your VPC, which ModelArk does not.
+      "Runtime supports two network access methods: Public network and Private network."
+      Private network suits "Enterprise internal systems, downstream resources within the
+      VPC, and production agents with low requirements for public-network exposure."
+      Outbound: a private-network runtime can enable shared public network access or use
+      your own egress, for example an EIP or NAT gateway. Associated session, memory and
+      knowledge resources must use the same network mode. (Paraphrase.)
+      Gateway side: MCP services can be private-network only, and dedicated gateways
+      support private network egress to private backends (added 2026-11-06). Cross-VPC
+      access uses PrivateLink. (Paraphrase, from different pages:
+      https://docs.byteplus.com/en/docs/agentkit/configure-gateway-private-network-egress
+      and https://docs.byteplus.com/en/docs/agentkit/Integrating_existing_MCP_Servers_into_AgentKit_Gateway.)
+      CAVEAT: a PrivateLink endpoint for invoking the runtime from another VPC or account
+      is not described as a runtime feature on the pages read.
+      MODELARK SIDE (a different page: https://docs.byteplus.com/en/docs/modelark/self-hosted-environment-overview):
+      self-hosted environments run Managed Agents' bash and file tools on your own
+      infrastructure, with outbound-polling workers, while ModelArk keeps inference,
+      orchestration and sessions. Cloud sandboxes support an egress allowlist of up to 64
+      domain names (another different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/configure-cloud-environment).
+      (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Runtime_security_best_practices
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -648,7 +1392,30 @@ capabilities:
       Source is the BytePlus Trust Center.
       NOTE: these are platform-level certs, not agent-service-specific. Whether Managed
       Agents inherits all of them or only a subset is not stated.
+      AGENTKIT (2026-11-23 pass): the Trust Center certifications are BytePlus
+      platform-level. Neither the AgentKit nor the ModelArk docs state which
+      certifications cover the agent services specifically. (Paraphrase.)
     source: https://www.byteplus.com/en/trust-center
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  sovereign_cloud:
+    status: unknown
+    notes: >
+      NEW CELL (2026-11-23 gap pass). No government or sovereign cloud offering found for
+      ModelArk, AgentKit or BytePlus generally. The region page lists only Johor
+      (ap-southeast-1) and Dublin (eu-west-1), both commercial regions, and says nothing
+      about government, sovereign or dedicated deployments. (Paraphrase.)
+      SEARCH TRAIL: www.byteplus.com product, solution, blog and insights sitemaps (no
+      sovereign, government or public-sector URL), www.byteplus.com/llms.txt, the full
+      ModelArk Markdown corpus (https://ai.byteplus.com/ark/llms-full.txt; sovereign and
+      GovCloud do not appear) and the AgentKit regions page (Johor only). The International
+      Availability page lists the countries where the model service is sold, which is a
+      sales-eligibility list, not a sovereign deployment. (Paraphrase.)
+      Mainland China is served by the sibling brand Volcengine, not BytePlus.
+      (Paraphrase.)
+      Not `none`: no page says it is not offered.
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/region-availability.md
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -685,29 +1452,42 @@ capabilities:
       page: "Strict resource and data isolation between tenants keeps business assets
       secure." That page does not define the tenant model. (Paraphrase, from a
       different page: www.byteplus.com/en/product/agentkit.)
+      AGENTKIT CAVEAT (from a different page:
+      https://docs.byteplus.com/en/docs/agentkit/Runtime_security_best_practices):
+      runtimes run on independent managed instances, but isolating user identities,
+      session identifiers, short-term context and long-term memory "still needs to
+      be implemented by you in the agent code, request headers, and business
+      storage." Sessions, memory and knowledge bases support isolation by app_name,
+      user_id and session_id, and projects give resource-level access control. That
+      tempers the product-page tenant-isolation claim. (Paraphrase except quoted
+      text.)
     source: https://docs.byteplus.com/en/docs/modelark/overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   framework_agnosticism:
     status: documented
-    product: BytePlus AgentKit
+    value: [VeADK, LangChain, LangGraph, Google ADK, Strands, Bedrock AgentCore (migration), Dify (Studio migration), other Python frameworks via AgentKit SDK decorators]
+    product: BytePlus AgentKit Runtime
     notes: >
-      SPLIT ANSWER. ModelArk Managed Agents is a prebuilt agent loop, so you configure an
-      agent rather than deploy your own framework code (see managed_agent_runtime).
-      (Paraphrase.)
-      The sibling product BytePlus AgentKit is the bring-your-own-framework runtime. Its
-      product page says: "Works with all mainstream frameworks — use what fits your
-      stack. Open protocols and modular design let agents plug into your existing
-      systems."
-      The AgentKit Features doc names the frameworks. It supports migrating existing
-      agents built with LangChain, LangGraph, ADK, Strands and Bedrock AgentCore, and has
-      an AgentKit SDK decorator adapter for other Python frameworks, alongside native
-      VeADK agents. Deployment is from code packages or container images, over HTTP
-      Server, A2A or MCP. (Paraphrase; see
-      docs.byteplus.com/en/docs/agentkit/Product_features, read in headless Chromium
-      2026-11-23.)
-    source: https://www.byteplus.com/en/product/agentkit
+      AgentKit, as before; source moved (2026-11-23 AgentKit pass) from the marketing page
+      to the Features doc, which names the frameworks.
+      "Supports native agent building with VeADK."
+      "Provides an AgentKit SDK decorator-based adaptation solution, allowing agents built
+      with mainstream Python frameworks to access AgentKit through lightweight adaptation."
+      "Supports migration of existing agents built with LangChain, LangGraph, ADK, Strands,
+      and Bedrock AgentCore, converting them into applications deployable on the AgentKit
+      cloud."
+      "Supports multiple deployment options, including local code packages and container
+      images." "Supports multiple access protocols, including HTTP Server, A2A, and MCP".
+      The runtime is not tied to ModelArk models and can call external model services
+      (a different page: https://docs.byteplus.com/en/docs/agentkit/Agent_runtime_overview).
+      Studio can also migrate Dify projects, per the 2026-08-21 release notes. (Paraphrase.)
+      CAVEAT: the named adapters are Python. Non-Python frameworks would need the
+      container-image path, which is not described as a framework adapter. (Paraphrase.)
+      SPLIT ANSWER: ModelArk Managed Agents is a prebuilt loop that you configure. It does
+      not host framework code. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Product_features
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
@@ -727,6 +1507,13 @@ capabilities:
       errors, or cleaning up outdated information."
       No TTL or bulk-export feature is described. List and Get can serve as a manual
       export. (Paraphrase.)
+      AGENTKIT (2026-11-23 pass; kept ModelArk): AgentKit Memory enforces data
+      isolation by dimensions such as session, user and agent, as defined in its
+      memory strategies. Its runtime best practices tell you to bind tenant
+      identifiers explicitly in retrieval conditions. TTL or export is not described
+      there either. (Paraphrase, from different pages:
+      https://docs.byteplus.com/en/docs/agentkit/How_memory_works and
+      agentkit/Runtime_security_best_practices.)
     source: https://docs.byteplus.com/en/docs/modelark/persistent-memory
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -745,6 +1532,10 @@ capabilities:
       The sibling product BytePlus AgentKit lists call auditing (agentkit/What_is_AgentKit)
       and runtime logs that support audit tracing (agentkit/Product_features). (Paraphrase,
       from different pages under docs.byteplus.com/en/docs/agentkit/.)
+      AGENTKIT (2026-11-23 pass): AgentKit Gateway access logs, runtime logs in TLS
+      and Identity audit through CloudTrail add a cross-component trail. The runtime
+      overview says all backend calls go through the Gateway proxy, which handles
+      credential hosting and auditing. (Paraphrase.)
     source: https://docs.byteplus.com/en/docs/modelark/overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
@@ -788,26 +1579,67 @@ capabilities:
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
+  free_tier_commitments:
+    product: BytePlus AgentKit
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). AgentKit is pay-as-you-go (postpaid), with a
+      small free quota on the shared gateway: "Shared gateways provide a free quota per
+      account per region:" (2 agent runtimes, and 2 MCP services and toolsets in total).
+      "Agent runtime: 2 free runtimes per account per region." Beyond that quota, usage is
+      charged at the shared gateway instance rate.
+      Deployed MCP services with stable usage can buy a package (per a different page:
+      https://docs.byteplus.com/en/docs/agentkit/MCP_services). An account balance over
+      USD 5 is required to buy resources. (Paraphrase.)
+      CAVEAT: the free quota covers the gateway instance fee only. It does not waive
+      runtime vCPU and memory usage (paraphrase of the billing structure). Savings plans or
+      marketplace procurement are not described. ModelArk's web_fetch is free for a
+      limited time (see pricing_axes). (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Billing_items
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
   versioning_rollout:
     status: documented
-    product: ModelArk Managed Agents
+    product: BytePlus AgentKit Runtime
     notes: >
-      Versioned agents with per-session pinning, which the docs explicitly frame as
-      canary and rollback: "When you need to lock a session to a specific version of an
-      agent, such as for rollback, canary comparison, or a finalized product release, pass
-      agent as an object and explicitly specify version".
-      "This lets you roll out a new version in canary stages without affecting the
-      behavior consistency of existing sessions."
-      Every update creates a new version and must pass the current version number
-      (optimistic concurrency). Archiving an agent keeps its history, and existing
-      sessions keep their configuration snapshot. (Paraphrase, from a different page:
-      docs.byteplus.com/en/docs/modelark/define-agent.)
-      CAVEAT: there is no traffic-splitting alias. Canary means the caller pins a version
-      per session.
-      The sibling product BytePlus AgentKit has platform-side release management for its
-      runtimes. Grey release sets a 10%-100% traffic ratio for the new version, and
-      rollback starts a new release task for a historical version. (Paraphrase, from a
-      different page: docs.byteplus.com/en/docs/agentkit/Releasing_runtimes.)
-    source: https://docs.byteplus.com/en/docs/modelark/start-session
+      SWITCHED FROM ModelArk TO AGENTKIT (2026-11-23 AgentKit pass); status unchanged.
+      AgentKit does platform-side traffic splitting, which ModelArk lacks.
+      "AgentKit supports grey release and full release."
+      "The traffic ratio for the new version can be set from 10% to 100%. After the
+      configured ratio is reached, you need to manually confirm the next operation, such
+      as adjusting the ratio, performing a full release, or rolling back."
+      "When a grey version exists for an agent runtime, requests are randomly sent to the
+      new and old agent runtime versions based on the traffic ratio."
+      Rollback: "A rollback will initiate a new release task and roll back online traffic
+      to the historical version of the selected release task." "Associated components are
+      rolled back at the same time."
+      Skills are versioned too, and can be published per skills space for grey release
+      (see skills_registry). (Paraphrase.)
+      MODELARK SIDE (a different page: https://docs.byteplus.com/en/docs/modelark/start-session):
+      Managed Agents versions every agent update and lets the caller pin a session to a
+      version for canary or rollback. There is no traffic-splitting alias. (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/Releasing_runtimes
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+  iac_coverage:
+    product: BytePlus AgentKit CLI
+    status: documented
+    notes: >
+      NEW CELL (2026-11-23 AgentKit pass). The IaC story is a declarative CLI, not
+      Terraform: "Declarative configurations: All configurations are managed via a single
+      agentkit.yaml file, ensuring clarity, portability, and easy version control."
+      The CLI "covers the entire workflow in the terminal: scaffolding projects, building
+      and deploying runtimes, and invoking deployed agents. It also manages MCP services,
+      knowledge bases, memories, sandboxes, skills, and evaluations."
+      CI/CD: AgentKit Studio can write the agent's source code and a GitHub Actions workflow
+      to a GitHub branch, so later pushes trigger redeployment. (Paraphrase, from a
+      different page:
+      https://docs.byteplus.com/en/docs/agentkit/Building_and_deploying_agents_using_AgentKit_Studio.)
+      AgentKit also has an OpenAPI (API reference) and SDKs. (Paraphrase.)
+      CAVEAT: no Terraform provider, Pulumi or CloudFormation-style template for AgentKit
+      or ModelArk Managed Agents was found. "terraform" appears nowhere in the AgentKit
+      pages read or in the ModelArk doc index (ai.byteplus.com/ark/llms.txt). (Paraphrase.)
+    source: https://docs.byteplus.com/en/docs/agentkit/CLI_overview
     verified_on: 2026-11-23
     verified_by: "@notacryptodad"
