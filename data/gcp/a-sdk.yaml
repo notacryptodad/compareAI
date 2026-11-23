@@ -1,174 +1,243 @@
 provider: gcp
 bucket: a
 product: Agent Development Kit (ADK)
-aliases: [ADK, google-adk, adk-python, Agents CLI]
+aliases: [ADK, google-adk, adk-python]
 repo: https://github.com/google/adk-python
 docs: https://adk.dev/
 notes: >
-  ADK remains Google's open-source, code-first agent framework. The current ADK site lists
-  Python, TypeScript, Go, Java, and Kotlin, and now presents graph workflows and Agents CLI
-  as first-class parts of the developer experience. The Python repository's current release
-  history is at v2.15.0 (2026-11-19). (Paraphrase.)
+  Docs moved: google.github.io/adk-docs 301-redirects to adk.dev.
+  Current major version is 2.x (latest release v2.15.0 on the GitHub sidebar as of
+  2026-11-23). "An open-source, code-first Python framework for
+  building, evaluating, and deploying sophisticated AI agents" (per the Python repo) —
+  but the docs site shows FIVE languages, so the repo's self-description understates it.
 
 capabilities:
   sdk_languages:
     status: documented
     value: [python, typescript, go, java, kotlin]
     notes: >
-      The current ADK homepage lists Python, TypeScript, Go, Java, and Kotlin. (Paraphrase.)
+      "Available in Python, TypeScript, Go, Java, and Kotlin." — the broadest language
+      coverage of any first-party agent SDK in this comparison (AWS Strands: 2,
+      MS Agent Framework: 3, AgentScope: 3).
+      Separate repos/packages per language: adk-go (`go get google.golang.org/adk/v2`),
+      adk-java (`com.google.adk:google-adk`).
+      LAUNCH STAGE IS PER-LANGUAGE: as of 2026-11-23 the adk.dev banner reads
+      "ADK TypeScript 2.0 GA" ("is now available with graph workflows support!").
+      The Go 2.0 GA banner recorded on 2026-08-04 is no longer on adk.dev (banner
+      rotated, not a downgrade). Python, Java and Kotlin carry NO stage label on adk.dev —
+      hence `documented`, not `ga`, for the row as a whole.
+      (The Python floor is now 3.11+ per the adk-python repo, a different page; it was
+      3.10+ in August.)
     source: https://adk.dev/
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   authoring_mode:
     status: documented
     value: code-first
     notes: >
-      ADK is presented as an open-source agent development framework whose examples are
-      written as code and whose site supports local development and deployment workflows.
-      (Paraphrase.)
-    source: https://adk.dev/
-    verified_on: 2026-11-22
+      "code-first Python framework". The README also lists an "Agent Config" feature —
+      "Build agents without code." — but code-first remains the headline positioning.
+    source: https://github.com/google/adk-python
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   workflow_engine:
     status: documented
-    product: Graph Workflows
+    product: Workflow Runtime
     notes: >
-      ADK 2.0 introduces graph-based workflows for deterministic execution paths alongside
-      adaptive AI reasoning. The current site describes this as a new ADK 2.0 capability.
-      (Paraphrase.)
-    source: https://adk.dev/
-    verified_on: 2026-11-22
+      ADK 2.0 headline feature: "A graph-based execution engine for composing
+      deterministic execution flows for agentic apps", supporting "routing, fan-out/fan-in,
+      loops, retry, state management, dynamic nodes, human-in-the-loop, and nested
+      workflows." Built on two classes: `Agent` and `Workflow` ("orchestrates agents and
+      tasks in a graph-based flow").
+    source: https://github.com/google/adk-python
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   multi_agent_patterns:
     status: documented
-    product: Multi-agent orchestration
+    product: Task API
     notes: >
-      The current ADK site describes growth from single agents to multi-agent orchestration,
-      but does not prescribe a named supervisor or swarm topology. (Paraphrase.)
-    source: https://adk.dev/
-    verified_on: 2026-11-22
+      "Structured agent-to-agent delegation with multi-turn task mode, single-turn
+      controlled output, mixed delegation patterns". Repo topics include `multi-agent`,
+      `multi-agent-systems`, `multi-agents-collaboration`.
+      Named patterns (supervisor/swarm) are not used as terminology — the model is
+      graph + delegation rather than named topologies.
+    source: https://github.com/google/adk-python
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   human_in_the_loop:
     status: documented
     notes: >
-      ADK's current site describes workflows that can handle human input as part of complex
-      agentic systems. The page does not state a separate launch stage for this capability.
-      (Paraphrase.)
-    source: https://adk.dev/
-    verified_on: 2026-11-22
+      Listed as a Workflow Runtime capability ("human-in-the-loop, and nested workflows")
+      and in the Task API. The README also lists "Tool Confirmation" — a "tool confirmation
+      flow (HITL)" that can guard tool execution with explicit confirmation and custom input.
+    source: https://github.com/google/adk-python
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   local_dev_loop:
     status: documented
-    product: Agents CLI
     notes: >
-      The current ADK site promotes Agents CLI for scaffolding, building, testing, evaluating,
-      and deploying agents, and provides setup guides for starting locally. (Paraphrase.)
-    source: https://adk.dev/
-    verified_on: 2026-11-22
+      "Interactive CLI" via `adk run` and a "Web UI" via `adk web`.
+      AGENTS CLI (adk.dev home page, a different page): "Use your favorite AI-enabled
+      developer environment to scaffold, build, test, evaluate, and deploy with Agents
+      CLI." Agents CLI is the Agent Platform's own CLI ("the unified command-line
+      interface and skill set for the Agent Platform", per the Agent Runtime page), so it
+      is not added as an ADK alias.
+      (An earlier revision also quoted a "Develop locally, scale globally" tagline;
+      check_quotes.py could not find that string, so it has been removed.)
+    source: https://github.com/google/adk-python
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_client:
     status: documented
     notes: >
-      ADK's first-party documentation and language APIs include MCP tooling. The available
-      evidence supports ADK agents consuming MCP tools; it does not establish one identical
-      MCP feature set across all five language implementations. (Paraphrase.)
-    source: https://adk.dev/
-    verified_on: 2026-11-22
+      MCP client AND server support. The MCP tools page is badged as supported in Python,
+      TypeScript, Go, Java and Kotlin (each from its v0.1.0/v0.2.0 release). "In ADK, you
+      use the McpToolset class as an interface between MCP Servers and ADK agents."
+      "It is also possible to configure an ADK server as an MCP server for use by other
+      client systems." (Language list paraphrased from the page's "Supported in ADK" badge.)
+    source: https://adk.dev/tools-custom/mcp-tools/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   openapi_import:
     status: documented
     notes: >
-      ADK documentation includes custom-tool integrations for connecting agents to external
-      services. The current homepage does not itself state a launch stage for OpenAPI import,
-      so this remains documented rather than GA. (Paraphrase.)
-    source: https://adk.dev/
-    verified_on: 2026-11-22
+      "ADK simplifies interacting with external REST APIs by automatically generating
+      callable tools directly from an OpenAPI Specification (v3.x)" via the
+      `OpenAPIToolset` class. CAVEAT: the page is badged Python-only ("Supported in ADK"
+      Python v0.1.0) — no TypeScript/Go/Java/Kotlin support is stated. (Paraphrase except
+      the quoted sentence.)
+    source: https://adk.dev/tools-custom/openapi-tools/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   cross_cloud_model_adapters:
     status: documented
     notes: >
-      The ADK FAQ says the framework can work with almost any generative AI model and provides
-      adapters for other model providers and locally running models. (Paraphrase.)
+      NOT Gemini-only. "ADK can work with almost any generative AI model"; adapters
+      "let you connect with many other models and model providers, including locally
+      running models."
+      Documented providers: Gemini, Gemma, Claude, OpenAI, LiteLLM, Ollama, vLLM,
+      LiteRT-LM, plus "Apigee AI Gateway", "Model routing" and "Agent Platform hosted".
+      Caveat: the adk-python README's Agent example now uses gemini-3.5-flash (that page,
+      not adk.dev; it was gemini-2.5-flash in August); adk.dev's own example uses
+      gemini-flash-latest.
     source: https://adk.dev/
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   in_repo_eval:
     status: documented
     notes: >
-      ADK is described as supporting performance evaluation, and the current site presents
-      evaluation as part of the framework and developer lifecycle. A separate vendor-hosted
-      evaluation service is outside this SDK row. (Paraphrase.)
-    source: https://adk.dev/
-    verified_on: 2026-11-22
+      ADK's evaluation page: "ADK provides both groundtruth based and rubric based tool use
+      evaluation metrics." Agents can be evaluated via "Web-based UI ( adk web )",
+      "Programmatically ( pytest )" and "Command Line Interface ( adk eval )", plus
+      conformance testing. Test files and evalsets are "backed by a formal Pydantic data
+      model"; an evalset "can contain multiple, potentially lengthy sessions, making it
+      ideal for simulating complex, multi-turn conversations". User simulation: "ADK
+      allows you test the behavior of the agent in a specific conversation scenario with
+      user prompts that are dynamically generated by an AI model."
+      SOURCE CHANGE 2026-11-23: previously cited the adk.dev home page, whose nav titles
+      were listed as features; now quotes the evaluation page's prose.
+    source: https://adk.dev/evaluate/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_license:
     status: documented
     value: Apache-2.0
-    notes: >
-      The official google/adk-python repository identifies the project as Apache-2.0 licensed.
-      (Paraphrase.)
+    notes: '"is licensed under the Apache 2.0 License"'
     source: https://github.com/google/adk-python
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_governance:
     status: documented
     value: single-vendor
-    notes: >
-      The repository is maintained in Google's official GitHub organization. No foundation or
-      multi-vendor governance model is stated in the reviewed first-party repository material.
-      (Paraphrase.)
+    notes: Google-owned org (github.com/google). No foundation governance stated.
     source: https://github.com/google/adk-python
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_release_cadence:
     status: documented
     notes: >
-      The official release page currently shows ADK Python v2.15.0 dated 2026-11-19. The
-      repository's current release history, rather than a fixed cadence claim, is the reliable
-      evidence for this refresh. (Paraphrase.)
-    source: https://github.com/google/adk-python/releases
-    verified_on: 2026-11-22
+      "The release cadence is roughly bi-weekly." — the only provider SDK in this set
+      that publishes an explicit cadence. The repo sidebar shows latest release v2.15.0
+      (2026-11-19) plus 93 earlier releases.
+      REMOVED FROM THE README since August: the ADK 2.0 session-compatibility warning
+      (2.0 sessions readable by ADK 1.28+ but incompatible with older 1.x) is no longer on
+      this page. (Paraphrase of the removed text.)
+    source: https://github.com/google/adk-python
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_runtime_lockin:
     status: none
     notes: >
-      ADK's current FAQ says agents can be containerized and run on the builder's own
-      infrastructure, or deployed to Google Cloud services. Google Cloud deployment is
-      therefore documented as an option rather than a stated requirement. (Paraphrase.)
+      No lock-in. "You can containerize and run ADK on your own infrastructure" as an
+      alternative to "our native, one-command deployment to Google Cloud".
+      Google Cloud targets (Agent Runtime, Cloud Run, GKE) are presented as conveniences
+      that add managed infrastructure, authentication and tracing — not requirements.
+      (Paraphrase; only the two quoted fragments above are verbatim.)
     source: https://adk.dev/
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_community:
     status: documented
+    value:
+      stars: 22300
     notes: >
-      The official repository remains active and has a current release stream, but this
-      refresh does not record a precise star or contributor count because those values change
-      continuously and are not stable product evidence. (Paraphrase.)
+      ~22.3k stars and ~4.4k forks as of 2026-11-23 (up from ~21k on 2026-08-09).
+      Cross-provider comparisons (AgentScope, MAF, Strands) use those providers' own
+      cells, whose star counts may be from different dates.
     source: https://github.com/google/adk-python
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  otel_traces:
+    status: documented
+    notes: >
+      "ADK implements the OpenTelemetry (OTel) Semantic Conventions for GenAI" and emits
+      "using the standard OTLP format". Spans: `invoke_agent`, `invoke_workflow`,
+      `execute_tool` (with `gen_ai.tool.name`, `gen_ai.tool.call.id`) and
+      `generate_content` (with token usage) — i.e. span-level tool-call traces.
+      OPT-IN: "When tracing is enabled, ADK automatically instruments key operations";
+      export is enabled by configuring an exporter (OTEL_EXPORTER_OTLP_TRACES_ENDPOINT,
+      the `--otel_to_cloud` flag for Cloud Trace, or programmatic setup via
+      `maybe_set_otel_providers`). Page is badged Python v1.17.0, Go v1.0.0, Kotlin v0.1.0
+      — TypeScript/Java not listed. (Paraphrase except the quoted fragments.)
+    source: https://adk.dev/observability/traces/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   sdk_telemetry_phone_home:
     status: documented
     notes: >
-      ADK is open source and its current public documentation describes deployment and
-      observability choices, but the reviewed homepage does not establish a complete current
-      statement about default telemetry for every language package. The prior no-phone-home
-      claim is therefore not strengthened here. (Paraphrase.)
-    source: https://github.com/google/adk-python
-    verified_on: 2026-11-22
+      USAGE ATTRIBUTION HEADERS, NO SEPARATE TELEMETRY ENDPOINT. `get_tracking_headers`
+      returns `x-goog-api-client` and `user-agent` headers carrying
+      `google-adk/<version>` (plus a hosting-runtime suffix such as Agent Engine, Cloud Run
+      or k8s, detected from env vars whose values are not themselves sent, per a different
+      file, _client_labels_utils.py) and the Python version. These ride on the app's own
+      outbound calls — Gemini, Anthropic, LiteLLM and Apigee model calls, MCP sessions and
+      registry integrations — so they are "attributable to ADK by Google's server-side
+      usage pipeline". No opt-out flag or env var for these headers was found in the
+      source (callers can only drop the runtime suffix). Comparable to MAF's User-Agent
+      token in azure/a-sdk.yaml.
+      OTel TELEMETRY REMAINS OPT-IN: spans only emit when the user configures an exporter
+      (--otel_to_cloud flag, OTEL_EXPORTER_OTLP_ENDPOINT env var, or programmatic setup);
+      telemetry/tracing.py writes to a user-configured tracer provider via
+      `trace.get_tracer`, with no hardcoded Google endpoint. The Agent Runtime metrics
+      exporter (telemetry/_agent_engine.py) only activates when the
+      GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY env var is set. (Paraphrase except the
+      quoted fragments.)
+    source: https://raw.githubusercontent.com/google/adk-python/main/src/google/adk/utils/_google_client_headers.py
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

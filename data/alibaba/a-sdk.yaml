@@ -4,200 +4,287 @@ product: AgentScope
 aliases: [agentscope, AgentScope 2.0]
 repo: https://github.com/agentscope-ai/agentscope
 notes: >
-  AgentScope 2.0 is the current major line. The official repository describes it as a
-  production-ready agent framework, while the PyPI publisher metadata still classifies
-  the package as Beta. That tension is recorded as documented rather than GA because
-  the vendor does not state general availability. The package metadata identifies the
-  publisher as the SysML team of Alibaba Tongyi Lab. (Paraphrase.)
+  Current major version is "AgentScope 2.0" (v2.0.12 on PyPI as of 2026-11-23; no new major
+  version since the 2.0.0 release of 2026-05-25 — only 2.0.x point releases). (Paraphrase.)
+  "AgentScope 2.0 is a production-ready, easy-to-use agent framework with essential
+  abstractions that keep up with rising model capability."
+  LAUNCH STAGE TENSION (re-checked 2026-11-23, unchanged): the README says "production-ready"
+  but the PyPI classifier reads "Development Status :: 4 - Beta" — NOT "5 - Production/Stable". Per project rules this
+  is NOT sufficient for `ga` (no "generally available" stated). Recorded as `documented`.
+  AFFILIATION NOW CONFIRMED (was unresolved through three earlier revisions).
+  The PyPI package metadata for `agentscope` — the authoritative publisher record — gives
+  author_email as "SysML team of Alibaba Tongyi Lab <...@alibaba-inc.com>".
+  An @alibaba-inc.com corporate address plus a named Alibaba Tongyi Lab team settles it:
+  this IS an Alibaba-affiliated SDK and belongs in Alibaba's bucket A.
+  Why it took so long: neither the GitHub org (`agentscope-ai`, not an Alibaba org), the
+  repo README, nor agentscope.io states the affiliation. agentscope.io lists Alibaba Cloud,
+  Alibaba Group and Ant Group under "Trusted by Teams At" — which reads as ADOPTION, not
+  ownership, and is exactly the kind of signal that should not be treated as proof.
+  Package-registry metadata beat both the repo and the marketing site here; worth
+  remembering as a sourcing technique for the other SDKs.
+  Caveat for precision: Tongyi Lab is Alibaba Group R&D. Treat this as
+  Alibaba-Group-affiliated; "Alibaba Cloud product" is a stronger claim, unevidenced.
+  2026-11-23 REFRESH: the 2.0 docs moved to versioned URLs (docs.agentscope.io/en/versions/
+  <ver>/...); the old /v1/ tree is gone (404). AgentScope 2.0 removed the core `evaluate`
+  module — evaluation now lives in the sibling OpenJudge repo (see in_repo_eval). Sibling
+  Java / TypeScript SDKs exist in the same org (see sdk_languages).
+  Bilingual docs (English + 中文主页 / README_zh.md) — good sign for the fairness rule
+  about not penalizing CN providers for thin English docs.
 
 capabilities:
   sdk_languages:
     status: documented
-    value: [python]
+    value: [python, java, typescript]
     notes: >
-      The installation requirement is Python 3.11 or higher. The current repository
-      does not document an equivalent TypeScript, Java, or Go SDK. (Paraphrase.)
-    source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+      CORRECTS AN EARLIER Python-only FINDING (2026-08-04 looked only at the Python repo).
+      The AgentScope org site lists a multi-language framework family under "Core &
+      multi-lang": "agentscope-java Agent-oriented programming for the JVM." and
+      "agentscope-typescript TypeScript agent framework — born for agent systems."
+      Go is listed as "agentscope-go On the way" — so NOT counted in the value.
+      Separate repos per language (agentscope-ai/agentscope-java, published to Maven Central
+      as io.agentscope, JDK 17+; agentscope-ai/agentscope-typescript on npm). (Paraphrase —
+      those details are on the sibling repos, a different page.)
+      The Python core requires Python 3.11 or higher (stated on the agentscope repo README,
+      a different page) — a higher floor than Strands/ADK (3.10). (Paraphrase.)
+      Same counting rule as GCP's ADK row, which also counts separate per-language repos.
+    source: https://agentscope.io/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_client:
     status: documented
     notes: >
-      The Toolkit supports MCP servers, and the Agent Service includes an MCP and Skill
-      Hub for browsing hubs, installing items into the library, and adding them to a
-      workspace. This is client and hub functionality, not managed MCP-server hosting.
-      (Paraphrase.)
+      README Toolkit row: "Agentic tool management over Python tools, MCP servers, and
+      skills". Agent Service row "MCP & Skill Hub": "Browse hubs (GitHub MCP Registry,
+      ClawHub), install into your library, add to a workspace". `mcp` is a repo topic.
+      (The 2026-08 news entries quoted in the previous revision rotated off the README into
+      docs/NEWS.md — re-quoted from the feature tables instead.)
+      Built-in MCP hub/registry integration is more than a plain MCP client — arguably the
+      most opinionated MCP story of the SDKs surveyed.
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   multi_agent_patterns:
     status: documented
-    value: [leader-worker, task planning]
+    value: [leader-worker, task planning, pipeline]
     notes: >
-      The Agent Team service provides leader-worker orchestration, built-in team tools,
-      and task planning. The current news also names TeamPipeline, where a leader agent
-      delegates tasks to member agents. (Paraphrase.)
+      "Agent Team" — "Leader–worker orchestration, built-in team tools, task planning"
+      (supervisor-equivalent). News (2026-09): "TeamPipeline supported — a leader agent
+      delegates tasks to member agents." Also (2026-09, flagged Experimental): "SOP
+      supported — run multi-step tasks as standard operating procedures, in both the
+      framework and agent service."
+      Repo topics: `multi-agent`, `react-agent`.
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   long_running_agents:
     status: documented
     notes: >
-      The Agent Service lists scheduled tasks, agent wakeup, and background task
-      offloading. These are service capabilities shipped with the open-source project,
-      not a vendor-operated cloud runtime. (Paraphrase.)
+      Agent Service "Scheduling" row: "Scheduled tasks, agent wakeup, background task
+      offloading". Caption: "Background task offloading — a long-running tool moves to the
+      background; its result later wakes the agent up and the conversation resumes."
+      Unusual for an SDK (vs a platform) to handle this.
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   multi_tenancy:
     status: documented
     notes: >
-      Agent Service provides multi-tenant and multi-session management, including
-      multi-session isolation. The documentation presents this as part of the
-      self-managed service deployment. (Paraphrase.)
-    source: https://docs.agentscope.io/en/versions/2.0.12
-    verified_on: 2026-11-22
+      Serving row: "Multi-tenancy, multi-session isolation, FastAPI backend, pre-built Web
+      UI". RAG Service row: "Blob storage, index worker, multi-tenant retrieval".
+      (History: the README wording here drifted between the 08-04 and 08-07 passes; it was
+      unchanged between 08-07 and 11-23.)
+      An SDK claiming multi-tenant serving blurs the A/B bucket line — worth a note on the
+      site, since no other bucket-A entry claims this.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_interpreter:
     status: documented
     value: [local, Docker, Apple Container, Bubblewrap, E2B, OpenSandbox, Daytona, K8s]
     notes: >
-      Workspace and sandbox execution supports the listed local and third-party
-      backends. This is a pluggable self-managed execution design rather than one
-      Alibaba-hosted code-interpreter service. (Paraphrase.)
+      Workspace / Sandbox row, unchanged since 08-07: "Isolated tool & code execution —
+      local, Docker, Apple Container, Bubblewrap, E2B, OpenSandbox, Daytona, K8s".
+      Pluggable third-party sandboxes rather than one managed service — the opposite
+      design choice from AWS/GCP managed code interpreters, and the widest backend set
+      of any provider here.
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   cross_cloud_model_adapters:
     status: documented
-    value: [OpenAI, Anthropic, Gemini, DashScope, DeepSeek, Moonshot, Volcengine, xAI, Ollama]
+    value: [OpenAI, Anthropic, Gemini, DashScope, DeepSeek, Moonshot, Volcengine, xAI, Ollama, MiniMax]
     notes: >
-      The current model building block lists adapters for OpenAI, Anthropic, Gemini,
-      DashScope, DeepSeek, Moonshot, Volcengine, xAI, and Ollama. This supports use with
-      rival providers and local Ollama models. (Paraphrase.)
+      "LLM, embedding, and TTS across major providers (OpenAI, Anthropic, Gemini,
+      DashScope, DeepSeek, Moonshot, Volcengine, xAI, Ollama)" — Volcengine was added to
+      this list since 08-09 (source drift). News (2026-09): "MiniMax chat models supported
+      via MiniMaxChatModel (MiniMax-M3 by default)." Also "Model routing supported — use
+      ModelRouterMiddleware to select an appropriate chat model for each reply."
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_license:
     status: documented
     value: Apache-2.0
-    notes: >
-      The repository license is Apache-2.0. (Paraphrase.)
+    notes: '"AgentScope is released under Apache License 2.0."'
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_governance:
     status: documented
     value: single-vendor
     notes: >
-      PyPI publisher metadata names the SysML team of Alibaba Tongyi Lab and uses an
-      alibaba-inc.com address. The repository does not describe foundation governance.
-      (Paraphrase.)
+      Single-vendor, resolved via the PyPI JSON API (a DIFFERENT source from the repo
+      page): author_email reads SysML team of Alibaba Tongyi Lab, at an alibaba-inc.com
+      address (re-checked 2026-11-23 against v2.0.12 metadata, unchanged). The GitHub org
+      name (`agentscope-ai`) reads independent and states no corporate owner — the org page
+      alone is NOT sufficient evidence either way, which is why this sat at `unknown` until
+      the registry was checked.
+      No foundation governance.
     source: https://pypi.org/pypi/agentscope/json
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_release_cadence:
     status: documented
     notes: >
-      The repository release page shows v2.0.12 published on 2026-11-16 and continued
-      2.0.x maintenance releases. No formal release-cadence promise is documented.
-      (Paraphrase.)
-    source: https://github.com/agentscope-ai/agentscope/releases
-    verified_on: 2026-11-22
+      Roughly bi-weekly to tri-weekly point releases observed from the README news feed and
+      PyPI history (2.0.6 on 08-07 through 2.0.12 on 11-16: 2.0.7, 2.0.7.post1, 2.0.8,
+      2.0.9, 2.0.10, 2.0.11 in between). No new major version since 2.0.0. The README carries
+      dated news entries through 2026-10. Breaking-change history: the 2.0 release notes
+      list temporary deprecations — evaluate, module, rag, tts and realtime were removed
+      pending refactor (rag/tts/realtime have since returned; evaluate has not). (Paraphrase —
+      release notes are a different page, docs.agentscope.io/en/versions/2.0.12/release-notes.)
+      No formal published cadence statement.
+    source: https://github.com/agentscope-ai/agentscope
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_runtime_lockin:
     status: none
     notes: >
-      The documented model adapters include several external providers and Ollama, while
-      workspace execution supports multiple local and third-party backends. The current
-      documentation therefore does not require an Alibaba runtime. (Paraphrase.)
+      No runtime lock-in. Model providers include OpenAI, Anthropic, Gemini, DeepSeek,
+      Volcengine, Ollama alongside DashScope. Sandbox backends are all third-party (Docker,
+      E2B, K8s, etc.). DashScope is the default in the quickstart (analogous to Strands'
+      Bedrock default) but not required — same pattern, same verdict (`none`).
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_community:
     status: documented
     value:
-      stars: 36471
+      stars: 36485
     notes: >
-      The repository had 36,471 GitHub stars when checked on 2026-11-22. (Paraphrase.)
+      ~36.5k stars as of 2026-11-23 (GitHub API), up from ~28.7k on 2026-08-09. Sibling
+      repos in the same org: agentscope-java ~6.4k stars. Contributor/issue-response data
+      not captured this pass. (Other providers' star counts were last captured in August
+      and are not compared here.)
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   authoring_mode:
     status: documented
     value: code-first
     notes: >
-      AgentScope is an installable Python framework and the official quickstart builds
-      agents in Python code. (Paraphrase.)
+      Python SDK; the quickstart builds an Agent in code and launches it in a console.
+      (Paraphrase.)
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   local_dev_loop:
     status: documented
     notes: >
-      The repository supplies a console launcher and a self-managed Agent Service with a
-      pre-built web UI. The service can be run locally from the repository. (Paraphrase.)
+      Console for terminal testing — per the quickstart code comment, streamed output,
+      tool-call confirmation and Ctrl+C interruption are handled for you. (Paraphrase.)
+      Pre-built Web UI via the agent service ("Multi-tenancy,
+      multi-session isolation, FastAPI backend, pre-built Web UI"). Local model execution
+      via the Ollama adapter.
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   human_in_the_loop:
     status: documented
     notes: >
-      The framework provides permission and HITL controls with tool and resource
-      confirmation, plus interruption and resume in the ReAct loop. (Paraphrase.)
+      "Reasoning-acting loop with structured output, realtime interruption & resume, and
+      batched (sequential / concurrent) tool acting"
+      Plus dedicated feature: "Permission & HITL" — "Fine-grained control over tools and
+      resources, confirmation, bypass mode"
+      This is explicit interrupt/resume AND approval gates — both halves of the row.
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   policy_hooks:
     status: documented
     notes: >
-      Middleware hooks can run around reply, reasoning, acting, model calls, permission
-      checks, context compression, and system-prompt handling. (Paraphrase.)
+      "Middleware" — "Composable hooks across the loop — reply, reasoning, acting, model
+      calling, permission checking, context compression, system prompt"
+      Seven named hook points covering the full agent loop. More granular than Strands'
+      hooks/steering/guardrails model.
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   otel_traces:
-    status: unknown
+    status: documented
     notes: >
-      The current repository and documentation describe an event system and service
-      observability-related components but do not establish OpenTelemetry export or
-      GenAI semantic conventions. (Paraphrase.)
-    source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+      CORRECTS AN EARLIER `none` — the 08-09 pass searched only the README, which does not
+      mention tracing. The 2.0 middleware docs list a built-in tracing middleware:
+      "TracingMiddleware wires the full agent lifecycle to OpenTelemetry tracing. It
+      instruments on_reply , on_model_call , and on_acting , producing hierarchical spans."
+      Export is via a standard OTLP exporter you register yourself ("register a
+      TracerProvider and an OTLP exporter in the process"), so any OTel backend works.
+      opentelemetry-api / -sdk / -exporter-otlp are core dependencies in pyproject.toml.
+      (Paraphrase of the dependency list.) No GenAI-semconv conformance claim found.
+    source: https://docs.agentscope.io/en/versions/2.0.12/building-blocks/middleware
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   in_repo_eval:
-    status: unknown
+    status: documented
+    product: OpenJudge (agentscope-ai/OpenJudge)
     notes: >
-      The current repository README does not document an evaluation harness. The older
-      evaluation page was not used to carry forward a stale capability claim without a
-      current version-specific confirmation. (Paraphrase.)
-    source: https://docs.agentscope.io/en/versions/2.0.12
-    verified_on: 2026-11-22
+      SOURCE MOVED AND SCOPE CHANGED. The old docs.agentscope.io/v1/observe-and-evaluate/
+      evaluation page is 404; the evaluation page now survives only in the frozen 1.0.21
+      docs. AgentScope 2.0 REMOVED the core `evaluate` module (2.0 release notes, a
+      different page, says evaluate, module, rag, tts and realtime modules were removed
+      pending refactor); it is absent from src/agentscope on main. The v1-era
+      GeneralEvaluator / RayEvaluator / ACEBench framework described in the previous
+      revision therefore does NOT apply to the current 2.x SDK. (Paraphrase.)
+      Evaluation now lives in the sibling repo in the same org: "OpenJudge is an
+      open-source evaluation framework for AI applications (e.g., AI agents or chatbots)
+      designed to evaluate quality and drive continuous application optimization."
+      Access "50+ production-ready graders"; agent graders cover "Agent lifecycle, tool
+      calling, memory, plan feasibility, trajectory quality". "Every grader comes with
+      benchmark datasets and pytest integration for validation." Installed separately
+      (`pip install py-openjudge`, v0.2.5 on 2026-11-10).
+      Same shape as AWS (separate strands-agents/evals repo) — documented, but no longer
+      the richest in-SDK harness the previous revision claimed.
+    source: https://github.com/agentscope-ai/OpenJudge
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   sdk_telemetry_phone_home:
     status: unknown
     notes: >
-      The current repository documentation does not state whether the SDK collects
-      telemetry or contacts an analytics endpoint. No conclusion is drawn from that
-      omission. (Paraphrase.)
+      No telemetry or phone-home behavior found, but AgentScope publishes no positive
+      no-telemetry statement, so this is absence of evidence — hence `unknown`, not `none`.
+      Re-checked 2026-11-23: the README has no
+      mention of analytics collection or usage reporting, the repo tree has no
+      telemetry/analytics module, and pyproject.toml carries no analytics SDK dependency.
+      The OpenTelemetry dependencies are for user-configured tracing (TracingMiddleware
+      exports only to an OTLP endpoint you register) — not vendor phone-home. (Paraphrase.)
     source: https://github.com/agentscope-ai/agentscope
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

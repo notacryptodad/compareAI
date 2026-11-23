@@ -25,6 +25,7 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
+from urllib.parse import urlparse
 
 import httpx
 import yaml
@@ -39,6 +40,12 @@ MIN_QUOTE_LEN = 12
 # real content never arrived. docs.byteplus.com strips to ~3.3 KB of pure navigation from a
 # ~300 KB payload; its rendered bodies are 5-22 KB of prose. 4500 sits between the two.
 JS_SHELL_MAX_TEXT = 4500
+
+# Hosts known to client-render article bodies. Some of their pages (ArkClaw, AgentKit docs)
+# ship a sidebar big enough to clear JS_SHELL_MAX_TEXT while still carrying no prose. On these
+# hosts, a page where NOT ONE quote matches is treated as an unrendered shell (UNVERIFIABLE).
+# If any quote on the page matches, the body did arrive, so the remaining misses still fail.
+JS_RENDERED_HOSTS = {"docs.byteplus.com", "docs.volcengine.com"}
 
 QUOTE_RE = re.compile(r'"([^"]{%d,}?)"' % MIN_QUOTE_LEN, re.DOTALL)
 
@@ -220,6 +227,12 @@ def main() -> int:
                 continue
 
             misses = [(f, r, q) for f, r, q in items if not quote_present(q, page)]
+            if len(misses) == len(items) and urlparse(url).hostname in JS_RENDERED_HOSTS:
+                unverifiable.append(url)
+                print(f"  ?? {url}\n     {len(page)} chars but no quote matched on a known "
+                      f"JS-rendered host — nav-only shell; {len(items)} quote(s) UNVERIFIABLE "
+                      f"by HTTP fetch. Re-verify with a headless browser.")
+                continue
             ok += len(items) - len(misses)
             mark = "OK" if not misses else "!!"
             print(f"  {mark} {url}  ({len(items) - len(misses)}/{len(items)} found)")

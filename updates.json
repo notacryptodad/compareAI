@@ -1,86 +1,1395 @@
 {
-  "generated": "2026-08-04",
+  "generated": "2026-11-23",
   "entries": [
     {
-      "date": "2026-08-04",
+      "date": "2026-11-23",
       "provider": "AWS",
       "bucket": "A",
-      "row": "\u2014",
-      "label": "New coverage: Strands Agents",
-      "detail": "17 cells added",
-      "tag": "research"
+      "row": "bundled_tools",
+      "label": "Built-in tool library shipped with the SDK",
+      "detail": "`product`: strands-agents-tools \u2192 Vended tools (strands.vended_tools)",
+      "tag": "change",
+      "product": "Vended tools (strands.vended_tools)"
     },
     {
-      "date": "2026-08-04",
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "A",
+      "row": "local_dev_loop",
+      "label": "Local dev loop (no cloud creds, hot reload, debug UI)",
+      "detail": "`product`: strandly \u2192 strands CLI",
+      "tag": "change",
+      "product": "strands CLI"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "A",
+      "row": "multi_agent_patterns",
+      "label": "Multi-agent patterns",
+      "detail": "`value`: \u2014 \u2192 agents-as-tools, graph, swarm, workflow, a2a",
+      "tag": "change",
+      "product": "Strands Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "A",
+      "row": "oss_community",
+      "label": "Community signal (contributors, issue response, production adopters)",
+      "detail": "`value`: {\"commits\": 2338, \"forks\": 1000, \"open_issues\": 449, \"open_prs\": 194, \"stars\": 6800} \u2192 {\"commits\": 3414, \"contributors\": 378, \"forks\": 1600, \"open_issues\": 780, \"open_prs\": 565, \"stars\": 9300}",
+      "tag": "change",
+      "product": "Strands Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "A",
+      "row": "sdk_telemetry_phone_home",
+      "label": "Does the SDK phone home telemetry by default, and can you disable it?",
+      "detail": "`status`: none \u2192 documented",
+      "tag": "change",
+      "product": "Strands Agents"
+    },
+    {
+      "date": "2026-11-23",
       "provider": "AWS",
       "bucket": "B",
-      "row": "\u2014",
-      "label": "New coverage: Amazon Bedrock AgentCore",
-      "detail": "29 cells added",
-      "tag": "research"
+      "row": "a2a_protocol",
+      "label": "Agent-to-agent (A2A) protocol support",
+      "detail": "`status`: \u2014 \u2192 ga; `product`: \u2014 \u2192 AgentCore Runtime",
+      "tag": "research",
+      "product": "AgentCore Runtime"
     },
     {
-      "date": "2026-08-04",
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "agent_optimization",
+      "label": "Automated agent optimization",
+      "detail": "`status`: preview \u2192 ga",
+      "tag": "change",
+      "product": "AgentCore Optimization"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "agent_payments",
+      "label": "Agent payments / microtransactions",
+      "detail": "`status`: preview \u2192 ga",
+      "tag": "change",
+      "product": "AgentCore Payments"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "agent_workload_identity",
+      "label": "Agent workload identity",
+      "detail": "`status`: documented \u2192 ga",
+      "tag": "change",
+      "product": "AgentCore Identity"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "browser_use",
+      "label": "Managed browser / computer use",
+      "detail": "`status`: documented \u2192 ga",
+      "tag": "change",
+      "product": "AgentCore Browser"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "certifications",
+      "label": "Certifications",
+      "detail": "`value`: {\"certified\": [\"HIPAA eligible\", \"FedRAMP (Class C)\", \"SOC 2\", \"ISO 27001:2022\", \"ISO 27017:2015\", \"ISO 27018:2019\", \"ISO 27701:2019\", \"ISO 22301:2019\", \"ISO 20000-1:2018\", \"ISO 9001:2015\", \"CSA STAR\"], \"self_assessed_pending_audit\": [\"BIO\", \"C5\", \"CISPE\", \"CPSTIC\", \"ENS High\", \"FINMA\", \"GNS\", \"GSMA\", \"HITRUST\", \"IRAP\", \"ISMAP\", \"MTCS\", \"OSPAR\", \"PCI\", \"Pinakes\", \"PiTuKri\"]} \u2192 {\"certified\": [\"HIPAA eligible\", \"FedRAMP (Class C and Class D)\", \"SOC 2\", \"ISO 27001:2022\", \"ISO 27017:2015\", \"ISO 27018:2019\", \"ISO 27701:2019\", \"ISO 22301:2019\", \"ISO 20000-1:2018\", \"ISO 9001:2015\", \"CSA STAR\"], \"self_assessed_pending_audit\": [\"BIO\", \"C5\", \"CISPE\", \"CPSTIC\", \"ENS High\", \"FINMA\", \"GNS\", \"GSMA\", \"HITRUST\", \"IRAP\", \"ISMAP\", \"MTCS\", \"OSPAR\", \"PCI\", \"Pinakes\", \"PiTuKri\"]}",
+      "tag": "change",
+      "product": "Amazon Bedrock AgentCore"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "code_interpreter",
+      "label": "Code interpreter / sandbox",
+      "detail": "`status`: documented \u2192 ga",
+      "tag": "change",
+      "product": "AgentCore Code Interpreter"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "knowledge_base",
+      "label": "Managed knowledge base / RAG",
+      "detail": "`status`: none \u2192 ga; `product`: \u2014 \u2192 Amazon Bedrock Managed Knowledge Base (AgentCore Gateway connector)",
+      "tag": "change",
+      "product": "Amazon Bedrock Managed Knowledge Base (AgentCore Gateway connector)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "long_term_memory",
+      "label": "Long-term memory (semantic, episodic, preference)",
+      "detail": "`status`: documented \u2192 ga",
+      "tag": "change",
+      "product": "AgentCore Memory"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "mcp_registry",
+      "label": "Managed MCP registry / catalog",
+      "detail": "`status`: preview \u2192 ga; `product`: AgentCore Registry / AWS Agent Registry \u2192 AWS Agent Registry",
+      "tag": "change",
+      "product": "AWS Agent Registry"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "otel_traces",
+      "label": "OpenTelemetry / GenAI semconv; span-level tool-call traces",
+      "detail": "`status`: documented \u2192 ga",
+      "tag": "change",
+      "product": "AgentCore Observability"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "pricing_axes",
+      "label": "Pricing axes",
+      "detail": "`value`: {\"applies_to\": [\"Runtime\", \"Browser Tool\", \"Code Interpreter\"], \"per_gb_hour\": 0.00945, \"per_vcpu_hour\": 0.0895} \u2192 {\"applies_to\": [\"Runtime microVMs v1\", \"Browser Tool\", \"Code Interpreter\"], \"per_gb_hour\": 0.00945, \"per_vcpu_hour\": 0.0895, \"runtime_v2_per_gb_hour\": 0.0169, \"runtime_v2_per_vcpu_hour\": 0.1276}",
+      "tag": "change",
+      "product": "Amazon Bedrock AgentCore"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "runtime_regions",
+      "label": "Region availability OF THE AGENT RUNTIME",
+      "detail": "`value`: {\"evaluations\": 16, \"harness_memory_optimization\": 15, \"payments\": 4, \"policy\": 19, \"registry\": 5, \"runtime_gateway_identity_builtin_tools_observability\": 20} \u2192 {\"harness_memory\": 16, \"optimization\": 21, \"payments\": 12, \"policy_evaluations\": 22, \"region_table_columns\": 24, \"registry\": 10, \"runtime_instances\": 15, \"runtime_microvms_gateway_identity_builtin_tools_observability\": 24, \"web_answer\": 1, \"web_search_api\": 6, \"web_search_tool\": 7}",
+      "tag": "change",
+      "product": "Amazon Bedrock AgentCore"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "training_data_policy",
+      "label": "Training-on-customer-data policy, retention, abuse-monitoring opt-out",
+      "detail": "`status`: documented \u2192 unknown",
+      "tag": "research",
+      "product": "Amazon Bedrock AgentCore"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "B",
+      "row": "web_search_tool",
+      "label": "Built-in web search tool",
+      "detail": "`status`: \u2014 \u2192 ga; `product`: \u2014 \u2192 AgentCore Web Search (Web Search API and Web Search Tool connector)",
+      "tag": "research",
+      "product": "AgentCore Web Search (Web Search API and Web Search Tool connector)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "C",
+      "row": "license_bundling",
+      "label": "Bundling with licenses you already own",
+      "detail": "`status`: none \u2192 unknown",
+      "tag": "research",
+      "product": "Amazon Q Business"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "C",
+      "row": "model_choosable",
+      "label": "Is the underlying model choosable, or fixed and opaque?",
+      "detail": "`status`: none \u2192 unknown",
+      "tag": "research",
+      "product": "Amazon Q Business"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "D",
+      "row": "agentic_coding",
+      "label": "Agentic coding (multi-file edits, task execution, tool use)",
+      "detail": "`status`: preview \u2192 ga",
+      "tag": "change",
+      "product": "Kiro"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "D",
+      "row": "cli_agent",
+      "label": "CLI / terminal agent mode",
+      "detail": "`product`: \u2014 \u2192 Kiro CLI",
+      "tag": "change",
+      "product": "Kiro CLI"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "D",
+      "row": "code_review",
+      "label": "AI code review (PR review, inline suggestions)",
+      "detail": "`status`: unknown \u2192 documented",
+      "tag": "research",
+      "product": "Kiro"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "D",
+      "row": "coding_free_tier",
+      "label": "Free tier or usage-based option",
+      "detail": "`status`: preview \u2192 documented; `value`: \u2014 \u2192 50 credits/month",
+      "tag": "change",
+      "product": "Kiro"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "D",
+      "row": "coding_seat_pricing",
+      "label": "Per-seat pricing (individual / business / enterprise tiers)",
+      "detail": "`status`: preview \u2192 documented; `value`: \u2014 \u2192 {\"addon_credit\": 0.04, \"power\": 200, \"pro\": 20, \"pro_max\": 100, \"pro_plus\": 40, \"team_seat\": 20}",
+      "tag": "change",
+      "product": "Kiro"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "D",
+      "row": "ide_integration",
+      "label": "IDE integration (VS Code, JetBrains, Vim/Neovim, other)",
+      "detail": "`value`: Kiro IDE, CLI, Web \u2192 Kiro IDE, Kiro for VS Code, CLI, Web, Mobile, Kiro Crew",
+      "tag": "change",
+      "product": "Kiro"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "D",
+      "row": "launch_stage_investigation",
+      "label": "Launch-stage evidence trail (where the vendor does/doesn't state GA)",
+      "detail": "`status`: preview \u2192 ga",
+      "tag": "change",
+      "product": "Kiro"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "AWS",
+      "bucket": "D",
+      "row": "model_choice_coding",
+      "label": "Model choice in coding tool",
+      "detail": "`value`: Anthropic Claude, open-weight models \u2192 Auto router, OpenAI GPT-5.6, Anthropic Claude, xAI Grok, open-weight models",
+      "tag": "change",
+      "product": "Kiro"
+    },
+    {
+      "date": "2026-11-23",
       "provider": "Alibaba",
       "bucket": "A",
-      "row": "\u2014",
-      "label": "New coverage: AgentScope",
-      "detail": "17 cells added",
-      "tag": "research"
+      "row": "cross_cloud_model_adapters",
+      "label": "Can the SDK talk to a rival cloud's models?",
+      "detail": "`value`: OpenAI, Anthropic, Gemini, DashScope, DeepSeek, Moonshot, xAI, Ollama \u2192 OpenAI, Anthropic, Gemini, DashScope, DeepSeek, Moonshot, Volcengine, xAI, Ollama, MiniMax",
+      "tag": "change",
+      "product": "AgentScope"
     },
     {
-      "date": "2026-08-04",
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "A",
+      "row": "in_repo_eval",
+      "label": "In-repo eval harness runnable in your own CI",
+      "detail": "`product`: \u2014 \u2192 OpenJudge (agentscope-ai/OpenJudge)",
+      "tag": "change",
+      "product": "OpenJudge (agentscope-ai/OpenJudge)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "A",
+      "row": "multi_agent_patterns",
+      "label": "Multi-agent patterns",
+      "detail": "`value`: leader-worker, task planning \u2192 leader-worker, task planning, pipeline",
+      "tag": "change",
+      "product": "AgentScope"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "A",
+      "row": "oss_community",
+      "label": "Community signal (contributors, issue response, production adopters)",
+      "detail": "`value`: {\"stars\": 28700} \u2192 {\"stars\": 36485}",
+      "tag": "change",
+      "product": "AgentScope"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "A",
+      "row": "otel_traces",
+      "label": "OpenTelemetry / GenAI semconv; span-level tool-call traces",
+      "detail": "`status`: none \u2192 documented",
+      "tag": "change",
+      "product": "AgentScope"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "A",
+      "row": "sdk_languages",
+      "label": "Languages supported",
+      "detail": "`value`: python \u2192 python, java, typescript",
+      "tag": "change",
+      "product": "AgentScope"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "A",
+      "row": "sdk_telemetry_phone_home",
+      "label": "Does the SDK phone home telemetry by default, and can you disable it?",
+      "detail": "`status`: none \u2192 unknown",
+      "tag": "research",
+      "product": "AgentScope"
+    },
+    {
+      "date": "2026-11-23",
       "provider": "Alibaba",
       "bucket": "B",
-      "row": "\u2014",
-      "label": "New coverage: Alibaba Cloud Model Studio",
-      "detail": "20 cells added",
-      "tag": "research"
+      "row": "browser_use",
+      "label": "Managed browser / computer use",
+      "detail": "`status`: none \u2192 documented; `product`: \u2014 \u2192 \u767e\u70bc Sandbox \u2014 Browser Use Sandbox",
+      "tag": "change",
+      "product": "\u767e\u70bc Sandbox \u2014 Browser Use Sandbox"
     },
     {
-      "date": "2026-08-04",
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "code_interpreter",
+      "label": "Code interpreter / sandbox",
+      "detail": "`product`: \u2014 \u2192 \u767e\u70bc Sandbox \u2014 Code Interpreter Sandbox",
+      "tag": "change",
+      "product": "\u767e\u70bc Sandbox \u2014 Code Interpreter Sandbox"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "eval_service",
+      "label": "Evaluation service",
+      "detail": "`product`: \u2014 \u2192 \u767e\u70bc Evolution \u2014 \u5e94\u7528\u8bc4\u6d4b",
+      "tag": "change",
+      "product": "\u767e\u70bc Evolution \u2014 \u5e94\u7528\u8bc4\u6d4b"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "first_party_models",
+      "label": "First-party frontier models",
+      "detail": "`value`: Qwen-Max, Qwen-Plus, Qwen-Flash \u2192 qwen4-max, qwen3.7-plus, qwen3.8-flash",
+      "tag": "change",
+      "product": "Alibaba Cloud Model Studio"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "long_running_agents",
+      "label": "Long-running agents (max session duration, async/background)",
+      "detail": "`status`: \u2014 \u2192 documented; `product`: \u2014 \u2192 \u767e\u70bc Managed Agents",
+      "tag": "research",
+      "product": "\u767e\u70bc Managed Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "long_term_memory",
+      "label": "Long-term memory (semantic, episodic, preference)",
+      "detail": "`status`: none \u2192 documented; `product`: \u2014 \u2192 \u767e\u70bc Memory (\u8bb0\u5fc6\u5e93) + Managed Agents Memory Store",
+      "tag": "change",
+      "product": "\u767e\u70bc Memory (\u8bb0\u5fc6\u5e93) + Managed Agents Memory Store"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "managed_agent_loop",
+      "label": "Managed agent loop (define + invoke an agent in one API call)",
+      "detail": "`product`: \u767e\u70bc visual agent builder (Agent 1.0) \u2192 \u767e\u70bc Flow Agent \u2014 \u667a\u80fd\u4f53\u5e94\u7528 (Agent 2.0)",
+      "tag": "change",
+      "product": "\u767e\u70bc Flow Agent \u2014 \u667a\u80fd\u4f53\u5e94\u7528 (Agent 2.0)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "managed_agent_runtime",
+      "label": "Managed agent runtime",
+      "detail": "`product`: \u767e\u70bc / Bailian application platform (Agent 1.0) \u2192 \u767e\u70bc Managed Agents",
+      "tag": "change",
+      "product": "\u767e\u70bc Managed Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "otel_traces",
+      "label": "OpenTelemetry / GenAI semconv; span-level tool-call traces",
+      "detail": "`product`: \u2014 \u2192 \u767e\u70bc Evolution \u2014 \u5e94\u7528\u89c2\u6d4b",
+      "tag": "change",
+      "product": "\u767e\u70bc Evolution \u2014 \u5e94\u7528\u89c2\u6d4b"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "runtime_sla",
+      "label": "Support tier & SLA on the agent runtime specifically",
+      "detail": "`status`: documented \u2192 unknown; `value`: 99.9% \u2192 \u2014",
+      "tag": "research",
+      "product": "Alibaba Cloud Model Studio"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "session_management",
+      "label": "Session lifecycle API (start, manage, event stream)",
+      "detail": "`status`: \u2014 \u2192 documented; `product`: \u2014 \u2192 \u767e\u70bc Managed Agents",
+      "tag": "research",
+      "product": "\u767e\u70bc Managed Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "third_party_catalog",
+      "label": "Third-party model catalog",
+      "detail": "`value`: DeepSeek, Kimi, GLM \u2192 DeepSeek, GLM, Kimi, MiniMax",
+      "tag": "change",
+      "product": "Alibaba Cloud Model Studio"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "B",
+      "row": "workflow_engine",
+      "label": "Workflow engine (graph/DAG, durable, resumable)",
+      "detail": "`product`: \u2014 \u2192 Flow Agent \u2014 \u5de5\u4f5c\u6d41\u5e94\u7528",
+      "tag": "change",
+      "product": "Flow Agent \u2014 \u5de5\u4f5c\u6d41\u5e94\u7528"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "C",
+      "row": "permission_aware_retrieval",
+      "label": "Permission-aware retrieval (ACL trimming at query time)",
+      "detail": "`status`: none \u2192 unknown",
+      "tag": "research",
+      "product": "Alibaba Cloud Model Studio Flow Agent"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "C",
+      "row": "prebuilt_connectors",
+      "label": "Prebuilt SaaS/enterprise connectors",
+      "detail": "`status`: documented \u2192 preview; `product`: \u2014 \u2192 \u767e\u70bc Connector",
+      "tag": "change",
+      "product": "\u767e\u70bc Connector"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "C",
+      "row": "seat_pricing",
+      "label": "Per-seat cost, minimum seats, annual commitment",
+      "detail": "`value`: {\"max\": \"USD 200/seat/month\", \"pro\": \"USD 100/seat/month\", \"standard\": \"USD 30/seat/month\"} \u2192 {\"advanced\": \"USD 75/seat/month\", \"premium\": \"USD 180/seat/month\", \"standard\": \"USD 20/seat/month\"}",
+      "tag": "change",
+      "product": "Alibaba Cloud Model Studio Flow Agent"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "D",
+      "row": "cli_agent",
+      "label": "CLI / terminal agent mode",
+      "detail": "`product`: \u2014 \u2192 Qoder CN CLI",
+      "tag": "change",
+      "product": "Qoder CN CLI"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "D",
+      "row": "coding_seat_pricing",
+      "label": "Per-seat pricing (individual / business / enterprise tiers)",
+      "detail": "`value`: {\"enterprise\": \"\\u00a5149/seat/month\", \"free\": \"\\u00a50\", \"pro\": \"\\u00a559/month\", \"pro_plus\": \"\\u00a5169/month\", \"teams\": \"\\u00a599/seat/month\", \"vpc\": \"\\u00a5199/seat/month\"} \u2192 {\"advanced\": \"\\u00a5169/month\", \"enterprise_dedicated\": \"\\u00a5199/seat/month\", \"enterprise_standard\": \"\\u00a5149/seat/month\", \"flagship\": \"\\u00a5559/month\", \"free\": \"\\u00a50\", \"pro\": \"\\u00a559/month\", \"teams\": \"\\u00a599/seat/month\"}",
+      "tag": "change",
+      "product": "Qoder CN series"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Alibaba",
+      "bucket": "D",
+      "row": "ide_integration",
+      "label": "IDE integration (VS Code, JetBrains, Vim/Neovim, other)",
+      "detail": "`value`: Qoder CN IDE, JetBrains, VS Code, CLI, Mobile, QoderWork \u2192 Qoder CN IDE, JetBrains, CLI, Mobile, Agent SDK, Cloud Agents, QoderWake",
+      "tag": "change",
+      "product": "Qoder CN series"
+    },
+    {
+      "date": "2026-11-23",
       "provider": "Azure",
       "bucket": "A",
-      "row": "\u2014",
-      "label": "New coverage: Microsoft Agent Framework",
-      "detail": "17 cells added",
-      "tag": "research"
+      "row": "cross_cloud_model_adapters",
+      "label": "Can the SDK talk to a rival cloud's models?",
+      "detail": "`value`: Microsoft Foundry, Azure OpenAI, OpenAI, GitHub Copilot SDK \u2192 Microsoft Foundry, Azure OpenAI, OpenAI, Anthropic, Amazon Bedrock, Google Gemini / Vertex AI, Ollama, Mistral",
+      "tag": "change",
+      "product": "Microsoft Agent Framework"
     },
     {
-      "date": "2026-08-04",
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "A",
+      "row": "multi_agent_patterns",
+      "label": "Multi-agent patterns",
+      "detail": "`value`: sequential, concurrent, handoff, group collaboration \u2192 sequential, concurrent, handoff, group chat, magentic",
+      "tag": "change",
+      "product": "Microsoft Agent Framework"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "A",
+      "row": "sdk_languages",
+      "label": "Languages supported",
+      "detail": "`value`: python, csharp \u2192 python, csharp, go",
+      "tag": "change",
+      "product": "Microsoft Agent Framework"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "A",
+      "row": "sdk_telemetry_phone_home",
+      "label": "Does the SDK phone home telemetry by default, and can you disable it?",
+      "detail": "`status`: none \u2192 documented",
+      "tag": "change",
+      "product": "Microsoft Agent Framework"
+    },
+    {
+      "date": "2026-11-23",
       "provider": "Azure",
       "bucket": "B",
-      "row": "\u2014",
-      "label": "New coverage: Microsoft Foundry Agent Service",
-      "detail": "30 cells added",
-      "tag": "research"
+      "row": "a2a_protocol",
+      "label": "Agent-to-agent (A2A) protocol support",
+      "detail": "`status`: preview \u2192 ga",
+      "tag": "change",
+      "product": "Microsoft Foundry Agent Service"
     },
     {
-      "date": "2026-08-04",
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "B",
+      "row": "agent_optimization",
+      "label": "Automated agent optimization",
+      "detail": "`status`: documented \u2192 preview",
+      "tag": "change",
+      "product": "agent optimizer"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "B",
+      "row": "browser_use",
+      "label": "Managed browser / computer use",
+      "detail": "`status`: \u2014 \u2192 ga; `product`: \u2014 \u2192 Browser automation tool (Foundry Agent Service)",
+      "tag": "research",
+      "product": "Browser automation tool (Foundry Agent Service)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "B",
+      "row": "framework_agnosticism",
+      "label": "Framework agnosticism",
+      "detail": "`value`: Microsoft Agent Framework, LangGraph, OpenAI Agents SDK, Anthropic Agent SDK, GitHub Copilot SDK, custom code \u2192 Microsoft Agent Framework, LangGraph, LangChain / Deep Agents, OpenAI Agents SDK, Anthropic Agent SDK, Copilot SDK, custom code",
+      "tag": "change",
+      "product": "Microsoft Foundry Agent Service"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "B",
+      "row": "knowledge_base",
+      "label": "Managed knowledge base / RAG",
+      "detail": "`value`: file search, SharePoint, WorkIQ, Fabric IQ \u2192 file search, Foundry IQ, SharePoint, WorkIQ, Fabric IQ",
+      "tag": "change",
+      "product": "Microsoft Foundry Agent Service"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "B",
+      "row": "runtime_regions",
+      "label": "Region availability OF THE AGENT RUNTIME",
+      "detail": "`value`: {\"agent_regions\": 30, \"class_a_private_ip\": 22} \u2192 {\"agent_regions\": 30, \"private_vnet_regions\": 30}",
+      "tag": "change",
+      "product": "Microsoft Foundry Agent Service"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "B",
+      "row": "runtime_sla",
+      "label": "Support tier & SLA on the agent runtime specifically",
+      "detail": "`status`: none \u2192 unknown",
+      "tag": "research",
+      "product": "Microsoft Foundry Agent Service"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "B",
+      "row": "web_search_tool",
+      "label": "Built-in web search tool",
+      "detail": "`status`: preview \u2192 documented",
+      "tag": "change",
+      "product": "Microsoft Foundry Agent Service"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "C",
+      "row": "model_choosable",
+      "label": "Is the underlying model choosable, or fixed and opaque?",
+      "detail": "`status`: none \u2192 documented",
+      "tag": "change",
+      "product": "Microsoft Copilot"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "D",
+      "row": "agentic_coding",
+      "label": "Agentic coding (multi-file edits, task execution, tool use)",
+      "detail": "`status`: documented \u2192 ga",
+      "tag": "change",
+      "product": "GitHub Copilot"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "D",
+      "row": "coding_seat_pricing",
+      "label": "Per-seat pricing (individual / business / enterprise tiers)",
+      "detail": "`value`: {\"business\": \"$19/seat/month\", \"enterprise\": \"$39/seat/month\", \"free\": \"$0\", \"max\": \"$100/month\", \"pro\": \"$10/month\", \"pro_plus\": \"$39/month\"} \u2192 {\"business\": \"$19/seat/month\", \"copilot_access\": \"$0/user/month with GitHub Enterprise Cloud, else $10/user/month\", \"enterprise\": \"$39/seat/month\", \"free\": \"$0\", \"max\": \"$100/month\", \"pro\": \"$10/month\", \"pro_plus\": \"$39/month\", \"student\": \"$0\"}",
+      "tag": "change",
+      "product": "GitHub Copilot"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "D",
+      "row": "mcp_support_coding",
+      "label": "MCP support in coding tool",
+      "detail": "`status`: documented \u2192 ga",
+      "tag": "change",
+      "product": "GitHub Copilot"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "Azure",
+      "bucket": "D",
+      "row": "model_choice_coding",
+      "label": "Model choice in coding tool",
+      "detail": "`value`: GPT-5.4, GPT-5.3-Codex, GPT-5.5, GPT-5.6, Claude Opus 4.8, Claude Opus 5, Claude Sonnet 5, Claude Fable 5, Gemini 3.5 Flash, Gemini 3.1 Pro, Kimi K2.7 Code, Kimi K3 \u2192 GPT-5.3-Codex, GPT-5.4 nano, GPT-5.6 Luna, GPT-5.6 Sol, GPT-6 Astra, GPT-6 Luna, GPT-6 Sol, GPT-6.1 Sol, GPT-6.1 Terra, GPT-6.2 Astra, GPT-6.2 Sol, Claude Fable 5, Claude Fable 5.1, Claude Fable 5.2, Claude Haiku 4.5, Claude Haiku 5.5, Claude Opus 4.8, Claude Opus 5.5, Claude Sonnet 4.6, Claude Sonnet 5, Claude Sonnet 5.5, Gemini 3.8 Flash, Gemini 4 Argon, Gemini 4 Carbon, Gemini 4 Hydrogen, Gemini 4 Neon, MAI-Code-1.1-Flash, MAI Code 2, MAI Code 2 Flash, Kimi K3, Grok 4.5, Grok 4.6, Grok 4.7",
+      "tag": "change",
+      "product": "GitHub Copilot"
+    },
+    {
+      "date": "2026-11-23",
       "provider": "BytePlus",
       "bucket": "B",
-      "row": "\u2014",
-      "label": "New coverage: BytePlus ModelArk \u2014 Managed Agents",
-      "detail": "22 cells added",
-      "tag": "research"
+      "row": "browser_use",
+      "label": "Managed browser / computer use",
+      "detail": "`status`: none \u2192 documented",
+      "tag": "change",
+      "product": "BytePlus ModelArk"
     },
     {
-      "date": "2026-08-04",
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "checkpoint_resume",
+      "label": "Checkpointing and resume-after-failure",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ModelArk"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "cost_attribution",
+      "label": "Token & cost attribution per agent / tenant / session",
+      "detail": "`status`: \u2014 \u2192 documented; `product`: \u2014 \u2192 ModelArk Managed Agents",
+      "tag": "research",
+      "product": "ModelArk Managed Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "data_residency",
+      "label": "Data residency, in-region processing, cross-region inference behavior",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ModelArk"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "eval_service",
+      "label": "Evaluation service",
+      "detail": "`status`: none \u2192 documented; `product`: \u2014 \u2192 BytePlus AgentKit",
+      "tag": "change",
+      "product": "BytePlus AgentKit"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "first_party_models",
+      "label": "First-party frontier models",
+      "detail": "`value`: Dola Seed 2.0, Seed 2.0 Pro, Seed 2.0 Lite, Seed 2.0 Mini, Dola Seed 2.1 Turbo \u2192 Dola Seed 2.1 Turbo, Seed 2.0 Pro, Seed 2.0 Lite, Seed 2.0 Mini, Seed 2.0 Code Preview",
+      "tag": "change",
+      "product": "BytePlus ModelArk"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "framework_agnosticism",
+      "label": "Framework agnosticism",
+      "detail": "`status`: \u2014 \u2192 documented; `product`: \u2014 \u2192 BytePlus AgentKit",
+      "tag": "research",
+      "product": "BytePlus AgentKit"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "guardrails",
+      "label": "Guardrails",
+      "detail": "`product`: \u2014 \u2192 ModelArk Content filter",
+      "tag": "change",
+      "product": "ModelArk Content filter"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "human_in_the_loop",
+      "label": "Human-in-the-loop (interrupt/resume, approval gates)",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ModelArk"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "knowledge_base",
+      "label": "Managed knowledge base / RAG",
+      "detail": "`product`: Knowledge base \u2192 BytePlus Knowledge base (Knowledge Engine)",
+      "tag": "change",
+      "product": "BytePlus Knowledge base (Knowledge Engine)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "memory_namespacing",
+      "label": "Per-end-user namespacing; TTL, deletion, export",
+      "detail": "`status`: \u2014 \u2192 documented; `product`: \u2014 \u2192 Persistent memory",
+      "tag": "research",
+      "product": "Persistent memory"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "multi_agent_patterns",
+      "label": "Multi-agent patterns",
+      "detail": "`value`: orchestrator / sub-agent delegation \u2192 orchestrator / sub-agent delegation (coordinator), persistent multi-level sub-agent threads (multiagent_20261001)",
+      "tag": "change",
+      "product": "BytePlus ModelArk"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "multi_tenancy",
+      "label": "Multi-tenant serving with tenant/session isolation",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ModelArk"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "otel_traces",
+      "label": "OpenTelemetry / GenAI semconv; span-level tool-call traces",
+      "detail": "`status`: none \u2192 unknown",
+      "tag": "research",
+      "product": "BytePlus ModelArk"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "runtime_sla",
+      "label": "Support tier & SLA on the agent runtime specifically",
+      "detail": "`status`: none \u2192 unknown",
+      "tag": "research",
+      "product": "BytePlus ModelArk"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "separately_billed_primitives",
+      "label": "Which primitives bill separately",
+      "detail": "`status`: \u2014 \u2192 documented; `product`: \u2014 \u2192 ModelArk Managed Agents",
+      "tag": "research",
+      "product": "ModelArk Managed Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "tool_audit_trail",
+      "label": "Audit trail of every tool invocation",
+      "detail": "`status`: \u2014 \u2192 documented; `product`: \u2014 \u2192 ModelArk Managed Agents",
+      "tag": "research",
+      "product": "ModelArk Managed Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "versioning_rollout",
+      "label": "Versioning, aliases, canary, rollback",
+      "detail": "`status`: \u2014 \u2192 documented; `product`: \u2014 \u2192 ModelArk Managed Agents",
+      "tag": "research",
+      "product": "ModelArk Managed Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "B",
+      "row": "web_search_tool",
+      "label": "Built-in web search tool",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ModelArk"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "addon_surcharges",
+      "label": "Add-on vs included; per-connector or per-index surcharges",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "admin_analytics",
+      "label": "Admin & adoption analytics, answer-feedback loop",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "authoring_mode",
+      "label": "Code-first vs low-code builder",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "certifications",
+      "label": "Certifications",
+      "detail": "`status`: \u2014 \u2192 unknown",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "conversation_history",
+      "label": "Conversation history, personalization, retention controls",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "dlp_tenant_isolation",
+      "label": "DLP, tenant isolation, admin controls",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "guardrails",
+      "label": "Guardrails",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "index_freshness",
+      "label": "Enterprise index freshness (real-time vs batch crawl)",
+      "detail": "`status`: \u2014 \u2192 unknown",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "invoke_custom_agents",
+      "label": "Can the packaged product invoke agents you built yourself?",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "license_bundling",
+      "label": "Bundling with licenses you already own",
+      "detail": "`status`: \u2014 \u2192 unknown",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "model_choosable",
+      "label": "Is the underlying model choosable, or fixed and opaque?",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "packaged_assistant",
+      "label": "Packaged assistant \u2014 is it purchasable, and what does it cover?",
+      "detail": "`status`: \u2014 \u2192 documented; `product`: \u2014 \u2192 BytePlus ArkClaw Enterprise",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "permission_aware_retrieval",
+      "label": "Permission-aware retrieval (ACL trimming at query time)",
+      "detail": "`status`: \u2014 \u2192 unknown",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "prebuilt_connectors",
+      "label": "Prebuilt SaaS/enterprise connectors",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "seat_pricing",
+      "label": "Per-seat cost, minimum seats, annual commitment",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "tool_audit_trail",
+      "label": "Audit trail of every tool invocation",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "C",
+      "row": "training_data_policy",
+      "label": "Training-on-customer-data policy, retention, abuse-monitoring opt-out",
+      "detail": "`status`: \u2014 \u2192 unknown",
+      "tag": "research",
+      "product": "BytePlus ArkClaw Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "D",
+      "row": "code_data_retention",
+      "label": "Code snippet retention & training policy",
+      "detail": "`status`: unknown \u2192 documented",
+      "tag": "research",
+      "product": "TRAE"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "D",
+      "row": "code_review",
+      "label": "AI code review (PR review, inline suggestions)",
+      "detail": "`status`: unknown \u2192 documented",
+      "tag": "research",
+      "product": "TRAE"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "D",
+      "row": "coding_seat_pricing",
+      "label": "Per-seat pricing (individual / business / enterprise tiers)",
+      "detail": "`value`: {\"free\": \"$0\", \"pro\": \"$10/month\"} \u2192 {\"free\": \"$0\", \"pro\": \"$20/month\", \"pro_plus\": \"$60/month\", \"ultra\": \"$200/month\"}",
+      "tag": "change",
+      "product": "TRAE"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "D",
+      "row": "ide_integration",
+      "label": "IDE integration (VS Code, JetBrains, Vim/Neovim, other)",
+      "detail": "`value`: TraeCode IDE \u2192 TRAE IDE (TraeCode), TraeCode Plugin (VS Code, JetBrains)",
+      "tag": "change",
+      "product": "TRAE"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "D",
+      "row": "mcp_support_coding",
+      "label": "MCP support in coding tool",
+      "detail": "`status`: unknown \u2192 documented",
+      "tag": "research",
+      "product": "TRAE"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "BytePlus",
+      "bucket": "D",
+      "row": "model_choice_coding",
+      "label": "Model choice in coding tool",
+      "detail": "`value`: GPT-5.4, Seed-2.1-Turbo, MiniMax-M3, Kimi-K2.5, Gemini-3 series \u2192 Seed-2.1-Turbo, GPT-6.x / GPT-5.x series, GLM-5.2, DeepSeek-V4.x, Kimi-K3 / K2.7-Code / K2.5, Gemini-3.1-Pro-Preview, MiniMax-M3, Grok-4.x (U.S. only)",
+      "tag": "change",
+      "product": "TRAE"
+    },
+    {
+      "date": "2026-11-23",
       "provider": "GCP",
       "bucket": "A",
-      "row": "\u2014",
-      "label": "New coverage: Agent Development Kit (ADK)",
-      "detail": "16 cells added",
-      "tag": "research"
+      "row": "oss_community",
+      "label": "Community signal (contributors, issue response, production adopters)",
+      "detail": "`value`: {\"stars\": 21000} \u2192 {\"stars\": 22300}",
+      "tag": "change",
+      "product": "Agent Development Kit (ADK)"
     },
     {
-      "date": "2026-08-04",
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "A",
+      "row": "otel_traces",
+      "label": "OpenTelemetry / GenAI semconv; span-level tool-call traces",
+      "detail": "`status`: \u2014 \u2192 documented",
+      "tag": "research",
+      "product": "Agent Development Kit (ADK)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "A",
+      "row": "sdk_telemetry_phone_home",
+      "label": "Does the SDK phone home telemetry by default, and can you disable it?",
+      "detail": "`status`: none \u2192 documented",
+      "tag": "change",
+      "product": "Agent Development Kit (ADK)"
+    },
+    {
+      "date": "2026-11-23",
       "provider": "GCP",
       "bucket": "B",
-      "row": "\u2014",
-      "label": "New coverage: Gemini Enterprise Agent Platform",
-      "detail": "23 cells added",
-      "tag": "research"
+      "row": "a2a_protocol",
+      "label": "Agent-to-agent (A2A) protocol support",
+      "detail": "`status`: \u2014 \u2192 preview; `product`: \u2014 \u2192 Agent Runtime + Agent Registry",
+      "tag": "research",
+      "product": "Agent Runtime + Agent Registry"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "agent_workload_identity",
+      "label": "Agent workload identity",
+      "detail": "`status`: documented \u2192 ga; `product`: \u2014 \u2192 Agent Identity",
+      "tag": "change",
+      "product": "Agent Identity"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "browser_use",
+      "label": "Managed browser / computer use",
+      "detail": "`status`: documented \u2192 ga; `product`: Computer Use (Sandbox) \u2192 Agent Platform Computer Use (Sandbox)",
+      "tag": "change",
+      "product": "Agent Platform Computer Use (Sandbox)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "delegated_user_auth",
+      "label": "Delegated end-user auth (OAuth token vault, 3LO, on-behalf-of)",
+      "detail": "`product`: \u2014 \u2192 Agent Identity auth manager",
+      "tag": "change",
+      "product": "Agent Identity auth manager"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "eval_service",
+      "label": "Evaluation service",
+      "detail": "`status`: documented \u2192 ga; `product`: Evaluation Service \u2192 Agent Evaluation (Evaluation Service)",
+      "tag": "change",
+      "product": "Agent Evaluation (Evaluation Service)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "framework_agnosticism",
+      "label": "Framework agnosticism",
+      "detail": "`value`: ADK, LangGraph, LangChain, LlamaIndex, AG2, A2A, custom \u2192 ADK, LangGraph, LangChain, LlamaIndex, AG2, CrewAI, A2A, custom",
+      "tag": "change",
+      "product": "Gemini Enterprise Agent Platform"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "guardrails",
+      "label": "Guardrails",
+      "detail": "`product`: Safety Filters + Model Armor + DLP \u2192 Safety Filters + Model Armor + Sensitive Data Protection",
+      "tag": "change",
+      "product": "Safety Filters + Model Armor + Sensitive Data Protection"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "long_term_memory",
+      "label": "Long-term memory (semantic, episodic, preference)",
+      "detail": "`product`: Memory Bank \u2192 Agent Platform Memory Bank",
+      "tag": "change",
+      "product": "Agent Platform Memory Bank"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "mcp_registry",
+      "label": "Managed MCP registry / catalog",
+      "detail": "`status`: documented \u2192 ga; `product`: Skill Registry \u2192 Agent Registry",
+      "tag": "change",
+      "product": "Agent Registry"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "otel_traces",
+      "label": "OpenTelemetry / GenAI semconv; span-level tool-call traces",
+      "detail": "`status`: documented \u2192 ga; `product`: \u2014 \u2192 Agent Observability",
+      "tag": "change",
+      "product": "Agent Observability"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "runtime_regions",
+      "label": "Region availability OF THE AGENT RUNTIME",
+      "detail": "`status`: limited \u2192 documented; `value`: {\"in_country_allowlist\": [\"ca\", \"in\", \"asia-northeast1 (JP)\", \"sg\", \"europe-west2 (UK)\"], \"multi_regions\": [\"global\", \"us\", \"eu\"]} \u2192 {\"multi_regions\": [\"us\", \"eu\"], \"region_list\": [\"us-east1\", \"us-east4\", \"us-west1\", \"us-central1\", \"europe-west1\", \"europe-west2\", \"europe-west3\", \"europe-west4\", \"europe-west6\", \"europe-west8\", \"europe-southwest1\", \"asia-east1\", \"asia-east2\", \"asia-northeast1\", \"asia-northeast3\", \"asia-south1\", \"asia-southeast1\", \"asia-southeast2\", \"australia-southeast2\", \"me-west1\", \"northamerica-northeast1\", \"northamerica-northeast2\", \"southamerica-east1\"], \"regions\": 23}",
+      "tag": "change",
+      "product": "Gemini Enterprise Agent Platform"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "B",
+      "row": "runtime_sla",
+      "label": "Support tier & SLA on the agent runtime specifically",
+      "detail": "`status`: documented \u2192 unknown; `value`: 99.5% (online inference), 99.9% (Agent Search API) \u2192 \u2014",
+      "tag": "research",
+      "product": "Gemini Enterprise Agent Platform"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "C",
+      "row": "index_residency",
+      "label": "Where the enterprise index physically lives",
+      "detail": "`value`: global, us, eu, ca, in, asia-northeast1, sg, europe-west2 \u2192 global, us, eu, br, ca, in, asia-northeast1, sg, europe-west2",
+      "tag": "change",
+      "product": "Gemini Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "C",
+      "row": "seat_pricing",
+      "label": "Per-seat cost, minimum seats, annual commitment",
+      "detail": "`value`: {\"business\": \"USD 21/seat/month\", \"plus\": \"USD 30+/seat/month (annual)\", \"standard\": \"USD 30/seat/month (annual)\"} \u2192 {\"business\": \"USD 21/seat/month\", \"plus\": \"USD 30+/seat/month\", \"standard\": \"USD 30/seat/month (starting)\"}",
+      "tag": "change",
+      "product": "Gemini Enterprise"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "D",
+      "row": "agentic_coding",
+      "label": "Agentic coding (multi-file edits, task execution, tool use)",
+      "detail": "`status`: documented \u2192 ga",
+      "tag": "change",
+      "product": "Google Antigravity"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "D",
+      "row": "cli_agent",
+      "label": "CLI / terminal agent mode",
+      "detail": "`product`: \u2014 \u2192 Antigravity CLI (agy)",
+      "tag": "change",
+      "product": "Antigravity CLI (agy)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "D",
+      "row": "code_review",
+      "label": "AI code review (PR review, inline suggestions)",
+      "detail": "`product`: \u2014 \u2192 Gemini Code Assist on GitHub",
+      "tag": "change",
+      "product": "Gemini Code Assist on GitHub"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "D",
+      "row": "codebase_indexing",
+      "label": "Codebase indexing / repo-wide context",
+      "detail": "`product`: \u2014 \u2192 Gemini Code Assist Enterprise \u2014 code customization (legacy)",
+      "tag": "change",
+      "product": "Gemini Code Assist Enterprise \u2014 code customization (legacy)"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "D",
+      "row": "coding_seat_pricing",
+      "label": "Per-seat pricing (individual / business / enterprise tiers)",
+      "detail": "`value`: {\"enterprise_annual\": \"$45/seat/month\", \"enterprise_monthly\": \"$54/seat/month\", \"free\": \"$0\", \"standard_annual\": \"$19/seat/month\", \"standard_monthly\": \"$22.80/seat/month\"} \u2192 {\"free\": \"$0/month\", \"gemini_enterprise_payg\": \"$0 seat fee, consumption-based\", \"gemini_enterprise_standard_plus\": \"from $30/seat/month\", \"google_ai_pro\": \"consumer subscription (price not on this page)\", \"google_ai_ultra\": \"consumer subscription (price not on this page)\"}",
+      "tag": "change",
+      "product": "Google Antigravity"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "D",
+      "row": "ide_integration",
+      "label": "IDE integration (VS Code, JetBrains, Vim/Neovim, other)",
+      "detail": "`status`: documented \u2192 ga; `value`: VS Code, JetBrains, Android Studio, Cloud Shell Editor, Cloud Workstations \u2192 VS Code, Visual Studio, JetBrains, Android Studio, Zed, Xcode, Eclipse",
+      "tag": "change",
+      "product": "Google Antigravity"
+    },
+    {
+      "date": "2026-11-23",
+      "provider": "GCP",
+      "bucket": "D",
+      "row": "model_choice_coding",
+      "label": "Model choice in coding tool",
+      "detail": "`value`: Gemini 2.5 Pro, Gemini 2.5 Flash \u2192 Gemini 4 Neon, Gemini 4 Carbon, Gemini 4 Argon, Gemini 4 Hydrogen, Orchestrator, Gemini 3.8 Flash, Gemini 3.7 Flash, Gemini 3.6 Flash, Gemini 3.1 Pro, Claude Sonnet 5.5, Claude Opus 5.5",
+      "tag": "change",
+      "product": "Google Antigravity"
     }
   ]
 }

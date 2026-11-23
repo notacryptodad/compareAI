@@ -5,49 +5,699 @@
     <link>https://example.invalid/compareai</link>
     <description>Changes to agentic AI offerings across AWS, Azure, GCP, BytePlus, and Alibaba Cloud.</description>
     <item>
-      <title>AWS A: New coverage: Strands Agents</title>
-      <description>17 cells added [research]</description>
-      <guid isPermaLink="false">2026-08-04:AWS:A:—</guid>
+      <title>AWS A: Built-in tool library shipped with the SDK</title>
+      <description>`product`: strands-agents-tools → Vended tools (strands.vended_tools) [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:A:bundled_tools</guid>
     </item>
     <item>
-      <title>AWS B: New coverage: Amazon Bedrock AgentCore</title>
-      <description>29 cells added [research]</description>
-      <guid isPermaLink="false">2026-08-04:AWS:B:—</guid>
+      <title>AWS A: Local dev loop (no cloud creds, hot reload, debug UI)</title>
+      <description>`product`: strandly → strands CLI [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:A:local_dev_loop</guid>
     </item>
     <item>
-      <title>Alibaba A: New coverage: AgentScope</title>
-      <description>17 cells added [research]</description>
-      <guid isPermaLink="false">2026-08-04:Alibaba:A:—</guid>
+      <title>AWS A: Multi-agent patterns</title>
+      <description>`value`: — → agents-as-tools, graph, swarm, workflow, a2a [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:A:multi_agent_patterns</guid>
     </item>
     <item>
-      <title>Alibaba B: New coverage: Alibaba Cloud Model Studio</title>
-      <description>20 cells added [research]</description>
-      <guid isPermaLink="false">2026-08-04:Alibaba:B:—</guid>
+      <title>AWS A: Community signal (contributors, issue response, production adopters)</title>
+      <description>`value`: {"commits": 2338, "forks": 1000, "open_issues": 449, "open_prs": 194, "stars": 6800} → {"commits": 3414, "contributors": 378, "forks": 1600, "open_issues": 780, "open_prs": 565, "stars": 9300} [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:A:oss_community</guid>
     </item>
     <item>
-      <title>Azure A: New coverage: Microsoft Agent Framework</title>
-      <description>17 cells added [research]</description>
-      <guid isPermaLink="false">2026-08-04:Azure:A:—</guid>
+      <title>AWS A: Does the SDK phone home telemetry by default, and can you disable it?</title>
+      <description>`status`: none → documented [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:A:sdk_telemetry_phone_home</guid>
     </item>
     <item>
-      <title>Azure B: New coverage: Microsoft Foundry Agent Service</title>
-      <description>30 cells added [research]</description>
-      <guid isPermaLink="false">2026-08-04:Azure:B:—</guid>
+      <title>AWS B: Agent-to-agent (A2A) protocol support</title>
+      <description>`status`: — → ga; `product`: — → AgentCore Runtime [research]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:a2a_protocol</guid>
     </item>
     <item>
-      <title>BytePlus B: New coverage: BytePlus ModelArk — Managed Agents</title>
-      <description>22 cells added [research]</description>
-      <guid isPermaLink="false">2026-08-04:BytePlus:B:—</guid>
+      <title>AWS B: Automated agent optimization</title>
+      <description>`status`: preview → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:agent_optimization</guid>
     </item>
     <item>
-      <title>GCP A: New coverage: Agent Development Kit (ADK)</title>
-      <description>16 cells added [research]</description>
-      <guid isPermaLink="false">2026-08-04:GCP:A:—</guid>
+      <title>AWS B: Agent payments / microtransactions</title>
+      <description>`status`: preview → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:agent_payments</guid>
     </item>
     <item>
-      <title>GCP B: New coverage: Gemini Enterprise Agent Platform</title>
-      <description>23 cells added [research]</description>
-      <guid isPermaLink="false">2026-08-04:GCP:B:—</guid>
+      <title>AWS B: Agent workload identity</title>
+      <description>`status`: documented → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:agent_workload_identity</guid>
+    </item>
+    <item>
+      <title>AWS B: Managed browser / computer use</title>
+      <description>`status`: documented → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:browser_use</guid>
+    </item>
+    <item>
+      <title>AWS B: Certifications</title>
+      <description>`value`: {"certified": ["HIPAA eligible", "FedRAMP (Class C)", "SOC 2", "ISO 27001:2022", "ISO 27017:2015", "ISO 27018:2019", "ISO 27701:2019", "ISO 22301:2019", "ISO 20000-1:2018", "ISO 9001:2015", "CSA STAR"], "self_assessed_pending_audit": ["BIO", "C5", "CISPE", "CPSTIC", "ENS High", "FINMA", "GNS", "GSMA", "HITRUST", "IRAP", "ISMAP", "MTCS", "OSPAR", "PCI", "Pinakes", "PiTuKri"]} → {"certified": ["HIPAA eligible", "FedRAMP (Class C and Class D)", "SOC 2", "ISO 27001:2022", "ISO 27017:2015", "ISO 27018:2019", "ISO 27701:2019", "ISO 22301:2019", "ISO 20000-1:2018", "ISO 9001:2015", "CSA STAR"], "self_assessed_pending_audit": ["BIO", "C5", "CISPE", "CPSTIC", "ENS High", "FINMA", "GNS", "GSMA", "HITRUST", "IRAP", "ISMAP", "MTCS", "OSPAR", "PCI", "Pinakes", "PiTuKri"]} [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:certifications</guid>
+    </item>
+    <item>
+      <title>AWS B: Code interpreter / sandbox</title>
+      <description>`status`: documented → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:code_interpreter</guid>
+    </item>
+    <item>
+      <title>AWS B: Managed knowledge base / RAG</title>
+      <description>`status`: none → ga; `product`: — → Amazon Bedrock Managed Knowledge Base (AgentCore Gateway connector) [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:knowledge_base</guid>
+    </item>
+    <item>
+      <title>AWS B: Long-term memory (semantic, episodic, preference)</title>
+      <description>`status`: documented → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:long_term_memory</guid>
+    </item>
+    <item>
+      <title>AWS B: Managed MCP registry / catalog</title>
+      <description>`status`: preview → ga; `product`: AgentCore Registry / AWS Agent Registry → AWS Agent Registry [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:mcp_registry</guid>
+    </item>
+    <item>
+      <title>AWS B: OpenTelemetry / GenAI semconv; span-level tool-call traces</title>
+      <description>`status`: documented → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:otel_traces</guid>
+    </item>
+    <item>
+      <title>AWS B: Pricing axes</title>
+      <description>`value`: {"applies_to": ["Runtime", "Browser Tool", "Code Interpreter"], "per_gb_hour": 0.00945, "per_vcpu_hour": 0.0895} → {"applies_to": ["Runtime microVMs v1", "Browser Tool", "Code Interpreter"], "per_gb_hour": 0.00945, "per_vcpu_hour": 0.0895, "runtime_v2_per_gb_hour": 0.0169, "runtime_v2_per_vcpu_hour": 0.1276} [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:pricing_axes</guid>
+    </item>
+    <item>
+      <title>AWS B: Region availability OF THE AGENT RUNTIME</title>
+      <description>`value`: {"evaluations": 16, "harness_memory_optimization": 15, "payments": 4, "policy": 19, "registry": 5, "runtime_gateway_identity_builtin_tools_observability": 20} → {"harness_memory": 16, "optimization": 21, "payments": 12, "policy_evaluations": 22, "region_table_columns": 24, "registry": 10, "runtime_instances": 15, "runtime_microvms_gateway_identity_builtin_tools_observability": 24, "web_answer": 1, "web_search_api": 6, "web_search_tool": 7} [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:runtime_regions</guid>
+    </item>
+    <item>
+      <title>AWS B: Training-on-customer-data policy, retention, abuse-monitoring opt-out</title>
+      <description>`status`: documented → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:training_data_policy</guid>
+    </item>
+    <item>
+      <title>AWS B: Built-in web search tool</title>
+      <description>`status`: — → ga; `product`: — → AgentCore Web Search (Web Search API and Web Search Tool connector) [research]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:B:web_search_tool</guid>
+    </item>
+    <item>
+      <title>AWS C: Bundling with licenses you already own</title>
+      <description>`status`: none → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:C:license_bundling</guid>
+    </item>
+    <item>
+      <title>AWS C: Is the underlying model choosable, or fixed and opaque?</title>
+      <description>`status`: none → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:C:model_choosable</guid>
+    </item>
+    <item>
+      <title>AWS D: Agentic coding (multi-file edits, task execution, tool use)</title>
+      <description>`status`: preview → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:D:agentic_coding</guid>
+    </item>
+    <item>
+      <title>AWS D: CLI / terminal agent mode</title>
+      <description>`product`: — → Kiro CLI [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:D:cli_agent</guid>
+    </item>
+    <item>
+      <title>AWS D: AI code review (PR review, inline suggestions)</title>
+      <description>`status`: unknown → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:D:code_review</guid>
+    </item>
+    <item>
+      <title>AWS D: Free tier or usage-based option</title>
+      <description>`status`: preview → documented; `value`: — → 50 credits/month [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:D:coding_free_tier</guid>
+    </item>
+    <item>
+      <title>AWS D: Per-seat pricing (individual / business / enterprise tiers)</title>
+      <description>`status`: preview → documented; `value`: — → {"addon_credit": 0.04, "power": 200, "pro": 20, "pro_max": 100, "pro_plus": 40, "team_seat": 20} [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:D:coding_seat_pricing</guid>
+    </item>
+    <item>
+      <title>AWS D: IDE integration (VS Code, JetBrains, Vim/Neovim, other)</title>
+      <description>`value`: Kiro IDE, CLI, Web → Kiro IDE, Kiro for VS Code, CLI, Web, Mobile, Kiro Crew [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:D:ide_integration</guid>
+    </item>
+    <item>
+      <title>AWS D: Launch-stage evidence trail (where the vendor does/doesn't state GA)</title>
+      <description>`status`: preview → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:D:launch_stage_investigation</guid>
+    </item>
+    <item>
+      <title>AWS D: Model choice in coding tool</title>
+      <description>`value`: Anthropic Claude, open-weight models → Auto router, OpenAI GPT-5.6, Anthropic Claude, xAI Grok, open-weight models [change]</description>
+      <guid isPermaLink="false">2026-11-23:AWS:D:model_choice_coding</guid>
+    </item>
+    <item>
+      <title>Alibaba A: Can the SDK talk to a rival cloud's models?</title>
+      <description>`value`: OpenAI, Anthropic, Gemini, DashScope, DeepSeek, Moonshot, xAI, Ollama → OpenAI, Anthropic, Gemini, DashScope, DeepSeek, Moonshot, Volcengine, xAI, Ollama, MiniMax [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:A:cross_cloud_model_adapters</guid>
+    </item>
+    <item>
+      <title>Alibaba A: In-repo eval harness runnable in your own CI</title>
+      <description>`product`: — → OpenJudge (agentscope-ai/OpenJudge) [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:A:in_repo_eval</guid>
+    </item>
+    <item>
+      <title>Alibaba A: Multi-agent patterns</title>
+      <description>`value`: leader-worker, task planning → leader-worker, task planning, pipeline [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:A:multi_agent_patterns</guid>
+    </item>
+    <item>
+      <title>Alibaba A: Community signal (contributors, issue response, production adopters)</title>
+      <description>`value`: {"stars": 28700} → {"stars": 36485} [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:A:oss_community</guid>
+    </item>
+    <item>
+      <title>Alibaba A: OpenTelemetry / GenAI semconv; span-level tool-call traces</title>
+      <description>`status`: none → documented [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:A:otel_traces</guid>
+    </item>
+    <item>
+      <title>Alibaba A: Languages supported</title>
+      <description>`value`: python → python, java, typescript [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:A:sdk_languages</guid>
+    </item>
+    <item>
+      <title>Alibaba A: Does the SDK phone home telemetry by default, and can you disable it?</title>
+      <description>`status`: none → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:A:sdk_telemetry_phone_home</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Managed browser / computer use</title>
+      <description>`status`: none → documented; `product`: — → 百炼 Sandbox — Browser Use Sandbox [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:browser_use</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Code interpreter / sandbox</title>
+      <description>`product`: — → 百炼 Sandbox — Code Interpreter Sandbox [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:code_interpreter</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Evaluation service</title>
+      <description>`product`: — → 百炼 Evolution — 应用评测 [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:eval_service</guid>
+    </item>
+    <item>
+      <title>Alibaba B: First-party frontier models</title>
+      <description>`value`: Qwen-Max, Qwen-Plus, Qwen-Flash → qwen4-max, qwen3.7-plus, qwen3.8-flash [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:first_party_models</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Long-running agents (max session duration, async/background)</title>
+      <description>`status`: — → documented; `product`: — → 百炼 Managed Agents [research]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:long_running_agents</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Long-term memory (semantic, episodic, preference)</title>
+      <description>`status`: none → documented; `product`: — → 百炼 Memory (记忆库) + Managed Agents Memory Store [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:long_term_memory</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Managed agent loop (define + invoke an agent in one API call)</title>
+      <description>`product`: 百炼 visual agent builder (Agent 1.0) → 百炼 Flow Agent — 智能体应用 (Agent 2.0) [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:managed_agent_loop</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Managed agent runtime</title>
+      <description>`product`: 百炼 / Bailian application platform (Agent 1.0) → 百炼 Managed Agents [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:managed_agent_runtime</guid>
+    </item>
+    <item>
+      <title>Alibaba B: OpenTelemetry / GenAI semconv; span-level tool-call traces</title>
+      <description>`product`: — → 百炼 Evolution — 应用观测 [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:otel_traces</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Support tier &amp; SLA on the agent runtime specifically</title>
+      <description>`status`: documented → unknown; `value`: 99.9% → — [research]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:runtime_sla</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Session lifecycle API (start, manage, event stream)</title>
+      <description>`status`: — → documented; `product`: — → 百炼 Managed Agents [research]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:session_management</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Third-party model catalog</title>
+      <description>`value`: DeepSeek, Kimi, GLM → DeepSeek, GLM, Kimi, MiniMax [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:third_party_catalog</guid>
+    </item>
+    <item>
+      <title>Alibaba B: Workflow engine (graph/DAG, durable, resumable)</title>
+      <description>`product`: — → Flow Agent — 工作流应用 [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:B:workflow_engine</guid>
+    </item>
+    <item>
+      <title>Alibaba C: Permission-aware retrieval (ACL trimming at query time)</title>
+      <description>`status`: none → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:C:permission_aware_retrieval</guid>
+    </item>
+    <item>
+      <title>Alibaba C: Prebuilt SaaS/enterprise connectors</title>
+      <description>`status`: documented → preview; `product`: — → 百炼 Connector [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:C:prebuilt_connectors</guid>
+    </item>
+    <item>
+      <title>Alibaba C: Per-seat cost, minimum seats, annual commitment</title>
+      <description>`value`: {"max": "USD 200/seat/month", "pro": "USD 100/seat/month", "standard": "USD 30/seat/month"} → {"advanced": "USD 75/seat/month", "premium": "USD 180/seat/month", "standard": "USD 20/seat/month"} [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:C:seat_pricing</guid>
+    </item>
+    <item>
+      <title>Alibaba D: CLI / terminal agent mode</title>
+      <description>`product`: — → Qoder CN CLI [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:D:cli_agent</guid>
+    </item>
+    <item>
+      <title>Alibaba D: Per-seat pricing (individual / business / enterprise tiers)</title>
+      <description>`value`: {"enterprise": "\u00a5149/seat/month", "free": "\u00a50", "pro": "\u00a559/month", "pro_plus": "\u00a5169/month", "teams": "\u00a599/seat/month", "vpc": "\u00a5199/seat/month"} → {"advanced": "\u00a5169/month", "enterprise_dedicated": "\u00a5199/seat/month", "enterprise_standard": "\u00a5149/seat/month", "flagship": "\u00a5559/month", "free": "\u00a50", "pro": "\u00a559/month", "teams": "\u00a599/seat/month"} [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:D:coding_seat_pricing</guid>
+    </item>
+    <item>
+      <title>Alibaba D: IDE integration (VS Code, JetBrains, Vim/Neovim, other)</title>
+      <description>`value`: Qoder CN IDE, JetBrains, VS Code, CLI, Mobile, QoderWork → Qoder CN IDE, JetBrains, CLI, Mobile, Agent SDK, Cloud Agents, QoderWake [change]</description>
+      <guid isPermaLink="false">2026-11-23:Alibaba:D:ide_integration</guid>
+    </item>
+    <item>
+      <title>Azure A: Can the SDK talk to a rival cloud's models?</title>
+      <description>`value`: Microsoft Foundry, Azure OpenAI, OpenAI, GitHub Copilot SDK → Microsoft Foundry, Azure OpenAI, OpenAI, Anthropic, Amazon Bedrock, Google Gemini / Vertex AI, Ollama, Mistral [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:A:cross_cloud_model_adapters</guid>
+    </item>
+    <item>
+      <title>Azure A: Multi-agent patterns</title>
+      <description>`value`: sequential, concurrent, handoff, group collaboration → sequential, concurrent, handoff, group chat, magentic [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:A:multi_agent_patterns</guid>
+    </item>
+    <item>
+      <title>Azure A: Languages supported</title>
+      <description>`value`: python, csharp → python, csharp, go [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:A:sdk_languages</guid>
+    </item>
+    <item>
+      <title>Azure A: Does the SDK phone home telemetry by default, and can you disable it?</title>
+      <description>`status`: none → documented [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:A:sdk_telemetry_phone_home</guid>
+    </item>
+    <item>
+      <title>Azure B: Agent-to-agent (A2A) protocol support</title>
+      <description>`status`: preview → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:B:a2a_protocol</guid>
+    </item>
+    <item>
+      <title>Azure B: Automated agent optimization</title>
+      <description>`status`: documented → preview [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:B:agent_optimization</guid>
+    </item>
+    <item>
+      <title>Azure B: Managed browser / computer use</title>
+      <description>`status`: — → ga; `product`: — → Browser automation tool (Foundry Agent Service) [research]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:B:browser_use</guid>
+    </item>
+    <item>
+      <title>Azure B: Framework agnosticism</title>
+      <description>`value`: Microsoft Agent Framework, LangGraph, OpenAI Agents SDK, Anthropic Agent SDK, GitHub Copilot SDK, custom code → Microsoft Agent Framework, LangGraph, LangChain / Deep Agents, OpenAI Agents SDK, Anthropic Agent SDK, Copilot SDK, custom code [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:B:framework_agnosticism</guid>
+    </item>
+    <item>
+      <title>Azure B: Managed knowledge base / RAG</title>
+      <description>`value`: file search, SharePoint, WorkIQ, Fabric IQ → file search, Foundry IQ, SharePoint, WorkIQ, Fabric IQ [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:B:knowledge_base</guid>
+    </item>
+    <item>
+      <title>Azure B: Region availability OF THE AGENT RUNTIME</title>
+      <description>`value`: {"agent_regions": 30, "class_a_private_ip": 22} → {"agent_regions": 30, "private_vnet_regions": 30} [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:B:runtime_regions</guid>
+    </item>
+    <item>
+      <title>Azure B: Support tier &amp; SLA on the agent runtime specifically</title>
+      <description>`status`: none → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:B:runtime_sla</guid>
+    </item>
+    <item>
+      <title>Azure B: Built-in web search tool</title>
+      <description>`status`: preview → documented [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:B:web_search_tool</guid>
+    </item>
+    <item>
+      <title>Azure C: Is the underlying model choosable, or fixed and opaque?</title>
+      <description>`status`: none → documented [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:C:model_choosable</guid>
+    </item>
+    <item>
+      <title>Azure D: Agentic coding (multi-file edits, task execution, tool use)</title>
+      <description>`status`: documented → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:D:agentic_coding</guid>
+    </item>
+    <item>
+      <title>Azure D: Per-seat pricing (individual / business / enterprise tiers)</title>
+      <description>`value`: {"business": "$19/seat/month", "enterprise": "$39/seat/month", "free": "$0", "max": "$100/month", "pro": "$10/month", "pro_plus": "$39/month"} → {"business": "$19/seat/month", "copilot_access": "$0/user/month with GitHub Enterprise Cloud, else $10/user/month", "enterprise": "$39/seat/month", "free": "$0", "max": "$100/month", "pro": "$10/month", "pro_plus": "$39/month", "student": "$0"} [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:D:coding_seat_pricing</guid>
+    </item>
+    <item>
+      <title>Azure D: MCP support in coding tool</title>
+      <description>`status`: documented → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:D:mcp_support_coding</guid>
+    </item>
+    <item>
+      <title>Azure D: Model choice in coding tool</title>
+      <description>`value`: GPT-5.4, GPT-5.3-Codex, GPT-5.5, GPT-5.6, Claude Opus 4.8, Claude Opus 5, Claude Sonnet 5, Claude Fable 5, Gemini 3.5 Flash, Gemini 3.1 Pro, Kimi K2.7 Code, Kimi K3 → GPT-5.3-Codex, GPT-5.4 nano, GPT-5.6 Luna, GPT-5.6 Sol, GPT-6 Astra, GPT-6 Luna, GPT-6 Sol, GPT-6.1 Sol, GPT-6.1 Terra, GPT-6.2 Astra, GPT-6.2 Sol, Claude Fable 5, Claude Fable 5.1, Claude Fable 5.2, Claude Haiku 4.5, Claude Haiku 5.5, Claude Opus 4.8, Claude Opus 5.5, Claude Sonnet 4.6, Claude Sonnet 5, Claude Sonnet 5.5, Gemini 3.8 Flash, Gemini 4 Argon, Gemini 4 Carbon, Gemini 4 Hydrogen, Gemini 4 Neon, MAI-Code-1.1-Flash, MAI Code 2, MAI Code 2 Flash, Kimi K3, Grok 4.5, Grok 4.6, Grok 4.7 [change]</description>
+      <guid isPermaLink="false">2026-11-23:Azure:D:model_choice_coding</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Managed browser / computer use</title>
+      <description>`status`: none → documented [change]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:browser_use</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Checkpointing and resume-after-failure</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:checkpoint_resume</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Token &amp; cost attribution per agent / tenant / session</title>
+      <description>`status`: — → documented; `product`: — → ModelArk Managed Agents [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:cost_attribution</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Data residency, in-region processing, cross-region inference behavior</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:data_residency</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Evaluation service</title>
+      <description>`status`: none → documented; `product`: — → BytePlus AgentKit [change]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:eval_service</guid>
+    </item>
+    <item>
+      <title>BytePlus B: First-party frontier models</title>
+      <description>`value`: Dola Seed 2.0, Seed 2.0 Pro, Seed 2.0 Lite, Seed 2.0 Mini, Dola Seed 2.1 Turbo → Dola Seed 2.1 Turbo, Seed 2.0 Pro, Seed 2.0 Lite, Seed 2.0 Mini, Seed 2.0 Code Preview [change]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:first_party_models</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Framework agnosticism</title>
+      <description>`status`: — → documented; `product`: — → BytePlus AgentKit [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:framework_agnosticism</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Guardrails</title>
+      <description>`product`: — → ModelArk Content filter [change]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:guardrails</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Human-in-the-loop (interrupt/resume, approval gates)</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:human_in_the_loop</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Managed knowledge base / RAG</title>
+      <description>`product`: Knowledge base → BytePlus Knowledge base (Knowledge Engine) [change]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:knowledge_base</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Per-end-user namespacing; TTL, deletion, export</title>
+      <description>`status`: — → documented; `product`: — → Persistent memory [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:memory_namespacing</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Multi-agent patterns</title>
+      <description>`value`: orchestrator / sub-agent delegation → orchestrator / sub-agent delegation (coordinator), persistent multi-level sub-agent threads (multiagent_20261001) [change]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:multi_agent_patterns</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Multi-tenant serving with tenant/session isolation</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:multi_tenancy</guid>
+    </item>
+    <item>
+      <title>BytePlus B: OpenTelemetry / GenAI semconv; span-level tool-call traces</title>
+      <description>`status`: none → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:otel_traces</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Support tier &amp; SLA on the agent runtime specifically</title>
+      <description>`status`: none → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:runtime_sla</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Which primitives bill separately</title>
+      <description>`status`: — → documented; `product`: — → ModelArk Managed Agents [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:separately_billed_primitives</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Audit trail of every tool invocation</title>
+      <description>`status`: — → documented; `product`: — → ModelArk Managed Agents [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:tool_audit_trail</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Versioning, aliases, canary, rollback</title>
+      <description>`status`: — → documented; `product`: — → ModelArk Managed Agents [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:versioning_rollout</guid>
+    </item>
+    <item>
+      <title>BytePlus B: Built-in web search tool</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:B:web_search_tool</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Add-on vs included; per-connector or per-index surcharges</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:addon_surcharges</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Admin &amp; adoption analytics, answer-feedback loop</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:admin_analytics</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Code-first vs low-code builder</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:authoring_mode</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Certifications</title>
+      <description>`status`: — → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:certifications</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Conversation history, personalization, retention controls</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:conversation_history</guid>
+    </item>
+    <item>
+      <title>BytePlus C: DLP, tenant isolation, admin controls</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:dlp_tenant_isolation</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Guardrails</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:guardrails</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Enterprise index freshness (real-time vs batch crawl)</title>
+      <description>`status`: — → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:index_freshness</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Can the packaged product invoke agents you built yourself?</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:invoke_custom_agents</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Bundling with licenses you already own</title>
+      <description>`status`: — → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:license_bundling</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Is the underlying model choosable, or fixed and opaque?</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:model_choosable</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Packaged assistant — is it purchasable, and what does it cover?</title>
+      <description>`status`: — → documented; `product`: — → BytePlus ArkClaw Enterprise [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:packaged_assistant</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Permission-aware retrieval (ACL trimming at query time)</title>
+      <description>`status`: — → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:permission_aware_retrieval</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Prebuilt SaaS/enterprise connectors</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:prebuilt_connectors</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Per-seat cost, minimum seats, annual commitment</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:seat_pricing</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Audit trail of every tool invocation</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:tool_audit_trail</guid>
+    </item>
+    <item>
+      <title>BytePlus C: Training-on-customer-data policy, retention, abuse-monitoring opt-out</title>
+      <description>`status`: — → unknown [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:C:training_data_policy</guid>
+    </item>
+    <item>
+      <title>BytePlus D: Code snippet retention &amp; training policy</title>
+      <description>`status`: unknown → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:D:code_data_retention</guid>
+    </item>
+    <item>
+      <title>BytePlus D: AI code review (PR review, inline suggestions)</title>
+      <description>`status`: unknown → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:D:code_review</guid>
+    </item>
+    <item>
+      <title>BytePlus D: Per-seat pricing (individual / business / enterprise tiers)</title>
+      <description>`value`: {"free": "$0", "pro": "$10/month"} → {"free": "$0", "pro": "$20/month", "pro_plus": "$60/month", "ultra": "$200/month"} [change]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:D:coding_seat_pricing</guid>
+    </item>
+    <item>
+      <title>BytePlus D: IDE integration (VS Code, JetBrains, Vim/Neovim, other)</title>
+      <description>`value`: TraeCode IDE → TRAE IDE (TraeCode), TraeCode Plugin (VS Code, JetBrains) [change]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:D:ide_integration</guid>
+    </item>
+    <item>
+      <title>BytePlus D: MCP support in coding tool</title>
+      <description>`status`: unknown → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:D:mcp_support_coding</guid>
+    </item>
+    <item>
+      <title>BytePlus D: Model choice in coding tool</title>
+      <description>`value`: GPT-5.4, Seed-2.1-Turbo, MiniMax-M3, Kimi-K2.5, Gemini-3 series → Seed-2.1-Turbo, GPT-6.x / GPT-5.x series, GLM-5.2, DeepSeek-V4.x, Kimi-K3 / K2.7-Code / K2.5, Gemini-3.1-Pro-Preview, MiniMax-M3, Grok-4.x (U.S. only) [change]</description>
+      <guid isPermaLink="false">2026-11-23:BytePlus:D:model_choice_coding</guid>
+    </item>
+    <item>
+      <title>GCP A: Community signal (contributors, issue response, production adopters)</title>
+      <description>`value`: {"stars": 21000} → {"stars": 22300} [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:A:oss_community</guid>
+    </item>
+    <item>
+      <title>GCP A: OpenTelemetry / GenAI semconv; span-level tool-call traces</title>
+      <description>`status`: — → documented [research]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:A:otel_traces</guid>
+    </item>
+    <item>
+      <title>GCP A: Does the SDK phone home telemetry by default, and can you disable it?</title>
+      <description>`status`: none → documented [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:A:sdk_telemetry_phone_home</guid>
+    </item>
+    <item>
+      <title>GCP B: Agent-to-agent (A2A) protocol support</title>
+      <description>`status`: — → preview; `product`: — → Agent Runtime + Agent Registry [research]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:a2a_protocol</guid>
+    </item>
+    <item>
+      <title>GCP B: Agent workload identity</title>
+      <description>`status`: documented → ga; `product`: — → Agent Identity [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:agent_workload_identity</guid>
+    </item>
+    <item>
+      <title>GCP B: Managed browser / computer use</title>
+      <description>`status`: documented → ga; `product`: Computer Use (Sandbox) → Agent Platform Computer Use (Sandbox) [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:browser_use</guid>
+    </item>
+    <item>
+      <title>GCP B: Delegated end-user auth (OAuth token vault, 3LO, on-behalf-of)</title>
+      <description>`product`: — → Agent Identity auth manager [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:delegated_user_auth</guid>
+    </item>
+    <item>
+      <title>GCP B: Evaluation service</title>
+      <description>`status`: documented → ga; `product`: Evaluation Service → Agent Evaluation (Evaluation Service) [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:eval_service</guid>
+    </item>
+    <item>
+      <title>GCP B: Framework agnosticism</title>
+      <description>`value`: ADK, LangGraph, LangChain, LlamaIndex, AG2, A2A, custom → ADK, LangGraph, LangChain, LlamaIndex, AG2, CrewAI, A2A, custom [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:framework_agnosticism</guid>
+    </item>
+    <item>
+      <title>GCP B: Guardrails</title>
+      <description>`product`: Safety Filters + Model Armor + DLP → Safety Filters + Model Armor + Sensitive Data Protection [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:guardrails</guid>
+    </item>
+    <item>
+      <title>GCP B: Long-term memory (semantic, episodic, preference)</title>
+      <description>`product`: Memory Bank → Agent Platform Memory Bank [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:long_term_memory</guid>
+    </item>
+    <item>
+      <title>GCP B: Managed MCP registry / catalog</title>
+      <description>`status`: documented → ga; `product`: Skill Registry → Agent Registry [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:mcp_registry</guid>
+    </item>
+    <item>
+      <title>GCP B: OpenTelemetry / GenAI semconv; span-level tool-call traces</title>
+      <description>`status`: documented → ga; `product`: — → Agent Observability [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:otel_traces</guid>
+    </item>
+    <item>
+      <title>GCP B: Region availability OF THE AGENT RUNTIME</title>
+      <description>`status`: limited → documented; `value`: {"in_country_allowlist": ["ca", "in", "asia-northeast1 (JP)", "sg", "europe-west2 (UK)"], "multi_regions": ["global", "us", "eu"]} → {"multi_regions": ["us", "eu"], "region_list": ["us-east1", "us-east4", "us-west1", "us-central1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "europe-west8", "europe-southwest1", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast3", "asia-south1", "asia-southeast1", "asia-southeast2", "australia-southeast2", "me-west1", "northamerica-northeast1", "northamerica-northeast2", "southamerica-east1"], "regions": 23} [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:runtime_regions</guid>
+    </item>
+    <item>
+      <title>GCP B: Support tier &amp; SLA on the agent runtime specifically</title>
+      <description>`status`: documented → unknown; `value`: 99.5% (online inference), 99.9% (Agent Search API) → — [research]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:B:runtime_sla</guid>
+    </item>
+    <item>
+      <title>GCP C: Where the enterprise index physically lives</title>
+      <description>`value`: global, us, eu, ca, in, asia-northeast1, sg, europe-west2 → global, us, eu, br, ca, in, asia-northeast1, sg, europe-west2 [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:C:index_residency</guid>
+    </item>
+    <item>
+      <title>GCP C: Per-seat cost, minimum seats, annual commitment</title>
+      <description>`value`: {"business": "USD 21/seat/month", "plus": "USD 30+/seat/month (annual)", "standard": "USD 30/seat/month (annual)"} → {"business": "USD 21/seat/month", "plus": "USD 30+/seat/month", "standard": "USD 30/seat/month (starting)"} [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:C:seat_pricing</guid>
+    </item>
+    <item>
+      <title>GCP D: Agentic coding (multi-file edits, task execution, tool use)</title>
+      <description>`status`: documented → ga [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:D:agentic_coding</guid>
+    </item>
+    <item>
+      <title>GCP D: CLI / terminal agent mode</title>
+      <description>`product`: — → Antigravity CLI (agy) [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:D:cli_agent</guid>
+    </item>
+    <item>
+      <title>GCP D: AI code review (PR review, inline suggestions)</title>
+      <description>`product`: — → Gemini Code Assist on GitHub [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:D:code_review</guid>
+    </item>
+    <item>
+      <title>GCP D: Codebase indexing / repo-wide context</title>
+      <description>`product`: — → Gemini Code Assist Enterprise — code customization (legacy) [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:D:codebase_indexing</guid>
+    </item>
+    <item>
+      <title>GCP D: Per-seat pricing (individual / business / enterprise tiers)</title>
+      <description>`value`: {"enterprise_annual": "$45/seat/month", "enterprise_monthly": "$54/seat/month", "free": "$0", "standard_annual": "$19/seat/month", "standard_monthly": "$22.80/seat/month"} → {"free": "$0/month", "gemini_enterprise_payg": "$0 seat fee, consumption-based", "gemini_enterprise_standard_plus": "from $30/seat/month", "google_ai_pro": "consumer subscription (price not on this page)", "google_ai_ultra": "consumer subscription (price not on this page)"} [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:D:coding_seat_pricing</guid>
+    </item>
+    <item>
+      <title>GCP D: IDE integration (VS Code, JetBrains, Vim/Neovim, other)</title>
+      <description>`status`: documented → ga; `value`: VS Code, JetBrains, Android Studio, Cloud Shell Editor, Cloud Workstations → VS Code, Visual Studio, JetBrains, Android Studio, Zed, Xcode, Eclipse [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:D:ide_integration</guid>
+    </item>
+    <item>
+      <title>GCP D: Model choice in coding tool</title>
+      <description>`value`: Gemini 2.5 Pro, Gemini 2.5 Flash → Gemini 4 Neon, Gemini 4 Carbon, Gemini 4 Argon, Gemini 4 Hydrogen, Orchestrator, Gemini 3.8 Flash, Gemini 3.7 Flash, Gemini 3.6 Flash, Gemini 3.1 Pro, Claude Sonnet 5.5, Claude Opus 5.5 [change]</description>
+      <guid isPermaLink="false">2026-11-23:GCP:D:model_choice_coding</guid>
     </item>
   </channel>
 </rss>

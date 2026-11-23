@@ -1,188 +1,246 @@
 provider: aws
 bucket: a
 product: Strands Agents
-aliases: [Strands, strands-agents, Strands SDK, Strands harness]
+aliases: [Strands, strands-agents, Strands Harness SDK]
 repo: https://github.com/strands-agents/harness-sdk
 notes: >
-  The repository now contains the Strands harness, Python and TypeScript SDKs, CLI,
-  MCP server, vended tools, and evaluation package. The harness is a separate,
-  batteries-included agent while the SDKs expose the agent loop and providers.
+  Monorepo. The former standalone sdk-typescript repo is archived; both language SDKs now
+  live in harness-sdk as strands-py/ and strands-ts/. There is no sdk-python repo.
+  2026-11-23 REFRESH: the docs now brand the SDK the "Strands Harness SDK" and ship a
+  pre-assembled agent alongside it, "Strands harness" (harness-py/, harness-ts/, plus a
+  strands-cli/ terminal client). The README title is still "Strands Agents". The docs site
+  moved SDK pages under /docs/user-guide/sdk/ (old /concepts/ and /observability-evaluation/
+  URLs now 404). The community tools package strands-agents-tools is deprecated and its
+  repo archived; tools are now vended inside the SDK. Other new ecosystem projects (not
+  covered by any row yet): Strands Box (sandbox, "now in developer preview" per the blog),
+  Strands Shell, Strands Decider (small decision models).
 
 capabilities:
   sdk_languages:
     status: documented
     value: [python, typescript]
     notes: >
-      The current monorepo contains strands-py and strands-ts. The Python SDK requires
-      Python 3.10+ and the TypeScript SDK targets Node.js 22+ ESM projects.
-      (Paraphrase.)
+      "Strands Agents is an open-source SDK for building and running AI agents in Python
+      and TypeScript." Python and TypeScript SDKs, as strands-py/ and strands-ts/ in the
+      monorepo. README states "Requires Python 3.10+" and a "Node.js 22+ ESM project" for
+      TypeScript (was Node.js 20+ at the August check).
     source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   authoring_mode:
     status: documented
     value: code-first
     notes: >
-      The SDK describes a model-driven approach to building agents in code, while the
-      harness exposes create_harness/createHarness entry points.
-      (Paraphrase.)
+      Code-first at both levels. The pre-assembled harness is created in code: "A single
+      `create_harness()` (Python) or `createHarness()` (TypeScript) call gives you an
+      optimized agent with benchmarked defaults". The SDK underneath "lets you go deeper and
+      control every part of the agent: the loop, tools, model providers, memory, sessions,
+      and hooks." No visual or low-code designer is described.
     source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   multi_agent_patterns:
     status: documented
+    value: [agents-as-tools, graph, swarm, workflow, a2a]
     notes: >
-      The current README lists built-in multi-agent patterns alongside MCP, streaming,
-      and structured output. It does not define a fixed named pattern taxonomy on the
-      repository page, so no narrower list is asserted here. (Paraphrase.)
-    source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+      Re-sourced 2026-11-23 from the README to the dedicated patterns page, which
+      enumerates them: Agents as tools ("The orchestrator LLM picks a specialist per
+      query."), Graph ("Developer-defined edges."), Swarm ("Agents hand off autonomously
+      through shared context, with no fixed path."), workflow in your own code, and
+      Agent-to-Agent (A2A). "Graph and Swarm are SDK orchestrators." There is also a
+      vended graph tool that lets the model build and run a task graph itself.
+    source: https://strandsagents.com/docs/user-guide/sdk/multi-agent/multi-agent-patterns/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   local_dev_loop:
     status: documented
-    product: strands-cli
+    product: strands CLI
     notes: >
-      The monorepo includes a strands CLI for prototyping and chatting with a harness
-      agent from the terminal. The SDK itself runs in the user's process and has no
-      hosted control plane. (Paraphrase.)
+      CHANGED 2026-11-23: the strandly/ directory cited in August is gone from the
+      README's directory table. Its place is taken by "strands CLI: prototype and chat with
+      a harness agent from the terminal". The SDK itself "runs in your process with no
+      hosted control plane", so the local loop is ordinary in-process execution.
     source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_client:
     status: documented
     notes: >
-      The Python SDK README documents MCPClient and the monorepo contains strands-mcp.
-      MCP support is also listed as a built-in SDK capability. (Paraphrase.)
+      "MCP, streaming, multi-agent patterns, and structured output are all built in."
+      Separately, the strands-mcp/ directory is an "MCP server that gives coding agents
+      knowledge about building with Strands Agents" (a docs server, not the MCP client).
+      The Python SDK README (strands-py/README.md) shows the client as MCPClient from
+      strands.tools.mcp, and says a compatibility layer lets it run on both the 1.x and 2.x
+      versions of the mcp package. (Paraphrase.)
     source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   bundled_tools:
     status: documented
-    product: strands-agents-tools
+    product: Vended tools (strands.vended_tools)
+    aliases: [strands-agents-tools]
     notes: >
-      The current repository documents vended tools for shell, file editing, HTTP
-      requests, web fetching, notebooks, Python REPL, sleep, handoff, subagents,
-      swarms, and MCP routing. (Paraphrase.)
-    source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+      CHANGED 2026-11-23: the separate strands-agents-tools package cited in August is
+      retired. "The community tools package strands-agents-tools is deprecated. Its tools
+      raise errors at import time." "Each tool is superseded by a vended tool, an SDK
+      feature, a memory store, or a vendor-maintained MCP server." Vended tools now ship
+      inside the SDK, e.g. strands.vended_tools.shell, read, write, edit, graph,
+      python_repl. The GitHub tools repo is now archived (seen on the org page).
+      The Python SDK README (strands-py/README.md) tables the vended tools as shell, file
+      editor, HTTP request, web fetch, notebook, Python REPL, sleep, handoff to user, stop,
+      subagent, swarm, an MCP router and an A2A client. (Paraphrase.)
+    source: https://strandsagents.com/docs/user-guide/migrate/strands-agents-tools/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   cross_cloud_model_adapters:
     status: documented
     notes: >
-      The SDK documents first-party providers for Amazon Bedrock, Anthropic, Gemini,
-      OpenAI, and many other providers, including Ollama, Llama, Mistral, SageMaker,
-      Writer, and custom providers. Bedrock remains the default provider, not a
-      requirement. (Paraphrase.)
+      Explicit "Model agnostic." bullet — "First-class support for Amazon Bedrock,
+      Anthropic, OpenAI, and Gemini, plus many more providers and custom ones." Ollama is
+      named among configurable providers.
+      CAVEAT: "The agent uses Amazon Bedrock by default, so configure AWS credentials or
+      pass another model." (Wording changed since August; same meaning.)
+      The Python SDK README (strands-py/README.md) lists the built-in providers as Amazon
+      Bedrock, Anthropic, Gemini, Cohere, LiteLLM, llama.cpp, LlamaAPI, MistralAI, Ollama,
+      OpenAI, OpenAI Responses API, SageMaker and Writer, plus custom providers.
+      (Paraphrase.)
     source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   human_in_the_loop:
     product: HumanInTheLoop intervention + Interrupts
     status: documented
     notes: >
-      The maintained documentation describes intervention handlers that can pause an
-      agent before tool calls and raw interrupts that request human input before the
-      agent continues. (Paraphrase.)
-    source: https://strandsagents.com/docs/user-guide/sdk/interrupts/
-    verified_on: 2026-11-22
+      Page MOVED (old /concepts/agents/human-in-the-loop/ URL now 404s); re-read at its new
+      location 2026-11-23. "Pause the agent before it acts and let a person approve, edit,
+      or reject a tool call. The HumanInTheLoop intervention handler adds this oversight
+      without custom interrupt logic". Collection modes: interrupt/resume (default),
+      stdio, or a custom callback. NEW since August: an 'auto' mode that uses the built-in risk classifier:
+      "low-risk calls run on their own and risky ones are escalated." Options include allowedTools, enableTrust, evaluate, and a classifier
+      (LLM or small decision model). For stateless deployments it combines with a session
+      manager. The underlying interrupt system (separate Interrupts page) also works
+      across swarm and graph orchestration via a BeforeNodeCallEvent hook.
+    source: https://strandsagents.com/docs/user-guide/sdk/agents/interventions/human-in-the-loop/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   policy_hooks:
     status: documented
     notes: >
-      Hooks can intercept agent steps to log, validate, or redirect them. The README
-      also lists guardrails and steering handlers as built-in controls. (Paraphrase.)
+      The harness-sdk README (a different page from the org page cited here) describes
+      hooks as programmatic interception — "log it, validate it, or redirect it" — plus
+      guardrails and steering handlers. On THIS org page, the extension-template
+      description lists extension types including "interventions".
+      NOTE for human_in_the_loop: "Steering handlers let agents correct themselves
+      instead of failing silently" is AGENT self-correction, not human intervention.
+      Docs now also list Cedar and Dogwood authorization interventions (seen in the docs
+      sidebar, 2026-11-23).
     source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   otel_traces:
     status: documented
     notes: >
-      Strands documentation describes OpenTelemetry tracing for agent, cycle, model,
-      and tool spans, with export through OTLP-compatible observability systems.
-      (Paraphrase.)
+      Page MOVED (old URL now 404s); re-read at /docs/user-guide/sdk/... 2026-11-23.
+      "Strands natively integrates with OpenTelemetry, an industry standard for distributed
+      tracing." Uses gen_ai.* semantic-convention attributes in a hierarchy of agent,
+      cycle, model-invoke and tool spans. "Send traces to platforms like Jaeger, Grafana
+      Tempo, AWS X-Ray, Datadog, and more"; Langfuse and Opik are listed as backends.
+      OTEL_SEMCONV_STABILITY_OPT_IN opts into the latest (experimental) gen_ai conventions.
+      (Correction: an earlier note called that variable an attribute-redaction switch; the
+      page does not say so.)
     source: https://strandsagents.com/docs/user-guide/sdk/observability-evaluation/traces/
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   in_repo_eval:
     status: documented
     product: strands-agents/evals
-    notes: >
-      The current monorepo links to the separate evals package for evaluation support.
-      (Paraphrase.)
-    source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    notes: '"A comprehensive evaluation framework for AI agents and LLM applications."'
+    source: https://github.com/strands-agents/evals
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_license:
     status: documented
     value: Apache-2.0
-    notes: >
-      The repository identifies the project license as Apache License 2.0.
-      (Paraphrase.)
+    notes: '"This project is licensed under the Apache License 2.0"'
     source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_governance:
     status: documented
     value: single-vendor
     notes: >
-      The project is maintained in the strands-agents GitHub organization. No
-      foundation governance model is stated on the repository page, so this remains a
-      vendor-controlled project classification. (Paraphrase.)
-    source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+      Single-vendor in practice: the org profile repo is "Forked from amzn/.github"
+      (verbatim, org page). The org page does NOT itself assert AWS operation, and the
+      "Generated from amazon-archives/__template_Apache-2.0" provenance string is on the
+      harness-sdk repo page, not here. No foundation governance stated anywhere.
+    source: https://github.com/strands-agents
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_release_cadence:
     status: documented
+    value: multiple per week
     notes: >
-      The releases page maintains independent Python and TypeScript release streams.
-      This refresh does not infer a release frequency from the latest tag.
-      (Paraphrase.)
+      Very high cadence — as of 2026-11-23: python/v1.65.0 (2026-11-13), typescript/v1.26.0
+      (2026-11-19), mcp/v0.4.0, plus new harness-python/v0.4.0, harness-typescript/v0.5.0
+      and harness-cli/v0.4.0 tags (was Python v1.51.0 / TypeScript v1.12.0 in August).
+      Tagged independently per package. Roughly weekly minor releases of each SDK through
+      Oct–Nov 2026, so several tags per week across the monorepo. Semver 2.0.0 per the
+      SDK versioning page. (Paraphrase of the releases list.)
     source: https://github.com/strands-agents/harness-sdk/releases
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_runtime_lockin:
     status: none
     notes: >
-      The current README describes the SDK as running in the user's process with no
-      hosted control plane and supports models from multiple providers and clouds.
-      Bedrock is the default provider, but the README documents alternatives.
-      (Paraphrase.)
+      No runtime lock-in. "Any model, any cloud" / "Swap backends when you scale; your
+      code stays the same." It "runs in your process with no hosted control plane".
+      Bedrock is only the default, not a requirement.
     source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_community:
     status: documented
-    notes: >
-      The repository remains public and exposes GitHub community counters. Exact
-      counters are intentionally not copied into this refresh because they change
-      continuously and the current page was not captured as a dated snapshot.
-      (Paraphrase.)
+    value:
+      stars: 9300
+      forks: 1600
+      commits: 3414
+      open_issues: 780
+      open_prs: 565
+      contributors: 378
+    notes: Snapshot 2026-11-23; stars ~9.3k (was ~6.8k on 2026-08-04).
     source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   sdk_telemetry_phone_home:
-    status: unknown
+    status: documented
     notes: >
-      The public README documents tracing and configurable exporters, but the current
-      first-party pages reviewed here do not provide a complete, explicit statement
-      that covers all SDK telemetry or definitively rules out every phone-home path.
-      Preserve unknown rather than infer absence. (Paraphrase.)
-    source: https://github.com/strands-agents/harness-sdk
-    verified_on: 2026-11-22
+      CHANGED 2026-11-23 (was `none`): the SDK source adds a usage token to the User-Agent
+      of AWS calls. The cited file has the comment "# Add strands-agents to the request user
+      agent" and sets "user_agent_extra=new_user_agent" (appending to any
+      user_agent_extra you pass) or sets it to just `strands-agents` when none is given.
+      The TypeScript SDK does the same with `strands-agents-ts-sdk` in
+      strands-ts/src/models/bedrock.ts, and the Python S3 session manager also adds
+      `strands-agents`. (Paraphrase for the TS and S3 parts.)
+      The token rides on the app's own AWS API calls (Bedrock, S3). There is no separate
+      telemetry endpoint, and no documented opt-out was found. Tracing is separate and
+      opt-in, going to an exporter you choose (traces docs page). Same treatment as
+      Azure's MAF User-Agent token.
+    source: https://raw.githubusercontent.com/strands-agents/harness-sdk/main/strands-py/src/strands/models/bedrock.py
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

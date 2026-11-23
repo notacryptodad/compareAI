@@ -1,166 +1,237 @@
 provider: alibaba
 bucket: c
-product: Alibaba Cloud Bailian Flow Agent
-aliases: [百炼 Flow Agent, Model Studio applications, Bailian, Agent 2.0, Agent 1.0]
+product: Alibaba Cloud Model Studio Flow Agent
+aliases: [Alibaba Cloud Bailian Flow Agent, 百炼 Flow Agent, 阿里云百炼 Flow Agent, Flow Agent, Model Studio application builder, Model Studio applications, Bailian, 智能体应用, Agent 2.0, Agent 1.0, 百炼 visual application builder]
 notes: >
-  Flow Agent is Alibaba Cloud Bailian's current visual application-development product,
-  rather than a pre-populated employee assistant. The current page documents zero-code
-  agent applications and low-code workflow applications, recommends Agent 2.0 for new
-  applications, and retains Agent 1.0 for compatibility. This is a partial bucket-C fit:
-  configure or build an application rather than buy a ready-indexed assistant. The
-  separate English application page still labels its older Applications, Components, and
-  Data tab preview and access-restricted. (Paraphrase.)
+  SCOPE JUDGEMENT, stated openly because it affects comparability: Alibaba does not appear
+  to market a packaged employee-facing assistant equivalent to Microsoft 365 Copilot or
+  Gemini Enterprise inside Model Studio. What it offers instead is a BUILDER aimed at
+  business users — now named Flow Agent: 「Flow Agent 是阿里云百炼提供的可视化应用开发平台，支持构建、调试和发布智能体应用和工作流应用。」
+  That is a genuinely different product shape: buy-and-configure rather than
+  buy-and-deploy. Recording it in bucket C is the closest honest fit, but the site must not
+  imply a like-for-like race with M365 Copilot — the buyer question can I buy instead of
+  build? gets a partial yes here.
+  2026-11-23 REFRESH: the CN what-is-model-studio URL that most cells cited now serves a
+  models-only overview; cells were re-sourced to Flow Agent, Connector, privacy and Token
+  Plan pages. The builder was renamed Flow Agent and its recommended version is "Agent 2.0".
+  Alibaba's site nav now also lists packaged apps outside Model Studio (千问办公 / QwenWork
+  「一站式AI生产力平台」, 万有无界 「企业级人与Agent协作平台」); these were NOT researched this pass
+  and may be closer M365-Copilot analogues — flagged for a future pass.
+  No 公测/beta/GA label on Flow Agent; Connector is labelled Beta.
 
 capabilities:
   packaged_assistant:
     status: documented
     notes: >
-      This is a builder for creating agent and workflow applications, not a ready-made
-      assistant with a pre-populated enterprise corpus. The application surface is
-      (Paraphrase.)
-    source: https://www.alibabacloud.com/help/en/model-studio/application-introduction
-    verified_on: 2026-11-22
+      Partial fit, see the scope note above. Flow Agent targets non-developers: agent apps
+      are 「自然语言配置（零代码），可调用知识库、MCP 服务等工具完成任务」, suited to
+      「智能客服、知识问答、任务助理」. Recommended version is 「新版智能体应用（Agent 2.0，推荐）」.
+      This is a builder, NOT a pre-populated assistant that already knows your corpus on
+      day one.
+    source: https://help.aliyun.com/zh/model-studio/flow-agent-introduction
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   authoring_mode:
     status: documented
-    value: [no-code, low-code]
+    value: both
     notes: >
-      Agent applications use natural-language no-code configuration, while workflow
-      applications use visual low-code node orchestration. (Paraphrase.)
+      Zero-code agent apps (「自然语言配置（零代码）」) and low-code workflow apps
+      (「可视化节点编排（低代码）」), plus a CLI (「在终端用 bl app 列出并调用已发布的应用与工作流。」).
+      The code-first path is Managed Agents (bucket B). Strongest low-code story of the CN
+      providers researched.
     source: https://help.aliyun.com/zh/model-studio/flow-agent-introduction
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   prebuilt_connectors:
-    status: unknown
+    product: 百炼 Connector
+    status: preview
     notes: >
-      The application documentation mentions external tool calls and MCP services but
-      does not provide a current named enterprise SaaS connector catalog. A protocol
-      integration is not counted as a connector inventory. (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/flow-agent-introduction
-    verified_on: 2026-11-22
+      STATUS CHANGE documented → preview: the vendor shipped a connector catalog and states
+      its stage. 「Connector 目前处于 Beta 阶段，功能与支持的 App 列表仍在持续扩充。」
+      「阿里云百炼 Connector 是把企业系统与数据接入智能体的统一连接层，在控制台完成一次授权后，即可将外部系统的能力封装为 MCP 工具供智能体调用。」
+      Catalog: 「连接 20 类系统：钉钉、语雀、Salesforce on Alibaba Cloud、数据库、OSS 等，开箱可连」.
+      Credentials configured once per App and reused. This closes most of the 08-04 gap vs
+      Gemini Enterprise / M365 Copilot connector inventories, though the catalog is CN-
+      ecosystem-centric (DingTalk, Yuque) rather than Confluence/Jira/SharePoint.
+      Legacy data connections had to be migrated by 2026-09-30.
+    source: https://help.aliyun.com/zh/model-studio/connector/overview/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   index_freshness:
-    status: unknown
+    status: documented
     notes: >
-      Knowledge-base retrieval is documented, but the current application-introduction
-      page does not state crawl frequency, indexing latency, or refresh guarantees.
-      (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/flow-agent-introduction
-    verified_on: 2026-11-22
+      Knowledge base (RAG) is the grounding mechanism. Billing relevant to running it
+      continuously: 「知识库的总费用由两部分构成：规格费用和模型调用费用。」 and, correcting the
+      08-04 note, prepaid packs now exist: 「知识库提供后付费（按量付费）和预付费资源包两种计费方式。」
+      Billing runs per knowledge base per hour from creation. Refresh / re-index cadence is
+      not stated on this page.
+      The create-knowledge-base page (a different page,
+      help.aliyun.com/zh/model-studio/rag-knowledge-base) lists, as an import source,
+      「从数据集的文件类目中导入，支持自动同步」 — i.e. category-based imports auto-sync — and notes
+      that changing the embedding model 「会触发全量重建索引」. No sync interval, latency or
+      real-time guarantee is given. (Paraphrase except the quotes.)
+    source: https://help.aliyun.com/zh/model-studio/billing-for-knowledge-base
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   training_data_policy:
     status: documented
     notes: >
-      Alibaba Cloud states that Model Studio will not use customer data for model
-      training and encrypts data transmitted during application building and model
-      training with AES-256. The same page says data generated from model and
-      application calls is stored, so this is not a no-retention claim. (Paraphrase.)
-    source: https://www.alibabacloud.com/help/en/model-studio/privacy-notice
-    verified_on: 2026-11-22
+      Same commitment recorded in bucket B and worth repeating here, since this is the
+      bucket where a buyer's data-governance reviewer will look:
+      「阿里云严格保护数据隐私，绝不会将您的数据用于模型训练。」 — will never use your data for
+      model training; transmitted data is AES-256 encrypted. The page also states
+      「阿里云百炼将存储模型与应用调用时产生的数据」 (call data is stored, per legal requirements).
+    source: https://help.aliyun.com/zh/model-studio/privacy-notice
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   permission_aware_retrieval:
     status: unknown
     notes: >
-      The refreshed application pages establish knowledge-base retrieval but do not
-      establish query-time document ACL trimming based on the asking user's identity.
-      Workspace authorization is not treated as per-document permission-aware retrieval.
+      NOT STATED at the knowledge-base retrieval layer (re-verified 2026-11-23). The
+      Retrieve API uses workspace-level RAM permissions — "The AliyunBailianDataFullAccess
+      policy includes the required sfm:Retrieve permission." — and SearchFilters are
+      "Custom retrieval conditions (such as tags) to filter results", not end-user ACLs.
+      The docs don't state whether per-document ACL filtering based on the end user's
+      identity exists — this is absence of documentation, not a positive not-offered
+      statement, hence `unknown`. What is documented is workspace-scoped isolation.
+      (Paraphrase.) Contrast Amazon Q Business which filters responses "based on the
+      content that your end user has permissions to access." (a different page:
+      docs.aws.amazon.com/amazonq/latest/qbusiness-ug/what-is.html)
+      The Connector (Beta) overview (help.aliyun.com/zh/model-studio/connector/overview/,
+      checked 2026-11-23) covers one-time authorization and shared credentials per App but
+      does not state whether source-system permissions are enforced per end user.
       (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/flow-agent-introduction
-    verified_on: 2026-11-22
+    source: https://www.alibabacloud.com/help/en/model-studio/api-bailian-2023-12-29-retrieve
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   invoke_custom_agents:
-    status: unknown
+    status: documented
     notes: >
-      The current application-introduction page explains how to create and call agent
-      applications but does not document publication targets such as DingTalk, WeChat,
-      Slack, or Teams. No distribution claim is inferred from the older overview.
-      (Paraphrase.)
+      Published Flow Agent apps are invoked via API (「新版智能体应用 API」) and the
+      bl app CLI (both in the page body). (Paraphrase.) The 08-04 list of publishing
+      targets (web, DingTalk bots, WeChat official accounts, audio/video agents) was on the
+      old overview page and was NOT re-verified on a current page. Publishing channels
+      (DingTalk / WeChat / web) now appear only as docs-sidebar tutorial titles, which are
+      navigation entries and not counted as evidence; they were not confirmed from page body
+      text this pass. (Paraphrase.) No Slack/Teams equivalent named.
     source: https://help.aliyun.com/zh/model-studio/flow-agent-introduction
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   seat_pricing:
     status: documented
     value:
-      standard: CNY 150/seat/month
-      advanced: CNY 550/seat/month
-      premium: CNY 1298/seat/month
+      standard: USD 20/seat/month
+      advanced: USD 75/seat/month
+      premium: USD 180/seat/month
     notes: >
-      The current Token Plan Team Edition lists Standard, Advanced, and Premium seats at
-      CNY 150, CNY 550, and CNY 1,298 per seat per month, with 25,000, 100,000, and
-      250,000 Credits respectively. The plan currently supports only China (Beijing).
-      (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/token-plan-team-overview
-    verified_on: 2026-11-22
+      PRICE AND TIER-NAME CHANGE since 08-09 (was Standard $30 / Pro $100 / Max $200 list,
+      with $20 / $75 promos). Now: Standard "USD 20/seat/month" (25,000 Credits), Advanced
+      "USD 75/seat/month" (100,000 Credits), Premium "USD 180/seat/month" (250,000 Credits).
+      Shared usage pack "USD 700/pack" (625,000 Credits).
+      "A seat is the minimum subscription unit of Token Plan Team Edition, representing a
+      usage quota for one team member." Each seat is bound to one member and one API Key.
+      "Token Plan Team Edition currently supports only the Singapore region."
+      Tools: "supporting Qwen Code, Claude Code, Qoder, OpenClaw, and more."
+      CN-SITE PARALLEL OFFERING (separate CN page,
+      help.aliyun.com/zh/model-studio/token-plan-team-overview, updated 2026-11-17): the
+      China-site Team Edition is priced in CNY and the page states it currently supports only
+      the China (Beijing) region. Seats: 标准坐席 「¥150/坐席/月」, 高级坐席
+      「¥550/坐席/月」, 尊享坐席 「¥1,298/坐席/月」 (same 25,000 / 100,000 / 250,000 Credits);
+      shared usage pack 「¥5,000/个」. The `value` above records the International (USD)
+      prices. (Paraphrase except the quotes.)
+      PRICING SHAPE IS DIFFERENT from M365 Copilot/Gemini Enterprise: this is a TOKEN
+      QUOTA plan, not an assistant access license. You get Credits to spend across models,
+      not access to a pre-built assistant.
+    source: https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choosable:
     status: documented
     notes: >
-      Token Plan Team Edition exposes multiple selectable Qwen, DeepSeek, Kimi, GLM,
-      MiniMax, and other model IDs. The available list is a subscription and region
-      detail, not a fixed opaque assistant model. (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/token-plan-team-overview
-    verified_on: 2026-11-22
+      Unlike M365 Copilot (opaque), the model is explicitly selectable — when creating an
+      agent app you choose the model (「选择模型、编写提示词，创建智能体应用。」). Model Studio
+      offers Qwen plus third-party DeepSeek, GLM, Kimi and MiniMax (bucket B
+      third_party_catalog). A real advantage for this bucket.
+    source: https://help.aliyun.com/zh/model-studio/flow-agent-introduction
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   license_bundling:
     status: none
     notes: >
-      The Token Plan Team Edition is a separately purchased seat-and-Credits
-      subscription. The official page describes its own subscription and usage-package
-      rules rather than bundling it with an office suite or another assistant license.
-      (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/token-plan-team-overview
-    verified_on: 2026-11-22
+      Token Plan Team Edition is a standalone subscription — not bundled with other
+      Alibaba Cloud services. "Subscription periods include monthly and auto-renewing
+      monthly options." (The 08-09 note of annual terms is no longer stated.) "The Team
+      Edition and Personal Edition can be held simultaneously, each billed independently."
+      No equivalent of Google Workspace bundling or M365 E5 inclusion.
+    source: https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   admin_analytics:
     status: documented
     notes: >
-      Team administrators can assign seats, inspect per-seat Credits and consumption
-      details, manage shared usage packages, and reset member API keys. The page does
-      not establish a richer answer-quality feedback or adoption analytics system.
-      (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/token-plan-team-overview
-    verified_on: 2026-11-22
+      RE-SOURCED to Token Plan Team Edition, which now documents admin analytics (Team management): "Provides an admin console with capabilities such as seat assignment and
+      reclamation, and member usage analytics." "On the Usage Analytics page, you can view
+      Credits consumption trends for the past 1, 7, or 30 days, usage by model, and
+      consumption details for each member."
+      Per-member breakdown is for Token Plan usage; per-application analytics for Flow
+      Agent apps is via Evolution observability (bucket B otel_traces).
+    source: https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   dlp_tenant_isolation:
     status: documented
     notes: >
-      Token Plan Team Edition binds each seat to one member and one API key, supports
-      administrator controls over shared usage, and keeps Credits independently measured
-      per seat. These are account and usage controls, not evidence of DLP or content
-      redaction. (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/token-plan-team-overview
-    verified_on: 2026-11-22
+      Token Plan Team Edition (Stable operation): "Multi-tenant isolation architecture
+      ensures no queuing during peak usage periods." (Data security): "Conversation data is
+      not used for model training, meeting enterprise-grade data privacy requirements."
+      Each seat bound to one API Key — logical isolation per member.
+      Workspaces provide data isolation (stated in the Model Studio FAQ, a different page).
+      No DLP/PII-masking feature specific to the application builder documented — content
+      moderation is via the separate AI Guardrails product.
+    source: https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   guardrails:
-    product: AI safety guardrails
+    product: AI Guardrails
     status: documented
     notes: >
-      Model Studio supports an AI safety guardrail service that inspects model inputs
-      and outputs for sensitive or high-risk content. The current documentation limits
-      the service to China (Beijing) and supports text and image models. (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/content-security
-    verified_on: 2026-11-22
+      Alibaba Cloud AI Guardrails is a separate product that integrates with Model Studio.
+      "AI Guardrails provides two content safety offerings: Guardrails for AI application
+      protection and Content Moderation for user-generated content (UGC) safety."
+      Threat detection covers regulatory violations, PII and credentials, jailbreak and
+      injection attempts, file and link risks, prompt extraction, and verification of LLM
+      outputs against ground truth; configurable thresholds and risk levels. (Paraphrase.)
+      Integration paths: "RESTful API for custom applications, AI Gateway for centralized
+      policy enforcement, WAF for edge-level prompt blocking, Model Studio for one-click
+      Tongyi integration, and third-party platforms (Dify agents, OpenClaw plug-ins)."
+      Block vs monitor-only modes and per-consumer policies are documented on the AI
+      Gateway integration page (bucket B guardrails), not this one.
+    source: https://www.alibabacloud.com/help/en/content-moderation/latest/product-overview
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   index_residency:
     status: documented
-    value: [China (Beijing)]
     notes: >
-      The current Token Plan Team Edition page says the service supports only China
-      (Beijing). It also lists region-specific model availability, so this row does not
-      generalize the Token Plan restriction to every Model Studio API. (Paraphrase.)
-    source: https://help.aliyun.com/zh/model-studio/token-plan-team-overview
-    verified_on: 2026-11-22
+      RE-SOURCED to the Regions page. "Regions determine the access point and data storage
+      location." "Your static data always remains in the selected region." Inference may run
+      in a broader service deployment scope (e.g. Global vs US/EU) chosen per workspace.
+      Six regions: Singapore, US (Virginia), China (Beijing), China (Hong Kong), Japan
+      (Tokyo), Germany (Frankfurt). Knowledge base data inherits the regional constraint.
+      (Paraphrase.) Note the new CN agent services (Managed Agents, Memory, Sandbox) show
+      cn-beijing endpoints only.
+    source: https://www.alibabacloud.com/help/en/model-studio/regions
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

@@ -1,147 +1,218 @@
 provider: aws
 bucket: d
 product: Kiro
-aliases: [Kiro IDE, Kiro CLI, Kiro Web, Kiro Crew]
+aliases: [Amazon Q Developer, Q Developer]
 notes: >
-  Kiro is AWS's AI-powered development environment with a unified agent harness across
-  IDE, VS Code, CLI, Web, and Mobile surfaces, plus Crew. The earlier preview-era
-  description is stale: Kiro's official announcement says Kiro is generally available.
-  Current documentation also covers credit-based Free, Pro, Pro+, Pro Max, and Power
-  tiers, model choice across OpenAI, Anthropic, and open-weight providers, and shared
-  configuration across surfaces. (Paraphrase.)
+  Kiro is the AWS AI coding product that replaces Amazon Q Developer (the docs have a
+  "Migrating from Q Developer" guide). The IDE is built on Code OSS (VS Code). It uses
+  spec-driven development (requirements, then design, then tasks) with property-based tests.
+  Pricing is credit-based.
+  2026-11-23 REFRESH, MAJOR CORRECTION: Kiro is GENERALLY AVAILABLE, and has been since
+  2025-11-17 (kiro.dev/blog/general-availability/). Earlier revisions of this file said
+  "Currently in preview" and "free during preview". That was already wrong when verified in
+  August 2026, and every preview status below has been corrected. Paid tiers run from Pro
+  ($20/user/month) to Power ($200). The surface area has grown well beyond the IDE: Kiro for
+  VS Code (extension), CLI (incl. headless CI mode), Web (cloud sessions that open PRs),
+  Android/iOS mobile apps, and Kiro Crew (persistent background agents). Some things are
+  still labelled preview: "Enterprise Management (preview)", and VPC connections for cloud
+  sessions are "in preview on Enterprise plans".
+  METHOD NOTE: the August cells were all paraphrase with no quotes. This refresh adds
+  verbatim quotes and points each cell at the specific kiro.dev page that supports it.
 
 capabilities:
   ide_integration:
     status: documented
-    value: [Kiro IDE, VS Code, CLI, Web, Mobile, Crew]
+    value: [Kiro IDE, Kiro for VS Code, CLI, Web, Mobile, Kiro Crew]
     notes: >
-      Kiro is available as a desktop IDE, VS Code extension, CLI, Web app, Mobile app,
-      and Crew. The same .kiro configuration is shared across supported surfaces. The
-      current installation page lists platform support and distinguishes local IDE/CLI
-      use from browser and mobile surfaces. (Paraphrase.)
-    source: https://kiro.dev/docs/getting-started/installation/
-    verified_on: 2026-11-22
+      "One unified agent harness powers every surface (IDE, VS Code, CLI, Web, and Mobile)
+      so your configuration, specs, and steering work everywhere."
+      Kiro IDE is a standalone editor built on Code OSS. NEW since August: Kiro for VS
+      Code, an extension for stock VS Code that the changelog says is "included in every
+      Kiro plan" (changelog is a different page). Kiro Crew (persistent background agents)
+      and Android/iOS apps are further surfaces.
+    source: https://kiro.dev/docs/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   cli_agent:
     status: documented
+    product: Kiro CLI
     notes: >
-      Kiro CLI 3.0.0 and later uses the V3 unified agent harness shared with Kiro IDE
-      and Web. It supports interactive terminal work, headless automation, specs,
-      steering, hooks, MCP, custom agents, skills, sub-agents, and model selection.
-      (Paraphrase.)
-    source: https://kiro.dev/docs/cli/
-    verified_on: 2026-11-22
+      "The CLI enables you to use AI for tasks like writing, reviewing, modifying code, and
+      automating workflows, locally or in cloud sessions that persist across disconnects."
+      Kiro CLI reads steering files and MCP configurations from the project's .kiro/
+      folder, the same context the IDE and Web use (paraphrase). Also has a headless mode for CI/CD.
+      The CLI docs page (kiro.dev/docs/cli/) says that from Kiro CLI 3.0.0 the default
+      harness is V3, the same unified harness as the IDE and Web, so steering, custom
+      agents, hooks, permissions and MCP servers carry over. It ships as a single
+      standalone kiro-cli binary and can act as the agent inside JetBrains IDEs, Zed and
+      other Agent Client Protocol (ACP) clients. (Paraphrase.)
+    source: https://kiro.dev/faq/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   agentic_coding:
     status: ga
     notes: >
-      Kiro's general availability announcement describes Specs, property-based testing
-      for spec correctness, checkpoints, the CLI, and team plans. Current Specs docs
-      document requirements, design, tasks, bugfix specs, parallel task execution, and
-      property-based testing in the IDE. (Paraphrase.)
+      STATUS CHANGE 2026-11-23: preview -> GA. "Kiro is generally available: Build with
+      your team in the IDE and terminal" (post dated November 17, 2025). "Since launching
+      Kiro in preview in July, we've seen strong adoption of Specs as a structured way to
+      build with AI." The GA release added "property-based testing for spec correctness"
+      and checkpointing, plus the Kiro CLI and team plans.
+      The August note said no GA announcement had been found; this post predates that note.
+      Today's surface (homepage, a different page): specs, multi-step workflows with
+      independent reviewer agents, cloud sessions that run for hours, and Kiro Crew
+      background agents.
+      The Specs docs page (kiro.dev/docs/specs/) now also covers Bugfix Specs, Quick Spec
+      and parallel execution of independent tasks on IDE, CLI, Web and Mobile.
+      Property-based correctness testing is IDE-only. (Paraphrase.)
     source: https://kiro.dev/blog/general-availability/
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choice_coding:
     status: documented
-    value: [OpenAI, Anthropic, open-weight models]
+    value: [Auto router, OpenAI GPT-5.6, Anthropic Claude, xAI Grok, open-weight models]
     notes: >
-      Current Kiro model documentation lists OpenAI, Anthropic, and open-weight model
-      families from other providers. The catalog includes Auto routing and named models,
-      with availability varying by profile, geography, and plan. (Paraphrase.)
-    source: https://kiro.dev/docs/models/
-    verified_on: 2026-11-22
+      "By default, your prompts are processed by Auto, an agent that uses a mix of
+      different frontier models". "You can also choose a specific model, including OpenAI's
+      GPT-5.6 (Sol, Terra, and Luna), Anthropic's Claude models (Opus 5.5, Opus 5, Sonnet
+      5.5, and Haiku 5.5), xAI's Grok 4.7, and open weight models such as Kimi K3, DeepSeek
+      3.2, MiniMax M2.5, GLM-5, and Qwen3 Coder Next."
+      CHANGED since August: the lineup is no longer Claude plus open-weight only, and now
+      includes OpenAI and xAI models. AWS still curates the list; there is no BYOK.
+    source: https://kiro.dev/pricing/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choosable:
     status: documented
     notes: >
-      Users can choose a model from Kiro's model picker, or use Auto to route each task.
-      The selection applies to subsequent messages and the model page documents fallback
-      behavior when a selected model is unavailable or refuses a request. (Paraphrase.)
-    source: https://kiro.dev/docs/models/
-    verified_on: 2026-11-22
+      Yes. "You can also choose a specific model", or leave it on Auto. Per the models page
+      (a different page): "Auto is treated as its own selectable option under model
+      governance: administrators can allow or block Auto for their users." Enterprise
+      admins also keep an approved-model list. Some models are labelled "experimental
+      support" (e.g. Grok 4.7).
+      The models page also says the selection applies to later messages in the
+      conversation. When a model is unavailable or refuses a request, Kiro can move the
+      turn to a fallback model and names it in the transcript. (Paraphrase.)
+    source: https://kiro.dev/pricing/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_support_coding:
     status: documented
     notes: >
-      Kiro supports local stdio and remote HTTP/SSE MCP servers across IDE, CLI, Web,
-      and Mobile, with JSON configuration, server-provided prompts and resources, and
-      OAuth support on selected surfaces. Kiro also documents Powers as on-demand bundles
-      of MCP tools and skills. (Paraphrase.)
+      "Model Context Protocol (MCP) extends Kiro's capabilities by connecting to
+      specialized servers that provide additional tools and context." Covers all surfaces.
+      The capability table marks both local (stdio) and remote (HTTP/SSE) MCP servers as
+      supported on IDE, CLI, Web and Mobile. The gaps: "OAuth sign-in for remote MCP
+      servers" is "Powers only" on Web and Mobile ("The oauth settings in mcp.json aren't
+      used"), and "Kiro Mobile has no # mention menu, so it can't insert server-provided
+      prompts or resources." The homepage (a different page) adds "use AGENTS.md, Skills, MCP, and Open VSX extensions". Steering, hooks
+      and Powers are separate extension points.
     source: https://kiro.dev/docs/mcp/
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   codebase_indexing:
     status: documented
     notes: >
-      Kiro's unified harness assembles context from the prompt, conversation, steering
-      files, and attached repository context. The CLI documentation says Kiro reads the
-      codebase, writes code, and runs commands; the current docs do not claim a separate
-      vector-index product, so this row records repository-aware context rather than
-      inferred indexing architecture. (Paraphrase.)
-    source: https://kiro.dev/docs/how-kiro-works/
-    verified_on: 2026-11-22
+      Repo-wide context is claimed, not specified. "It understands your codebase and speeds
+      up development through adaptive, natural dialogue." (said of Kiro CLI). The product
+      also says it can "build across large codebases with parallel agents". No page read
+      describes an index (embedding, refresh cadence, size limits). Specs, steering files and
+      cross-session memory are how project context is carried. (Paraphrase beyond quotes.)
+      The How Kiro works page (kiro.dev/docs/how-kiro-works/) matches this. Each turn, the
+      harness assembles the prompt, the conversation, steering files and any attachments,
+      and compaction summarizes older history near the context limit. It describes no
+      separate code index. (Paraphrase.)
+    source: https://kiro.dev/faq/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_review:
     status: documented
     notes: >
-      Kiro's current product page says agents plan, build, review, and verify engineering
-      work. Kiro Web supports reviewing agent work and opening pull requests, but the
-      reviewed pages do not establish a standalone hosted PR-review product with its own
-      lifecycle. (Paraphrase.)
-    source: https://kiro.dev/
-    verified_on: 2026-11-22
+      RESOLVED 2026-11-23 (was unknown): "Headless mode lets you run Kiro CLI as part of
+      your CI/CD pipeline to automate code reviews, generate tests, or troubleshoot build
+      failures — no interactive terminal required." The page ships a GitHub Actions
+      example named "Kiro Code Review" that runs "Review the changes in this PR for security
+      issues". Kiro Web also responds to PR review comments (/kiro commands), and
+      workflows include independent reviewer agents.
+      CAVEAT: this is a scripted CLI job you wire into CI yourself, not a turnkey assign-Kiro-as-PR-reviewer
+      button like Copilot's.
+    source: https://kiro.dev/docs/cli/headless/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_data_retention:
     status: documented
     notes: >
-      Kiro data handling is tier-specific. Free and individual users may have content
-      used for service improvement subject to opt-out, with additional abuse-detection
-      retention described by AWS. Enterprise content is not used for service improvement;
-      enterprise administrators can configure customer-selected S3 prompt logging and
-      customer-managed KMS keys. Kiro's data-protection page also distinguishes storage
-      location from model inference location. (Paraphrase.)
+      Split by tier, stated explicitly:
+      Free Tier users: subject to opt-out, "content may be used for service improvement".
+      Individual paid subscribers get the same opt-out wording.
+      Enterprise users: "Content is not used for service improvement". When prompt
+      logging is enabled, that data goes to a customer-selected S3 bucket.
+      "Kiro may also store inputs for up to 60 days for additional abuse detection" for
+      Free Tier. Free and individual content "will be stored in the US East (N. Virginia)
+      Region". Enterprise admins can use customer managed KMS keys.
+      Correction: the August note's Bedrock-data-isolation framing is not how this page
+      describes it.
     source: https://kiro.dev/docs/privacy-and-security/data-protection/
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_seat_pricing:
     status: documented
+    value:
+      pro: 20
+      pro_plus: 40
+      pro_max: 100
+      power: 200
+      team_seat: 20
+      addon_credit: 0.04
     notes: >
-      Kiro currently documents five tiers: Free, Pro, Pro+, Pro Max, and Power. Credits
-      are consumed fractionally, paid tiers have plan allocations, and add-on credits are
-      available for paid tiers. The billing page documents proration and a first-upgrade
-      trial rule effective November 1, 2026; current prices are maintained on the pricing
-      page rather than copied into this capability cell. (Paraphrase.)
-    source: https://kiro.dev/docs/billing/
-    verified_on: 2026-11-22
+      STATUS CHANGE 2026-11-23: preview -> documented (Kiro is GA; there is no preview
+      pricing). "You can upgrade to paid tiers ranging from Pro ($20/month), Pro+
+      ($40/month), Pro Max ($100/month), to Power ($200/month) for increased capacity."
+      Included credits: 1,000 / 2,000 / 5,000 / 10,000 per month, with add-on credits at
+      $0.04 each. Teams pool credits at "$20 per seat / month" with "500 included credits /
+      seat / month".
+      From November 1, 2026 plan fees and credits are prorated to the second on a
+      mid-month upgrade, per the billing page (kiro.dev/docs/billing/). (Paraphrase.)
+    source: https://kiro.dev/pricing/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_free_tier:
     status: documented
+    value: 50 credits/month
     notes: >
-      Kiro offers a perpetual Free tier with 50 monthly credits and no add-on credits on
-      that tier. Paid tiers have larger credit allocations and add-on credit support.
-      (Paraphrase.)
-    source: https://kiro.dev/docs/billing/
-    verified_on: 2026-11-22
+      STATUS CHANGE 2026-11-23: preview -> documented. "New users can start with the
+      perpetual Kiro Free tier, which includes 50 credits per month. The Free Tier includes
+      access to open weight models and Claude Sonnet 4.5, with limits." The first upgrade
+      to Pro gets the rest of the month free plus 500 trial credits. The FAQ (a different
+      page) says the free tier is not available in Kiro Enterprise or GovCloud. The August
+      claim of no rate limits during preview no longer applies.
+      The billing page (kiro.dev/docs/billing/) marks add-on credits as not available on
+      the Free tier. It also says the free trial applies to the first upgrade only and
+      that trial credits expire after 12 months. (Paraphrase.)
+    source: https://kiro.dev/pricing/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   launch_stage_investigation:
     status: ga
     notes: >
-      Kiro's official launch announcement states that Kiro is generally available after
-      its preview period. The current documentation and billing pages describe active
-      production tiers and supported surfaces; the previous preview-only description is
-      no longer current. (Paraphrase.)
+      STATUS CHANGE 2026-11-23: preview -> GA. "Kiro is generally available: Build with
+      your team in the IDE and terminal" — November 17, 2025, after "launching Kiro in
+      preview in July" (2025). The August 2026 note (in preview, no GA announcement
+      found) was wrong when it was written.
+      Sub-features still labelled preview elsewhere on kiro.dev (different pages):
+      Enterprise Management, cloud-session VPC connections, and opt-in Feature Previews in
+      the IDE. Some models carry experimental support (models page).
+      GovCloud: Kiro runs in AWS GovCloud (US) per several What's New posts (Oct–Nov 2026).
     source: https://kiro.dev/blog/general-availability/
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

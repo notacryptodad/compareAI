@@ -1,142 +1,182 @@
 provider: alibaba
 bucket: d
 product: Qoder CN series
-aliases: [Qoder CN, Qoder CN IDE, Qoder CN CLI, QoderWork CN, Tongyi Lingma, 通义灵码]
+aliases: [Qoder CN, Qoder CN 系列, Qoder CN suite, Qoder CN IDE, Qoder CN CLI, QoderWork CN, 通义灵码, Tongyi Lingma, Lingma, 千码]
 notes: >
-  The Alibaba Cloud documentation says the former Tongyi Lingma suite was renamed to
-  Qoder CN on May 20, 2026. The current family includes the Qoder CN desktop coding
-  workspace, Qoder CN IDE, JetBrains plugin, Qoder CN CLI, QoderWork CN, and mobile
-  companion. The current documentation also describes separate Qoder Agent SDK, Qoder
-  Cloud Agents, and QoderWake products; they are not folded into this coding-tool row.
-  (Paraphrase.)
+  Tongyi Lingma (通义灵码) was renamed Qoder CN: 「Qoder CN 系列原名"智能编码助手通义灵码"（Lingma），将于 2026 年 5 月 20 日正式更名。」
+  Now a product family: 「包含面向编码场景的 Qoder CN（含 IDE、JetBrains 插件）、面向日常工作的 QoderWork CN（桌面应用）、Qoder CN CLI（终端原生形态）、QoderWake CN（数字员工）、Qoder Cloud Agents（云端 Agent 平台）等子产品」
+  (QoderWake and Cloud Agents are new since the 08-09 pass). Multi-model selection (GLM,
+  DeepSeek, Kimi, MiniMax). Credit-based pricing from free to ¥559/month (individual) and
+  ¥99–¥199/seat/month (team/enterprise).
+  2026-11-23 SOURCING NOTE: the 08-09 cells all cited the help.aliyun.com/zh/lingma landing
+  page, which is a link hub; most specifics were not on it. Cells are now re-sourced to the
+  product introduction, the qoder.cn pricing page, and the agent / MCP user-guide pages.
+  The help.aliyun.com pages carry a banner that the new doc site is docs.qoder.cn and that
+  they may lag the product. docs.qoder.cn/product-overview/introduction-of-qodercn was read
+  this pass (it is the source for code_review), as was docs.qoder.cn/zh/cli/overview (cited
+  in cli_agent, mcp_support_coding and code_review); other docs.qoder.cn pages were not.
+  The docs.qoder.cn introduction names the family 「Qoder CN 系列」 and says the rename
+  「已于 2026 年 5 月 20 日正式更名」 (completed), hence product "Qoder CN series".
 
 capabilities:
   ide_integration:
     status: documented
-    value: [Qoder CN IDE, JetBrains]
+    value: [Qoder CN IDE, JetBrains, CLI, Mobile, Agent SDK, Cloud Agents, QoderWake]
     notes: >
-      The current suite documentation covers the Qoder CN IDE and JetBrains plugin. The
-      billing page says the VS Code plugin is no longer actively developed, so VS Code is
-      not carried forward as a current primary integration. (Paraphrase.)
-    source: https://help.aliyun.com/en/lingma/billing-description
-    verified_on: 2026-11-22
+      Pricing-page footnote: "体验版、专业版、高级版，旗舰版和团队版现已支持 Qoder CN 全系列产品，包括
+      Qoder IDE、Mobile、JetBrains 插件、CLI、Agent SDK、Cloud Agents 和 QoderWake。"
+      CHANGE vs 08-09: the VS Code plugin and QoderWork are not in this list (the Lingma
+      landing page still mentions legacy JetBrains/VS Code plugins for the original
+      通义灵码). Agent SDK, Cloud Agents and QoderWake are new surfaces. (Paraphrase.)
+      VS Code: the Qoder CN billing page on help.aliyun.com (separate page,
+      help.aliyun.com/en/lingma/billing-description, updated 2026-08-26, carrying a banner
+      that docs.qoder.cn is the current doc site) notes that the VS Code plugin is no longer
+      actively developed, and says Teams / Enterprise VPC editions currently cover only part
+      of the lineup (wording differs between sections of that page). (Paraphrase.)
+    source: https://qoder.cn/pricing
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   cli_agent:
+    product: Qoder CN CLI
     status: documented
     notes: >
-      Qoder CLI CN is a terminal agent that can understand a repository, edit files,
-      execute commands, run tests, search the web, and operate in interactive or
-      non-interactive headless mode. (Paraphrase.)
-    source: https://docs.qoder.cn/zh/cli/overview
-    verified_on: 2026-11-22
+      「Qoder CN CLI ：面向终端原生场景的命令行形态，可在 Shell 中直接调用智能体能力完成开发、运维、脚本编写等任务。」
+      The CLI overview on the new doc site (a different page, docs.qoder.cn/zh/cli/overview)
+      adds detail: Qoder 「理解整个代码库、编写和修改代码、运行命令、检索资料，并完成从探索到提交的完整开发流程」,
+      with built-in file, Shell, Grep/Glob and web search/fetch tools, permission
+      confirmation before side-effecting actions, and work modes including Plan, Goal,
+      定时任务, /loop and Headless (scripts / CI/CD). (Paraphrase except the quotes.)
+    source: https://help.aliyun.com/zh/lingma/introduction-of-lingma
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   agentic_coding:
     status: documented
     notes: >
-      Qoder CLI CN plans tasks, uses tools, writes and modifies code, runs commands and
-      tests, and adjusts its work from the results. The current product documentation
-      also describes multi-file execution and expert-agent collaboration in the desktop
-      family. (Paraphrase.)
-    source: https://docs.qoder.cn/product-overview/introduction-of-qodercn
-    verified_on: 2026-11-22
+      Quest 2.0: 「编程任务规划与执行能力全面升级，可针对复杂研发任务自动拆解为可执行步骤，端到端完成工程级任务交付。」
+      Expert team: 「提供面向前后端、数据库、运维、测试等不同技术领域的专家智能体协作。」
+      「Repowiki、Quest、Subagent 等核心能力不限次数使用。」 New: Cloud Agents CN, a hosted
+      long-running async agent platform (「无需自建 agent loop、无需维护执行环境」).
+      Agent mode does multi-file changes, terminal execution and planning (agent user-guide
+      page, a different page).
+    source: https://help.aliyun.com/zh/lingma/introduction-of-lingma
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choice_coding:
     status: documented
     value: [GLM, DeepSeek, Kimi, MiniMax]
     notes: >
-      Qoder CN's current product-family documentation names GLM, DeepSeek, Kimi, and
-      MiniMax as supported domestic model families. It does not publish a stable versioned
-      model list for every product surface. (Paraphrase.)
-    source: https://docs.qoder.cn/product-overview/introduction-of-qodercn
-    verified_on: 2026-11-22
+      「模型选择器：支持 GLM、DeepSeek、Kimi、MiniMax 等国内主流大模型自由切换。」 Also
+      「底层支持 GLM、DeepSeek、Kimi、MiniMax 等国内主流大模型，全链路在国内云上部署」.
+      A curated set of Chinese foundation models — no Western models (Claude, GPT) named,
+      reflecting the China-market / domestic-deployment focus.
+    source: https://help.aliyun.com/zh/lingma/introduction-of-lingma
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choosable:
     status: documented
     notes: >
-      Users can switch among the supported domestic model families through the model
-      selector. The exact model list and access depend on the Qoder subscription and
-      product surface. (Paraphrase.)
-    source: https://docs.qoder.cn/product-overview/introduction-of-qodercn
-    verified_on: 2026-11-22
+      Yes — 「自由切换」 between models via the model selector. Enterprise Standard adds
+      「多维度模型策略管控」 (multi-dimensional model policy control) and the feature table
+      lists 模型策略管控 for enterprise tiers (qoder.cn/pricing, a different page).
+    source: https://help.aliyun.com/zh/lingma/introduction-of-lingma
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_support_coding:
     status: documented
     notes: >
-      Qoder CLI CN connects to external services and custom tools through MCP. The
-      current overview also lists Skills, Plugins, Subagents, hooks, and custom commands
-      as extension mechanisms. Transport limits and a fixed server-count limit are not
-      carried forward without current evidence. (Paraphrase.)
-    source: https://docs.qoder.cn/zh/cli/overview
-    verified_on: 2026-11-22
+      Both transports: 「STDIO 模式：在此模式下，通信通过标准输入输出流进行，服务运行在本地。」 and
+      「SSE 模式：采用服务器发送事件（SSE）协议进行通信，服务可以运行在远端或本地。」
+      Limit: 「允许同时连接最多 10 个 MCP 服务。」 Explicit MCP protocol support, not just a
+      plugin system.
+      Qoder CN CLI also connects to MCP (a different page, docs.qoder.cn/zh/cli/overview):
+      「通过 MCP（Model Context Protocol）接入外部服务和自定义工具」, and is extensible via Skills,
+      Plugins, Subagents, hooks and custom commands. (Paraphrase except the quote.)
+    source: https://help.aliyun.com/zh/lingma/guide-for-using-mcp
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   codebase_indexing:
     status: documented
     notes: >
-      The current Qoder CN documentation describes whole-codebase understanding and Repo
-      Wiki support. It does not state whether the implementation uses embeddings, an AST,
-      or a particular search index, so the mechanism remains unspecified. (Paraphrase.)
-    source: https://docs.qoder.cn/product-overview/introduction-of-qodercn
-    verified_on: 2026-11-22
+      RepoWiki is listed in the knowledge-engine row of the tier comparison, and team and
+      enterprise tiers add 「支持团队共享 & 更大的知识库容量」. The exact indexing mechanism
+      (embeddings, AST, search) is not described on this page. (Paraphrase.)
+    source: https://qoder.cn/pricing
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_review:
     status: documented
     notes: >
-      Qoder CLI CN supports code-review automation in headless mode and the product
-      documentation lists PR handling among its development-automation scenarios. The
-      pages do not establish a separately priced autonomous PR-review product. (Paraphrase.)
-    source: https://docs.qoder.cn/zh/cli/overview
-    verified_on: 2026-11-22
+      RE-SOURCED 2026-11-23 to the Qoder CN product introduction (CLI section): Qoder CN CLI
+      「除交互式使用外，还支持以非交互模式接入脚本和 CI/CD 流水线，执行代码评审、批量修改、测试修复等自动化任务」.
+      CAVEAT: this is a scripted CLI job you wire into CI yourself, not a turnkey
+      assign-as-PR-reviewer bot like Copilot's automated PR review.
+      The CLI overview (a different page, docs.qoder.cn/zh/cli/overview) lists among its
+      scenarios 「日常研发自动化：生成提交信息、审查改动、处理 PR、编写测试。」 — same shape: review
+      and PR handling as CLI tasks; neither page documents a separate PR-review product.
+    source: https://docs.qoder.cn/product-overview/introduction-of-qodercn
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_data_retention:
-    status: unknown
+    status: documented
     notes: >
-      The current Qoder CN product-family documentation describes domestic deployment and
-      enterprise security positioning, but the checked pages do not state code retention,
-      training use, or deletion controls for every plan and product surface. (Paraphrase.)
-    source: https://docs.qoder.cn/product-overview/introduction-of-qodercn
-    verified_on: 2026-11-22
+      Enterprise tiers on the pricing page: Teams adds 「支持 SAML/OIDC 单点登录」 and
+      「隐私模式管控」; Enterprise Standard adds 「操作审计」; Enterprise Dedicated adds
+      「独立实例与存储」, 「专有网络访问控制」 and 「IP 白名单管理」. The product introduction (a
+      different page) states domestic deployment and dedicated-VPC options for regulated
+      industries. No explicit code-retention period or no-training statement found on these
+      pages; the 08-09 claim that Alibaba's general no-training policy applies is NOT
+      re-verified for Qoder CN specifically.
+    source: https://qoder.cn/pricing
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_seat_pricing:
     status: documented
     value:
-      free: CNY 0
-      pro: CNY 59/month
-      pro_plus: CNY 169/month
-      teams: CNY 99/seat/month
-      enterprise: CNY 149/seat/month
-      vpc: CNY 199/seat/month
+      free: ¥0
+      pro: ¥59/month
+      advanced: ¥169/month
+      flagship: ¥559/month
+      teams: ¥99/seat/month
+      enterprise_standard: ¥149/seat/month
+      enterprise_dedicated: ¥199/seat/month
     notes: >
-      The current Qoder CN All-in-One pricing table lists Free, Pro, Pro+, Teams,
-      Enterprise Standard, and Enterprise VPC at the values shown. Credits are the usage
-      unit; enterprise editions add seat minimums and administration features. (Paraphrase.)
-    source: https://help.aliyun.com/en/lingma/billing-description
-    verified_on: 2026-11-22
+      Individual: 体验版 ¥0, 专业版 ¥59/month (2,000 Credits; promo ¥19.9 first month), 高级版
+      ¥169/month (6,000 Credits), and NEW 旗舰版 ¥559/month (20,000 Credits). Annual billing
+      at 10% off. Personal resource pack ¥40 per 1,000 Credits.
+      Business (企业订阅 tab): 团队版 ¥99/seat/month, 企业标准版 ¥149/seat/month (10-seat
+      minimum, 「10 席位起售」), 企业专属版 ¥199/seat/month (50-seat minimum, 「50 席位起售」), each
+      「3,000 Credits 每席位/月」. (Paraphrase of the tables.)
+      Renamed keys vs 08-09: pro_plus → advanced (高级版); enterprise → enterprise_standard;
+      vpc → enterprise_dedicated.
+    source: https://qoder.cn/pricing
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_free_tier:
     status: documented
     notes: >
-      The current billing page lists a free tier with limited quota, including a two-week
-      Pro trial and 300 Credits, followed by a free plan with limited usage. (Paraphrase.)
-    source: https://help.aliyun.com/en/lingma/billing-description
-    verified_on: 2026-11-22
+      体验版 ¥0: 「有限的体验额度」 and 「为期 2 周的专业版试用及 300 Credits」. Completion and
+      chat/agent use are 「有限次体验」 on the free tier.
+    source: https://qoder.cn/pricing
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   launch_stage_investigation:
     status: documented
     notes: >
-      Qoder CN has current paid subscription editions and an active product documentation
-      site. The reviewed first-party pages do not label the core suite GA, preview, or
-      beta, so this remains documented rather than a launch-stage claim. (Paraphrase.)
-    source: https://help.aliyun.com/en/lingma/billing-description
-    verified_on: 2026-11-22
+      Commercially sold with paid tiers (originally as Tongyi Lingma, renamed Qoder CN on
+      2026-05-20). The product introduction calls it 「阿里云一方产品」. No "preview" or
+      "beta" label on the core product; the qoder.cn app shell marks some new UI areas
+      (项目, 讨论) as Beta. No GA statement either — hence `documented`.
+    source: https://help.aliyun.com/zh/lingma/introduction-of-lingma
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

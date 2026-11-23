@@ -3,141 +3,194 @@ bucket: d
 product: GitHub Copilot
 aliases: [Copilot, GH Copilot, GitHub Copilot CLI]
 notes: >
-  GitHub Copilot is GitHub's AI coding product. Current plan documentation uses GitHub AI
-  Credits and usage-based billing alongside plan allowances. The product documentation does
-  not assign one overall launch stage; individual features and the feature matrix can have
-  separate support states. (Paraphrase.)
+  GitHub Copilot is the Microsoft-ecosystem AI coding tool, sold separately from Microsoft
+  365 Copilot. Usage-based billing (GitHub AI Credits) since June 1, 2026. Plans (docs,
+  2026-11-23): Free, Student (free), Pro ($10/mo), Pro+ ($39/mo), Max ($100/mo), Business
+  ($19/seat/mo), Enterprise ($39/seat/mo), and a new "Copilot access" option for eligible
+  enterprises ($0 seat with a GitHub Enterprise Cloud license, or $10/user/mo standalone,
+  metered usage with no included credits). Supports VS Code, Visual Studio, JetBrains,
+  Eclipse, Xcode, NeoVim, plus the Copilot CLI and the GitHub Copilot desktop app ("All
+  plans include Copilot CLI and the Copilot app"). Ignite 2026 (Nov 17) changelogs add
+  public-preview browser use, Azure DevOps repos in the Copilot app, and a JetBrains cloud
+  sandbox.
 
 capabilities:
   ide_integration:
     status: documented
     value: [VS Code, Visual Studio, JetBrains, Eclipse, Xcode, NeoVim]
     notes: >
-      The current feature matrix covers VS Code, Visual Studio, JetBrains, Eclipse, Xcode,
-      and NeoVim. Feature support differs by IDE and the matrix itself is currently public
-      preview. (Paraphrase.)
+      Feature matrix covers 6 IDEs. VS Code and Visual Studio have the broadest feature
+      parity. NeoVim is limited to code completion only. Eclipse and Xcode have agent mode
+      and MCP. The matrix itself is labelled preview: "The GitHub Copilot feature matrix is
+      currently in public preview and is subject to change."
+      (Paraphrase of the Copilot plans marketing page, a different page: Raycast, SQL
+      Server Management Studio and Zed are also listed as platforms.)
     source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   cli_agent:
     status: documented
     notes: >
-      Current GitHub plan documentation states that all plans include Copilot CLI and the
-      Copilot app. Access, models, and usage allowances remain plan- and policy-dependent.
-      (Paraphrase.)
-    source: https://docs.github.com/en/copilot/get-started/plans
-    verified_on: 2026-11-22
+      Copilot CLI is a supported surface: the per-client table lists Copilot CLI alongside
+      GitHub.com and the IDEs, and the Auto/Fusion table lists Copilot cloud agent, Copilot
+      Chat, Copilot CLI and the GitHub Copilot app. "The 1 million token context window is
+      available in Visual Studio Code and Copilot CLI only." "Configurable reasoning levels
+      are available in Visual Studio Code, Copilot CLI, and Copilot cloud agent."
+    source: https://docs.github.com/en/copilot/reference/ai-models/supported-models
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   agentic_coding:
-    status: documented
+    status: ga
     notes: >
-      The current feature matrix marks agent mode as supported in VS Code, Visual Studio,
-      JetBrains, Eclipse, and Xcode, but not NeoVim. Custom agents are preview in some IDEs.
-      These support cells do not establish an overall GA claim, and the matrix itself is public
-      preview. (Paraphrase.)
-    source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
-    verified_on: 2026-11-22
+      Agent mode is supported (✓) in VS Code, Visual Studio, JetBrains, Eclipse, and Xcode
+      per the feature matrix (not supported in NeoVim). JetBrains changelog (March 2026):
+      "Core agentic capabilities, including custom agents, sub-agents, and plan agent, are
+      now generally available, with agent hooks in preview and auto-approve support for MCP."
+      PREVIEW CAVEATS: agent hooks are preview in JetBrains ("Agent hooks are available in
+      public preview."); the feature matrix still marks Custom agents P (under preview) in
+      JetBrains and Xcode and Agent skills P in JetBrains, and the matrix itself is labelled
+      public preview (Paraphrase of the feature matrix, a different page). Copilot cloud agent (Copilot in the cloud on
+      the plans page) is a separate service for running agent tasks in the cloud.
+      STATUS CHANGE 2026-11-23: documented -> ga.
+    source: https://github.blog/changelog/2026-03-11-major-agentic-capabilities-improvements-in-github-copilot-for-jetbrains-ides/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choice_coding:
     status: documented
-    value: [GPT-5.3-Codex, GPT-5.4 nano, GPT-5.6 Luna, GPT-5.6 Sol, GPT-6 Astra, GPT-6 Luna]
+    value: [GPT-5.3-Codex, GPT-5.4 nano, GPT-5.6 Luna, GPT-5.6 Sol, GPT-6 Astra, GPT-6 Luna, GPT-6 Sol, GPT-6.1 Sol, GPT-6.1 Terra, GPT-6.2 Astra, GPT-6.2 Sol, Claude Fable 5, Claude Fable 5.1, Claude Fable 5.2, Claude Haiku 4.5, Claude Haiku 5.5, Claude Opus 4.8, Claude Opus 5.5, Claude Sonnet 4.6, Claude Sonnet 5, Claude Sonnet 5.5, Gemini 3.8 Flash, Gemini 4 Argon, Gemini 4 Carbon, Gemini 4 Hydrogen, Gemini 4 Neon, MAI-Code-1.1-Flash, MAI Code 2, MAI Code 2 Flash, Kimi K3, Grok 4.5, Grok 4.6, Grok 4.7]
     notes: >
-      GitHub publishes a larger, changing model catalog. The current official pricing table
-      includes the listed OpenAI models as examples and labels their release status GA. Other
-      current tables include models from Anthropic, Google, and additional providers; this value
-      is intentionally not exhaustive. (Paraphrase.)
-    source: https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing
-    verified_on: 2026-11-22
+      Extensive model choice across OpenAI, Anthropic, Google, Microsoft (MAI), Moonshot AI
+      and xAI — 34 rows in the table that "lists the AI models available in Copilot, along
+      with their release status", all marked GA (one Claude Opus 4.8 fast-mode variant is
+      itself labelled preview). Since August the list turned over heavily (e.g. GPT-6.x,
+      Gemini 4, Claude 5.5, MAI Code 2 and Grok added). The retirement history lists full
+      GPT-5.4, GPT-5.4 mini and GPT-5.5 as retired 2026-10-19; GPT-5.4 nano remains, but
+      "GPT-5.4 nano is currently only available in the Codex Visual Studio Code extension
+      (Copilot Pro+ only) and is not available in Copilot Chat."
+      Auto model selection and "Copilot Fusion" route across a subset. "Copilot Student
+      and Copilot Free users have access to models through auto model selection only."
+      Admins: "you can enable or restrict access to specific models for your members."
+      BYOK remains preview in most IDEs (feature matrix).
+    source: https://docs.github.com/en/copilot/reference/ai-models/supported-models
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choosable:
     status: documented
     notes: >
-      Paid plans provide access to a selection of models, while Copilot Free and Student use
-      auto model selection only according to the current plan table. Administrator policies and
-      spending controls can further limit availability. (Paraphrase.)
-    source: https://docs.github.com/en/copilot/get-started/plans
-    verified_on: 2026-11-22
+      Yes — extensive model choice. Users can switch between auto and any specific model.
+      "Stay in control: Switch between auto and any specific model at any time." Auto
+      "Respects your policies: Auto honors all administrator model settings."
+    source: https://github.blog/changelog/2026-03-12-copilot-auto-model-selection-is-generally-available-in-jetbrains-ides/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_support_coding:
-    status: documented
+    status: ga
     notes: >
-      The current feature matrix marks MCP as supported in VS Code, Visual Studio, JetBrains,
-      Eclipse, and Xcode, and not supported in NeoVim. The matrix does not make a separate
-      launch-stage claim for MCP. (Paraphrase.)
-    source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
-    verified_on: 2026-11-22
+      "Model Context Protocol (MCP) support with GitHub Copilot is now generally available
+      for JetBrains, Eclipse, and Xcode!" Also supported (✓) in VS Code and Visual Studio
+      per the feature matrix (not supported in NeoVim; the matrix itself is in public
+      preview). STATUS CHANGE 2026-11-23: documented -> ga. "you can connect Copilot to both local and remote MCP servers
+      that follow the MCP specification". "For organization and enterprise administrators,
+      access to MCP is regulated by the MCP servers in Copilot policy. The MCP policy is
+      disabled by default and must be enabled by an organization or enterprise
+      administrator." (Paraphrase: auto-approve support for MCP was added for JetBrains in
+      March 2026.)
+    source: https://github.blog/changelog/2025-08-13-model-context-protocol-mcp-support-for-jetbrains-eclipse-and-xcode-is-now-generally-available/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   codebase_indexing:
     status: documented
     notes: >
-      The current feature matrix marks workspace indexing as supported in VS Code, Visual
-      Studio, JetBrains, and Eclipse, and not supported in Xcode or NeoVim. (Paraphrase.)
+      Workspace indexing is supported (✓) in VS Code, Visual Studio, JetBrains, and Eclipse;
+      not supported in Xcode or NeoVim. (The Enterprise org-codebase-indexing quote cited in
+      August is not on this page and was removed.)
     source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_review:
     status: documented
     notes: >
-      The current feature matrix marks Copilot code review as supported in VS Code, Visual
-      Studio, JetBrains, and Xcode, and not supported in Eclipse or NeoVim. The matrix does
-      not establish a separate overall product launch stage. (Paraphrase.)
+      Copilot code review is supported (✓) in VS Code, Visual Studio, JetBrains, and Xcode;
+      not in Eclipse or NeoVim. Plans page: Copilot Free gets only Review selection in VS Code. Billing: code review consumes GitHub AI Credits (per the plans marketing page);
+      the August Actions-minutes quote is not on this page and was removed.
+      Ignite 2026: JetBrains code review now uses the Copilot agent review engine
+      (paraphrase of the JetBrains Ignite changelog).
     source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_data_retention:
     status: documented
     notes: >
-      GitHub's current privacy announcement says interaction data from Copilot Free, Pro, and
-      Pro+ can be used to train and improve models unless the user opts out. Business and
-      Enterprise users are not affected by that consumer-account change and remain governed by
-      enterprise data protections. (Paraphrase.)
+      SPLIT POLICY by plan tier: "Copilot Business and Copilot Enterprise users are not
+      affected" — their data is NOT used for training ("Enterprise and organization-provided
+      accounts remain governed by your Data Protection Agreement. Your data will not be used
+      for AI training."). For Free/Pro/Pro+: "from April 24 onward we will begin using
+      interaction data—specifically inputs, outputs, code snippets, and associated
+      context—from Copilot Free, Pro, and Pro+ users to train and improve our AI models
+      unless you opt out." "We do not use private repository content at rest to train AI
+      models."
     source: https://github.blog/changelog/2026-03-25-updates-to-our-privacy-statement-and-terms-of-service-how-we-use-your-data/
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_seat_pricing:
     status: documented
     value:
       free: $0
+      student: $0
       pro: $10/month
       pro_plus: $39/month
       max: $100/month
       business: $19/seat/month
       enterprise: $39/seat/month
+      copilot_access: $0/user/month with GitHub Enterprise Cloud, else $10/user/month
     notes: >
-      The current plans page lists Copilot Pro at $10/month, Pro+ at $39/month, Max at
-      $100/month, Business at $19 per granted seat/month, and Enterprise at $39 per granted
-      seat/month. It also lists monthly GitHub AI Credit allowances and separate metered usage
-      when included allowances are exceeded. (Paraphrase.)
+      Eight options. "Copilot Business $19 USD per granted seat per month" and "Copilot
+      Enterprise $39 USD per granted seat per month"; individual Pro $10, Pro+ $39, Max
+      $100 per month with 1,500 / 7,000 / 20,000 total monthly AI credits.
+      NEW: "Copilot access" — "Provides the same feature and model eligibility as Copilot
+      Enterprise, with a $0 seat charge for users with a GitHub Enterprise Cloud license or
+      $10 USD per user per month for Copilot Standalone. Metered usage is billed
+      separately, with no included allowance." Pooled usage beyond included credits "is
+      charged at $0.01 USD per AI credit".
     source: https://docs.github.com/en/copilot/get-started/plans
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_free_tier:
     status: documented
     notes: >
-      GitHub Copilot Free remains a no-cost individual plan with limited feature access and an
-      allowance of GitHub AI Credits. The current plan page lists 2,000 monthly completions for
-      the Free tier and auto model selection only. (Paraphrase.)
-    source: https://docs.github.com/en/copilot/get-started/plans
-    verified_on: 2026-11-22
+      "GitHub Copilot Free users are limited to 2,000 completions and access to entry level
+      models per month." Plan card: "2,000 completions per month", "Access to Haiku 4.5,
+      GPT-5 mini, and more". "Free plan supports CLI and agent mode." Verified students get
+      a separate free Copilot Student plan.
+      (Paraphrase of the docs plans page, docs.github.com/en/copilot/get-started/plans:
+      Copilot Free and Copilot Student both carry an allowance of GitHub AI Credits, and
+      their model access is through auto model selection only.)
+      (The August new-free-pricing-tier sentence and 50-chat-request figure are no longer
+      on this page.)
+    source: https://github.com/features/copilot/plans
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   launch_stage_investigation:
     status: documented
     notes: >
-      No single current first-party page labels GitHub Copilot overall as GA or preview. The
-      current feature matrix is itself public preview and marks feature support with supported,
-      preview, or closing-down indicators. Do not promote individual support cells into an
-      overall launch-stage claim. (Paraphrase.)
+      No single GA statement for the overall product — it has been shipping for years.
+      Individual features have their own stages; the matrix key distinguishes "✓ =
+      supported" from "P = under preview" (plus "C = closing down"). Agent mode, MCP, code review and workspace
+      indexing are ✓ in the main IDEs; BYOK is P in VS Code, JetBrains, Eclipse and Xcode
+      (✓ in Visual Studio); Vision is P except in Visual Studio and Eclipse. The matrix
+      itself: "The GitHub Copilot feature matrix is currently in public preview and is
+      subject to change."
     source: https://docs.github.com/en/copilot/reference/copilot-feature-matrix
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

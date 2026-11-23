@@ -1,150 +1,254 @@
 provider: gcp
 bucket: d
-product: Antigravity
-aliases:
-  - Antigravity IDE
-  - Antigravity CLI
-  - Gemini Code Assist
-  - Gemini Code Assist Standard
-  - Gemini Code Assist Enterprise
-  - Gemini CLI
-  - Code Assist
-  - Duet AI for Developers
+product: Google Antigravity
+aliases: [Antigravity, Antigravity IDE, Antigravity CLI, agy, Gemini Code Assist, Gemini Code Assist Standard, Gemini Code Assist Enterprise, Code Assist, Gemini CLI, Duet AI for Developers]
 notes: >
-  Google Cloud's current developer-tool transition is from Gemini Code Assist to Antigravity.
-  Google says new Gemini Code Assist Standard and Enterprise subscriptions stopped being
-  available on 2026-10-09, while existing subscriptions continue under the stated renewal
-  and contract dates. The sunset page directs future agentic coding users to Antigravity,
-  which is included in Gemini Enterprise editions. (Paraphrase.)
+  SUCCESSION / RENAME (2026-11-23 refresh): Google has replaced Gemini Code Assist and
+  Gemini CLI with Antigravity. The Code Assist release notes now open: "We have unified
+  our tools into a single, multi-agent platform called Antigravity, with Antigravity CLI
+  now available." Timeline (Code Assist release notes + sunset page):
+    2026-06-18  Gemini Code Assist IDE extensions and Gemini CLI stop serving the
+                individuals / Google AI Pro / Ultra tiers (i.e. the free Code Assist tier
+                is gone).
+    2026-08-18  "AI developer tools" (Antigravity 2.0, Antigravity CLI, Android Studio)
+                GA in Gemini Enterprise Standard / Plus / Pay-as-you-go.
+    2026-10-09  New Gemini Code Assist Standard / Enterprise subscriptions can no longer
+                be purchased; annual renewals end 2027-01-31, monthly 2027-12-31.
+  The old source URL cloud.google.com/products/gemini/code-assist now 301-redirects
+  (via codeassist.google/products/business) to the Code Assist SUNSET page.
+  Consequently this file's product is now Google Antigravity; Gemini Code Assist moves to
+  aliases. NAME CHECK (2026-11-23 merge): the vendor's own site titles itself "Google
+  Antigravity" (antigravity.google, and the docs as "Google Antigravity Docs"), while
+  Google Cloud docs say just "Antigravity" in running text — the full name is kept, with
+  "Antigravity" as an alias. Cells that still describe legacy Code Assist features (code customization,
+  Code Assist on GitHub) say so via a `product:` override.
+  Antigravity surfaces: desktop App, CLI (`agy`), IDE extensions, and a Python SDK.
+  Enterprise access is via Gemini Enterprise licenses or pay-as-you-go on a Google Cloud
+  project; individuals use personal Google accounts (Free / Google AI Pro / Ultra).
+  NOTE: the August version of this file cited a single marketing URL for every cell and
+  several of its claims (24-hour re-index, a data-ownership slogan, model list) were
+  not on that page; all cells are now re-sourced to the specific doc pages read today.
 
 capabilities:
   ide_integration:
-    status: documented
-    value: [Antigravity IDEs, VS Code, JetBrains, Android Studio]
+    status: ga
+    value: [VS Code, Visual Studio, JetBrains, Android Studio, Zed, Xcode, Eclipse]
     notes: >
-      Current Google documentation lists Antigravity IDEs and Android Studio among Gemini
-      Enterprise AI developer tools. The migration page also identifies Antigravity IDE
-      extensions for VS Code and JetBrains. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini/enterprise/docs/locations
-    verified_on: 2026-11-22
+      Seven named editors on the IDE extensions page, plus "Other editors (ACP)" via the
+      CLI's Agent Client Protocol server. The overview page says enterprise features "apply
+      to Antigravity IDE extensions (GA in VS Code, Visual Studio, JetBrains, Zed, Xcode,
+      and Eclipse)" — Android Studio is NOT in that GA list (it integrates via the ACP
+      Registry, and enterprise sign-in for it is in Preview per the IDE extensions page,
+      a different page).
+      STATUS CHANGE 2026-11-23: documented -> ga (explicit GA wording now exists). The
+      August value (VS Code, JetBrains, Android Studio, Cloud Shell Editor, Cloud
+      Workstations) described legacy Code Assist.
+    source: https://antigravity.google/docs/overview
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   cli_agent:
+    product: Antigravity CLI (agy)
     status: documented
-    value: [Antigravity CLI, Gemini CLI]
     notes: >
-      Google directs future agentic coding toward Antigravity CLI. Gemini CLI remains documented
-      as an open-source local or Cloud Shell agent with a ReAct loop and local or remote MCP
-      servers, but the current page warns that Gemini CLI is not optimized for the latest Gemini
-      models. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini/docs/codeassist/gemini-cli
-    verified_on: 2026-11-22
+      Antigravity CLI (`agy`) replaces Gemini CLI. "Antigravity CLI preserves backward
+      compatibility with the core developer-experience constructs popularized by Gemini
+      CLI." Migration: `agy plugin import gemini` converts Gemini CLI extensions to
+      plugins; GEMINI.md / AGENTS.md context files keep working; workspace skills move from
+      .gemini/skills/ to .agents/skills/; MCP servers move to a standalone mcp_config.json.
+      "Partial parity" caveat: some Gemini CLI themes / visual overlays may not carry over.
+      Gemini CLI stopped serving the individual / Google AI Pro / Ultra tiers on
+      2026-06-18 per the Code Assist release notes (a different page).
+      The Google Cloud Gemini CLI page (also a different page,
+      docs.cloud.google.com/gemini/docs/codeassist/gemini-cli) now opens: "Gemini CLI is
+      not optimized for the latest Gemini models. For the best coding experience with
+      Gemini models, use Antigravity CLI."
+      No stage label on this page.
+    source: https://antigravity.google/docs/cli/gcli-migration
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   agentic_coding:
-    status: documented
+    status: ga
     notes: >
-      Existing Gemini Code Assist agent mode supports multi-step tasks, built-in tools, MCP
-      servers, plans, and approval of tool use, but its current documentation labels the feature
-      Preview. Google separately says future agentic coding assistance will be delivered through
-      Antigravity. No separate Antigravity launch stage is asserted here. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini/docs/codeassist/agent-mode
-    verified_on: 2026-11-22
+      STATUS CHANGE 2026-11-23: documented -> ga. The Gemini Enterprise release notes
+      (docs.cloud.google.com/gemini/enterprise/docs/release-notes, a different page),
+      2026-08-18: "AI developer tools is generally available (GA) for Gemini Enterprise
+      Standard, Plus, and Pay-as-you-go editions with an invoiced Cloud Billing account."
+      "This launch includes access to Antigravity 2.0, Antigravity CLI, and Android
+      Studio." Caveat: that GA statement covers only those Gemini Enterprise editions
+      (with invoiced billing), not Antigravity generally. Same convention as AWS Kiro and
+      Azure GitHub Copilot (ga on a vendor GA statement).
+      "Every Antigravity surface runs on a shared, highly optimized agent harness
+      co-trained with Gemini models, combining synchronous turn-by-turn code editing and
+      tool execution with asynchronous background subagents, scheduled cron sidecars, and
+      automated verification loops". Subagents: "Delegate complex background tasks to
+      concurrent subagents working across isolated Git worktrees". Also multi-agent swarms
+      (/teamwork), deep reasoning (/boost), "Sandboxed Chromium browser automation", and
+      safety via "Enforce local execution safeguards with granular tool approval gates".
+      The same harness powers the Managed Agents API on the platform tier (see
+      gcp/b-platform.yaml managed_agent_loop).
+      LEGACY CONTRAST: Gemini Code Assist agent mode (VS Code / IntelliJ) is still labelled
+      Preview on its own page (codeassist/agent-mode), which warns that "Agent mode in VS
+      Code uses the Gemini CLI, which is not optimized for the latest Gemini models" — the
+      GA above is for Antigravity, not legacy agent mode. (Paraphrase except quoted text.)
+    source: https://antigravity.google/docs/overview
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choice_coding:
     status: documented
-    value: [Gemini 3.x]
+    value: [Gemini 4 Neon, Gemini 4 Carbon, Gemini 4 Argon, Gemini 4 Hydrogen, Orchestrator, Gemini 3.8 Flash, Gemini 3.7 Flash, Gemini 3.6 Flash, Gemini 3.1 Pro, Claude Sonnet 5.5, Claude Opus 5.5]
     notes: >
-      The current Code Assist transition page says support will be limited to the Gemini 3.x
-      model family. The current Gemini Enterprise product page describes automated routing among
-      available models rather than a fixed model selection promise. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini/docs/codeassist/sunset
-    verified_on: 2026-11-22
+      Enterprise model table ("Antigravity in Gemini Enterprise supports included
+      first-party Gemini models and administrator-enabled third-party partner models"):
+      Gemini 4 Neon / Carbon / Argon / Hydrogen, Orchestrator (Carbon planner + Hydrogen
+      executor), Gemini 3.8 / 3.7 / 3.6 Flash, Gemini 3.1 Pro, and Anthropic Claude Sonnet
+      5.5 and Claude Opus 5.5 at four thinking levels. Claude 4.6 models and GPT-OSS-120b
+      are marked unavailable in Enterprise (they appear on consumer plans).
+      "Third-party partner models require administrator opt-in in the Google Cloud Console
+      and are billed by token consumption."
+      Hybrid caveat: with a Claude model selected, "lightweight first-party Gemini models
+      continue to run in the background" for context management and summaries.
+      STATUS NOTE 2026-11-23: the August value (Gemini 2.5 Pro / 2.5 Flash, Gemini family
+      only) is obsolete — third-party models ARE now offered.
+    source: https://antigravity.google/docs/enterprise/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choosable:
     status: documented
     notes: >
-      Gemini Enterprise describes automatic model routing, while third-party model choice is
-      identified as early access on the current product page. The reviewed material does not
-      establish unrestricted end-user choice across all models. (Paraphrase.)
-    source: https://cloud.google.com/gemini-enterprise
-    verified_on: 2026-11-22
+      User-selectable: "Open the Model picker in the chat composer and select your
+      preferred model" in the App and IDE extensions; in the CLI, `--model` or `/model`,
+      with `--effort` for reasoning level. Admins curate the list (third-party models are
+      opt-in). Not a fully open marketplace like Copilot's, but no longer Gemini-only.
+      CORRECTED 2026-11-23: the August note (Gemini family only, system auto-routes)
+      described legacy Code Assist.
+    source: https://antigravity.google/docs/enterprise/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_support_coding:
     status: documented
     notes: >
-      Current Gemini Code Assist agent-mode documentation supports configuring MCP servers, and
-      Gemini CLI documentation describes both local and remote MCP servers. These claims apply
-      to the existing Code Assist and Gemini CLI documentation while Google's developer-tool
-      transition to Antigravity proceeds. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini/docs/codeassist/agent-mode
-    verified_on: 2026-11-22
+      Antigravity supports the Model Context Protocol (MCP), "an open standard that lets AI
+      agents and editors securely connect to local developer tools, databases, file
+      parsers, and external remote APIs." App: MCP Servers section under Customizations.
+      CLI: "Antigravity CLI supports both local stdio processes and remote host MCP server
+      configurations", via the /mcp manager or mcp_config.json (global or workspace).
+      Also MCP Apps (interactive ui:// views rendered in the App).
+    source: https://antigravity.google/docs/mcp/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   codebase_indexing:
-    status: unknown
+    product: Gemini Code Assist Enterprise — code customization (legacy)
+    status: documented
     notes: >
-      Existing Gemini Code Assist Enterprise documentation supports code customization from
-      private GitHub, GitLab, and Bitbucket repositories. The current transition documentation
-      does not establish that this capability is available under Antigravity on the same terms,
-      so the current product row remains unknown. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini/docs/codeassist/overview
-    verified_on: 2026-11-22
+      Server-side private-repo indexing exists ONLY in legacy Code Assist Enterprise:
+      "Code customization keeps recommendations fresh by reindexing your codebase every
+      24 hours". Supported hosts: github.com, gitlab.com, bitbucket.org and on-prem GitLab
+      Enterprise, GitHub Enterprise and Bitbucket Data Center. The page contrasts it with
+      "full codebase awareness", which is "limited to searching files in the current folder
+      and open tabs in your IDE".
+      CAVEAT: Code Assist Enterprise can no longer be newly purchased (2026-10-09). The
+      successor, Antigravity, documents local workspace search (`/codesearch`) on a
+      different page but no server-side org-wide index was found.
+    source: https://docs.cloud.google.com/gemini/docs/codeassist/code-customization-overview
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_review:
-    status: unknown
+    product: Gemini Code Assist on GitHub
+    status: documented
     notes: >
-      The reviewed current Antigravity and Gemini Enterprise pages do not document a dedicated
-      pull-request or CI-integrated code-review feature. The prior Gemini Code Assist description
-      is not carried forward as current Antigravity evidence. (Paraphrase.)
-    source: https://cloud.google.com/gemini-enterprise
-    verified_on: 2026-11-22
+      PR-level review DOES exist: "Gemini Code Assist on GitHub lets you automatically
+      summarize pull requests and generate in-depth code reviews." Invoke at any stage of
+      the PR; interact via PR comments and the /gemini tag.
+      "The enterprise version of Gemini Code Assist on GitHub is a separate and distinct
+      product from Gemini Code Assist Enterprise." The enterprise version is labelled
+      Preview in the page's enterprise-version table; the consumer version carries no stage label — hence
+      `documented`.
+      CORRECTED 2026-11-23: the August note said a dedicated PR-level review feature was
+      not prominently documented; it is. In Antigravity itself, a Review pane lets you
+      review agent diffs and send line-level feedback (a different page), which is
+      in-session review, not PR review.
+    source: https://docs.cloud.google.com/gemini/docs/code-review/review-repo-code
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_data_retention:
     status: documented
     notes: >
-      The current Gemini Enterprise product page states that customer data, including prompts,
-      outputs, and model tuning, is not used to train Google's models or another customer's
-      models. Existing Code Assist security documentation separately says prompts and responses
-      are stateless and not stored in Google Cloud by default. (Paraphrase.)
-    source: https://cloud.google.com/gemini-enterprise
-    verified_on: 2026-11-22
+      For enterprise sign-in (Gemini Enterprise), the page lists three guarantees.
+      Data privacy: "Your code, prompts, and agent transcripts are never used to train
+      Google foundation models." Compliance: "All agent interactions operate under the
+      enterprise-grade Google Cloud Terms of Service." Security: "Respects your
+      organization’s IAM policies, VPC Service Controls (VPC-SC), and custom dual-region or
+      sovereign cloud boundaries."
+      Individual accounts are under terms derived from Google's consumer Terms of Service
+      (per the Plans page, a different page) — the enterprise guarantees above are stated
+      for the enterprise path only. Retention period for prompts is not stated here; the
+      enterprise page notes model interactions are logged to the customer's own Google
+      Cloud project.
+      CORRECTED 2026-11-23: the August data-ownership quote and the claims
+      about IP indemnification / no session storage were not found on any page read today.
+    source: https://antigravity.google/docs/ide/extensions/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_seat_pricing:
-    status: unknown
+    status: documented
+    value:
+      free: $0/month
+      google_ai_pro: consumer subscription (price not on this page)
+      google_ai_ultra: consumer subscription (price not on this page)
+      gemini_enterprise_standard_plus: from $30/seat/month
+      gemini_enterprise_payg: $0 seat fee, consumption-based
     notes: >
-      New Gemini Code Assist Standard and Enterprise subscriptions can no longer be purchased
-      after 2026-10-09, and the current Antigravity transition pages do not provide a standalone
-      comparable seat price. Existing Code Assist pricing is not carried forward as current
-      Antigravity pricing. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini/docs/codeassist/sunset
-    verified_on: 2026-11-22
+      Individuals: a $0/month free tier, then Google AI Pro and Ultra. Organizations: a
+      Business plan via Google Cloud — "Standard/Plus plans starting at $30 USD per seat
+      per month" and a "Pay-as-you-go plan with $0 seat fee and consumption-based
+      pricing", for eligible Gemini Enterprise customers. First-party Gemini models draw
+      from pooled seat credits ($10/month Standard, $15/month Plus); third-party models are
+      billed by token.
+      REMOVED 2026-11-23: legacy Code Assist Standard ($19/$22.80) and Enterprise
+      ($45/$54) seat prices — those subscriptions can no longer be purchased (sunset page).
+    source: https://antigravity.google/pricing
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_free_tier:
-    status: unknown
+    status: documented
     notes: >
-      The current transition documentation does not establish a current free Antigravity tier.
-      The older individual Gemini Code Assist offering is not treated as evidence for the new
-      product because Google has moved the agentic coding path to Antigravity. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini/docs/codeassist/sunset
-    verified_on: 2026-11-22
+      Antigravity "For Individuals" plan: "$0/month" — "Experience Antigravity without a
+      subscription plan", with access across the app, CLI, IDE extensions and Python SDK
+      and a "Baseline agent quota refreshed weekly". Free-tier models: Gemini 3.8 Flash
+      plus some third-party models (Claude 4.6 models and GPT-OSS-120b are flagged for
+      removal on November 30, 2026).
+      The legacy Gemini Code Assist for individuals free tier stopped serving requests on
+      2026-06-18 (Code Assist release notes, a different page).
+    source: https://antigravity.google/pricing
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   launch_stage_investigation:
     status: documented
     notes: >
-      Gemini Code Assist Standard and Enterprise are in a sunset and migration period: new
-      subscriptions are closed, existing subscriptions have published renewal limits, and
-      Antigravity is the stated future route for agentic coding. The reviewed first-party pages
-      identify early-access features but do not give one overall Antigravity stage label, so GA
-      is not inferred. (Paraphrase.)
+      LEGACY PRODUCT IS SUNSETTING: "Starting October 9, 2026, you can no longer purchase
+      new Gemini Code Assist Standard or Enterprise subscriptions." "Existing Gemini Code
+      Assist subscriptions will remain supported until the end of your contractual
+      agreement." Annual auto-renew ends January 31, 2027; monthly ends December 31, 2027;
+      existing Gemini Enterprise subscriptions keep their Code Assist entitlement "until
+      March 31, 2027". "Going forward, agentic coding assistance will be available through"
+      Antigravity, which the page says is included in Gemini Enterprise editions.
+      "Support will be limited to the Gemini 3.x model family only."
+      SUCCESSOR STAGE (each from a different page): the Gemini Enterprise release notes say
+      "AI developer tools is generally available (GA)" for Standard, Plus and
+      Pay-as-you-go (2026-08-18); the Antigravity pricing page labels its plans
+      "Generally Available".
+      Row kept `documented` because it is an investigation row, not a single feature.
     source: https://docs.cloud.google.com/gemini/docs/codeassist/sunset
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

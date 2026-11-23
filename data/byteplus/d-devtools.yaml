@@ -1,111 +1,203 @@
 provider: byteplus
 bucket: d
 product: TRAE
-aliases: [TRAE, Trae AI, TraeCode, TRAE Teams]
+aliases: [Trae AI, TraeCode, TraeWork, Trae, TRAE Teams]
 notes: >
-  Refreshed 2026-11-22 against the current official TRAE IDE, pricing, and BytePlus TRAE
-  Teams pages. The current international product brands itself TRAE; the BytePlus
-  enterprise page calls the enterprise offering TRAE Teams. The previous $10 Pro price,
-  unverified model list, and unsupported VS Code-foundation wording were removed.
-  (Paraphrase.)
+  TRAE is ByteDance's AI coding product (international site www.trae.ai; enterprise sales
+  routed via BytePlus — the pricing page says "Looking for enterprise solutions? Contact
+  us via BytePlus.").
+  RENAME / MERGE (seen 2026-11-23): the docs announce that "TraeWork and TraeCode have been
+  merged and upgraded into the all-new TRAE", with an Agent Mode and an IDE Mode across
+  desktop, web and mobile. The marketing site still uses the TraeCode name for the IDE,
+  plugin and (coming-soon) CLI. Previous product name in this file: Trae AI.
+  Surfaces: TRAE IDE (SOLO mode for autonomous end-to-end development), TraeCode Plugin
+  for VS Code / JetBrains, TRAE Enterprise. Pricing moved from Free / Pro $10 (August) to
+  Free / Pro $20 / Pro+ $60 / Ultra $200 per month.
+  Sources were split from the bare trae.ai homepage onto the specific docs.trae.ai and
+  www.trae.ai pages on 2026-11-23. docs.trae.ai is JS-rendered (read with Playwright).
+  BYTEPLUS PAGE (checked 2026-11-23): www.byteplus.com/en/product/trae sells the enterprise
+  offering as "TRAE Teams" ("Leading enterprise AI development solution"). It is priced via
+  Contact sales and lists member and access management, usage control, audit logs, SSO,
+  enterprise knowledge base, custom models and custom agents. Its performance, CLI/VPC
+  coming-soon and zero-retention copy matches www.trae.ai/enterprise (which calls it TRAE
+  Enterprise). It adds no fact that changes a cell status.
+  ALSO NOTE: BytePlus ModelArk sells its own "Coding Plan" subscription (Lite / Pro) for
+  using ModelArk models in coding tools. Not tracked as a separate product here.
 
 capabilities:
   ide_integration:
     status: documented
-    value: [TRAE IDE, plugin]
+    value: [TRAE IDE (TraeCode), TraeCode Plugin (VS Code, JetBrains)]
     notes: >
-      The official TRAE site presents TRAE as an IDE covering ideation, design, coding,
-      and testing. The BytePlus enterprise page lists IDE and plugin integration methods;
-      it also labels CLI as coming soon. No specific editor compatibility list is claimed
-      here. (Paraphrase.)
-    source: https://www.trae.ai/ide/
-    verified_on: 2026-11-22
+      Two surfaces. The standalone IDE: "A fully featured, AI-native IDE — out of the box
+      for your entire team."
+      The TraeCode Plugin: "Available for VS Code, JetBrains, and other mainstream
+      editors."
+      So TRAE is now both a standalone IDE (like Kiro) and a plugin for existing editors
+      (like Copilot). The TRAE privacy policy (www.trae.ai/privacy-policy, a different
+      page) also treats the two separately, e.g. "If you are only using Trae Plugin,
+      embeddings and metadata associated with your codebase files are not collected".
+      Both surfaces are presented on the Enterprise page. Whether the plugin is
+      available to individual plans is not stated there.
+      (2026-11-23: the August claims that TRAE is built on a VS Code foundation and
+      supports the VS Code extension marketplace were not re-verified and were dropped.)
+    source: https://www.trae.ai/enterprise
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   cli_agent:
-    status: documented
+    status: unknown
     notes: >
-      The current BytePlus TRAE Teams page lists IDE, plugin, or CLI integration, with CLI
-      explicitly marked coming soon. This records the documented roadmap state rather than
-      claiming that a generally available standalone CLI exists. (Paraphrase.)
-    source: https://www.byteplus.com/en/product/trae
-    verified_on: 2026-11-22
+      CHANGED FROM `none` (2026-11-23). The Enterprise page announces a CLI that is not yet
+      shipped: integration methods are "IDE, plugin, or CLI (coming soon) — every developer
+      can work the way they work best." The product card reads "TraeCode CLI" "(coming
+      soon)" and describes it as "Tailored for large-scale refactoring, bulk generation,
+      code migration, and test backfilling." It is meant to run from CI/CD.
+      The coming-soon label announces a future CLI but is not a positive statement that no CLI is
+      offered, so this stays `unknown` rather than `none`. Revisit when the coming-soon
+      label is removed. The BytePlus TRAE Teams page (www.byteplus.com/en/product/trae)
+      carries the same "IDE, plugin, or CLI (coming soon)" wording (checked 2026-11-23).
+      A refresh dated 2026-11-22 set this cell to `documented` from that wording; rejected,
+      because a coming-soon label documents a roadmap item, not a shipped CLI.
+      Separately, ByteDance publishes the open-source research project Trae Agent
+      (github.com/bytedance/trae-agent), an LLM-based software-engineering agent with a
+      CLI; it is a research framework, not the TRAE product CLI. (Paraphrase, from a
+      different page: github.com/bytedance/trae-agent.)
+    source: https://www.trae.ai/enterprise
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   agentic_coding:
     status: documented
     notes: >
-      The current TRAE IDE page describes SOLO as its most advanced coding agent. It says
-      SOLO can take a task with context and tools, plan and execute a complete solution,
-      and work with built-in, custom, and sub-agents. The page also describes parallel
-      projects and agents. (Paraphrase.)
-    source: https://www.trae.ai/ide/
-    verified_on: 2026-11-22
+      SOLO mode is the autonomous agent: "SOLO mode enables AI to autonomously plan and
+      execute the entire development process from requirement understanding, code
+      generation, testing, to result preview and deployment."
+      The built-in Agent plans first and then executes: it "first generates an actionable
+      plan based on your goals and project context, then proceeds with development step by
+      step after you confirm the plan."
+      Also: multitask management, a DiffView of changes, and integrations such as
+      Supabase, Vercel deployment and Stripe. The docs also cover subagents, custom agents,
+      hooks, worktrees and cloud tasks (pricing caps concurrent cloud tasks per plan).
+    source: https://docs.trae.ai/ide/solo-mode
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choice_coding:
     status: documented
+    value: [Seed-2.1-Turbo, GPT-6.x / GPT-5.x series, GLM-5.2, DeepSeek-V4.x, Kimi-K3 / K2.7-Code / K2.5, Gemini-3.1-Pro-Preview, MiniMax-M3, Grok-4.x (U.S. only)]
     notes: >
-      The current TRAE Teams page advertises access to frontier models and the ability to
-      connect custom enterprise models. It does not enumerate a stable model list on the
-      reviewed page, so the former hard-coded model names were removed. (Paraphrase.)
-    source: https://www.byteplus.com/en/product/trae
-    verified_on: 2026-11-22
+      Multi-provider, and the list DIFFERS BY REGION. Non-U.S. users get Seed-2.1-Turbo,
+      GPT-6.2/6.1/6 and GPT-5.6/5.5/5.4/5.2 variants, GLM-5.2, DeepSeek-V4.1-Flash /
+      V4-Flash / V4-Pro, Kimi-K3 / K2.7-Code / K2.5, Gemini-3.1-Pro-Preview /
+      Gemini-3-Flash-Preview, and MiniMax-M3 / M2.7.
+      U.S. users get a different list: GPT models, Grok-4.7 / 4.6, Gemini 3.1 / 2.5 and
+      Kimi-K2-0905, with no Seed, DeepSeek, GLM or MiniMax.
+      Some models are gated by plan: "The following models are available only after you
+      upgrade to the new plan".
+      Custom models are supported (see model_choosable).
+      (2026-11-23: the August list of GPT-5.4, Seed-2.1-Turbo, MiniMax-M3, Kimi-K2.5 and
+      Gemini-3 has been superseded. The August claim that BytePlus and Volcano Engine are
+      preset custom providers was not re-verified and was dropped.)
+    source: https://docs.trae.ai/ide/models
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   model_choosable:
     status: documented
     notes: >
-      TRAE Teams documents multi-model support, including frontier models and custom
-      enterprise models. The official page does not state that every model is available
-      on every individual plan. (Paraphrase.)
-    source: https://www.byteplus.com/en/product/trae
-    verified_on: 2026-11-22
+      "TRAE provides multiple mainstream built-in models, enabling you to flexibly switch
+      between them for different tasks. In addition to TRAE's built-in models, you can also
+      add custom models to meet your personal needs."
+      Custom models come from preset providers (API key) or a fully custom configuration:
+      API format OpenAI Chat Completions or Anthropic Messages, request URL, model ID and
+      key. Per-model tuning covers context window, tool call rounds, thinking mode, and
+      temperature/top-p/top-k.
+      Pricing also offers an Auto mode, and the Free plan is limited to Auto mode (see
+      coding_free_tier).
+    source: https://docs.trae.ai/ide/models
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_support_coding:
     status: documented
     notes: >
-      The current TRAE IDE page explicitly documents Model Context Protocol support for
-      agents to access external resources on demand. The same page describes built-in
-      preview-tab browser interaction, console-log access, and debugging; that is not
-      upgraded to a managed browser-use claim for this coding-tool row. (Paraphrase.)
-    source: https://www.trae.ai/ide/
-    verified_on: 2026-11-22
+      CHANGED FROM `unknown`. There is a dedicated MCP doc: "In TRAE, agents act as MCP
+      clients and can make requests to MCP servers to utilize the tools they provide. You
+      can add MCP servers yourself and integrate them into custom agents for use."
+      Transports: "In TRAE, MCP servers support three transport types: stdio, SSE, and
+      Streamable HTTP." Local and remote servers are supported, along with the tools,
+      logging and list-changed parts of the protocol.
+      Disclaimer the vendor volunteers: "TRAE does not review or endorse these servers".
+    source: https://docs.trae.ai/ide/model-context-protocol
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   codebase_indexing:
     status: documented
     notes: >
-      The current TRAE Teams page says enterprise indexing supports up to 100,000 files
-      and 150 million lines of code with real-time incremental updates. It also describes
-      dedicated GPU clusters for low-latency response under high concurrency. (Paraphrase.)
-    source: https://www.byteplus.com/en/product/trae
-    verified_on: 2026-11-22
+      CHANGED SINCE AUGUST — CODEBASE INDEX BEING RETIRED for client versions released on
+      or after October 22, 2026: the "Indexing & Docs" feature "in TRAE's settings canter
+      will be discontinued for client versions released on or after October 22, 2026."
+      "Older versions of the TRAE client are currently not affected by this change."
+      The vendor's stated reason: "To continuously improve our service and deliver a more
+      native agentic coding experience".
+      Where it remains, the codebase index is used through @Folder: "Once the index has
+      been built, you can use @Folder when chatting with AI." (The separate Privacy mode
+      page, docs.trae.ai/ide/privacy-mode, says TRAE "temporarily uploads your codebase
+      files to our servers to compute embeddings".)
+      For future file-based Q&A the vendor points users to the Upload Attachment feature
+      in the chat input box. (Paraphrase.)
+      COUNTERPOINT on a different page: the TRAE Enterprise page still advertises
+      Massive Repo Indexing (up to 100K files / 150M lines, incremental). (Paraphrase, from
+      a different page: www.trae.ai/enterprise.) So repo-wide indexing is documented for
+      Enterprise, while newer clients lose the Indexing & Docs feature.
+    source: https://docs.trae.ai/ide/codebase-indexing
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_review:
-    status: unknown
+    status: documented
     notes: >
-      The reviewed current TRAE pages describe coding, testing, tools, agents, and
-      enterprise controls but do not establish a dedicated pull-request or inline AI code
-      review feature. (Paraphrase.)
-    source: https://www.trae.ai/ide/
-    verified_on: 2026-11-22
+      CHANGED FROM `unknown`. Agent-powered code review is documented: "The agent-powered
+      code review feature leverages the agent to automatically identify potential issues
+      in code, extract core changes, present business process changes through visual
+      charts, and display code issues using the diff view".
+      Scopes: uncommitted changes, a single commit, and "Branch differences: Review all
+      differences between the current branch and another target branch (local or
+      remote)." Modes: Summarize and Review, Review, Summarize.
+      The automatic review-on-commit toggle lives under Settings > Beta > Agent Review,
+      i.e. a beta setting. Manual review is not labelled.
+      SCOPE: this is in-IDE review of local changes. No hosted PR-review bot
+      (GitHub/GitLab PR comments) is documented on this page.
+    source: https://docs.trae.ai/ide/agent-powered-code-review
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_data_retention:
     status: documented
     notes: >
-      The current TRAE IDE page says the product follows a local-first and minimal-data
-      collection approach. It says codebase files are stored locally, plaintext uploaded
-      for indexing is deleted after processing, and Privacy Mode and ignore controls are
-      available. The BytePlus enterprise page separately states zero retention, no model
-      training on code, and no retained logs. These are current product statements; the
-      exact scope of each statement should be checked against the applicable plan terms.
-      (Paraphrase.)
-    source: https://www.byteplus.com/en/product/trae
-    verified_on: 2026-11-22
+      CHANGED FROM `unknown`. Default individual use MAY train on chat content: "When you
+      use TRAE's services, your information like your chat interactions, including related
+      code snippets and AI-generated outputs, may be used for analytics, product
+      improvement, and model training."
+      Opt-out: "When Privacy mode is enabled, TRAE will not use any of your chat
+      interactions, including related code snippets and AI-generated outputs, for the
+      above-mentioned purposes." Privacy mode only works while logged in.
+      Codebase files are excluded either way: "Regardless of your Privacy mode setting, TRAE
+      will not use your codebase files for analytics, product improvement, or model
+      training." For indexing, files are temporarily uploaded for embedding and "the
+      uploaded plaintext code will be permanently deleted."
+      ENTERPRISE is stricter: the Enterprise page claims zero retention (code never stored
+      on TRAE servers), no model training on your code, and no logs retained. (Paraphrase,
+      from a different page: www.trae.ai/enterprise. The BytePlus TRAE Teams page,
+      www.byteplus.com/en/product/trae, repeats it.)
+      The TRAE IDE page (www.trae.ai/ide/) says TRAE follows the principle of
+      "local-first" and "minimal data collection". It says user data is stored in the
+      United States, Singapore and Malaysia based on account location, with isolation
+      for local data regulations. (Paraphrase of the storage sentence.)
+    source: https://docs.trae.ai/ide/privacy-mode
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_seat_pricing:
@@ -116,33 +208,47 @@ capabilities:
       pro_plus: $60/month
       ultra: $200/month
     notes: >
-      The current international pricing page lists Free at $0, Pro at $20 per month,
-      Pro+ at $60 per month, and Ultra at $200 per month on monthly billing. It also
-      presents annual billing with a displayed 17 percent saving. The page directs
-      enterprise buyers to BytePlus rather than publishing an enterprise seat price.
-      (Paraphrase.)
+      PRICE CHANGE SINCE AUGUST (was Free + Pro $10/month). Four individual tiers now:
+      Free $0, Pro $20, Pro+ $60, Ultra $200 per month. The Yearly toggle shows a 17%
+      saving. Each paid
+      tier includes a dollar-denominated usage balance equal to its price ($20 / $60 /
+      $200) and a cap on concurrent cloud tasks (10 / 15 / 20). Ultra adds model early
+      access.
+      "Usage is the dollar-denominated balance included in your plan, consumed as you make
+      AI requests."
+      Enterprise pricing is not listed: "Looking for enterprise solutions? Contact us via
+      BytePlus."
+      The BytePlus TRAE Teams page also publishes no seat price, only Contact sales. Its
+      feature list includes SSO, audit logs and usage control. (Paraphrase; see
+      www.byteplus.com/en/product/trae.)
     source: https://www.trae.ai/pricing
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   coding_free_tier:
     status: documented
     notes: >
-      The current Free plan is $0 and includes Auto mode only, limited usage, limited
-      autocomplete, 5,000 monthly autocomplete uses, and up to two concurrent cloud
-      tasks. The page describes this as a free plan, not as an unlimited free tier.
-      (Paraphrase.)
+      Free tier exists at $0 with Auto mode only, limited usage, limited autocomplete
+      (5000/month), the standard queue, and 2 concurrent cloud tasks.
+      The usage allowance is one-off: "For free users, it's a one-time allowance and doesn't
+      reset monthly." That is less generous than a monthly-resetting free tier such as
+      Copilot Free.
     source: https://www.trae.ai/pricing
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   launch_stage_investigation:
     status: documented
     notes: >
-      The current TRAE IDE and pricing pages present an operating product with free and
-      paid plans. The reviewed TRAE pages do not state GA, preview, or beta for the core
-      TRAE product. The BytePlus enterprise page labels CLI and VPC deployment coming
-      soon, which is not generalized to the whole product. (Paraphrase.)
-    source: https://www.trae.ai/pricing
-    verified_on: 2026-11-22
+      TRAE is commercially available with paid tiers. No GA, preview or beta label is
+      applied to the product as a whole. The current docs landing page announces the
+      merger: "TraeWork and TraeCode have been merged and upgraded into the all-new TRAE,
+      an integrated platform that supports the entire development lifecycle."
+      Individual features carry their own stages: some settings sit under a Beta settings
+      page (e.g. automatic agent review), several bundled Gemini models are -Preview, and
+      the CLI and VPC deployment are marked coming soon on the Enterprise page.
+      (Paraphrase, from separate pages: docs.trae.ai/ide/agent-powered-code-review,
+      docs.trae.ai/ide/models, www.trae.ai/enterprise.)
+    source: https://docs.trae.ai/ide/traework-to-traecode-data-migration
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

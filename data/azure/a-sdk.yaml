@@ -1,177 +1,275 @@
 provider: azure
 bucket: a
 product: Microsoft Agent Framework
-aliases: [MAF, agent-framework, Semantic Kernel, AutoGen]
+aliases: [MAF, agent-framework, agent-framework-go, Semantic Kernel, AutoGen]
+repo: https://github.com/microsoft/agent-framework
 notes: >
-  Microsoft Agent Framework is the current Microsoft framework for agents and multi-agent
-  workflows. Current Microsoft Learn documentation describes it as the direct successor to
-  Semantic Kernel and AutoGen and provides migration guides for both. It now documents
-  .NET, Python, and Go surfaces; Go is explicitly public preview.
+  "A framework for building, orchestrating and deploying AI agents and multi-agent
+  workflows" / "an open, multi-language framework for building production-grade AI agents
+  and multi-agent workflows".
+  SUCCESSOR TO TWO PRIOR FRAMEWORKS — this is the key fact for anyone with existing code:
+  MAF consolidates Semantic Kernel and AutoGen, offering migration guides for both
+  ("Migration from Semantic Kernel", "Migration from AutoGen") rather than coexistence.
+  No shared-codebase or dependency relationship is described.
+  SOURCE OUTAGE (2026-11-23): the main .NET/Python repo github.com/microsoft/agent-framework
+  returns HTTP 404 (web, raw, and API) with no redirect. This is NOT a documented rename:
+  Microsoft Learn, the PyPI package metadata, and the Go repo README still link to that
+  URL, and no announcement of a move was found on devblogs.microsoft.com/agent-framework.
+  Packages keep shipping (PyPI agent-framework 1.26.0 on 2026-11-12; NuGet
+  Microsoft.Agents.AI 1.28.0 on 2026-11-06). Cells that could be re-sourced were moved to
+  Microsoft Learn (learn.microsoft.com/en-us/agent-framework) or the PyPI project page
+  (which mirrors the Python README); repo-only facts (stars, governance, AF Labs) are left
+  at their 2026-08 verification.
+  A separate Go implementation now exists at github.com/microsoft/agent-framework-go
+  ("Microsoft Agent Framework for Go is in public preview").
 
 capabilities:
   sdk_languages:
     status: documented
     value: [python, csharp, go]
     notes: >
-      Microsoft Learn provides Python, C#/.NET, and Go getting-started paths. Go is public
-      preview and requires Go 1.26 or later; the language-specific feature set is narrower
-      than the Python and .NET surfaces.
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/overview
-    verified_on: 2026-11-22
+      The Learn overview shows `dotnet add package Microsoft.Agents.AI.Foundry --prerelease`,
+      `pip install agent-framework` and `go get github.com/microsoft/agent-framework-go`.
+      Go is newer and narrower: "Agent Framework for Go is in public preview and requires Go
+      1.26 or later. Declarative agents, CodeAct, and functional workflows aren't implemented
+      in Go." Python and C#/.NET remain the full-featured implementations.
+      Only provider SDK here with first-class .NET support.
+    source: https://learn.microsoft.com/en-us/agent-framework/overview/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   authoring_mode:
     status: documented
-    value: both
+    value: code-first
     notes: >
-      The framework supports code-defined agents and workflows plus declarative workflows
-      defined with YAML. The current docs show Python, C#, and Go programmatic builders and
-      a separate declarative-workflow surface.
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/workflows/declarative-workflows
-    verified_on: 2026-11-22
+      SDK-first (C#, Python, Go code samples). A declarative-agent option also exists for
+      .NET/Python — the overview notes "Declarative agents, CodeAct, and functional
+      workflows aren't implemented in Go." No visual builder in the framework itself.
+      (Paraphrase of the declarative-workflows overview,
+      agent-framework/workflows/declarative: workflows can also be defined in YAML
+      configuration files instead of programmatic code, for C# and Python.) YAML config is
+      not a low-code visual builder, so the value stays code-first.
+    source: https://learn.microsoft.com/en-us/agent-framework/overview/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   workflow_engine:
     status: documented
     notes: >
-      Workflows connect executors and edges into directed graphs, support streaming and
-      non-streaming execution, validate graphs before execution, and can pause for human
-      input. Checkpoints are defined at superstep boundaries. (Paraphrase.)
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/workflows/core-concepts/workflows
-    verified_on: 2026-11-22
+      "Functional and graph-based workflows that connect agents and functions through
+      explicit execution paths." Beyond merging SK and AutoGen, MAF "introduces workflows
+      that give developers explicit control over multi-agent execution paths, plus a robust
+      state management system for long-running and human-in-the-loop scenarios".
+      (Paraphrase: "time-travel" was stated in the main repo README, which now 404s; on
+      2026-11-23 it is still listed among workflow patterns in the separate Go repo README.)
+      (Paraphrase of the workflows builder-and-execution page: workflows run in streaming
+      or non-streaming mode, and builders validate the graph — type compatibility,
+      connectivity, executor binding, edges — before execution.)
+    source: https://learn.microsoft.com/en-us/agent-framework/overview/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   multi_agent_patterns:
     status: documented
+    value: [sequential, concurrent, handoff, group chat, magentic]
     notes: >
-      Current documentation describes graph-based workflows that coordinate multiple agents
-      or functions through explicit execution paths. It does not establish a fixed taxonomy
-      of supervisor, swarm, or handoff patterns in the overview.
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/overview
-    verified_on: 2026-11-22
+      Built-in orchestration patterns table: Sequential ("Agents execute one after another
+      in a defined order"), Concurrent ("Agents execute in parallel"), Handoff ("Agents
+      transfer control to each other based on context"), Group Chat ("Agents collaborate in
+      a shared conversation"), and Magentic ("A manager agent dynamically coordinates
+      specialized agents"). Magentic is a fifth pattern not in the August list.
+    source: https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   human_in_the_loop:
     status: documented
     notes: >
-      Workflow runs can halt while waiting for external input, and the framework overview
-      lists human-in-the-loop scenarios for long-running state management. (Paraphrase.)
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/workflows/core-concepts/workflows
-    verified_on: 2026-11-22
+      "HITL is achieved through the request and response handling mechanism in workflows,
+      which allows executors to send requests to external systems (such as human operators)
+      and wait for their responses before proceeding with the workflow execution."
+      Implemented via RequestPort / RequestInfoEvent.
+    source: https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   checkpoint_resume:
     status: documented
     notes: >
-      Checkpoint-enabled workflows save execution state at superstep boundaries. The current
-      workflow documentation also describes keeping a run open so an application can resume
-      it after a pause.
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/workflows/core-concepts/workflows
-    verified_on: 2026-11-22
+      "Checkpoints allow you to save the state of a workflow at specific points during its
+      execution, and resume from those points later." Checkpoints are created at the end of
+      each superstep. Since Python 1.13.0, entry checkpoints "make the complete workflow run
+      replayable".
+    source: https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   cross_cloud_model_adapters:
     status: documented
-    value: [Microsoft Foundry, Anthropic, Azure OpenAI, OpenAI, Ollama]
+    value: [Microsoft Foundry, Azure OpenAI, OpenAI, Anthropic, Amazon Bedrock, Google Gemini / Vertex AI, Ollama, Mistral]
     notes: >
-      The current overview explicitly names Microsoft Foundry, Anthropic, Azure OpenAI,
-      OpenAI, and Ollama as supported model providers and links to a larger integration
-      list. It does not document Bedrock or Gemini on this page.
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/overview
-    verified_on: 2026-11-22
+      CHANGED SINCE AUGUST — rival clouds are now named. The integrations-by-provider table
+      lists "Amazon Web Services" ("Amazon Bedrock and Anthropic Claude on Bedrock"),
+      "Google" ("Google Gemini and Anthropic Claude on Vertex AI"), "Anthropic" ("Claude
+      models, the Claude Agent SDK, Foundry, Bedrock, and Vertex AI"), plus OpenAI,
+      Ollama ("Local model inference through native and OpenAI-compatible clients"), Mistral,
+      and TypeSafe AI alongside Microsoft Foundry / Azure.
+      The August conclusion (no rival-cloud provider named) no longer holds — MAF now
+      documents AWS and GCP adapters.
+    source: https://learn.microsoft.com/en-us/agent-framework/integrations/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_client:
-    product: MCPStdioTool / MCPStreamableHTTPTool
+    product: MCPToolDefinition / hostedtool.MCPServer
     status: documented
     notes: >
-      The framework documents local stdio and remote streamable-HTTP MCP clients in Python,
-      MCP client integration through the official MCP C# SDK, and MCP transports in Go.
-      Hosted MCP tools are also documented for Foundry-backed execution. Tool approval and
-      authentication headers are configurable.
-    source: https://learn.microsoft.com/en-us/agent-framework/agents/tools/local-mcp-tools
-    verified_on: 2026-11-22
+      Full MCP client support. "Connect your Foundry agents to Model Context Protocol (MCP)
+      servers by using the MCP tool." Usage table covers Python, C#, JavaScript, Java SDKs
+      and REST. Two modes: (1) the MCP tool connecting directly to a remote MCP server, and
+      (2) Foundry Toolboxes, which bundle tools "into a single MCP-compatible endpoint".
+      Supports public and private MCP server endpoints ("Private MCP requires private
+      networking setup and a dedicated MCP subnet within your virtual network").
+      Tool approval configurable via require_approval: always, never, or per-tool lists.
+      (The Build 2025 partnership quote previously in this cell is not on this page and was
+      removed.)
+      Framework-side MCP client in your own process (paraphrase of
+      agent-framework/agents/tools/local-mcp-tools): local stdio and remote streamable HTTP
+      connections via MCPStdioTool / MCPStreamableHTTPTool in Python; C# uses the official
+      MCP C# SDK; custom headers are configurable. (Paraphrase.)
+    source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_license:
-    status: unknown
+    status: documented
+    value: MIT
     notes: >
-      The current Microsoft Learn documentation does not state the repository license, and
-      the repository URL was not usable for a fresh first-party verification. Preserve as
-      unknown rather than carry forward the previous snapshot.
+      PyPI metadata for agent-framework: "MIT License" (classifier "OSI Approved :: MIT
+      License"); NuGet Microsoft.Agents.AI 1.28.0 also declares MIT, as does the Go repo.
+      Re-sourced from the main GitHub repo, which 404s as of 2026-11-23.
+      More permissive than the Apache-2.0 used by Strands, ADK, and AgentScope.
+    source: https://pypi.org/project/agent-framework/
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
 
   oss_governance:
     status: documented
     value: single-vendor
     notes: >
-      The current documentation is published and maintained by Microsoft and does not state
-      a foundation governance model. This records the documented ownership, not a claim about
-      future community governance.
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/overview
-    verified_on: 2026-11-22
+      Microsoft-owned org. No foundation governance stated.
+      NOT RE-VERIFIED 2026-11-23: source repo returns HTTP 404.
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
     verified_by: "@notacryptodad"
 
   oss_release_cadence:
     status: documented
     notes: >
-      The current official overview and documentation do not state a formal release cadence.
-      Go is explicitly public preview, so language maturity is not uniform.
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/overview
-    verified_on: 2026-11-22
+      No formal schedule published. Continuous/rolling releases — roughly weekly on PyPI:
+      agent-framework 1.26.0 (Nov 12, 2026), 1.25.0 (Nov 7), 1.24.0 (Oct 30), 1.23.0
+      (Oct 22). Separate .NET track (NuGet Microsoft.Agents.AI 1.28.0 on 2026-11-06) and a
+      Go track in its own repo. PyPI classifier: Development Status 5 -
+      Production/Stable; "Experimental Lab modules are installed separately with pip
+      install agent-framework-lab".
+      Migration-from-SK/AutoGen history is itself a breaking-change signal worth noting.
+    source: https://pypi.org/project/agent-framework/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_runtime_lockin:
     status: none
     notes: >
-      The framework documents multiple Microsoft and third-party model providers, local
-      execution, and third-party systems. It can connect to Foundry, but the docs do not
-      require Foundry for framework use. Third-party data handling and service terms remain
-      the application owner's responsibility. (Paraphrase.)
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/overview
-    verified_on: 2026-11-22
+      No runtime lock-in at the framework level. Hosting "is an operational choice between
+      Microsoft-managed Foundry Hosted Agents and self-hosting"; self-hosting means "Your
+      application runs in your web service, container, runtime, or existing
+      infrastructure." Durable execution is available via the Durable Extension.
+      "Microsoft Foundry Hosted Agents is generally available. The current Python
+      self-hosting packages are prerelease".
+      Soft pressure toward Azure: quickstarts default to Azure credentials, and the Learn
+      overview (a different page) places non-Microsoft "Third-Party Systems" outside product
+      terms. Same pattern as Strands/Bedrock and AgentScope/DashScope — default is vendor,
+      but not required. Verdict: `none` (consistent with the other two).
+    source: https://learn.microsoft.com/en-us/agent-framework/hosting/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   oss_community:
-    status: unknown
+    status: documented
+    value:
+      stars: 12600
+      forks: 2100
+      commits: 2719
+      open_issues: 525
     notes: >
-      No current repository activity or community-count snapshot was re-stamped for this
-      refresh. Preserve as unknown rather than carrying forward the August snapshot.
+      Snapshot 2026-08-04. Higher than Strands (6.8k), but NOT the highest in this set —
+      a repo page cannot support a cross-repo superlative, and spot checks show
+      agentscope ~28.5k and adk-python ~21k both above MAF. Fill those cells before making
+      any comparative claim.
+      NOT RE-VERIFIED 2026-11-23: source repo returns HTTP 404, so no fresh snapshot is
+      possible (the separate agent-framework-go repo has ~695 stars).
+    source: https://github.com/microsoft/agent-framework
+    verified_on: 2026-08-04
+    verified_by: "@notacryptodad"
 
   in_repo_eval:
-    status: unknown
+    status: documented
     notes: >
-      The current overview documents integrations with evaluation services but does not
-      establish a stable in-repository evaluation harness. Preserve as unknown.
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/overview
-    verified_on: 2026-11-22
+      "Agent Framework includes a built-in evaluation framework that lets you measure agent
+      quality, safety, and correctness." "In Python, the evaluation framework is part of the
+      core agent_framework package. Evaluators implement the Evaluator protocol, and
+      orchestration is provided through evaluate_agent() and evaluate_workflow() functions."
+      "In .NET, the evaluation framework builds on Microsoft.Extensions.AI.Evaluation."
+      LocalEvaluator "runs checks locally without API calls — ideal for inner-loop
+      development, CI smoke tests, and fast iteration"; FoundryEvals "connects to Microsoft
+      Foundry's evaluation service for cloud-based LLM-as-judge evaluation."
+      RE-SOURCED 2026-11-23: the former GitHub repo source returns HTTP 404; the earlier
+      "AF Labs" experimental framing is not on this Learn page and was dropped.
+    source: https://learn.microsoft.com/en-us/agent-framework/agents/evaluation
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   local_dev_loop:
     status: documented
     notes: >
-      The workflow documentation includes a workflow that runs without a model or
-      credentials, and the overview provides local programmatic getting-started paths.
-      This supports local development before connecting a hosted model.
-    source: https://learn.microsoft.com/en-us/agent-framework/user-guide/workflows/core-concepts/workflows
-    verified_on: 2026-11-22
+      "If you are exploring or developing locally, install the standard framework package
+      set". Quickstart runs against plain OpenAI (OPENAI_API_KEY) as well as Azure OpenAI /
+      Foundry, and "mixed shells default to OpenAI when OPENAI_API_KEY is present" — no Azure
+      account required for a local loop. Ollama provides fully local model inference.
+      (Paraphrase of the workflows builder-and-execution page: its Go sample builds a
+      text-processing workflow that needs no model or credentials.)
+    source: https://pypi.org/project/agent-framework/
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   otel_traces:
     status: documented
     notes: >
-      Microsoft Agent Framework documents OpenTelemetry instrumentation for agent, tool,
-      and model-call activity and configuration through standard providers and exporters.
-      (Paraphrase.)
+      Native OpenTelemetry instrumentation for .NET (UseOpenTelemetry) and Python
+      (configure_otel_providers / enable_instrumentation), with exporters to Azure Monitor,
+      OTLP, or console. "Agent Framework automatically propagates trace context to MCP
+      servers". Python follows GenAI semantic conventions (latest experimental by default,
+      v1.36 selectable).
     source: https://learn.microsoft.com/en-us/agent-framework/agents/observability
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   sdk_telemetry_phone_home:
-    status: unknown
+    status: documented
     notes: >
-      The current observability documentation explains how to configure OpenTelemetry but
-      does not establish whether an SDK sends telemetry without a user-configured exporter.
-      Preserve as unknown.
+      CHANGED 2026-11-23 (was `none`): the observability page now discloses a default,
+      opt-out usage signal to Microsoft services. "Agent Framework also adds its package and
+      version to the User-Agent of supported client requests. Approved Microsoft Foundry and
+      Azure OpenAI request paths can include a process-wide feature-usage token that encodes
+      framework feature categories, not prompt or response content."
+      Opt-outs: "AGENT_FRAMEWORK_FEATURE_MASK_DISABLED=true - Disables only the
+      feature-usage token and keeps the package/version User-Agent." and
+      "AGENT_FRAMEWORK_USER_AGENT_DISABLED=true - Disables the entire Agent Framework
+      User-Agent contribution, including the feature token."
+      No separate analytics endpoint is described — the token rides on requests the app
+      already makes to Foundry/Azure OpenAI. OpenTelemetry itself only goes to
+      user-configured exporters ("We do not install exporters by default").
+      "ENABLE_INSTRUMENTATION - Default is true"; "ENABLE_SENSITIVE_DATA - Default is false".
     source: https://learn.microsoft.com/en-us/agent-framework/agents/observability
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"

@@ -6,296 +6,627 @@ aliases:
   - Vertex AI Reasoning Engine
   - Agent Runtime
   - Agent Platform Runtime
+  - Agent Engine
   - ReasoningEngine
 notes: >
-  The current product name is Gemini Enterprise Agent Platform. Agent Runtime is the managed
-  runtime name, while ReasoningEngine remains the API resource name for backwards
-  compatibility. The platform now documents Agent Identity, Agent Registry, Agent Gateway,
-  Evaluation Service, Agent Observability, Sessions, Memory Bank, and sandbox services.
-  (Paraphrase.)
+  RENAMED. The umbrella name is "Gemini Enterprise Agent Platform"; the runtime is
+  called both "Agent Runtime" and "Agent Platform Runtime", and shortened to
+  "Agent Platform" in prose. The rename is now formally recorded in the platform's OWN
+  release notes (docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes,
+  2026-04-22 "Initial release of Gemini Enterprise Agent Platform"): "Agent Engine is now
+  Agent Runtime.", Agent Builder Sessions -> Agent Platform Sessions, Memory Bank ->
+  Agent Platform Memory Bank.
+  API RESOURCE NAME: per the Agent Runtime page (build/runtime), "the name of the resource
+  in the API reference is ReasoningEngine to maintain backwards compatibility."
+  LAUNCH STAGES live in release-notes feeds, NOT the product docs (the overview, deploy,
+  scale and sandbox pages carry no GA/Preview label for any service). Two feeds:
+  (a) the legacy VERTEX AI release notes (old product name) for 2025 events:
+    2025-03-04  "Vertex AI Agent Engine is now generally available (GA)."
+    2025-07-08  Memory Bank enters Preview
+    2025-09-10  Code Execution enters Preview
+    2025-11-07  Agent Runtime Express mode reaches GA
+    2025-12-16  Sessions and Memory Bank reach GA
+  (b) the Gemini Enterprise Agent Platform release notes for 2026 events:
+    2026-04-22  Agent Identity GA; Agent Gateway Private Preview; Agent Registry Public
+                Preview; Agent Runtime long-running operations (up to 7 days)
+    2026-05-19  Managed Agents API Preview; Skill Registry public preview
+    2026-05-26  Computer use / custom container sandboxes Preview
+    2026-06-18  Agent Gateway GA; Agent Registry GA; Agent Observability GA
+    2026-06-24  Model Armor for Agent Gateway GA
+    2026-09-09  Computer Use and Shell sandboxes GA
+    2026-11-11  Agent Gateway for cross-cloud Limited Preview
+  METHOD LESSON, same as AWS: launch stage may exist ONLY in a release-notes or
+  announcement feed, and may be filed under the product's OLD name after a rename.
+  REGIONS: the platform's own "Supported locations for agents in Agent Platform" page
+  (resources/agent-locations) lists 23 self-serve regions plus us/eu/global endpoints.
+  The "in GA with allowlist" wording on the Gemini Enterprise locations page applies to
+  Gemini Enterprise / Gemini Notebook in-country locations, not to Agent Runtime — so
+  runtime_regions is `documented` (it was `limited` before the 2026-11-23 merge).
+  Scale page last updated 2026-11-20 UTC (re-read 2026-11-23).
+  URL HISTORY: content was originally read at
+  /vertex-ai/generative-ai/docs/agent-engine/overview, which 301-redirects to
+  /gemini-enterprise-agent-platform/scale — sources below use the canonical target.
+  cloud.google.com also 301-redirects to docs.cloud.google.com. Legacy "Vertex AI"
+  naming still survives in some feature labels.
 
 capabilities:
   data_residency:
     status: documented
     notes: >
-      Current Agent Platform location documentation says supported infrastructure locations
-      provide at-rest residency for agent source code, deployment packages, session history,
-      Memory Bank entries, and metadata. It lists regional, multi-regional, and global endpoint
-      behavior, with separate ML-processing rules for the selected model endpoint. (Paraphrase.)
+      REGIONAL AT-REST RESIDENCY, per the platform's own locations page: "Supported
+      locations for agent infrastructure features provide data-at-rest residency for your
+      data (including agent source code, deployment packages, session history, memory bank
+      entries, and metadata) in the selected location." The features covered include
+      Runtime, Sessions, Memory Bank, "Sandboxes (Code Execution, shell execution, Agent
+      Platform Computer Use, and custom container images)" and Agent Gateway. ML
+      processing follows the model: it "is governed by the location and endpoint configured
+      for that model." CMEK caveats: "You can't use CMEK if your Runtime is configured to
+      use a multi-regional endpoint", nor for Memory Bank/Sessions on the global endpoint.
+      CONFLICTING CODE-EXECUTION RESIDENCY, from the "Agent Runtime limitations" table on the
+      Gemini Enterprise locations page (a different page,
+      docs.cloud.google.com/gemini/enterprise/docs/locations), which covers the us/eu
+      multi-regions and CA/IN/JP/SG/UK in-country regions:
+      Memory Bank and Sessions, and Runtime: "At-rest DRZ supported" in BOTH the US/EU
+      multi-regions AND the in-country regions.
+      Code execution: "At-rest DRZ supported in US" but "At-rest DRZ not supported in EU",
+      and "At-rest DRZ not supported" in-country at all.
+      THE TWO PAGES DISAGREE and neither resolves it: the agent-locations page lists Code
+      Execution among the features with at-rest residency in every listed region and
+      multi-region, while the Gemini Enterprise table says EU and in-country (CA/IN/JP/SG/UK)
+      code-execution residency is not supported. Treat EU / in-country code-execution
+      residency as unconfirmed until Google reconciles them. That table covers at-rest
+      residency only and makes no machine-learning-processing (MLP) claims.
+      SOURCE CHANGE 2026-11-23 (merge): now cites the Agent Platform locations page in
+      addition to the Gemini Enterprise page. (Paraphrase except quoted text.)
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/agent-locations
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   managed_agent_runtime:
     product: Agent Runtime
     status: ga
     notes: >
-      Google Cloud's July 2026 first-party announcement says the newly generally available
-      Agent Platform capabilities include Agent Runtime. The current runtime documentation
-      describes it as fully managed and supports deployment, operation, scaling, custom
-      containers, IAM, and VPC Service Controls. (Paraphrase.)
-    source: https://cloud.google.com/blog/products/ai-machine-learning/whats-new-in-gemini-enterprise-agent-platform
-    verified_on: 2026-11-22
+      "Deploy, operate, and scale agentic applications." Agent Platform is described as a
+      fully managed environment for developers (paraphrase). Four pillars:
+      "Serverless efficiency",
+      "Context management", "Continuous quality improvement", "Secure sandbox execution".
+      Status genuinely unlabelled on the page — do not infer GA from it.
+      LAUNCH STAGE (from the Vertex AI release notes, a DIFFERENT source from the page
+      cited below): "Vertex AI Agent Engine is now generally available (GA)." — 2025-03-04.
+      Also "The following features are now available in GA: Express mode support for
+      Vertex AI Agent Engine Runtime." — 2025-11-07.
+      2026-04-22 (Agent Platform release notes, also a different page): "Agent Runtime now
+      supports long-running operations (up to 7 days)." plus sub-second cold starts and
+      custom-built containers.
+      2026-07-29 Google Cloud blog ("What's new in Gemini Enterprise Agent Platform", also
+      a different page) restates availability: "some of our most popular capabilities are
+      available for everyone, from Agent Runtime to Agent Identity", closing with "these
+      newly generally available features".
+      CONTAINERS / ANY LANGUAGE (Agent Runtime page, build/runtime, a different page):
+      "Agent Runtime supports deploying agents written in any programming language and
+      agent framework, as long as the agent application can be containerized and conforms
+      to the runtime contract".
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   managed_agent_loop:
     product: Managed Agents API
     status: preview
     notes: >
-      Managed Agents API on Agent Platform is explicitly a Pre-GA offering for limited testing
-      and evaluation, not commercial or production use. It provides an Agents API control plane,
-      an Interactions API data plane, and isolated sandboxes with configurable external data and
-      network access. (Paraphrase.)
+      "Managed Agents API on Agent Platform lets you build managed, autonomous agents with
+      a single API call."
+      Powered by the "Antigravity harness" — each agent runs with a sandbox environment
+      where it "reasons, plans, uses agent skills, executes code, searches the web, and
+      reads and writes files." You configure via the Agents API (control plane): "create
+      agents from configurations and configure their execution environments, including
+      mounting external data sources and defining network allowlists."
+      The Interactions API is the runtime interface for communicating with deployed agents.
+      LAUNCH STAGE: explicitly PREVIEW — "These Pre-GA products are in various stages of
+      internal testing and review" with a warning "do not use proprietary, sensitive, or
+      other confidential data with these products." Released in Preview on 2026-05-19 per the Agent Platform
+      release notes; still Pre-GA on 2026-11-23. So GCP DOES have a managed loop, but it's
+      behind AWS (GA) and Azure (GA) on maturity.
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/managed-agents
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   framework_agnosticism:
     status: documented
     value: [ADK, LangGraph, LangChain, LlamaIndex, AG2, CrewAI, A2A, custom]
     notes: >
-      Current Agent Runtime documentation supports containerized agents in any language or
-      framework that meets the runtime contract. It provides integrations for ADK, LangChain,
-      LangGraph, LlamaIndex, AG2, and A2A, and a custom-template path for CrewAI and other
-      frameworks. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/runtime
-    verified_on: 2026-11-22
+      Per-framework deployment guides exist for ADK ("Use an Agent Development Kit (ADK)
+      agent with Agent Platform Runtime"), LangGraph, LangChain, LlamaIndex ("LlamaIndex
+      Query Pipeline agent"), AG2, Agent2Agent (A2A), and custom ("Use a custom agent
+      with Agent Platform Runtime") — per the scale page's navigation.
+      SUPPORT TIERS (Agent Runtime page, build/runtime, a different page): "Full
+      integration" for ADK; "Agent Platform SDK integration" (managed templates) for
+      LangChain, LangGraph, AG2 and LlamaIndex; "Custom template" for CrewAI and custom
+      frameworks. Beyond that, "Agent Runtime supports deploying agents written in any
+      programming language and agent framework, as long as the agent application can be
+      containerized and conforms to the runtime contract".
+      CORRECTED 2026-11-23 (merge): the earlier note said CrewAI was not mentioned; it
+      is absent from the scale page but named on the Agent Runtime page, at the
+      custom-template tier only (AWS AgentCore names it explicitly too). Still no guide
+      for a rival cloud's SDK (no Strands, no MS Agent Framework), unlike AgentCore which
+      lists Google ADK.
+      No GA/preview label is given for the guides — hence `documented`.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   short_term_memory:
     product: Sessions
-    status: documented
+    status: ga
     notes: >
-      Sessions are a current Agent Platform service for storing individual interactions and
-      maintaining conversation state. The current scale documentation lists session management,
-      IAM Conditions, regional endpoints, and global endpoints. (Paraphrase.)
+      "Store individual interactions between users and agents."
+      Security matrix: VPC-SC, CMEK, data residency at rest, HIPAA, Access Transparency,
+      Access Approval all Yes.
+      LAUNCH STAGE: "Vertex AI Agent Engine Sessions and Memory Bank are now Generally
+      Available." — 2025-12-16, Vertex AI release notes (a DIFFERENT source from below).
+      2026-06-17 (Agent Platform release notes): global and multi-regional endpoints for
+      Sessions and Memory Bank went GA; CMEK can't be used on the global endpoint.
+      (Paraphrase of that entry.)
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   long_term_memory:
     product: Agent Platform Memory Bank
-    status: documented
+    status: ga
     notes: >
-      Memory Bank is the current long-term-memory service for storing and retrieving user
-      preferences and facts across sessions. The current documentation includes memory profiles,
-      generation, ingestion, retrieval, revisions, IAM Conditions, and regional residency
-      guidance. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/memory-bank
-    verified_on: 2026-11-22
+      Memory Bank stores and retrieves information from sessions to personalize agent
+      interactions (paraphrase — the page's exact tagline omits terminal punctuation).
+      Residency caveat worth surfacing: ML processing "occurs within the specific region
+      or multi-region of the model endpoint used by Agent Platform Memory Bank" — i.e.
+      residency is inherited from the model endpoint, not independently configurable.
+      LAUNCH STAGE: GA as of 2025-12-16 — "Vertex AI Agent Engine Sessions and Memory Bank
+      are now Generally Available." Entered preview earlier: "Vertex AI Agent Engine Memory
+      Bank is now available in Preview." — 2025-07-08. Both from the Vertex AI release notes
+      (a DIFFERENT source from the page cited below), so a ~5-month preview.
+      2026 additions (Agent Platform release notes): IngestEvents API GA (2026-07-08),
+      memory profiles GA (2026-07-15), memory revisions. (Paraphrase.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   code_interpreter:
-    product: Code Execution
-    status: documented
+    product: Code Execution (Sandbox)
+    status: preview
     notes: >
-      Code Execution provides a secure, isolated, managed sandbox. Current documentation states
-      that sandboxes support file input and output up to 100 MB per request or response and can
-      retain execution state for up to 14 days with configurable TTL. The reviewed page does not
-      label the service GA or Preview, so this row remains documented. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/sandbox/code-execution-overview
-    verified_on: 2026-11-22
+      "Run code in a secure, isolated, and managed sandbox environment" (the scale page's
+      Code Execution tagline). The page itself carries no stage label.
+      LAUNCH STAGE — STILL PREVIEW on the latest vendor statement found:
+      "Agent Engine Code Execution, now in Preview, lets your agent run code in an isolated
+      sandbox environment." — 2025-09-10, Vertex AI release notes (a DIFFERENT source from
+      the page cited below). No GA announcement for Code Execution appears in either the
+      Vertex AI or the Agent Platform release notes as of 2026-11-23 — even though sibling
+      sandboxes went GA: "Computer Use and Shell sandboxes in Gemini Enterprise Agent
+      Platform are now generally available (GA)." — 2026-09-09, Agent Platform release
+      notes. Treat Code Execution as preview until Google says otherwise. Re-checked
+      2026-11-23 (merge): the 2026-07-29 "What's new in Gemini Enterprise Agent Platform"
+      blog's newly-GA list (Memory Bank, Agent Runtime, Agent Identity, Agent Gateway,
+      Agent Registry, Agent Evaluation, Agent Observability) does not name Code Execution,
+      and the Code Execution overview page carries no stage label — so `preview` stands
+      over a `documented` alternative because the last vendor stage statement is Preview.
+      LIMITS (Code Execution overview page, a different page): "Sandboxes support file
+      input and output up to 100MB for the entire request or response." and "Sandboxes
+      maintain their execution state (memory) for up to 14 days." (TTL configurable);
+      "The sandbox offers a limited file system and no network access."
+      AWS states AgentCore Code Interpreter GA only in per-region wording (AgentCore release notes, April 2026 São Paulo region-expansion entry);
+      Google's equivalent is still preview, AND it is the one service with no EU at-rest
+      residency (see data_residency).
+      Billing: Runtime and sandbox environments (including Code Execution) bill on Agent
+      Compute vCPU-hours and Agent Memory GiB-hours per the pricing page (paraphrase).
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   browser_use:
-    product: Agent Platform Computer Use
-    status: documented
+    product: Agent Platform Computer Use (Sandbox)
+    status: ga
     notes: >
-      Agent Platform currently lists Computer Use under its sandbox services. The reviewed
-      documentation confirms the product area but does not provide enough current detail to
-      claim a browser implementation, Playwright support, or a launch stage. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
-    verified_on: 2026-11-22
+      "Agent Platform Computer Use sandboxes provide a secure, isolated browser
+      environment that your agents can interact with." Control is via API requests or a
+      "standard Chrome DevTools Protocol (CDP) connection, letting you use browser
+      automation tools (such as Playwright) to automate the browser." — so a Playwright
+      path IS now documented (it was not on 2026-08-04).
+      LAUNCH STAGE (from the Agent Platform release notes, a DIFFERENT source from the page
+      cited below): "Computer use (Preview): Enables agents to automate browser-based tasks
+      within an isolated web browser environment." — 2026-05-26; then "Computer Use and
+      Shell sandboxes in Gemini Enterprise Agent Platform are now generally available
+      (GA)." — 2026-09-09. The Computer Use page itself has no stage label.
+      STATUS CHANGE 2026-11-23: documented -> ga.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/sandbox/computer-use
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   knowledge_base:
-    product: Agent Retrieval
+    product: RAG Engine
     status: documented
     notes: >
-      The current Agent Platform product navigation includes Agent Retrieval for retrieval
-      workloads. This refresh does not infer a specific vector-search version or claim a
-      launch stage without a current capability page that states it. (Paraphrase.)
+      RAG Engine plus "Agent Retrieval (formerly Vector Search 2.0) - Intelligent
+      Retrieval for AI Applications". The navigation links to a migration guide from
+      Vector Search 1.0, so Vector Search 2.0 is a breaking-ish successor worth flagging
+      to users. (Paraphrase except the quoted nav label.)
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
+    verified_by: "@notacryptodad"
+
+  a2a_protocol:
+    product: Agent Runtime + Agent Registry
+    status: preview
+    notes: >
+      HOSTING IS PREVIEW: "Agent Runtime lets you develop and deploy agents using the
+      Agent2Agent (A2A) protocol." The page carries a Preview banner citing the Pre-GA
+      Offerings Terms (paraphrase). Agents are built from an AgentCard, an AgentExecutor and an
+      optional ADK LlmAgent.
+      REGISTRY SUPPORT IS GA: in the Agent Platform release notes (a different page), the
+      2026-06-18 entry "Agent Registry is generally available (GA)" lists "A2A v1 support:
+      Agent Registry supports Agent-to-Agent (A2A) protocol version 1.0", alongside the
+      existing 0.3 schema (paraphrase of the last clause). The GA covers cataloguing A2A
+      agents in Agent Registry, not serving them on Agent Runtime.
+      GATEWAY: the 2026-11-11 entry for Agent Gateway for cross-cloud (Limited Preview)
+      routes agents' "LLM, MCP, and A2A traffic" through local Agent Gateway proxies.
+      Status `preview` because the vendor labels the Runtime A2A capability Preview;
+      compare AWS AgentCore Runtime and Azure Agent Service, both GA for A2A.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/runtime/create-an-a2a-agent
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_registry:
     product: Agent Registry
-    status: documented
+    status: ga
     notes: >
-      Agent Registry is the current first-party registry for agents, MCP servers, tools,
-      endpoints, and skills. It supports discovery and governance and supplies identifiers used
-      by Agent Gateway and IAM policies. (Paraphrase.)
-    source: https://docs.cloud.google.com/agent-registry/overview
-    verified_on: 2026-11-22
+      "Agent Registry is generally available (GA)" — "Agent Registry is a centralized
+      catalog for discovering and registering agents and Model Context Protocol (MCP)
+      servers." — 2026-06-18. It entered Public Preview on 2026-04-22. The GA entry adds A2A v1
+      support and Terraform management of "agents, MCP servers, endpoints, and bindings",
+      with known limitations: Access Transparency / Access Approval aren't available for
+      Agent Registry configurations, and data-residency detective controls are limited.
+      (Paraphrase except quoted text.)
+      PRODUCT CHANGE 2026-11-23: this row previously pointed at Skill Registry (nav only,
+      MCP relationship unverified). Skill Registry is a separate skills repository —
+      "Manage and discover agent skills with the Skill Registry, in public preview."
+      (2026-05-19) — and is NOT the MCP registry. Agent Registry is the MCP-server
+      catalog, and Gemini Enterprise imports MCP servers and A2A agents from it.
+      SCOPE NOW INCLUDES SKILLS: the Agent Registry overview (a different page,
+      docs.cloud.google.com/agent-registry/overview) says it lets you "register, discover,
+      and govern agentic components, including AI agents, Model Context Protocol (MCP)
+      servers and tools, endpoints, and standalone skills", so skills are also catalogued
+      in Agent Registry itself, alongside the separate Skill Registry preview.
+      STATUS CHANGE 2026-11-23: documented -> ga.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   mcp_server_hosting:
     product: Agent Gateway
     status: documented
     notes: >
-      Agent Gateway is the governance and security enforcement layer for agent traffic. Current
-      documentation says it mediates MCP, A2A, REST, and gRPC traffic and can govern agents and
-      MCP servers on Agent Runtime and GKE; Cloud Run and cross-cloud support are Limited
-      Preview. This is gateway governance, not evidence that Google hosts arbitrary MCP server
-      code as a managed server product. (Paraphrase.)
+      Agent Gateway is a governance layer for MCP traffic, NOT an MCP-server host:
+      "Agent Gateway is the governance and security enforcement layer for Google Cloud
+      agent governance." It lets admins enforce least-privilege postures for interactions
+      "between human users and agents, agents and Model Context Protocol (MCP) tools, or
+      among autonomous agents themselves." Agent Registry acts as "the central directory
+      for all approved agents, tools, Model Context Protocol (MCP) servers, and endpoints".
+      A first-party managed HOST for customer-written MCP servers (an AgentCore-Gateway- or
+      Foundry-style deploy-your-MCP-server-here service) is not stated on this page — treat this
+      row as governance/routing of MCP traffic only. Agent Gateway went GA 2026-06-18 and
+      cross-cloud Agent Gateway is Limited Preview (2026-11-11), per the Agent Platform
+      release notes (a DIFFERENT source); status kept `documented` because the row's
+      hosting claim itself is not what went GA.
+      Protocols mediated: "Model Context Protocol (MCP), Agent-to-Agent (A2A), REST, or
+      gRPC"; governance spans "managed runtimes, Google Kubernetes Engine (GKE) clusters,
+      Cloud Run services, and non-Google Cloud Kubernetes clusters" — the last via "Agent
+      Gateway for cross-cloud (Limited Preview)" (that wording is on this page).
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/agent-gateway-overview
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   eval_service:
-    product: Agent Evaluation
+    product: Agent Evaluation (Evaluation Service)
     status: ga
     notes: >
-      Google's first-party announcement identifies Agent Evaluation as one of the newly
-      generally available Agent Platform capabilities. It describes online production
-      evaluation monitors and prebuilt, custom-Python, LLM-as-a-judge, and adaptive-rubric
-      metrics. (Paraphrase.)
-    source: https://cloud.google.com/blog/products/ai-machine-learning/whats-new-in-gemini-enterprise-agent-platform
-    verified_on: 2026-11-22
+      LAUNCH STAGE from the Google Cloud blog "What's new in Gemini Enterprise Agent
+      Platform" (2026-07-29, a different page,
+      cloud.google.com/blog/products/ai-machine-learning/whats-new-in-gemini-enterprise-agent-platform):
+      it lists "Agent Evaluation: Continuously monitor and evaluate agent performance in
+      production with online evaluation monitors that proactively identify performance
+      degradation and behavioral drift." with metric options "pre-built, custom Python,
+      LLM-as-a-judge, or adaptive rubrics co-developed with Google DeepMind", and closes
+      "get started with these newly generally available features today." CAVEAT: the GA
+      wording is collective — it covers the capabilities the post presents as newly
+      available, and Agent Evaluation's own section carries no stage wording — and no
+      matching GA entry is in the Agent Platform release notes.
+      STATUS CHANGE 2026-11-23 (merge): documented -> ga.
+      The scale page's navigation lists "Continuous evaluation with Online Monitors"
+      alongside offline evaluations.
+      Present, plus Example Store — "Leveraging the Example Store and Evaluation Service to
+      test, monitor, and trace agent behavior". Security matrix CHANGED since 2026-08-04:
+      "Agent evaluation" is now Yes for VPC Service Controls, CMEK and data residency at
+      rest (it was No in August). "Example Store" is now the ONLY service marked No for all
+      three — still a real compliance constraint if you rely on Example Store.
+      Agent evaluation remains No for Access Transparency and Access Approval.
+      (Table reading.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   otel_traces:
-    status: documented
+    product: Agent Observability
+    status: ga
     notes: >
-      Agent Runtime tracing uses Cloud Trace and OpenTelemetry instrumentation. Current docs
-      describe spans for LLM and tool operations and expose the latest GenAI semantic
-      conventions as experimental, so this row does not claim stable OTel semantic-convention
-      conformance. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/tracing
-    verified_on: 2026-11-22
+      "Agent Observability is generally available (GA)" — 2026-06-18. That entry:
+      "OpenTelemetry tracing is now enabled by default for newly deployed Agent Development
+      Kit (ADK) agents on Agent Engine". 2026-08-13: ADK 2.6.0+ agents on Agent Runtime
+      can emit gen_ai metrics that "follow OpenTelemetry's generative AI semantic
+      conventions". So OTel is now explicitly the trace format (in August the scale page
+      only said the runtime has built-in observability). Agent Observability had entered Preview on 2026-04-22.
+      STATUS CHANGE 2026-11-23: documented -> ga; source moved from the scale page to the
+      release notes, where the stage is stated.
+      SEMCONV CAVEAT (Agent Runtime tracing page, a different page,
+      .../scale/runtime/tracing): "The example span is experimental and subject to change
+      so you shouldn't rely on the format to be stable for now", and ADK tracing is enabled
+      with OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental — GA covers the
+      service, not a stable GenAI span schema. (Paraphrase except the quoted sentence.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   feedback_service:
     product: Feedback service
     status: documented
     notes: >
-      Agent Platform currently documents a Feedback service for collecting, managing, and
-      tracing qualitative user feedback alongside system events and telemetry. (Paraphrase.)
+      "Collect, manage, and trace user qualitative feedback alongside system events and
+      telemetry." No direct AWS/Azure equivalent found yet — candidate new taxonomy row
+      in d6.
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   private_networking:
     status: documented
     notes: >
-      Agent Runtime supports a Private Service Connect interface and DNS peering for private
-      egress to VPC, on-premises, and multi-cloud resources. The current documentation says the
-      path stays within Google's network and that explicit VPC egress configuration is required
-      for internet access. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/private-service-connect-interface
-    verified_on: 2026-11-22
+      Security matrix (CHANGED since 2026-08-04): VPC Service Controls = Yes for Agent
+      Runtime, Agent evaluation, Sessions, Memory Bank, Code Execution; No for Example Store
+      only (Agent evaluation was No in August). CMEK follows the same pattern, with the
+      caveat that "For deployed agents on Agent Runtime, CMEK is supported only on
+      single-region endpoints and isn't supported on multi-regional endpoints (us or eu)."
+      Access Transparency / Access Approval = Yes for Agent Runtime, Sessions, Memory
+      Bank ONLY.
+      Private connectivity: a guide to "Use a Private Service Connect interface with Agent
+      Platform Runtime" to connect an agent to your VPC. That PSC page (a different page)
+      adds: "Agent Runtime supports Private Service Connect interface (PSC interface) and
+      DNS peering to enable private and secure egress traffic", with traffic that "travels
+      securely within Google's network, never traversing the public internet"; internet
+      egress then needs an explicit path in your VPC (e.g. a proxy VM). The Agent Platform release notes
+      (a DIFFERENT source) add that "Agent Gateway now enforces VPC Service Controls
+      perimeter rules for agent communications." (2026-09-09), and sandboxes gained
+      VPC-SC and PSC support on 2026-09-09.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   certifications:
     status: documented
     notes: >
-      The current Agent Platform security matrix marks HIPAA support for Agent Runtime, Agent
-      evaluation, Sessions, Memory Bank, Example Store, and Code Execution. The reviewed page
-      does not provide a complete SOC 2, ISO, or PCI list for the platform. (Paraphrase.)
+      Partial evidence: the enterprise security matrix's HIPAA row reads Yes for all six
+      services (Agent Runtime, Agent evaluation, Sessions, Memory Bank, Example Store,
+      Code Execution). Table reading, not a sentence on the page.
+      Broader cert list (SOC 2, ISO, PCI) not on this page.
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   runtime_regions:
     status: documented
     value:
-      regional_examples: [us-east1, us-east4, us-west1, us-central1, europe-west1, europe-west4, asia-northeast1, asia-southeast1]
-      multi_regions: [global, us, eu]
+      regions: 23
+      region_list: [us-east1, us-east4, us-west1, us-central1, europe-west1, europe-west2, europe-west3, europe-west4, europe-west6, europe-west8, europe-southwest1, asia-east1, asia-east2, asia-northeast1, asia-northeast3, asia-south1, asia-southeast1, asia-southeast2, australia-southeast2, me-west1, northamerica-northeast1, northamerica-northeast2, southamerica-east1]
+      multi_regions: [us, eu]
     notes: >
-      Agent Platform infrastructure now has a regional location table covering US, European,
-      Asian, Middle Eastern, North American, and South American regions, plus multi-regional and
-      global endpoints. The page states that v1 supports GA features and v1beta1 supports
-      Preview features; Memory Bank is unavailable in some marked regions and Agent Gateway is
-      unavailable in some others. This is not the same location model as Gemini Enterprise's
-      in-country allowlist. (Paraphrase.)
+      23 SELF-SERVE REGIONS plus multi-regional endpoints, per "Supported locations for
+      agents in Agent Platform". The table covers "Runtime", "Sessions", "Agent Platform
+      Memory Bank", sandboxes and Agent Gateway in every listed region, each with "v1 is
+      supported for GA features. v1beta1 is supported for Preview features." Exceptions:
+      "Memory Bank is not supported in this region." for asia-southeast2,
+      australia-southeast2 and northamerica-northeast2; "Agent Gateway is not supported in
+      this region." for asia-east2, asia-northeast3 and asia-southeast2. Multi-regional:
+      "Memory Bank, Sessions, Runtime, and Code Execution support multi-regional
+      endpoints. Memory Bank and Sessions also support global endpoints." No allowlist or
+      account-team gating is stated for any runtime region — hence `documented`.
+      STATUS CHANGE 2026-11-23 (merge): limited -> documented, and source moved here from
+      the Gemini Enterprise locations page (a different page,
+      docs.cloud.google.com/gemini/enterprise/docs/locations). That page's in-country
+      wording — "Using these locations is in GA with allowlist. To get access to these
+      locations for use with Gemini Enterprise or Gemini Notebook for business, contact
+      your Google account team." — gates Gemini Enterprise / Gemini Notebook (bucket C),
+      not Agent Runtime, so it does not justify `limited` here. Its "Agent Runtime
+      limitations" table (us/eu multi-regions and CA, IN, JP, SG, UK in-country) remains
+      relevant for residency — see data_residency. That page also recommends global,
+      which "provides better end-user response times, the latest model versions, and the
+      most up-to-date features" — a Gemini Enterprise trade-off statement.
+      Runtime is NOT listed for the global endpoint; global applies to Memory Bank and
+      Sessions only, which the Agent Platform release notes (a different page) mark GA:
+      "Memory Bank and Sessions support for multi-regional and global endpoints is now in
+      General Availability (GA)." The agent-locations table lists regions per feature;
+      per-region launch stage of other services is not stated beyond the v1/v1beta1
+      API-version rule. (Paraphrase except quoted text.)
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/agent-locations
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   pricing_axes:
     status: documented
     notes: >
-      The current Agent Runtime documentation links to separate Gemini Enterprise Agent
-      Platform pricing. The reviewed scale and runtime pages establish usage-based platform
-      services but do not provide a complete current breakdown of every runtime, memory,
-      sandbox, and tool billing axis in the page text. (Paraphrase.)
+      RESOURCE-BASED, not just tokens: "Gemini platform products to Scale have a unified
+      pricing structure, using 3 resource types: Compute, Memory and Storage."
+      "Runtime and Sandbox environments, including Code Execution and Computer Use, are
+      billed on Agent Compute (vCPU-hours) and Agent Memory (GiB-hours) resource usage."
+      Listed rates: Agent Compute $0.085/vCPU-h, Agent Memory $0.009/GiB-h; "For Runtime,
+      idle time spent waiting for the next prompt between turns is not billed."
+      Memory Bank: storage $0.30/GiB-month plus read/write operations billed as Agent
+      Compute; model tokens for memory generation billed separately. Agent Gateway and
+      Semantic Governance Policies are also metered as Agent Compute.
+      Model calls are billed per token under their own model SKUs (paraphrase).
+      SOURCE CHANGE 2026-11-23: the old source (scale page) does not state pricing; this
+      cell now cites the pricing page. The August note's token-based-only, no-flat-rate
+      framing was incomplete.
     source: https://cloud.google.com/products/gemini-enterprise-agent-platform/pricing
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   runtime_sla:
-    status: documented
+    status: unknown
     notes: >
-      The current Gemini Online Inference API SLA covers generateContent and streamGenerateContent
-      with a 99.5% monthly uptime target. Provisioned Throughput streamGenerateContent also has a
-      99% monthly latency-target attainment objective, subject to the documented model and endpoint
-      exclusions. (Paraphrase.)
+      NO AGENT RUNTIME SLA FOUND — hence `unknown` (cross-provider rule: documented only if
+      an SLA covers the agent runtime itself). CAVEAT: the cited SLA covers the MODEL API,
+      not the agent runtime: "Covered Service" means
+      "the generateContent and streamGenerateContent methods of Gemini Online Inference
+      API on Gemini Enterprise Agent Platform." 99.5% Monthly Uptime, or 95% for models
+      "designated for shorter availability". Provisioned Throughput adds a 99% Monthly
+      Latency Target Attainment SLO: covered service is "streamGenerateContent methods of
+      Gemini Online Inference API on Gemini Enterprise Agent Platform under Provisioned
+      Throughput consumption model for a Covered Model from a Covered Endpoint"; "Covered
+      Models" means Gemini 2.5 Pro, Gemini 2.5 Flash, and Gemini 2.5 Flash-lite, and
+      "Covered Endpoint" means the Global Endpoint. Latency targets are p50 output tokens
+      per second over 5-minute intervals (60 / 80 / 110 TPS, excluding long context);
+      latency credits are 10% at 95-99%, 25% at 90-95%, 50% below 90%. Still model
+      inference, not the agent runtime. (Paraphrase except quoted text.)
+      Financial credits (uptime): 10% at 99.0-99.5%, 25% at 95-99%, 50% below 95%.
+      Claim window: notify support "within 30 days", with log files showing downtime.
+      Measured per calendar month per Project.
+      REMOVED 2026-11-23: the August note also claimed a 99.9% Agent Search API SLA on
+      this page; that text is not on this page, so it is no longer asserted here. No
+      Agent Runtime-specific SLA was found.
     source: https://cloud.google.com/vertex-ai/generative-ai/sla
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   long_running_agents:
     status: documented
     notes: >
-      The current first-party announcement says Agent Runtime supports agents that run
-      continuously for up to seven days. This is a current product-page capability statement;
-      it is not treated as a launch-stage claim. (Paraphrase.)
-    source: https://cloud.google.com/blog/products/ai-machine-learning/whats-new-in-gemini-enterprise-agent-platform
-    verified_on: 2026-11-22
+      EXPLICIT CAP NOW DOCUMENTED: "Agent Runtime now supports long-running operations (up
+      to 7 days)." — 2026-04-22, Gemini Enterprise Agent Platform release notes (the August
+      note said no explicit time cap was documented; that was wrong — the entry predates it).
+      Compare AWS AgentCore's 8-hour cap (see the AWS cell). Related: "Autonomous agent scheduling (the
+      deferred tier) is available in General Availability (GA)" (2026-11-16) for queuing
+      latency-tolerant ADK agent workloads at a discount; and Code Execution sandboxes keep
+      state for up to 14 days per the Code Execution page (a different page).
+      Status `documented` rather than `ga`: the 7-day entry is a "Change" with no stage
+      wording of its own.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   agent_workload_identity:
-    status: documented
+    product: Agent Identity
+    status: ga
     notes: >
-      Agent Identity provides a per-agent SPIFFE-based cryptographic identity, X.509
-      credentials, IAM integration, and audit attribution. Agent Runtime documentation also
-      describes agent identity as an option distinct from service accounts. (Paraphrase.)
+      A DEDICATED AGENT IDENTITY, not just service accounts: "Agent Identity provides a
+      strongly attested, cryptographic identity for each agent that is based on the SPIFFE
+      standard." Unlike service accounts, "agent identities are not shared by multiple
+      workloads by default, can't be impersonated, and don't allow developers to generate
+      long-lived service account keys." Supported on Agent Runtime, Gemini Enterprise,
+      Cloud Run and GKE.
+      LAUNCH STAGE (Agent Platform release notes, a DIFFERENT source from the page cited
+      below): "Agent Identity for General Availability." — 2026-04-22. Caveat: the newer
+      Agent Identity API (agentidentity.googleapis.com), which replaces the legacy IAM
+      Connectors API, was announced in Preview on 2026-06-18.
+      STATUS CHANGE 2026-11-23: documented -> ga (the August note described plain IAM
+      service accounts and missed Agent Identity).
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/agent-identity-overview
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   delegated_user_auth:
+    product: Agent Identity auth manager
     status: documented
     notes: >
-      The current Agent Identity documentation supports user-delegated authority through
-      three-legged OAuth and describes an auth manager for acquiring, managing, and securing
-      delegated end-user tokens. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/agent-identity-overview
-    verified_on: 2026-11-22
+      3LO confirmed on a first-party page: the "Delegated identity" is "the combined
+      authority context when the agent acts on behalf of the initiating human user using
+      scoped 3-legged OAuth (3LO) credentials brokered by Agent Identity auth manager."
+      "Raw user credentials and refresh tokens are never exposed to the agent model or
+      application code", and audit logs record both the agent identity and the user
+      identity. No stage label on this page (Agent Identity itself is GA — see
+      agent_workload_identity).
+      SOURCE CHANGE 2026-11-23: previously cited the scale page, which does not describe 3LO.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/identity-delegation-architecture
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   guardrails:
-    product: Model Armor + Agent Gateway policies
+    product: Safety Filters + Model Armor + Sensitive Data Protection
     status: documented
     notes: >
-      Agent Gateway documentation describes Model Armor prompt and tool-response inspection,
-      semantic governance policies, IAM unified access policies, and token-management policies.
-      Token-management policies and extension bindings are explicitly marked as coming soon;
-      this row therefore does not claim all gateway policy types are GA. (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/agent-gateway-overview
-    verified_on: 2026-11-22
+      Multi-layered safety system documented:
+      1. Default settings — an independent layer "designed to prevent the generation of
+      content related to Child Sexual Abuse Material (CSAM) or Copyrighted Content
+      (Recitation)."
+      2. Configurable content filters — thresholds per harm category (e.g.
+      BLOCK_LOW_AND_ABOVE, BLOCK_MEDIUM_AND_ABOVE, BLOCK_ONLY_HIGH); "Only available for
+      response filtering, not prompt filtering."
+      3. Model Armor — "Prompt injection and jailbreak filtering, content filters,
+      sensitive data protection, and malware detection and safe browsing."
+      4. Sensitive Data Protection (DLP API) — redaction, masking or tokenization with
+      predefined and custom infoType detectors.
+      5. Gemini as a filter — a second call to a fast Gemini model to judge safety against
+      your own policies.
+      Model Armor on Agent Gateway: "This feature is generally available (GA)." per the
+      Agent Platform release notes, 2026-06-24 (a DIFFERENT source from the page cited
+      below).
+      GATEWAY POLICY LAYER (Agent Gateway overview, also a different page): Model Armor
+      "scans user prompts and tool responses in real time to block prompt injection
+      attacks, sensitive data leaks, and harmful content"; semantic governance policies
+      are "Rules written in plain language that control how agents use tools"; plus IAM
+      Unified Access Policies and token management policies. Caveat: "Support for token
+      management policies and extension bindings is coming soon." — not available yet.
+      CORRECTED 2026-11-23: the August note said non-configurable filters block CSAM and
+      PII and listed a separate jailbreak classifier; the current page names CSAM and
+      copyright (Recitation) only and has no standalone jailbreak classifier.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/safety
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   iac_coverage:
     status: documented
     notes: >
-      The current Agent Runtime page documents Agents CLI automation using Terraform and CI/CD
-      workflows using Cloud Build. The reviewed evidence supports Terraform and Cloud Build,
-      but does not establish complete resource coverage for every Agent Platform service.
-      (Paraphrase.)
-    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/runtime
-    verified_on: 2026-11-22
+      Terraform is documented for the governance plane: with Agent Registry GA (2026-06-18),
+      "Terraform scripts for Application Default Credentials (ADC) have graduated to General
+      Availability. You can use Terraform to configure and manage your agents, MCP servers,
+      endpoints, and bindings."
+      Terraform coverage of Agent Runtime deployments themselves is not stated in this
+      entry. No CloudFormation equivalent (GCP-native). (Paraphrase.)
+      RUNTIME DEPLOYMENTS VIA AGENTS CLI (Agent Runtime page, build/runtime, a different
+      page): "The Agents CLI is the unified command-line interface and skill set for the
+      Agent Platform", providing "Automated infrastructure: Uses Terraform for
+      streamlined resource management." and "CI/CD pipelines: Automated deployment
+      workflows leveraging Cloud Build." Complete Terraform resource coverage of every
+      Agent Platform service is not stated. (Paraphrase except quoted text.)
+      SOURCE CHANGE 2026-11-23: previously cited the scale page, which does not mention
+      Terraform.
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
 
   training_data_policy:
     status: documented
     notes: >
-      Google’s current zero-data-retention guidance says Google will not use customer data to
-      train or fine-tune AI/ML models without prior permission or instruction. The guidance applies
-      to all managed models on Gemini Enterprise Agent Platform, including GA and pre-GA models,
-      while documenting limited retention exceptions for abuse monitoring and some grounding
-      features. (Paraphrase.)
+      "Google won't use your data to train or fine-tune any AI/ML models without your prior
+      permission or instruction." per the "Training Restriction" in the Service Specific
+      Terms. "This applies to all managed models on Gemini Enterprise Agent Platform,
+      including GA and pre-GA models." Same commitment as Azure and AWS Q Business.
+      RETENTION EXCEPTIONS on the same page (relevant to zero-data-retention, not to
+      training): Google "may log prompts to detect potential abuse" for customers under the
+      Google Cloud Platform Terms of Service; "Zero data retention may not be possible when
+      using some Advanced AI features."; Grounding with Google Search stores derived query
+      logs for up to three days — "There is no way to disable the storage of this
+      information if you use Grounding with Google Search." — and Grounding with Google
+      Maps has a similar non-disableable storage rule. (Paraphrase except quoted text.)
+      MERGE NOTE 2026-11-23: both refreshes cite this page; reconciled into one cell.
+      SOURCE CHANGE 2026-11-23: previously cited the Cloud Data Processing Addendum, which
+      does not itself contain a training restriction; this page does.
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention
-    verified_on: 2026-11-22
+    verified_on: 2026-11-23
     verified_by: "@notacryptodad"
