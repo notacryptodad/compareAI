@@ -34,8 +34,7 @@ capabilities:
     status: documented
     value: "Up to 30 days (abuse monitoring, Google-held, US); ZDR by OpenAI approval"
     summary: >-
-      Logging needs a one-time consent per project; no human review during Private Preview.
-      store=false is not ZDR.
+      No human review during Private Preview.
     notes: >
       "By default, Google Cloud logs and retains prompts and responses for up to 30 days for
       abuse monitoring." The OpenAI flagship models are designated Advanced AI, and enabling
@@ -62,8 +61,7 @@ capabilities:
     status: documented
     value: "No default prompt logging stated; Fable/Mythos up to 30 days, shared with Anthropic"
     summary: >-
-      No page states a rule for ordinary Claude calls; 30-day logging is opt-in.
-      Google-managed path: Google is sole processor.
+      No rule stated for ordinary Claude calls.
     notes: >
       Fable and Mythos are Advanced AI models. For them, "prompts and responses are retained
       for up to 30 days", and Anthropic requires that "you must enable sharing this data with
@@ -91,8 +89,7 @@ capabilities:
     status: documented
     value: "Stateless by default except implicit cache (deleted within 24h) and Interactions API store=true; abuse logs 30-90 days by tier"
     summary: >-
-      Cache deleted within 24h, can be turned off per project. Search grounding logs (3
-      days) and Maps (30 days) can't be turned off.
+      Search / Maps grounding logs can't be turned off.
     notes: >
       CACHING: "By default, Google's published Gemini models cache Customer Data to reduce
       latency and accelerate responses." Both the in-memory tier and the durable tier are on
@@ -115,8 +112,7 @@ capabilities:
     status: documented
     value: "Google models: flagged prompts up to 90 days; Frontier Gemini: 30 days in customer env; Advanced AI partners: 30 days; human review possible"
     summary: >-
-      Master Agreement customers are exempt from prompt logging for ordinary Google models.
-      No CMEK on these logs.
+      Master Agreement customers exempt (Google models).
     notes: >
       THREE TIERS. (1) Ordinary Google models: after a classifier flags a prompt, Google may
       log it, and "This data is stored securely for up to 90 days in the same region or
@@ -144,7 +140,7 @@ capabilities:
     status: limited
     value: "By approval: per-project OpenAI approval through the account team, off by default; direct-OpenAI approvals don't carry over"
     summary: >-
-      The account team sends the request to OpenAI; it is off until approved.
+      Off until OpenAI approves the project.
     notes: >
       Approval-gated, hence `limited`. "Zero Data Retention (ZDR) is available for OpenAI
       flagship models on an approved project basis, but is disabled by default." The account
@@ -158,7 +154,7 @@ capabilities:
     status: limited
     value: "By provider approval only; Fable / Mythos must share data with Anthropic (no ZDR route named); Anthropic-managed service: ZDR may be available on request"
     summary: >-
-      No self-serve ZDR for Claude; the ZDR page's partner section names only OpenAI.
+      No self-serve ZDR for Claude.
     notes: >
       Approval-gated, hence `limited`. For partner models, ZDR "access is not guaranteed and
       requires provider approval". For Claude Fable and Mythos, "you must enable sharing this
@@ -177,7 +173,7 @@ capabilities:
     status: limited
     value: "Self-serve settings (caching off, logging off, store=false, no session resumption, Enterprise web grounding), but abuse prompt logging lifts only under a Master Agreement"
     summary: >-
-      ZDR is a checklist of settings, not one switch, and may not be possible with some Advanced AI features.
+      A checklist of settings, not one switch.
     notes: >
       STATUS (fact-check 2026-11-25): `limited`, not `documented`. Every setting is
       self-serve, but abuse prompt logging can't be switched off by online-terms customers;
@@ -199,8 +195,7 @@ capabilities:
     status: documented
     value: "No training without permission; applies to all managed models incl. partner models"
     summary: >-
-      Covers pre-GA and partner models; OpenAI makes the same commitment. No Anthropic
-      statement on Google's pages.
+      OpenAI makes the same commitment.
     notes: >
       "Google won't use your data to train or fine-tune any AI/ML models without your prior
       permission or instruction. This applies to all managed models on Gemini Enterprise Agent
@@ -222,8 +217,7 @@ capabilities:
     status: documented
     value: "Abuse logs in customer-selected region/multi-region (OpenAI: US); durable cache follows location except global endpoint"
     summary: >-
-      The global endpoint can serve requests and cached data from any region, with no
-      residency guarantee.
+      Global endpoint gives no residency guarantee.
     notes: >
       Abuse logs for Google models are kept "in the same region or multi-region selected by
       the customer for their project". Advanced AI logs are "stored in the same region or

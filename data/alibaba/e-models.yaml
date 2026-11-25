@@ -81,8 +81,7 @@ capabilities:
     status: documented
     value: "Prompts/outputs up to 30 days by default; flagged content up to 2 years; content-safety guardrails cannot be fully switched off (policy adjustable via account-manager assessment)"
     summary: >-
-      The CN site gives no duration. Flagged content is kept up to 2 years even under ZDR.
-      Human review isn't addressed.
+      Flagged content kept up to 2 years, even under ZDR.
     notes: >
       Default: "By default, user’s prompts and responses from model inference calls are retained for no longer than 30 days, unless longer retention is required by applicable laws or is reasonably necessary to ensure the security of Alibaba Cloud Model Studio services."
       Content flagged by automated filters is kept longer: "content flagged by our automated safety filtering systems is retained in accordance with"
@@ -140,8 +139,7 @@ capabilities:
     status: documented
     value: "No training on customer data (Alibaba); no training statement for vendor-served models"
     summary: >-
-      Training only with separate consent. No statement for models served directly by
-      third-party vendors.
+      Only with your separate consent.
     notes: >
       Privacy page, a different page (https://www.alibabacloud.com/help/en/model-studio/privacy-notice):
       "Alibaba Cloud strictly protects your data privacy and will never use your data for model training."
@@ -161,7 +159,7 @@ capabilities:
     status: documented
     value: "Stored in the chosen access region; Global deployment scope moves inference, not stored data"
     summary: >-
-      ZDR is only in the regions outside mainland China.
+      ZDR only in regions outside mainland China.
     notes: >
       "Regions determine the access point and data storage location." and "Request data is stored in that region."
       With a Global or geo deployment scope, inference may run elsewhere, but "The inference result is returned to the region for storage and then sent back to your application."

@@ -36,8 +36,7 @@ capabilities:
     status: documented
     value: "Up to 30 days for classifier-flagged traffic only (AWS-held, abuse detection); gpt-oss exempt; Responses API store=true keeps 30 days"
     summary: >-
-      Only flagged traffic is kept, by AWS, never shared with OpenAI. Responses API
-      store=false keeps nothing.
+      Kept by AWS, never shared with OpenAI.
     notes: >
       Stateless inference: "For all OpenAI models other than GPT OSS Safeguard 120B, GPT OSS
       Safeguard 20B, gpt-oss-120b, and gpt-oss-20b, classifier-flagged traffic will be
@@ -64,8 +63,7 @@ capabilities:
     status: documented
     value: "Fable 5.x: all traffic up to 30 days, AWS-held, opt-in required; most other Claude models: none retained; Anthropic receives nothing"
     summary: >-
-      Fable 5.x won't run until you opt in to aws_review; Mythos also needs an opt-in.
-      Claude models before Fable 5 are unchanged.
+      Fable 5.x won't run without the aws_review opt-in.
     notes: >
       Retention differs per Claude model. "For models requiring aws_review (currently Claude
       Fable 5, Claude Fable 5.1, and Claude Fable 5.2): user prompts and completions are
@@ -114,8 +112,7 @@ capabilities:
     status: documented
     value: "30 days: all Claude Fable 5.x traffic, flagged OpenAI traffic; AWS human review of flagged cases (Fable); no 30-day abuse retention for other models (CSAM-flagged content excepted)"
     summary: >-
-      Model providers get only case metadata. An SCP can block human review, which makes
-      Fable unavailable.
+      An SCP can block human review (Fable then unavailable).
     notes: >
       Baseline: "Amazon Bedrock uses a zero operator access (ZOA) data security model,
       subject to the model-specific abuse and CSAM detection detailed below."
@@ -144,7 +141,7 @@ capabilities:
     status: limited
     value: "By approval: full ZDR through the AWS account team; otherwise classifier-flagged traffic is kept up to 30 days (gpt-oss models exempt)"
     summary: >-
-      Requests are evaluated per account and per model, with OpenAI.
+      Evaluated per account and per model, with OpenAI.
     notes: >
       Approval-gated, hence `limited`. "Eligible customers may request full ZDR through their
       AWS account team." Without it: "For all OpenAI models other than GPT OSS Safeguard
@@ -164,7 +161,7 @@ capabilities:
     status: limited
     value: "Self-serve (mode none) for Claude models before Fable 5; Fable 5.x by approval (AWS account manager or Anthropic EFS); Mythos needs a retention mode"
     summary: >-
-      Older Claude models permit mode none, so nothing is retained. The newest models do not run under none without a per-model ZDR approval.
+      Newest models won't run under mode none without approval.
     notes: >
       Split by model, and the newest models are approval-gated, hence `limited`.
       SELF-SERVE for older models: mode none means "Zero data retention. No request or
@@ -201,8 +198,7 @@ capabilities:
     status: documented
     value: "No: neither AWS nor Anthropic / OpenAI trains on Bedrock inputs or outputs"
     summary: >-
-      One commitment for all families; providers can't see Bedrock logs, prompts or
-      completions.
+      Providers can't see Bedrock logs, prompts or completions.
     notes: >
       "No, AWS and the third-party model providers will not use any inputs to or outputs
       from Amazon Bedrock to train Amazon Nova, Amazon Titan, or any third-party models."
@@ -221,7 +217,7 @@ capabilities:
     status: documented
     value: "Stored in the Region that processed the request; geo profiles stay in-geo, global profiles can store in any commercial Region; flagged content reviewed in US or EU"
     summary: >-
-      Global profiles can store Responses API data in any commercial Region they route to.
+      Global profiles can store data in any commercial Region.
     notes: >
       "To the extent we store data for abuse detection, your input prompts and output
       results will be stored in the destination region." Geographic profiles (US, EU, APAC)

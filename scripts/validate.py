@@ -114,8 +114,8 @@ def main() -> int:
                     if any(ch in summ for ch in '"「」|'):
                         errors.append(f"{loc}: summary must not contain quote marks or '|' "
                                       f"(it is a paraphrase; quote in notes instead)")
-                    if len(summ) > 200:
-                        errors.append(f"{loc}: summary is {len(summ)} chars (max 200; keep it to the gist)")
+                    if len(summ) > 90:
+                        errors.append(f"{loc}: summary is {len(summ)} chars (max 90; one point only)")
                     if not cell.get("notes"):
                         errors.append(f"{loc}: summary without notes to summarise")
 

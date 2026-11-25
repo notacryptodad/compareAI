@@ -34,8 +34,7 @@ capabilities:
     status: documented
     value: "Stateless inference; abuse-monitoring store (no duration stated); Responses API stored responses 30 days by default"
     summary: >-
-      Microsoft hosts GPT; OpenAI never receives prompts. Responses API store=false is not a
-      full zero-retention guarantee.
+      Microsoft hosts GPT; OpenAI never receives prompts.
     notes: >
       STATELESS INFERENCE: "The models are stateless: no prompts or completions are stored in
       the model." Microsoft hosts GPT itself, and the models "do NOT interact with any
@@ -60,8 +59,7 @@ capabilities:
     status: documented
     value: "Anthropic holds it under Anthropic's terms; Covered Models 30 days minimum; Azure-hosted option keeps prompts in Azure"
     summary: >-
-      Microsoft states no duration; Anthropic sets it. Anthropic-hosted Claude may be
-      processed outside your geography.
+      Anthropic-hosted Claude may leave your geography.
     notes: >
       WHO HOLDS IT: Anthropic, not Microsoft. "Claude models in Microsoft Foundry are
       third-party Marketplace offerings from Anthropic." "For both hosting options, Anthropic
@@ -112,8 +110,7 @@ capabilities:
     status: documented
     value: "Flagged samples stored per customer geography for Microsoft human review (no duration stated); Claude uses Anthropic safety systems"
     summary: >-
-      Review is by AI first, then Microsoft staff if needed; reviewers sit in the EEA for
-      EEA deployments.
+      AI reviews first, then Microsoft staff if needed.
     notes: >
       MODELS SOLD BY AZURE (GPT etc.): when abuse signals are detected "a sample of
       customer's prompts and completions may be selected for review." "Review is conducted
@@ -143,7 +140,7 @@ capabilities:
     status: limited
     value: "By approval: modified abuse monitoring for Microsoft-managed customers only; being withdrawn for models released from 2026-11-01"
     summary: >-
-      Approval stops abuse storage and human review, but automated review can still run.
+      Automated review can still run after approval.
     notes: >
       Limited Access, by application, hence `limited`. "modified Guardrails (previously
       content filters) and/or modified abuse monitoring for Models sold by Azure are available
@@ -164,7 +161,7 @@ capabilities:
     status: limited
     value: "Arranged with Anthropic per subscription; not available for Covered Models (Fable / Mythos 5.x) apart from a time-limited transition offer"
     summary: >-
-      Microsoft can't set it. Covered Models refuse ZDR subscriptions with an error.
+      Microsoft can't set it; Anthropic does.
     notes: >
       Microsoft cannot set it; it is arranged with Anthropic, hence `limited`. "Anthropic
       independently manages data retention for Claude on Azure, so Microsoft can't change
@@ -194,7 +191,7 @@ capabilities:
     status: documented
     value: "No: Microsoft and OpenAI do not train on GPT prompts; Claude governed by Anthropic commercial terms (no training)"
     summary: >-
-      Microsoft's no-training commitment doesn't cover Claude; Anthropic's terms do.
+      Microsoft's commitment doesn't cover Claude.
     notes: >
       GPT / MODELS SOLD BY AZURE: prompts, completions, embeddings and training data "are
       NOT used by providers of Models sold by Azure to improve their models or services."
@@ -221,7 +218,7 @@ capabilities:
     status: documented
     value: "GPT: stored data and abuse store stay in the resource's geography even for Global / Data Zone; Claude: Azure-hosted stays in Azure, Anthropic-hosted may leave"
     summary: >-
-      Global / Data Zone only change where GPT is processed, not where data is stored.
+      Global / Data Zone change processing, not storage.
     notes: >
       GPT / MODELS SOLD BY AZURE: "For both Global and DataZone deployment types, any data
       stored at rest, such as uploaded data, and including the abuse monitoring data store

@@ -85,8 +85,7 @@ capabilities:
     status: documented
     value: "180 days for filter-flagged inputs/outputs (content filter on by default, can be switched off per endpoint)"
     summary: >-
-      The filter is on by default; baseline safety policies stay when it is off. Human
-      review of flagged content isn't stated.
+      Human review of flagged content isn't stated.
     notes: >
       "input and output triggered by the filter are retained for 180 days in" Malaysia, per
       the Data Processing page; ModelArk "may store your Customer Data for content safety
@@ -145,8 +144,7 @@ capabilities:
     status: documented
     value: "No training without prior authorization; opt-in data-collaboration campaign grants a perpetual licence"
     summary: >-
-      The opt-in campaign trades data for free tokens; shared data can't be deleted after
-      you withdraw.
+      Campaign data can't be deleted after you withdraw.
     notes: >
       "Without the customer's prior authorization, BytePlus ModelArk will neither interfere
       with the data processing nor use Customer Data for its own model training."
@@ -171,8 +169,7 @@ capabilities:
     status: documented
     value: "Filter-flagged data in Malaysia (content-filter page also says Singapore); processing in Malaysia, Indonesia and/or EU/EEA; AP/EU spillover"
     summary: >-
-      AP / EU requests can spill over to the other region with no documented opt-out; opt-in
-      diagnostics data may go to China.
+      AP / EU spillover, with no documented opt-out.
     notes: >
       "Customer Data processing is located in" Malaysia, Indonesia and/or the EU/EEA, and
       filter-flagged inputs and outputs are kept 180 days in Malaysia.
