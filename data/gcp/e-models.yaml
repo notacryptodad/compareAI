@@ -1,0 +1,245 @@
+provider: gcp
+bucket: e
+product: Gemini Enterprise Agent Platform models (Model Garden, Gemini API on Agent Platform)
+aliases: [Vertex AI generative AI, Vertex AI Model Garden, Agent Platform MaaS]
+notes: >
+  All three families are sold. Gemini is Google's first-party model family; Anthropic Claude
+  (Haiku / Sonnet / Opus / Fable, Google-managed) and OpenAI GPT (Astra / Sol / Terra / Luna
+  flagship families, Private Preview, Responses API only) are partner models in Model Garden
+  (catalog: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/use-partner-models).
+  The data-handling terms live on three pages: the zero-data-retention page
+  (https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention),
+  the abuse-monitoring page
+  (https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/abuse-monitoring),
+  and the OpenAI partner-model page
+  (https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/openai).
+  SURPRISES: (1) abuse-monitoring terms are split by model tier, not by maker: ordinary
+  Google models (classifier-flagged prompts, up to 90 days, online-terms customers only),
+  "Google Frontier Models" such as Gemini 4 Neon and Carbon (prompts and responses, up to 30
+  days, inside the customer's environment), and "Advanced AI" partner models such as
+  OpenAI's flagship GPTs and Claude Fable / Mythos (all prompts and responses, up to 30
+  days). (2) Claude is offered twice: Google-managed on Agent Platform, where Google is the
+  sole data processor, and "Claude models on Google Cloud (Anthropic managed)"
+  (claude.googleapis.com), which runs on Anthropic infrastructure under Anthropic's
+  retention policy. This file scores the Google-managed path and notes the other.
+  (3) The OpenAI page says abuse logs sit in Google-owned US storage, while the abuse-monitoring
+  page says Advanced AI logs follow the customer's selected region. These agree in practice
+  only because OpenAI models are offered just on the global and us endpoints.
+  (4) Gemini caches inputs by default (in memory, plus durable storage), deleted within 24
+  hours, and you can turn this off for a project yourself. (Paraphrase.)
+
+capabilities:
+  retention_openai_gpt:
+    product: Agent Platform — OpenAI GPT partner models (Private Preview)
+    status: documented
+    value: "Up to 30 days (abuse monitoring, Google-held, US); ZDR by OpenAI approval"
+    summary: >-
+      Logging needs a one-time consent per project; no human review during Private Preview.
+      store=false is not ZDR.
+    notes: >
+      "By default, Google Cloud logs and retains prompts and responses for up to 30 days for
+      abuse monitoring." The OpenAI flagship models are designated Advanced AI, and enabling
+      them needs a one-time consent per project that "permits Google Cloud to log prompts
+      and responses for up to 30 days in Google-owned US storage solely to detect abuse and
+      policy violations." Google holds the logs. The abuse-monitoring page (a different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/abuse-monitoring)
+      says "Google and Model Providers deploy automated investigative tools, including safety
+      classifiers, to analyze logged data", and OpenAI's flagship GPTs are on its Advanced
+      AI list. Human review: "During Private Preview, neither Google nor OpenAI uses human
+      reviewers to assess customer prompts, file inputs, or model responses." Stateful
+      features: setting store to false in a Responses API request makes it stateless but
+      doesn't grant ZDR. "Setting `store: false` configures requests to be stateless, but
+      doesn't grant or guarantee ZDR." Hosted File Search, Vector Stores, Assistants and
+      background mode aren't supported on Agent Platform, so those OpenAI-side stores don't
+      apply. Prompt caching is kept in volatile memory. The models themselves are Private
+      Preview. (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/openai
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_anthropic_claude:
+    product: Agent Platform — Anthropic Claude partner models (Google-managed)
+    status: documented
+    value: "No default prompt logging stated; Fable/Mythos up to 30 days, shared with Anthropic"
+    summary: >-
+      No page states a rule for ordinary Claude calls; 30-day logging is opt-in.
+      Google-managed path: Google is sole processor.
+    notes: >
+      Fable and Mythos are Advanced AI models. For them, "prompts and responses are retained
+      for up to 30 days", and Anthropic requires that "you must enable sharing this data with
+      Anthropic for abuse monitoring." Opus 4.7 and later, and Sonnet 5 and later, fall under
+      the same Advanced AI terms only when advanced_ai_enabled is set for Anthropic's Cyber
+      Verification Program, and "All other usage of these models is out of scope of the
+      Advanced AI Safety Addendum." Neither this page nor the Claude page gives a retention
+      rule for ordinary Claude calls. The prompt logging described for Google models is
+      scoped to Google models only, so ordinary calls appear to have no logging, but no page
+      says so outright. On a different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/claude,
+      the customer can opt in to "30-day request-response logging of your prompt and
+      completion activity". That page also says Claude use is subject to the "Separate
+      Offerings" terms. WHO HOLDS IT: on a different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/claude/anthropic-managed,
+      the Google-managed path offers "Google-operated inference where Google Cloud is the sole
+      data processor". The Anthropic-managed alternative "follows the same data retention
+      policy as Anthropic's 1st party Claude API." (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/abuse-monitoring
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_google_gemini:
+    product: Agent Platform — Gemini models
+    status: documented
+    value: "Stateless by default except implicit cache (deleted within 24h) and Interactions API store=true; abuse logs 30-90 days by tier"
+    summary: >-
+      Cache deleted within 24h, can be turned off per project. Search grounding logs (3
+      days) and Maps (30 days) can't be turned off.
+    notes: >
+      CACHING: "By default, Google's published Gemini models cache Customer Data to reduce
+      latency and accelerate responses." Both the in-memory tier and the durable tier are on
+      by default. Cached data is "deleted no later than 24 hours after it's written", and
+      caching can be turned off per project through the cacheConfig API. STATEFUL: with the
+      Interactions API, store defaults to true for all models unless the request sets it. The page doesn't state how long stored interactions are kept. Live API
+      session resumption (opt-in) caches session data for up to 24 hours. GROUNDING: Google
+      Search grounding stores derived query logs "for up to three (3) days", and "There is no
+      way to disable the storage of this information if you use Grounding with Google
+      Search." Google Maps grounding stores prompts and output for thirty days, also without
+      an opt-out. Request-response logging to BigQuery is off by default. Abuse-monitoring
+      logs are covered in abuse_monitoring_retention: up to 90 days for ordinary Google
+      models, up to 30 days for Google Frontier Models. (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  abuse_monitoring_retention:
+    product: Agent Platform — abuse monitoring (all model families)
+    status: documented
+    value: "Google models: flagged prompts up to 90 days; Frontier Gemini: 30 days in customer env; Advanced AI partners: 30 days; human review possible"
+    summary: >-
+      Master Agreement customers are exempt from prompt logging for ordinary Google models.
+      No CMEK on these logs.
+    notes: >
+      THREE TIERS. (1) Ordinary Google models: after a classifier flags a prompt, Google may
+      log it, and "This data is stored securely for up to 90 days in the same region or
+      multi-region selected by the customer for their project". Authorized Google employees
+      may review flagged prompts. Only customers on the online Google Cloud Platform Terms of
+      Service are in scope, and "customers with a Google Cloud Master Agreement are exempt
+      from prompt logging for this abuse monitoring by default." (2) Google Frontier Models
+      (Gemini 4 Neon, Gemini 4 Carbon, and the cyber variants): prompts and responses "are
+      stored securely inside the customer's environment for up to 30 days". Master Agreement
+      customers are exempt from human review. Online-terms customers may have flagged prompts
+      reviewed by humans. (3) Non-Google Advanced AI models (OpenAI's Astra / Sol / Terra /
+      Luna; Claude Fable and Mythos; Claude Opus and Sonnet when enrolled in the Cyber
+      Verification Program): "All prompts and responses will be logged and securely stored
+      for up to 30 days for the sole purpose of monitoring for abuse." Both Google and the
+      model providers run automated tools on these logs. On a different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/openai,
+      Google says no human review happens for OpenAI models during Private Preview. None of
+      these logs are encrypted with CMEK. (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/abuse-monitoring
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  zdr_openai_gpt:
+    product: Agent Platform — OpenAI GPT partner models (Private Preview)
+    status: limited
+    value: "By approval: per-project OpenAI approval through the account team, off by default; direct-OpenAI approvals don't carry over"
+    summary: >-
+      The account team sends the request to OpenAI; it is off until approved.
+    notes: >
+      Approval-gated, hence `limited`. "Zero Data Retention (ZDR) is available for OpenAI
+      flagship models on an approved project basis, but is disabled by default." The account
+      team sends the request to OpenAI for approval. "Existing ZDR approvals for the direct
+      OpenAI API don't apply to Agent Platform". (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_anthropic_claude:
+    product: Agent Platform — Anthropic Claude partner models
+    status: limited
+    value: "By provider approval only; Fable / Mythos must share data with Anthropic (no ZDR route named); Anthropic-managed service: ZDR may be available on request"
+    summary: >-
+      No self-serve ZDR for Claude; the ZDR page's partner section names only OpenAI.
+    notes: >
+      Approval-gated, hence `limited`. For partner models, ZDR "access is not guaranteed and
+      requires provider approval". For Claude Fable and Mythos, "you must enable sharing this
+      data with Anthropic for abuse monitoring.", and no ZDR route is named for them. The
+      partner-models section of the ZDR page names only OpenAI (a different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention).
+      For the Anthropic-managed Claude service, ZDR "may be available on request", per a
+      different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/claude/anthropic-managed.
+      (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/abuse-monitoring
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_google_gemini:
+    product: Agent Platform — Gemini models
+    status: limited
+    value: "Self-serve settings (caching off, logging off, store=false, no session resumption, Enterprise web grounding), but abuse prompt logging lifts only under a Master Agreement"
+    summary: >-
+      ZDR is a checklist of settings, not one switch, and may not be possible with some Advanced AI features.
+    notes: >
+      STATUS (fact-check 2026-11-25): `limited`, not `documented`. Every setting is
+      self-serve, but abuse prompt logging can't be switched off by online-terms customers;
+      only a Master Agreement exempts it, which is a negotiated contract. ZDR here is a list
+      of steps: "To achieve zero data retention, customers must take specific actions within
+      each of these areas". For Gemini that means turning off caching for the project
+      (self-serve API), leaving request-response logging off, setting store to false on the
+      Interactions API, not enabling Live API session resumption, and using Web Grounding for
+      Enterprise instead of Google Search grounding. Exceptions: "Zero data retention may not
+      be possible when using some Advanced AI features." ABUSE LOGS (a different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/abuse-monitoring):
+      "customers with a Google Cloud Master Agreement are exempt from prompt logging for this
+      abuse monitoring by default." (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  training_on_inputs:
+    product: Agent Platform — all managed models (Gemini, Claude, GPT)
+    status: documented
+    value: "No training without permission; applies to all managed models incl. partner models"
+    summary: >-
+      Covers pre-GA and partner models; OpenAI makes the same commitment. No Anthropic
+      statement on Google's pages.
+    notes: >
+      "Google won't use your data to train or fine-tune any AI/ML models without your prior
+      permission or instruction. This applies to all managed models on Gemini Enterprise Agent
+      Platform, including GA and pre-GA models." The cache and abuse-log sections repeat that
+      the data is "never used to train or fine-tune models". OpenAI's own commitment, on a
+      different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/openai:
+      "Neither Google nor OpenAI uses customer prompts, inputs, or responses to train,
+      fine-tune, or improve any AI/ML models." No Anthropic-side training statement was found
+      on the Google pages. Anthropic's terms govern Claude use, per the abuse-monitoring page.
+      For the Google-managed path, Google calls itself the sole data processor.
+      (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_region:
+    product: Agent Platform — abuse logs, caches, data residency
+    status: documented
+    value: "Abuse logs in customer-selected region/multi-region (OpenAI: US); durable cache follows location except global endpoint"
+    summary: >-
+      The global endpoint can serve requests and cached data from any region, with no
+      residency guarantee.
+    notes: >
+      Abuse logs for Google models are kept "in the same region or multi-region selected by
+      the customer for their project". Advanced AI logs are "stored in the same region or
+      multi-region selected by the customer for their project". Frontier-model logs stay
+      inside the customer's environment. OpenAI: a different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/openai,
+      says logs go to "Google-owned US storage". Only the global and us endpoints are offered
+      for these models. CACHE: per a different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention,
+      the durable cache follows the selected location, but "When you use the global endpoint,
+      requests and their cached data can be served from any region." The in-memory cache is
+      processed in the region that serves the request. GLOBAL ENDPOINT: per a different page,
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/data-residency,
+      requests to a global endpoint "may be processed in any Google Cloud location around the
+      world, and therefore don't provide any data residency guarantees." The ZDR page doesn't
+      say where Google Search grounding logs are stored. (Paraphrase except quoted text.)
+    source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/abuse-monitoring
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"

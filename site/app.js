@@ -21,7 +21,17 @@ fetch('data.json')
       'server) — opening index.html directly via file:// blocks fetch().</p>';
   });
 
+// Keep table headers pinned just below the sticky controls bar, whatever its height.
+function trackControlsHeight() {
+  const bar = document.querySelector('.controls');
+  const set = () => document.documentElement.style.setProperty(
+    '--controls-h', bar.getBoundingClientRect().height + 'px');
+  set();
+  new ResizeObserver(set).observe(bar);
+}
+
 function init() {
+  trackControlsHeight();
   const db = state.db;
 
   // Freshness banner.
@@ -94,16 +104,26 @@ function cellOf(pkey, bucket, rowId) {
   return bd ? bd.capabilities[rowId] : undefined;
 }
 
-function badge(cell) {
+// Buckets whose string `value` is the headline fact (e.g. a retention period).
+const SHOW_VALUE_BUCKETS = ['e'];
+
+function badge(cell, bucket) {
   const st = cell ? cell.status : 'unknown';
   if (!cell || st === 'unknown') return '<span class="badge b-unknown">·</span>';
   let html = '<span class="badge b-' + st + '">' + (BADGE[st] || st) + '</span>';
-  if (cell.product) html += '<span class="prod">' + esc(cell.product) + '</span>';
-  else if (Array.isArray(cell.value))
+  // In headline-value buckets a No needs no explanation inline; details stay in the dialog.
+  if (st === 'none' && SHOW_VALUE_BUCKETS.includes(bucket)) return html;
+  if (cell.product) {
+    html += '<span class="prod">' + esc(cell.product) + '</span>';
+    // Bucket-style headline value (e.g. a retention period) shown alongside the product.
+    if (SHOW_VALUE_BUCKETS.includes(bucket) && typeof cell.value === 'string')
+      html += '<span class="val">' + esc(cell.value) + '</span>';
+  } else if (Array.isArray(cell.value))
     html += '<span class="prod">' + esc(cell.value.slice(0, 3).join(', ')) +
             (cell.value.length > 3 ? ', +' + (cell.value.length - 3) : '') + '</span>';
   else if (cell.value != null && typeof cell.value !== 'object')
     html += '<span class="prod">' + esc(String(cell.value)) + '</span>';
+  if (cell.summary) html += '<span class="sum">' + esc(cell.summary) + '</span>';
   return html;
 }
 
@@ -158,6 +178,9 @@ function render() {
     }
 
     const t = document.createElement('table');
+    // Rows with inline summaries need the width for the provider columns.
+    if (rows.some((r) => provs.some((p) => (cellOf(p, bucket, r.id) || {}).summary)))
+      t.className = 'with-sum';
     let head = '<tr><th class="cap">Capability</th>';
     provs.forEach((p) => { head += '<th>' + db.providers[p].short + '</th>'; });
     head += '</tr>';
@@ -168,7 +191,7 @@ function render() {
       provs.forEach((p) => {
         const cell = cellOf(p, bucket, r.id);
         body += '<td class="cell" data-p="' + p + '" data-r="' + r.id + '">' +
-          badge(cell) + '</td>';
+          badge(cell, bucket) + '</td>';
       });
       body += '</tr>';
     });
@@ -194,7 +217,8 @@ function openCell(pkey, bucket, rowId) {
     (cell.product ? ' · ' + cell.product : '') +
     (cell.verified_on ? ' · verified ' + cell.verified_on : '');
   let b = '';
-  if (cell.notes) b += '<div class="k">Notes</div><pre>' + esc(cell.notes.trim()) + '</pre>';
+  if (cell.summary) b += '<div class="k">Summary</div><p class="sumfull">' + esc(cell.summary) + '</p>';
+  if (cell.notes) b += '<div class="k">Notes</div><pre>' + linkify(esc(cell.notes.trim())) + '</pre>';
   if (Array.isArray(cell.value))
     b += '<div class="k">Value</div><pre>' + esc(cell.value.join(', ')) + '</pre>';
   if (cell.source) b += '<div class="k">Source</div><pre><a href="' + esc(cell.source) +
@@ -235,6 +259,19 @@ function contributeUrl(pkey, bucket, rowId) {
     'title=' + encodeURIComponent(title) +
     '&body=' + encodeURIComponent(body) +
     '&labels=data-update';
+}
+
+// Make every URL in already-escaped note text clickable, so a viewer can open the second
+// pages a note quotes, not just the cell's `source`. Trailing punctuation is not part of
+// the link.
+function linkify(escaped) {
+  return escaped.replace(/https?:\/\/[^\s<>"）」，。；]+/g, (m) => {
+    const cut = m.search(/&(quot|lt|gt);/);
+    const raw = cut >= 0 ? m.slice(0, cut) : m;
+    const url = raw.replace(/[.,;:)\]]+$/, '');
+    return '<a href="' + url + '" target="_blank" rel="noopener">' + url + '</a>' +
+      m.slice(url.length);
+  });
 }
 
 function esc(s) {

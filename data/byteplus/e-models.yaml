@@ -1,0 +1,195 @@
+provider: byteplus
+bucket: e
+product: BytePlus ModelArk
+aliases: [ModelArk, Ark, BytePlus Ark, ModelArk Coding Plan]
+notes: >
+  NONE OF THE THREE FAMILIES IS SOLD. The ModelArk model list
+  (https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-list.md) presents itself as
+  the full catalog ("ModelArk provides models for text and code, video, image, 3D, and
+  embedding workloads") and lists only ByteDance (Seed / Seedance / Seedream), DeepSeek,
+  Z.ai (GLM), Deemos and Hitem3D. No OpenAI GPT, Anthropic Claude or Google Gemini model
+  appears. (Paraphrase except quoted text.)
+  The Coding Plan (a subscription inside ModelArk) also offers only Dola Seed, GLM and
+  DeepSeek coding models, and it retired GPT-OSS-120B (OpenAI's open-weight model) on
+  09.23. ArkClaw runs on Coding Plan models. AgentKit's gateway proxies model providers the
+  customer brings; it is not a hosted catalog. (Paraphrase.)
+  API COMPATIBILITY IS NOT RESALE: ModelArk exposes OpenAI-compatible and
+  Anthropic-compatible endpoints, and the Coding Plan documents setup for Claude Code and
+  Codex. Those tools then call ByteDance / DeepSeek / GLM models on ModelArk, not GPT or
+  Claude. (Paraphrase.)
+  WHERE THE TERMS LIVE: ModelArk's own data-handling terms are on the Data Processing page
+  (BytePlus_ModelArk_Data_Processing), the Content filter overview (Content_Pre-filter), the
+  Data Collaboration Rewards Campaign and Data Authorization Agreement
+  (collaboration-reward-program), and the Model Generations Quality Diagnostics Service
+  Acknowledgement. Those four general rows score ModelArk's terms for its own catalog.
+  SURPRISES: (1) the content-filter page says filter logs are kept on servers in Malaysia
+  OR SINGAPORE, while the Data Processing page says 180 days in Malaysia; (2) the opt-in
+  diagnostics service may move Seedance task data to the People's Republic of China;
+  (3) the opt-in data-collaboration campaign grants a perpetual training licence that is
+  not undone by withdrawing. (Paraphrase.)
+
+capabilities:
+  retention_openai_gpt:
+    product: BytePlus ModelArk — model list (no OpenAI models)
+    status: none
+    value: Not sold on ModelArk
+    notes: >
+      The model list names its text-and-code providers as ByteDance, DeepSeek and Z.ai,
+      plus Deemos and Hitem3D for 3D. No OpenAI GPT model appears, so there are no
+      GPT-specific retention terms to record. (Paraphrase.)
+      The Coding Plan used to offer OpenAI's open-weight GPT-OSS-120B, but the deprecation
+      notice lists it with deprecation date 09.23 (a different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/coding-plan-personal-model-deprecation.md).
+      GPT-OSS-120B is OpenAI's open-weight model, so it was hosted by BytePlus rather than
+      served through OpenAI's API (our inference; the page shows only the name and date).
+      ModelArk's OpenAI-compatible API and the Codex setup guide point those tools at
+      ModelArk's own models, so they are not GPT resale. (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-list.md
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_anthropic_claude:
+    product: BytePlus ModelArk — model list (no Anthropic models)
+    status: none
+    value: Not sold on ModelArk
+    notes: >
+      No Anthropic Claude model is on the ModelArk model list. Its text-and-code providers
+      are ByteDance, DeepSeek and Z.ai only, so Anthropic receives no data through
+      ModelArk. (Paraphrase.)
+      The Coding Plan offers an Anthropic-compatible base URL and a Claude Code setup guide,
+      but the plan's overview says "Other models cannot be used in the Coding Plan", and its
+      supported models are Dola Seed, GLM and DeepSeek (a different page:
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/coding-plan-personal-plan-overview.md).
+      So Claude Code runs on non-Claude models there. (Paraphrase except quoted text.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-list.md
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_google_gemini:
+    product: BytePlus ModelArk — model list (no Google models)
+    status: none
+    value: Not sold on ModelArk
+    notes: >
+      No Google Gemini model is on the ModelArk model list, which covers text and code,
+      video, image, 3D and embedding models from ByteDance, DeepSeek, Z.ai, Deemos and
+      Hitem3D. The Coding Plan offers no Gemini either: it lists only Dola Seed, GLM and
+      DeepSeek (a different page,
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/coding-plan-personal-plan-overview.md).
+      (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-list.md
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  abuse_monitoring_retention:
+    product: BytePlus ModelArk — Content filter
+    status: documented
+    value: "180 days for filter-flagged inputs/outputs (content filter on by default, can be switched off per endpoint)"
+    summary: >-
+      The filter is on by default; baseline safety policies stay when it is off. Human
+      review of flagged content isn't stated.
+    notes: >
+      "input and output triggered by the filter are retained for 180 days in" Malaysia, per
+      the Data Processing page; ModelArk "may store your Customer Data for content safety
+      purposes".
+      The content filter can be switched on or off for each endpoint, and "this feature is
+      enabled by default" (a different page:
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/Content_Pre-filter.md). That
+      page says that when the filter is on, BytePlus will "retain logs from the use of the
+      Content filter feature and the risk-related content data filtered by it for a limited
+      period", used for troubleshooting and normal operation. Turning it off still leaves
+      "baseline content safety policies" in place. (Paraphrase except quoted text.)
+      HUMAN REVIEW: neither page says whether humans review flagged content. The opt-in
+      Seedance diagnostics service is separate: when you ask for it, BytePlus may keep
+      task data "for up to 3 days solely to provide the Diagnostic Service" (a different
+      page:
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-diagnostic-service-acknowledgement.md).
+      Applies to ModelArk's own catalog (no GPT / Claude / Gemini). (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/BytePlus_ModelArk_Data_Processing.md
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  zdr_openai_gpt:
+    product: BytePlus ModelArk — model list (no OpenAI models)
+    status: none
+    value: "GPT not sold on ModelArk"
+    notes: >
+      No OpenAI GPT model is on the ModelArk model list (see retention_openai_gpt), so there is
+      no GPT ZDR to score. For ModelArk's own models, no ZDR program, form or contract term is
+      documented on the Data Processing, Content filter or Responses API pages; the Responses
+      API store=false option is the nearest self-serve control. (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-list.md
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_anthropic_claude:
+    product: BytePlus ModelArk — model list (no Anthropic models)
+    status: none
+    value: "Claude not sold on ModelArk"
+    notes: >
+      No Anthropic Claude model is on the ModelArk model list (see retention_anthropic_claude),
+      so there is no Claude ZDR to score. (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-list.md
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_google_gemini:
+    product: BytePlus ModelArk — model list (no Google models)
+    status: none
+    value: "Gemini not sold on ModelArk"
+    notes: >
+      No Google Gemini model is on the ModelArk model list (see retention_google_gemini), so
+      there is no Gemini ZDR to score. (Paraphrase.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-list.md
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  training_on_inputs:
+    product: BytePlus ModelArk
+    status: documented
+    value: "No training without prior authorization; opt-in data-collaboration campaign grants a perpetual licence"
+    summary: >-
+      The opt-in campaign trades data for free tokens; shared data can't be deleted after
+      you withdraw.
+    notes: >
+      "Without the customer's prior authorization, BytePlus ModelArk will neither interfere
+      with the data processing nor use Customer Data for its own model training."
+      OPT-IN EXCEPTION: in the Data Collaboration Rewards Campaign, inputs and outputs from
+      the endpoints you enrol "will be permanently used to provide, maintain, develop or
+      improve our model services" in exchange for free tokens. Under the Data Authorization
+      Agreement, data shared before you withdraw "cannot be technically deleted" (a
+      different page:
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/collaboration-reward-program.md).
+      The diagnostics service keeps de-identified data but says "We do not use such data to
+      train any general-purpose or foundation model" (a different page:
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-diagnostic-service-acknowledgement.md).
+      No GPT / Claude / Gemini, so no model-maker terms apply. Third-party makers on the
+      catalog (DeepSeek, Z.ai) have no separate training terms on these pages. (Paraphrase
+      except quoted text.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/BytePlus_ModelArk_Data_Processing.md
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_region:
+    product: BytePlus ModelArk
+    status: documented
+    value: "Filter-flagged data in Malaysia (content-filter page also says Singapore); processing in Malaysia, Indonesia and/or EU/EEA; AP/EU spillover"
+    summary: >-
+      AP / EU requests can spill over to the other region with no documented opt-out; opt-in
+      diagnostics data may go to China.
+    notes: >
+      "Customer Data processing is located in" Malaysia, Indonesia and/or the EU/EEA, and
+      filter-flagged inputs and outputs are kept 180 days in Malaysia.
+      INCONSISTENCY: the Content filter page says the data "is stored on servers in
+      Malaysia or Singapore belonging to BytePlus or its affiliates" (a different page:
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/Content_Pre-filter.md).
+      CROSS-REGION ROUTING: "some requests may be routed to inference resources in other
+      regions", and the routing table gives AP to EU and EU to AP spillover, with no
+      opt-out documented (a different page:
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/region-availability.md).
+      OPT-IN EXCEPTIONS: diagnostics data "may be accessed, transferred to, stored in, and
+      processed in the People’s Republic of China" (a different page:
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-diagnostic-service-acknowledgement.md),
+      and campaign data may be stored outside your region (Paraphrase, from a different
+      page:
+      https://ai.byteplus.com/ark/region:ap-southeast-1/docs/collaboration-reward-program.md).
+      (Paraphrase except quoted text.)
+    source: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/BytePlus_ModelArk_Data_Processing.md
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"

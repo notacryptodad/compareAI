@@ -1,0 +1,176 @@
+provider: alibaba
+bucket: e
+product: Alibaba Cloud Model Studio
+aliases: [阿里云百炼, 大模型服务平台百炼, Bailian, DashScope]
+notes: >
+  Model Studio does NOT sell OpenAI GPT, Anthropic Claude or Google Gemini models. Neither
+  the international Text Generation model list
+  (https://www.alibabacloud.com/help/en/model-studio/model-list-text-generation, updated
+  2026-11-20) nor the CN 文本生成 list
+  (https://help.aliyun.com/zh/model-studio/model-list-text-generation/, updated 2026-11-16)
+  contains any of the three families: both list Qwen plus DeepSeek, Kimi, GLM / ZHIPU,
+  MiniMax and (EN) mindlab/Macaron; CN adds vendor-prefixed resellers such as siliconflow/,
+  vanchin/, xiaomi/, stepfun/. The console Model Plaza was not checked. (Paraphrase.)
+  The only Alibaba route to GPT / Claude / Gemini is AI Gateway (API Gateway), which ships
+  provider templates for OpenAI, Azure, Gemini, Bedrock and Claude but proxies to the
+  vendor with the CUSTOMER's own API key and says the model capabilities are not provided
+  by AI Gateway, so the model maker's own terms govern retention — see the family rows.
+  (Paraphrase.)
+  WHERE THE TERMS LIVE: a dedicated international-site page, Data retention policy
+  (https://www.alibabacloud.com/help/en/model-studio/data-retention-policy, updated
+  2026-11-17), carries the 30-day default, the ZDR programme, the ZDR model list and the
+  content-safety carve-outs. The CN site has no equivalent page: its 合规资质与隐私说明
+  page (https://help.aliyun.com/zh/model-studio/privacy-notice) only says data is stored
+  per law and points to the 《阿里云百炼服务协议》, with no duration. (Paraphrase.)
+  SURPRISE: the EN product page (https://www.alibabacloud.com/en/product/modelstudio)
+  still says ZDR is "Coming soon September." but the retention-policy page documents ZDR as
+  a live, account-manager-gated control — the product page is stale.
+
+capabilities:
+  retention_openai_gpt:
+    product: Alibaba Cloud Model Studio (AI Gateway as bring-your-own-key proxy)
+    status: none
+    value: Not sold on Model Studio; AI Gateway can only proxy to OpenAI / Azure with your own key
+    notes: >
+      The international Text Generation model list names no GPT model (nor does the CN
+      list, https://help.aliyun.com/zh/model-studio/model-list-text-generation/); it is
+      Qwen plus DeepSeek, Kimi, GLM, MiniMax and Macaron. (Paraphrase.) AI Gateway, a
+      different page (https://www.alibabacloud.com/help/en/api-gateway/ai-gateway/user-guide/creating-services),
+      offers OpenAI and Azure provider templates that need the customer's own API key, and
+      says "The large model capabilities offered through this AI service are not provided directly by AI Gateway."
+      So any retention is OpenAI's / Azure's, not Alibaba's. (Paraphrase except quoted text.)
+    source: https://www.alibabacloud.com/help/en/model-studio/model-list-text-generation
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_anthropic_claude:
+    product: Alibaba Cloud Model Studio (AI Gateway as bring-your-own-key proxy)
+    status: none
+    value: Not sold on Model Studio; AI Gateway can only proxy to Anthropic / Bedrock with your own key
+    notes: >
+      No Claude model on the international Text Generation model list or the CN list
+      (https://help.aliyun.com/zh/model-studio/model-list-text-generation/). (Paraphrase.)
+      Claude appears in Alibaba docs only as a client: Claude Code pointed at Qwen, and AI
+      Gateway's Claude and Bedrock provider templates, which use the customer's own key —
+      a different page (https://www.alibabacloud.com/help/en/api-gateway/ai-gateway/user-guide/creating-services)
+      says "The large model capabilities offered through this AI service are not provided directly by AI Gateway."
+      Anthropic's (or AWS's) terms would apply; Alibaba states nothing about whether
+      Anthropic keeps data. (Paraphrase except quoted text.)
+    source: https://www.alibabacloud.com/help/en/model-studio/model-list-text-generation
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_google_gemini:
+    product: Alibaba Cloud Model Studio (AI Gateway as bring-your-own-key proxy)
+    status: none
+    value: Not sold on Model Studio; AI Gateway can only proxy to Gemini with your own key
+    notes: >
+      No Gemini model on the international Text Generation model list or the CN list
+      (https://help.aliyun.com/zh/model-studio/model-list-text-generation/). (Paraphrase.)
+      AI Gateway's Gemini provider template proxies to Google with the customer's own key —
+      a different page (https://www.alibabacloud.com/help/en/api-gateway/ai-gateway/user-guide/creating-services)
+      says "The large model capabilities offered through this AI service are not provided directly by AI Gateway."
+      Google's terms, including its caching behaviour, would apply. (Paraphrase except
+      quoted text.)
+    source: https://www.alibabacloud.com/help/en/model-studio/model-list-text-generation
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  abuse_monitoring_retention:
+    product: Alibaba Cloud Model Studio
+    status: documented
+    value: "Prompts/outputs up to 30 days by default; flagged content up to 2 years; content-safety guardrails cannot be fully switched off (policy adjustable via account-manager assessment)"
+    summary: >-
+      The CN site gives no duration. Flagged content is kept up to 2 years even under ZDR.
+      Human review isn't addressed.
+    notes: >
+      Default: "By default, user’s prompts and responses from model inference calls are retained for no longer than 30 days, unless longer retention is required by applicable laws or is reasonably necessary to ensure the security of Alibaba Cloud Model Studio services."
+      Content flagged by automated filters is kept longer: "content flagged by our automated safety filtering systems is retained in accordance with"
+      the international-site privacy policy and applicable law "for no longer than 2 years"
+      for law-enforcement and rights-protection purposes, even under ZDR. Moderation is
+      inline and cannot be fully disabled: "Alibaba Cloud Model Studio does not provide a switch to"
+      turn the guardrails off; changing the policy goes through the account manager.
+      Human review: the page says data in the ZDR cache window is not used for human review,
+      but says nothing about human review of the 30-day standard retention. The 30-day default
+      states no model scope (the third-party exclusion on that page applies to ZDR); this
+      is the international site — the CN privacy page gives no duration. (Paraphrase except
+      quoted text.)
+    source: https://www.alibabacloud.com/help/en/model-studio/data-retention-policy
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  zdr_openai_gpt:
+    product: Alibaba Cloud Model Studio
+    status: none
+    value: "GPT not sold on Model Studio"
+    notes: >
+      No GPT model is on the Text Generation model list (see retention_openai_gpt), so there
+      is no GPT ZDR to score. Model Studio does run a ZDR program for its own catalog:
+      enterprise customers apply through an account manager, it is set per workspace, it is
+      offered only on the international site, and it covers named Qwen, DeepSeek, GLM and
+      Kimi models but not models served by third-party vendors (per a different page,
+      https://www.alibabacloud.com/help/en/model-studio/data-retention-policy). (Paraphrase.)
+    source: https://www.alibabacloud.com/help/en/model-studio/model-list-text-generation
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_anthropic_claude:
+    product: Alibaba Cloud Model Studio
+    status: none
+    value: "Claude not sold on Model Studio"
+    notes: >
+      No Claude model is on the Text Generation model list (see retention_anthropic_claude),
+      so there is no Claude ZDR to score; Model Studio's own ZDR program is described under
+      zdr_openai_gpt. (Paraphrase.)
+    source: https://www.alibabacloud.com/help/en/model-studio/model-list-text-generation
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_google_gemini:
+    product: Alibaba Cloud Model Studio
+    status: none
+    value: "Gemini not sold on Model Studio"
+    notes: >
+      No Gemini model is on the Text Generation model list (see retention_google_gemini), so
+      there is no Gemini ZDR to score; Model Studio's own ZDR program is described under
+      zdr_openai_gpt. (Paraphrase.)
+    source: https://www.alibabacloud.com/help/en/model-studio/model-list-text-generation
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  training_on_inputs:
+    product: Alibaba Cloud Model Studio
+    status: documented
+    value: "No training on customer data (Alibaba); no training statement for vendor-served models"
+    summary: >-
+      Training only with separate consent. No statement for models served directly by
+      third-party vendors.
+    notes: >
+      Privacy page, a different page (https://www.alibabacloud.com/help/en/model-studio/privacy-notice):
+      "Alibaba Cloud strictly protects your data privacy and will never use your data for model training."
+      CN equivalent (a different page, https://help.aliyun.com/zh/model-studio/privacy-notice):
+      「阿里云严格保护数据隐私，绝不会将您的数据用于模型训练。」 The retention-policy page
+      adds a consent carve-out: "Without your separate consent, we will not use your business data (including inputs, outputs, and files) to train, fine-tune or improve any foundation model."
+      That consent sentence sits in the page's ZDR section. Its referral of vendor-served
+      models to the vendor's own terms is about retention under ZDR, not training; the
+      page makes no training statement for models served directly by third-party vendors. GPT / Claude
+      / Gemini are not sold, so no per-family terms exist. (Paraphrase except quoted text.)
+    source: https://www.alibabacloud.com/help/en/model-studio/data-retention-policy
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_region:
+    product: Alibaba Cloud Model Studio
+    status: documented
+    value: "Stored in the chosen access region; Global deployment scope moves inference, not stored data"
+    summary: >-
+      ZDR is only in the regions outside mainland China.
+    notes: >
+      "Regions determine the access point and data storage location." and "Request data is stored in that region."
+      With a Global or geo deployment scope, inference may run elsewhere, but "The inference result is returned to the region for storage and then sent back to your application."
+      and "Your static data always remains in the selected region." Scopes per region:
+      Frankfurt Global/EU, Tokyo Global/Japan, Hong Kong Global/Hong Kong, Virginia
+      Global/US, chosen per workspace. CN wording on a different page
+      (https://help.aliyun.com/zh/model-studio/regions):
+      「推理结果回到接入地域存储，再响应给应用（用户静态数据始终存于所选地域）。」 ZDR is
+      available only in the non-mainland regions. (Paraphrase except quoted text.)
+    source: https://www.alibabacloud.com/help/en/model-studio/regions
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"

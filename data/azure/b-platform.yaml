@@ -390,18 +390,20 @@ capabilities:
       through a managed remote browser. Powered by Azure Playwright Workspaces". It "exposes a
       Model Context Protocol (MCP) tool set that's optimized for browser actions", including
       "Watch with Live View and intervene with Take control" and "Run JavaScript or
-      Playwright code." Session recording: "Agent builders can choose to record sessions."
-      PREVIEW SUB-FEATURES: "Automate private web applications (preview)", "Private VNet
-      injection (preview)", "Secret management with Azure Key Vault (Preview)". Not
-      supported: CAPTCHA or bot verification, browser profiles, browser proxies, browser
-      extensions.
+      Playwright code." Session recording: "Opt in to session recording to replay browser
+      activity for debugging, auditing, and compliance reviews."
+      PREVIEW SUB-FEATURES (page reworded since 2026-11-23, re-verified 2026-11-25): private
+      website access, browser proxy, secret management and Web Bot Auth (to reduce CAPTCHA
+      challenges) are labelled preview, and browser profile reuse is "(preview, coming
+      soon)". The earlier note's list of unsupported features (CAPTCHA, profiles, proxies)
+      no longer matches the page and was removed. (Paraphrase except quoted text.)
       REGION GAPS: the tool-support-by-region table on
       azure/foundry/agents/concepts/limits-quotas-regions marks Browser Automation "no" in
       Japan West, Switzerland West and West Central US (27 of 30 agent regions). (Paraphrase.)
       A separate Computer Use tool exists with narrower regional coverage (see
       tool_region_variance).
     source: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/browser-automation
-    verified_on: 2026-11-23
+    verified_on: 2026-11-25
     verified_by: "@notacryptodad"
 
   agent_payments:

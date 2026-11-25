@@ -138,14 +138,15 @@ capabilities:
     notes: >
       RESOLVED 2026-11-23 (was unknown): "Headless mode lets you run Kiro CLI as part of
       your CI/CD pipeline to automate code reviews, generate tests, or troubleshoot build
-      failures — no interactive terminal required." The page ships a GitHub Actions
+      failures without an interactive terminal." (Reworded by the vendor since 2026-11-23,
+      re-verified 2026-11-25.) The page ships a GitHub Actions
       example named "Kiro Code Review" that runs "Review the changes in this PR for security
       issues". Kiro Web also responds to PR review comments (/kiro commands), and
       workflows include independent reviewer agents.
       CAVEAT: this is a scripted CLI job you wire into CI yourself, not a turnkey assign-Kiro-as-PR-reviewer
       button like Copilot's.
     source: https://kiro.dev/docs/cli/headless/
-    verified_on: 2026-11-23
+    verified_on: 2026-11-25
     verified_by: "@notacryptodad"
 
   code_data_retention:

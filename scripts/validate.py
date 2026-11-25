@@ -20,7 +20,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 
-BUCKET_FILES = {"a": "a-sdk.yaml", "b": "b-platform.yaml", "c": "c-outofbox.yaml", "d": "d-devtools.yaml"}
+BUCKET_FILES = {"a": "a-sdk.yaml", "b": "b-platform.yaml", "c": "c-outofbox.yaml", "d": "d-devtools.yaml", "e": "e-models.yaml"}
 NEEDS_SOURCE = {"ga", "documented", "preview", "limited", "partner", "oss", "none"}
 
 # A launch-stage claim requires the vendor to SAY the stage. `documented` exists for the
@@ -106,6 +106,18 @@ def main() -> int:
                 counts[status] += 1
 
                 src, ver = cell.get("source"), cell.get("verified_on")
+
+                # A summary is our paraphrase of the notes, shown inline in the table.
+                # Quote marks there would read as verbatim vendor text that nothing checks.
+                if summ := cell.get("summary"):
+                    summ = str(summ)
+                    if any(ch in summ for ch in '"「」|'):
+                        errors.append(f"{loc}: summary must not contain quote marks or '|' "
+                                      f"(it is a paraphrase; quote in notes instead)")
+                    if len(summ) > 200:
+                        errors.append(f"{loc}: summary is {len(summ)} chars (max 200; keep it to the gist)")
+                    if not cell.get("notes"):
+                        errors.append(f"{loc}: summary without notes to summarise")
 
                 if status in STAGE_CLAIMS:
                     blob = f"{cell.get('notes', '')} {cell.get('product', '')}".lower()

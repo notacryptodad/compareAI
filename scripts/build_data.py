@@ -30,7 +30,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 SITE = ROOT / "site"
 DIST = ROOT / "dist"
-BUCKET_FILES = {"a": "a-sdk.yaml", "b": "b-platform.yaml", "c": "c-outofbox.yaml", "d": "d-devtools.yaml"}
+BUCKET_FILES = {"a": "a-sdk.yaml", "b": "b-platform.yaml", "c": "c-outofbox.yaml", "d": "d-devtools.yaml", "e": "e-models.yaml"}
 
 
 def load(path: Path) -> dict:
@@ -78,6 +78,7 @@ def main() -> int:
                     "status": cell.get("status", "unknown"),
                     "product": cell.get("product"),
                     "value": cell.get("value"),
+                    "summary": cell.get("summary"),
                     "notes": cell.get("notes"),
                     "source": cell.get("source"),
                     "verified_on": str(cell["verified_on"]) if cell.get("verified_on") else None,

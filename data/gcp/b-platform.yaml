@@ -441,13 +441,15 @@ capabilities:
       Distillation Service in Early Access." [sic].
       PROMPT CACHING (context caching page, a different page,
       https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/context-cache/context-cache-overview):
-      "All Google Cloud projects have implicit caching enabled by default." and "Implicit
-      caching provides a 90% discount on cached tokens compared to standard input tokens."
+      "All Google Cloud projects have implicit caching enabled by default." The implicit-cache
+      discount now depends on the model: 95% for Gemini 4 and later, 90% for Gemini 3 and
+      2.5, 75% for Gemini 2 and earlier (reworded by the vendor since 2026-11-23,
+      re-verified 2026-11-25). (Paraphrase.)
       Explicit caching adds storage costs by time stored. Claude models have their own
       prompt-caching page. `ga` reflects SFT; preference tuning, RLFT and distillation
       carry their own (earlier) stages. (Paraphrase except quoted text.)
     source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes
-    verified_on: 2026-11-23
+    verified_on: 2026-11-25
     verified_by: "@notacryptodad"
 
   model_routing:

@@ -1,0 +1,245 @@
+provider: aws
+bucket: e
+product: Amazon Bedrock
+aliases: [Bedrock, bedrock-runtime, bedrock-mantle]
+notes: >
+  Bedrock sells OpenAI GPT models (GPT-6.x, GPT-5.x, plus the open-weight gpt-oss line) and
+  Anthropic Claude models (Claude 3 Haiku through the Claude 5.x Fable / Mythos / Opus /
+  Sonnet / Haiku line). It does NOT sell Gemini: the "Models at a glance" catalog
+  (https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards.html) lists only Gemma 4
+  and Gemma 3 under Google. (Paraphrase.)
+  Data-handling terms live in four user-guide pages: Data retention (data-retention.html),
+  Amazon Bedrock abuse detection (abuse-detection.html), Automated review and human review
+  (automated-review-human-review.html), and the public-preview EFS / EDC page for Anthropic
+  models (anthropic-efs-enterprise-data-controls.html). Stateful OpenAI-style storage is on
+  the Responses API page (inference-responses-api.html).
+  SURPRISES: (1) Retention is now an explicit per-Region, per-account / per-project
+  data-retention MODE (none / default / aws_review / legacy provider_data_share / inherit),
+  set by API only at launch; the newest Claude models refuse to run without a retention opt-in:
+  Fable 5.x and Mythos 5.1 / 5.2 need aws_review (or provider_data_share); Mythos 5 needs
+  provider_data_share (per their model cards). For Fable 5.x that means 30-day retention
+  plus possible AWS human review; provider_data_share gets the same 30-day handling, so it
+  applies to Mythos 5 too; no duration is stated for Mythos 5.1 / 5.2 run under
+  aws_review. (Paraphrase.) (2) AWS says it shares no prompts or outputs with Anthropic or
+  OpenAI in any mode; even the legacy provider_data_share mode shares nothing today.
+  (3) A minor inconsistency between pages: the Responses API page says store=false means
+  Bedrock keeps no data at all, while the Data retention page warns that store=false does
+  not guarantee zero retention because some models still keep data for safety review.
+  (Paraphrase.)
+  The 30-day Fable / OpenAI abuse-retention statement recorded in an earlier pass is no
+  longer on the Bedrock FAQ as of 2026-11-25; it now lives on the abuse-detection page.
+  (Paraphrase.)
+
+capabilities:
+  retention_openai_gpt:
+    product: Amazon Bedrock — OpenAI GPT and gpt-oss models
+    status: documented
+    value: "Up to 30 days for classifier-flagged traffic only (AWS-held, abuse detection); gpt-oss exempt; Responses API store=true keeps 30 days"
+    summary: >-
+      Only flagged traffic is kept, by AWS, never shared with OpenAI. Responses API
+      store=false keeps nothing.
+    notes: >
+      Stateless inference: "For all OpenAI models other than GPT OSS Safeguard 120B, GPT OSS
+      Safeguard 20B, gpt-oss-120b, and gpt-oss-20b, classifier-flagged traffic will be
+      retained for up to 30 days for automated offline abuse detection." So only flagged
+      traffic is kept, and the four open-weight models are exempt. (Paraphrase.)
+      Holder: "Retained inputs and outputs are stored and processed by AWS and are not shared
+      with third-party model providers." OpenAI does not receive the data. (Paraphrase.)
+      STATEFUL (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/inference-responses-api.html):
+      "When store is true (the default), Amazon Bedrock retains the response, including the
+      input and output, for 30 days." "When store is false, Amazon Bedrock does not retain
+      any data from the request or response." Setting the account retention mode to none
+      rejects store=true outright. (Paraphrase of the last sentence.)
+      Prompt caching on GPT-5.5 keeps a cached prefix for 30 minutes per its model card (a
+      different page,
+      https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-55.html).
+      (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/abuse-detection.html
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_anthropic_claude:
+    product: Amazon Bedrock — Anthropic Claude models
+    status: documented
+    value: "Fable 5.x: all traffic up to 30 days, AWS-held, opt-in required; most other Claude models: none retained; Anthropic receives nothing"
+    summary: >-
+      Fable 5.x won't run until you opt in to aws_review; Mythos also needs an opt-in.
+      Claude models before Fable 5 are unchanged.
+    notes: >
+      Retention differs per Claude model. "For models requiring aws_review (currently Claude
+      Fable 5, Claude Fable 5.1, and Claude Fable 5.2): user prompts and completions are
+      retained within the AWS boundary for up to 30 days and may be reviewed by AWS to meet
+      the human review requirement the model provider imposes as a condition of access."
+      Those models will not run until you set the mode to aws_review; under none, default,
+      or no mode set they are unavailable unless the account is approved for ZDR on the
+      model. (Paraphrase.)
+      Older and non-Fable models: "There is no data retention change to Claude models
+      released before Claude Fable 5." The page's example of a model that never retains is
+      Claude Opus 4.8. (Paraphrase.)
+      Anthropic's access: "Amazon Bedrock does not share your content with model providers
+      for any current mode."
+      MYTHOS: the Claude Mythos 5.2 model card (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-mythos-5-2.html)
+      says "To use this model, you must set your data retention mode to aws_review or
+      provider_data_share via the Data Retention API." The abuse-detection page names only
+      Fable 5.x for the 30-day term. The data-retention page (a different page,
+      https://docs.aws.amazon.com/bedrock/latest/userguide/data-retention.html) gives
+      provider_data_share the same 30-day handling as aws_review, so Mythos 5 (which needs
+      provider_data_share) is covered; for Mythos 5.1 / 5.2 under aws_review no duration is
+      stated. (Paraphrase.)
+      EFS / EDC (public preview) can move the retained Claude data into your own S3 bucket
+      (EFS) and make you, not AWS, the reviewer. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/data-retention.html
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_google_gemini:
+    product: Amazon Bedrock model catalog
+    status: none
+    value: Gemini not sold on Bedrock (Google listed with Gemma only)
+    notes: >
+      The Bedrock "Models at a glance" catalog lists Google as a provider, but only with
+      Gemma 4 and Gemma 3 open-weight models. No Gemini model appears there or in the
+      Bedrock FAQ provider list. (Paraphrase.) Gemini can still be called from AgentCore
+      agents as a model outside Bedrock (AgentCore overview,
+      https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html), but that traffic is not Bedrock inference and Bedrock's
+      retention terms do not cover it. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards.html
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  abuse_monitoring_retention:
+    product: Amazon Bedrock abuse detection
+    status: documented
+    value: "30 days: all Claude Fable 5.x traffic, flagged OpenAI traffic; AWS human review of flagged cases (Fable); no 30-day abuse retention for other models (CSAM-flagged content excepted)"
+    summary: >-
+      Model providers get only case metadata. An SCP can block human review, which makes
+      Fable unavailable.
+    notes: >
+      Baseline: "Amazon Bedrock uses a zero operator access (ZOA) data security model,
+      subject to the model-specific abuse and CSAM detection detailed below."
+      Per family: "For Anthropic Claude Fable 5, Claude Fable 5.1, and Claude Fable 5.2,
+      Amazon Bedrock retains all traffic for up to 30 days for automated offline abuse
+      detection. Classifier-flagged traffic will be subject to potential human review
+      performed by AWS." OpenAI (except the gpt-oss line) keeps classifier-flagged traffic
+      only, for up to 30 days, with no human review mentioned. (Paraphrase.)
+      HUMAN REVIEW (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/automated-review-human-review.html):
+      "If a model does not require human review, automated review can still run on the
+      retained inputs and outputs. However, no human will review the content." For the
+      models that do, "the provider receives case data only, such as the case ID, the case
+      status, your account ID, and the outcome of the review." Accounts in Anthropic EFS
+      or EDC review their own cases instead of AWS. (Paraphrase.)
+      CSAM: flagged image inputs or outputs may be stored and reviewed for every model, and
+      may be reported to NCMEC. (Paraphrase.) To block human review organization-wide, an
+      SCP can deny the aws_review mode, which makes the Fable models unavailable.
+      (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/abuse-detection.html
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  zdr_openai_gpt:
+    product: Amazon Bedrock — OpenAI GPT models
+    status: limited
+    value: "By approval: full ZDR through the AWS account team; otherwise classifier-flagged traffic is kept up to 30 days (gpt-oss models exempt)"
+    summary: >-
+      Requests are evaluated per account and per model, with OpenAI.
+    notes: >
+      Approval-gated, hence `limited`. "Eligible customers may request full ZDR through their
+      AWS account team." Without it: "For all OpenAI models other than GPT OSS Safeguard
+      120B, GPT OSS Safeguard 20B, gpt-oss-120b, and gpt-oss-20b, classifier-flagged traffic
+      will be retained for up to 30 days for automated offline abuse detection." The four
+      open-weight gpt-oss models are exempt from that retention. (Paraphrase of the last
+      sentence.) The general ZDR process on a different page
+      (https://docs.aws.amazon.com/bedrock/latest/userguide/data-retention.html): "ZDR access
+      is evaluated on a per-account, per-model basis in coordination with the model provider."
+      That page does not list OpenAI models by name, so the first sentence quoted above is the
+      GPT-specific evidence. (Paraphrase except quoted text.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/abuse-detection.html
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_anthropic_claude:
+    product: Amazon Bedrock — Anthropic Claude models
+    status: limited
+    value: "Self-serve (mode none) for Claude models before Fable 5; Fable 5.x by approval (AWS account manager or Anthropic EFS); Mythos needs a retention mode"
+    summary: >-
+      Older Claude models permit mode none, so nothing is retained. The newest models do not run under none without a per-model ZDR approval.
+    notes: >
+      Split by model, and the newest models are approval-gated, hence `limited`.
+      SELF-SERVE for older models: mode none means "Zero data retention. No request or
+      response data is written to durable storage by AWS or shared with the model provider."
+      It is set per Region by API. The page's example of a model that permits none is Claude
+      Opus 4.8, and "There is no data retention change to Claude models released before
+      Claude Fable 5." (Paraphrase except quoted text.) BY APPROVAL for Fable 5.x: "Some
+      models require data retention for safety and abuse-prevention purposes." Customers who
+      need ZDR on them must "contact your AWS account manager to discuss eligibility." and
+      "ZDR access is evaluated on a per-account, per-model basis in coordination with the
+      model provider." For Claude: "If you're eligible for Anthropic Enterprise Frontier
+      Safeguards (EFS), you can get ZDR for certain Claude models that require data
+      retention." MYTHOS: the Claude Mythos 5.2 model card (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-mythos-5-2.html)
+      says "To use this model, you must set your data retention mode to aws_review or
+      provider_data_share via the Data Retention API." No ZDR route for Mythos is named.
+      (Paraphrase except quoted text.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/data-retention.html
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_google_gemini:
+    product: Amazon Bedrock model catalog
+    status: none
+    value: "Gemini not sold on Bedrock"
+    notes: >
+      The Bedrock "Models at a glance" catalog lists Google only with the open-weight Gemma 4
+      and Gemma 3 models, so there is no Gemini ZDR to score (see retention_google_gemini).
+      (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards.html
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  training_on_inputs:
+    product: Amazon Bedrock (all model families)
+    status: documented
+    value: "No: neither AWS nor Anthropic / OpenAI trains on Bedrock inputs or outputs"
+    summary: >-
+      One commitment for all families; providers can't see Bedrock logs, prompts or
+      completions.
+    notes: >
+      "No, AWS and the third-party model providers will not use any inputs to or outputs
+      from Amazon Bedrock to train Amazon Nova, Amazon Titan, or any third-party models."
+      "Users' inputs and model outputs are not shared with any model providers." This is a
+      single commitment covering Claude and GPT alike, with no per-family carve-out.
+      (Paraphrase of the last sentence.) The data-protection page (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html) adds that
+      model providers "don't have access to Amazon Bedrock logs or to customer prompts and
+      completions."
+    source: https://aws.amazon.com/bedrock/faqs/
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_region:
+    product: Amazon Bedrock cross-Region inference
+    status: documented
+    value: "Stored in the Region that processed the request; geo profiles stay in-geo, global profiles can store in any commercial Region; flagged content reviewed in US or EU"
+    summary: >-
+      Global profiles can store Responses API data in any commercial Region they route to.
+    notes: >
+      "To the extent we store data for abuse detection, your input prompts and output
+      results will be stored in the destination region." Geographic profiles (US, EU, APAC)
+      keep that destination inside the geography. (Paraphrase.)
+      Responses API store (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/inference-responses-api.html):
+      "a request that uses a global inference profile can store data in any commercial
+      Region that profile routes to." On bedrock-mantle it stays in the Region the request
+      was sent to. (Paraphrase.)
+      Review location (another different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/automated-review-human-review.html):
+      "Flagged inputs and outputs processed in the US or under a global Cross-Region
+      Inference Profile (CRIS) will be reviewed in the US."
+      EFS exception for Claude (a different page;
+      https://docs.aws.amazon.com/bedrock/latest/userguide/anthropic-efs-enterprise-data-controls.html):
+      retained content goes to your bucket in the source Region even when cross-Region
+      inference processes the request elsewhere, and automated review runs in us-east-1 and
+      eu-west-1. (Paraphrase.)
+    source: https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"

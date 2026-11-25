@@ -1,0 +1,245 @@
+provider: azure
+bucket: e
+product: Microsoft Foundry Models
+aliases: [Azure OpenAI, Azure OpenAI in Foundry Models, Foundry Models sold by Azure, Azure Direct Models, Claude in Microsoft Foundry]
+notes: >
+  WHICH FAMILIES AZURE SELLS. OpenAI GPT: yes, as "Azure OpenAI in Foundry Models", part of
+  "Foundry Models sold by Azure" (hosted, operated and billed by Microsoft; see
+  https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure).
+  Anthropic Claude: yes, but as a third-party Azure Marketplace offering in which Anthropic
+  is the seller and operator, NOT a model sold by Azure — so Microsoft's Azure OpenAI
+  data-privacy commitments do not cover it; Anthropic's terms do. Google Gemini: not sold;
+  a search of the full Foundry model catalog (11,553 models on 2026-11-25) for gemini
+  returns 0 models. (Paraphrase.)
+  WHERE THE TERMS LIVE. GPT and other Models sold by Azure:
+  https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy (page
+  now titled "Data, privacy, and security for Models sold by Azure in Microsoft Foundry";
+  the old "Azure Direct Models" title is gone) plus the abuse-monitoring and limited-access
+  pages. Claude:
+  https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/claude-models/data-privacy,
+  which defers to Anthropic's DPA and Commercial Terms, and Anthropic's own Foundry guide
+  and Covered Models pages. (Paraphrase.)
+  SURPRISES. (1) Claude has two hosting options with different data paths — Hosted on Azure
+  (prompts never leave Azure) and Hosted on Anthropic infrastructure (may leave the Azure
+  geography). (2) Microsoft is winding down Modified Abuse Monitoring (its ZDR-like
+  opt-out): models released on or after 2026-11-01 lose it on a future date (change-logged
+  17 November 2026). (3) Anthropic's Covered Models (Fable / Mythos class) force 30-day
+  retention even on Foundry subscriptions with ZDR, so a ZDR subscription returns a 400
+  error for them. (4) Microsoft's current pages state NO duration for the abuse-monitoring
+  data store for GPT. (Paraphrase.)
+
+capabilities:
+  retention_openai_gpt:
+    product: Azure OpenAI in Foundry Models (Models sold by Azure)
+    status: documented
+    value: "Stateless inference; abuse-monitoring store (no duration stated); Responses API stored responses 30 days by default"
+    summary: >-
+      Microsoft hosts GPT; OpenAI never receives prompts. Responses API store=false is not a
+      full zero-retention guarantee.
+    notes: >
+      STATELESS INFERENCE: "The models are stateless: no prompts or completions are stored in
+      the model." Microsoft hosts GPT itself, and the models "do NOT interact with any
+      services operated by providers of Models sold by Azure, for example, OpenAI" — OpenAI
+      does not receive or keep prompts. Prompts are "NOT available to OpenAI or other
+      providers of Models sold by Azure." ABUSE MONITORING: flagged prompts and completions
+      can be stored in an abuse monitoring data store for human review by Microsoft
+      (see abuse_monitoring_retention); the current page gives no retention period.
+      STATEFUL FEATURES store data in the customer's Foundry resource: "Responses API, the
+      Threads feature of the Assistants API, and Stored completions" (plus Files API and
+      vector stores), which "Can be deleted by the customer at any time." On a different
+      page, https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/responses:
+      "By default, response data is retained for 30 days." and "Setting store=false isn't a
+      blanket guarantee of zero retention across every service process."
+      The Azure terms apply to all Models sold by Azure (Paraphrase.).
+    source: https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_anthropic_claude:
+    product: Claude in Microsoft Foundry (Anthropic, Azure Marketplace)
+    status: documented
+    value: "Anthropic holds it under Anthropic's terms; Covered Models 30 days minimum; Azure-hosted option keeps prompts in Azure"
+    summary: >-
+      Microsoft states no duration; Anthropic sets it. Anthropic-hosted Claude may be
+      processed outside your geography.
+    notes: >
+      WHO HOLDS IT: Anthropic, not Microsoft. "Claude models in Microsoft Foundry are
+      third-party Marketplace offerings from Anthropic." "For both hosting options, Anthropic
+      is the seller and operator of Claude models in Microsoft Foundry and acts as an
+      independent data processor for prompts and outputs associated with Claude models."
+      "Anthropic's terms of use govern your use of the Claude models." Microsoft also
+      collects billing, usage, contact and transaction information (Paraphrase.).
+      TWO HOSTING OPTIONS: Hosted on Azure — "Your prompts and outputs never leave Azure."
+      Hosted on Anthropic infrastructure — "Data might be processed outside of Azure
+      including outside of your selected Azure geography."
+      DURATION. Microsoft's page gives none. Anthropic, on a different page,
+      https://support.claude.com/en/articles/15425695-covered-models, says Covered Models
+      (Fable 5 / 5.1 / 5.2, which list Microsoft Foundry, and Mythos 5 / 5.1 / 5.2, limited
+      access for approved partners)
+      have a "30-day minimum retention by default" and "zero data retention is not available
+      in workspaces, Claude Enterprise organizations, or third-party platforms (e.g., Azure
+      Subscriptions) where Covered Models can be accessed." For other Claude models,
+      Anthropic's general API rule, on a different page,
+      https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data,
+      is "we automatically delete inputs and outputs on our backend within 30 days of receipt
+      or generation" — that page speaks of Anthropic API users and does not name Foundry, so
+      applying it to Foundry is our inference (Paraphrase.). STATEFUL: the Files API is only
+      on Anthropic-hosted deployments (per
+      https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/claude-models).
+      (Paraphrase.)
+    source: https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/claude-models/data-privacy
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_google_gemini:
+    product: Microsoft Foundry model catalog
+    status: none
+    value: Not sold on Azure
+    notes: >
+      A search of the full Foundry model catalog for gemini on 2026-11-25 returned 0
+      models, out of 11,553 in the catalog; the same search for claude returned 28, so
+      search works. The only Google match for google is open-source models such as
+      google-vit-base-patch16-224, not Gemini. The docs lists of partner models and models
+      sold by Azure show no Google provider section either, but both describe themselves as
+      a selection, so the catalog search is the evidence. The catalog page is
+      JS-rendered; we read it with Playwright. (Paraphrase.)
+    source: https://ai.azure.com/catalog/models?search=gemini
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  abuse_monitoring_retention:
+    product: Foundry Models sold by Azure (GPT); Claude covered separately by Anthropic
+    status: documented
+    value: "Flagged samples stored per customer geography for Microsoft human review (no duration stated); Claude uses Anthropic safety systems"
+    summary: >-
+      Review is by AI first, then Microsoft staff if needed; reviewers sit in the EEA for
+      EEA deployments.
+    notes: >
+      MODELS SOLD BY AZURE (GPT etc.): when abuse signals are detected "a sample of
+      customer's prompts and completions may be selected for review." "Review is conducted
+      by automated means including by AI models such as LLMs by default, with additional
+      reviews by human reviewers as necessary." "For automated review, customer's prompts
+      and completions are not stored by the system or used to train the AI models or other
+      systems." The data store for human review is "logically separated by customer
+      resource". "The human reviewers are authorized Microsoft employees" using SAWs and
+      JIT approval; "For Models sold by Azure deployed in the European Economic Area, the
+      authorized Microsoft employees are located in the European Economic Area." The page
+      states no retention period for that store. CLAUDE is not covered by this system:
+      "Claude models in Microsoft Foundry use Anthropic safety systems and safeguards,
+      supported by Microsoft." on a different page,
+      https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/claude-models/data-privacy.
+      For Covered Models Anthropic keeps 30 days; "By default, no Anthropic personnel can
+      read your retained conversations." and human review happens only through a controlled access path, for example
+      when content is flagged,
+      per a different page,
+      https://support.claude.com/en/articles/15425996-data-retention-practices-for-covered-models.
+      (Paraphrase except quoted text.)
+    source: https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  zdr_openai_gpt:
+    product: Modified abuse monitoring (Models sold by Azure)
+    status: limited
+    value: "By approval: modified abuse monitoring for Microsoft-managed customers only; being withdrawn for models released from 2026-11-01"
+    summary: >-
+      Approval stops abuse storage and human review, but automated review can still run.
+    notes: >
+      Limited Access, by application, hence `limited`. "modified Guardrails (previously
+      content filters) and/or modified abuse monitoring for Models sold by Azure are available
+      only to customers and partners managed by a Microsoft account team or under an eligible
+      program, and are subject to additional requirements." Approval stops the storage and
+      human review, but automated review can still run (per
+      https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy)
+      (Paraphrase.). BEING WITHDRAWN: "For models made available on or after November 1, 2026,
+      Modified Abuse Monitoring will no longer be available, beginning on a future date to be
+      announced." "Customers will receive at least 30 days" notice; models released before
+      that date keep existing approvals. "Some advanced Models sold by Azure may have more
+      stringent criteria for turning off abuse monitoring." (Paraphrase except quoted text.)
+    source: https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/limited-access
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_anthropic_claude:
+    product: Claude in Microsoft Foundry (Anthropic ZDR)
+    status: limited
+    value: "Arranged with Anthropic per subscription; not available for Covered Models (Fable / Mythos 5.x) apart from a time-limited transition offer"
+    summary: >-
+      Microsoft can't set it. Covered Models refuse ZDR subscriptions with an error.
+    notes: >
+      Microsoft cannot set it; it is arranged with Anthropic, hence `limited`. "Anthropic
+      independently manages data retention for Claude on Azure, so Microsoft can't change
+      this setting for you." ZDR is a per-subscription setting, and Covered Models refuse ZDR
+      subscriptions with a 400 error; the fix is to ask Anthropic to turn ZDR off or use a new
+      subscription (Paraphrase.). Anthropic, on a different page
+      (https://support.claude.com/en/articles/15425695-covered-models), says "zero data
+      retention is not available in workspaces, Claude Enterprise organizations, or
+      third-party platforms (e.g., Azure Subscriptions) where Covered Models can be
+      accessed.", apart from a time-limited transition offer to eligible customers
+      (Paraphrase.).
+    source: https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-claude
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  zdr_google_gemini:
+    product: Microsoft Foundry model catalog
+    status: none
+    value: "Gemini not sold on Azure"
+    notes: >
+      A search of the full Foundry model catalog for gemini on 2026-11-25 returned 0 models,
+      so there is no Gemini ZDR to score (see retention_google_gemini). (Paraphrase.)
+    source: https://ai.azure.com/catalog/models?search=gemini
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+  training_on_inputs:
+    product: Foundry Models sold by Azure (GPT); Claude under Anthropic terms
+    status: documented
+    value: "No: Microsoft and OpenAI do not train on GPT prompts; Claude governed by Anthropic commercial terms (no training)"
+    summary: >-
+      Microsoft's no-training commitment doesn't cover Claude; Anthropic's terms do.
+    notes: >
+      GPT / MODELS SOLD BY AZURE: prompts, completions, embeddings and training data "are
+      NOT used by providers of Models sold by Azure to improve their models or services."
+      "are NOT used to train any generative AI foundation models without your permission or
+      instruction." "Customer Data, Prompts, and Completions are NOT used to improve
+      Microsoft or third-party products or services without your explicit permission or
+      instruction." "prompts and completions are not used to train, retrain, or improve the
+      base models." CLAUDE: this commitment does not cover Claude, which is not a Model sold
+      by Azure; Anthropic's terms govern (Paraphrase.). Anthropic's commercial statement, on a
+      different page,
+      https://privacy.claude.com/en/articles/7996885-how-do-you-use-personal-data-in-model-training:
+      "We will not use your chats or coding sessions to train our models, unless you choose
+      to participate in our Development Partner Program." That page covers Anthropic
+      Commercial Offerings and does not name Foundry; Anthropic's Foundry guide says Foundry
+      customers "are subject to Anthropic's data use terms" (per
+      https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry)
+      (Paraphrase.).
+    source: https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"
+
+  retention_region:
+    product: Foundry Models sold by Azure (GPT); Claude in Microsoft Foundry
+    status: documented
+    value: "GPT: stored data and abuse store stay in the resource's geography even for Global / Data Zone; Claude: Azure-hosted stays in Azure, Anthropic-hosted may leave"
+    summary: >-
+      Global / Data Zone only change where GPT is processed, not where data is stored.
+    notes: >
+      GPT / MODELS SOLD BY AZURE: "For both Global and DataZone deployment types, any data
+      stored at rest, such as uploaded data, and including the abuse monitoring data store
+      created for Global and DataZone deployments, is stored in the customer-designated
+      geography." Global/Data Zone change only where processing happens: for 'Global',
+      "prompts and responses may be processed in any geography where the relevant model sold
+      by Azure is deployed". The page describes US and EU Member Nation data zones. Feature data (Responses,
+      Threads, files) "Is stored at rest in the Foundry resource in the customer's Azure
+      tenant, within the same geography as the resource". Batch is a Global type.
+      CLAUDE (Anthropic's page, a different page,
+      https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry):
+      "For deployments hosted on Azure, Anthropic processes prompts and completions on Azure
+      infrastructure and stores retained content there." "Operational data that contains no
+      prompts or completions is stored on Anthropic's systems outside Azure." Hosted on
+      Anthropic infrastructure may leave the Azure geography. Claude deploys only as Global
+      Standard or US Data Zone Standard, and US Data Zone only for some Azure-hosted models.
+      Neither page names the region inside Azure where retained Claude content sits.
+      (Paraphrase except quoted text.)
+    source: https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy
+    verified_on: 2026-11-25
+    verified_by: "@notacryptodad"

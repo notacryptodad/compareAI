@@ -32,7 +32,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
-BUCKET_FILES = {"a": "a-sdk.yaml", "b": "b-platform.yaml", "c": "c-outofbox.yaml", "d": "d-devtools.yaml"}
+BUCKET_FILES = {"a": "a-sdk.yaml", "b": "b-platform.yaml", "c": "c-outofbox.yaml", "d": "d-devtools.yaml", "e": "e-models.yaml"}
 
 # Fields whose change is worth an entry. Everything else (notes, verified_by) is noise.
 TRACKED = ("status", "product", "value", "limits")

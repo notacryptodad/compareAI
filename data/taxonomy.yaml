@@ -1,7 +1,7 @@
 # CompareAI taxonomy — the two axes.
 #
-# Axis 1: buckets (a/b/c) — how you acquire the capability.
-# Axis 2: dimensions (1-8) -> rows. Each row declares which buckets it applies to.
+# Axis 1: buckets (a-e) — how you acquire the capability.
+# Axis 2: dimensions (1-9) -> rows. Each row declares which buckets it applies to.
 #
 # This file is the contract. `data/<provider>/<bucket>.yaml` may only use row ids
 # declared here, and only in buckets the row applies to. CI enforces both.
@@ -59,6 +59,13 @@ buckets:
     verb: code
     question: Which AI coding tool fits my dev team?
     source_type: Product documentation, pricing page, or feature comparison
+  e:
+    name: Model inference API (GPT / Claude / Gemini)
+    verb: call
+    question: Where do my prompts go when I call GPT, Claude or Gemini on this cloud?
+    source_type: >
+      Model-service data-privacy / data-handling page, model card, or service terms — read
+      the page for the specific model family; retention terms differ per model provider
 
 dimensions:
   d1:
@@ -529,6 +536,75 @@ dimensions:
       index_residency:
         label: Where the enterprise index physically lives
         buckets: [c]
+
+  d9:
+    name: Inference data retention (GPT / Claude / Gemini)
+    weight: {a: dropped, b: dropped, c: dropped, d: dropped, e: core}
+    reframe:
+      e: >
+        Scores the cloud's MODEL SERVICE (Bedrock, Foundry Models / Azure OpenAI, Vertex AI,
+        ModelArk, Model Studio), not the agent platform. The same model can carry different
+        retention terms on different clouds, and different terms from the model maker's
+        own API. A family the cloud does not sell is `none` only when the vendor's model
+        catalog shows it plainly; otherwise `unknown`. Added 2026-11.
+    rows:
+      retention_openai_gpt:
+        label: OpenAI GPT models — prompt / output retention
+        buckets: [e]
+        hint: >
+          How long prompts and completions for OpenAI GPT models on this cloud are stored,
+          by whom (cloud vs OpenAI) and for what purpose. Put the duration in `value`
+          (e.g. "30 days, abuse monitoring"). Note stateful features (Responses API stored
+          responses, threads, files) separately from stateless inference.
+      retention_anthropic_claude:
+        label: Anthropic Claude models — prompt / output retention
+        buckets: [e]
+        hint: >
+          Same as retention_openai_gpt, for Claude. Record whether Anthropic receives or
+          retains any data when Claude is called through this cloud.
+      retention_google_gemini:
+        label: Google Gemini models — prompt / output retention
+        buckets: [e]
+        hint: >
+          Same as retention_openai_gpt, for Gemini. Note caching (implicit / context cache)
+          and grounding features that store data separately.
+      abuse_monitoring_retention:
+        label: Abuse / safety-monitoring retention and human review
+        buckets: [e]
+        hint: >
+          Whether inputs/outputs are kept to detect abuse, for how long, whether humans may
+          review them, and which model families it applies to.
+      zdr_openai_gpt:
+        label: OpenAI GPT models — zero-data-retention option
+        buckets: [e]
+        hint: &zdr_hint >
+          Can a customer turn off ALL retention for this family on this cloud, abuse-monitoring
+          logs included, and how: self-serve setting, approval, account team, or contract?
+          Status: `documented` only if full ZDR is self-serve for all of the family's models on
+          this cloud; `limited` if any of them needs approval, an account team or a negotiated
+          contract (the value names which); `none` if the cloud does not sell the family;
+          `unknown` if no page addresses it.
+      zdr_anthropic_claude:
+        label: Anthropic Claude models — zero-data-retention option
+        buckets: [e]
+        hint: *zdr_hint
+      zdr_google_gemini:
+        label: Google Gemini models — zero-data-retention option
+        buckets: [e]
+        hint: *zdr_hint
+      training_on_inputs:
+        label: Prompts / outputs used to train models?
+        buckets: [e]
+        hint: >
+          Per model family: does the cloud or the model maker train on customer prompts and
+          outputs? Quote the commitment. Distinct from b `training_data_policy`, which scores
+          the agent platform.
+      retention_region:
+        label: Where retained inference data is stored (region / geography)
+        buckets: [e]
+        hint: >
+          Region or geography of any retained prompts/outputs, and whether cross-region or
+          global inference endpoints change it.
 
 # Fairness note enforced in review, not in CI:
 # BytePlus and Alibaba Cloud must not be scored down for thin ENGLISH docs.

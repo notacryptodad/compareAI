@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 OUT = ROOT / "COMPARISON.md"
 
-BUCKET_FILES = {"a": "a-sdk.yaml", "b": "b-platform.yaml", "c": "c-outofbox.yaml", "d": "d-devtools.yaml"}
+BUCKET_FILES = {"a": "a-sdk.yaml", "b": "b-platform.yaml", "c": "c-outofbox.yaml", "d": "d-devtools.yaml", "e": "e-models.yaml"}
 
 BADGE = {
     "ga": "✅ GA",
@@ -38,14 +38,26 @@ def load(path: Path) -> dict:
         return yaml.safe_load(fh) or {}
 
 
-def cell_text(cell: dict | None) -> str:
+# Buckets whose `value` is the headline fact (e.g. a retention period) and is shown even
+# when the cell also names a product.
+SHOW_VALUE_BUCKETS = {"e"}
+
+
+def cell_text(cell: dict | None, bucket: str = "") -> str:
     if not cell:
         return "·"
     badge = BADGE.get(cell.get("status", "unknown"), "?")
     parts = [badge]
-    if prod := cell.get("product"):
+    prod = cell.get("product")
+    val = cell.get("value")
+    # In headline-value buckets a No is shown as the badge alone (plus its source link).
+    if bucket in SHOW_VALUE_BUCKETS and cell.get("status") == "none":
+        prod = val = None
+    if prod:
         parts.append(f"<br>{prod}")
-    elif (val := cell.get("value")) is not None:
+    if bucket in SHOW_VALUE_BUCKETS and prod and isinstance(val, str):
+        parts.append(f"<br>**{val}**")
+    elif not prod and val is not None:
         if isinstance(val, list):
             shown = ", ".join(str(v) for v in val[:3])
             if len(val) > 3:
@@ -55,6 +67,12 @@ def cell_text(cell: dict | None) -> str:
             pass
         else:
             parts.append(f"<br>{val}")
+    # A plain-language digest of the notes, so a reader needn't open every source.
+    if summ := cell.get("summary"):
+        parts.append("<br>" + " ".join(str(summ).split()))
+    # Link the cell's first-party source so a reader can check the claim.
+    if src := cell.get("source"):
+        parts.append(f" [source]({src})")
     return "".join(parts)
 
 
@@ -146,7 +164,7 @@ def main() -> int:
             add(sep)
             for rid, row in relevant:
                 cells = [
-                    cell_text((docs[(p, bkey)].get("capabilities") or {}).get(rid))
+                    cell_text((docs[(p, bkey)].get("capabilities") or {}).get(rid), bkey)
                     for p in present
                 ]
                 add(f"| {row['label']} | " + " | ".join(cells) + " |")

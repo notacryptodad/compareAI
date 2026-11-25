@@ -311,10 +311,13 @@ capabilities:
       Kong, Virginia Global/US, chosen per workspace. (Paraphrase.)
       EN product page (a different page, https://www.alibabacloud.com/en/product/modelstudio):
       "Region = API endpoint + static data location." It also lists Zero Data Retention as
-      coming soon (September), not yet confirmed as shipped. Most new agent features are
+      coming soon (September); that label is stale. A dedicated page (a different page,
+      https://www.alibabacloud.com/help/en/model-studio/data-retention-policy, updated
+      2026-11-17) describes ZDR as a working, approval-based control (see
+      alibaba/e-models zdr_openai_gpt). (Paraphrase.) Most new agent features are
       cn-beijing only (see tool_region_variance). No stage label.
     source: https://help.aliyun.com/zh/model-studio/regions
-    verified_on: 2026-11-23
+    verified_on: 2026-11-25
     verified_by: "@notacryptodad"
 
   sovereign_cloud:
